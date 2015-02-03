@@ -1,3 +1,8 @@
+PATH
+  remote: ./gems/scorched-rest
+  specs:
+    scorched-rest (0.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,5 +47,6 @@ DEPENDENCIES
   rack-test
   rack_csrf
   scorched
+  scorched-rest!
   shotgun
   thin

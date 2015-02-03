@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Peter Saxton"]
   spec.email         = ["peterhsaxton@gmail.com"]
   spec.summary       = %q{Adds resful actions to Scorched controller}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.description   = %q{Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
