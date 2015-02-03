@@ -23,4 +23,11 @@ class App < Scorched::Controller
   end
 end
 
+class HomeController < App
+  get '/' do
+    'hello'
+  end
+end
+
+App.controller '/', HomeController
 run App

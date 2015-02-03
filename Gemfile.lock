@@ -13,6 +13,8 @@ GEM
       rack (~> 1.4)
       rack-accept (~> 0.4)
       tilt (~> 1.4)
+    shotgun (0.9)
+      rack (>= 1.0)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -26,4 +28,5 @@ DEPENDENCIES
   awesome_print
   rack_csrf
   scorched
+  shotgun
   thin
