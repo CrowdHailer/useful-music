@@ -8,7 +8,7 @@ class PiecesController < UsefulMusic::App
   end
 
   def new
-    'New users'
+    render :new
   end
 
   def create
