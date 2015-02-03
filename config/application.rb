@@ -11,5 +11,6 @@ end
 Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
+  controller '/users', UsersController
   controller '/', HomeController
 end
