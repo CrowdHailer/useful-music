@@ -17,6 +17,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    pg (0.18.1)
     rack (1.6.0)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -29,6 +30,7 @@ GEM
       rack (~> 1.4)
       rack-accept (~> 0.4)
       tilt (~> 1.4)
+    sequel (4.19.0)
     shotgun (0.9)
       rack (>= 1.0)
     thin (1.6.3)
@@ -44,9 +46,11 @@ DEPENDENCIES
   awesome_print
   minitest
   minitest-reporters
+  pg
   rack-test
   rack_csrf
   scorched
   scorched-rest!
+  sequel
   shotgun
   thin
