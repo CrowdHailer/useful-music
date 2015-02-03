@@ -11,4 +11,5 @@ gem 'awesome_print'
 group :test do
   gem 'minitest', :require => 'minitest/autorun'
   gem 'minitest-reporters'
+  gem 'rack-test', :require => 'rack/test'
 end
