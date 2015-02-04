@@ -24,6 +24,21 @@ class PiecesController < UsefulMusic::App
     render :show
   end
 
+  def edit(id)
+    expose_piece Piece::Cartridge[id]
+    render :edit
+  end
+
+  post '/:id/edit' do |id|
+    piece = Piece::Cartridge[id].update request.POST['piece']
+    redirect "/pieces/#{piece.id}"
+  end
+
+  def update(id)
+    'dd'
+
+  end
+
   def expose(items)
     locals.merge! items
   end
