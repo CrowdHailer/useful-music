@@ -18,4 +18,29 @@ class PiecesController < UsefulMusic::App
     redirect '/pieces'
   end
 
+  def show(id)
+    # expose(:piece => Piece::Cartridge[id])
+    expose_piece Piece::Cartridge[id]
+    render :show
+  end
+
+  def expose(items)
+    locals.merge! items
+  end
+
+  def locals
+    @locals ||= {}
+  end
+
+  def render(template, options={})
+    super(template, options.merge(:locals => locals))
+  end
+
+  def method_missing(name, *args, &block)
+    if match = /(?:expose_)(?<local>.+)/.match(name)
+      send :expose, match[:local].to_sym => args[0]
+    else
+      super
+    end
+  end
 end
