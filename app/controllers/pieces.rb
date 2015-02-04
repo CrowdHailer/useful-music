@@ -14,7 +14,6 @@ class PiecesController < UsefulMusic::App
   end
 
   def create
-    # request.POST['piece'].to_s
     Piece::Cartridge.create request.POST['piece']
     redirect '/pieces'
   end

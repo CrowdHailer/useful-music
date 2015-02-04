@@ -7,6 +7,12 @@ Application to sell tracks
 
 Ecomerce cart
 
+### Commands
+
+> Migrate Up
+
+> `sequel -m db/migrations postgres://localhost/useful_music_development`
+
 ### Middleware
 
 ##### Rack::MethodOverride

@@ -3,6 +3,7 @@ Sequel.migration do
     create_table(:pieces) do
       primary_key :id
       String :title, :null=>false
+      String :track, :null=>false
     end
   end
 
