@@ -1,0 +1,15 @@
+<h1>Pieces</h1>
+<a href="/pieces/new">New</a>
+<br>
+
+<% @pieces.each do |piece| %>
+<br>
+<%= piece.title %><br>
+<%= piece.track %><br>
+<a href="/pieces/<%= piece.id %>">Show</a>
+<form action="/pieces/<%= piece.id %>" method="post">
+  <input name="_method" type="hidden" value="delete" />
+  <input type="submit" value="destroy">
+</form>
+<br>
+<% end %>

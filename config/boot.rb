@@ -14,5 +14,19 @@ require 'bundler/setup'
 # requires all gems for the current runtime enviroment
 Bundler.require(:default, RACK_ENV)
 
+########################################
+
+## Belongs in a config/db.rb file
+
+########################################
+
+DATABASE_URL = ENV.fetch('DATABASE_URL'){
+  "postgres://localhost/useful_music_#{RACK_ENV}"
+}
+Sequel::Model.plugin(:schema)
+Sequel.connect(DATABASE_URL)
+
+######### END ###########
+
 # # require the lib directory
 Dir[APP_ROOT + '/lib/**/*.rb'].each {|file| require file }

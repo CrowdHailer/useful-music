@@ -1,5 +1,6 @@
 class HomeController < UsefulMusic::App
-  render_defaults[:dir] << '/home'
+  # NOTE: need to create new string to assign in config dir
+  render_defaults[:dir] += '/home'
 
   get '/' do
     render :index

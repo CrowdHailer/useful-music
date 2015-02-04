@@ -1,0 +1,7 @@
+<form id="form_id" action="/pieces/<%= piece.id %>/edit", method="post">
+  <!-- <input name="_method" type="hidden" value="PUT" /> -->
+  <input type="text" name="piece[title]" value="<%= piece.title %>">
+  <input type="file" name="piece[track]" value="<%= piece.track %>">
+  <input type="submit" value="Yes">
+</form>
+<a href="/pieces/<%= piece.id %>">back</a>
