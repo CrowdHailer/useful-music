@@ -9,9 +9,12 @@ Ecomerce cart
 
 ### Commands
 
-> Migrate Up
+> Migrate up  
+> `sequel -m db/migrations postgres://localhost/useful_music_development`  
 
-> `sequel -m db/migrations postgres://localhost/useful_music_development`
+> Test  
+> `rake test`
+
 
 ### Middleware
 
