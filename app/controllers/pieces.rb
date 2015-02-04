@@ -36,7 +36,11 @@ class PiecesController < UsefulMusic::App
 
   def update(id)
     'dd'
+  end
 
+  def destroy(id)
+    Piece::Cartridge[id].destroy
+    redirect '/pieces'
   end
 
   def expose(items)
