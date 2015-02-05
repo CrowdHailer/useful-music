@@ -1,6 +1,8 @@
 require_relative '../test_config'
 
 class HomeControllerTest < MiniTest::Test
+  include ControllerTesting
+
   def app
     HomeController
   end

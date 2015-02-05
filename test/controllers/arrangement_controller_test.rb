@@ -1,6 +1,8 @@
 require_relative '../test_config'
 
 class ArrangementsControllerTest < MiniTest::Test
+  include ControllerTesting
+  
   def app
     ArrangementsController
   end
