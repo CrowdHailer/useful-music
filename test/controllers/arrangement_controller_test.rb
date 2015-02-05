@@ -2,7 +2,7 @@ require_relative '../test_config'
 
 class ArrangementsControllerTest < MiniTest::Test
   include ControllerTesting
-  
+
   def app
     ArrangementsController
   end
@@ -14,6 +14,6 @@ class ArrangementsControllerTest < MiniTest::Test
 
   def test_new_page_is_available
     get '/new'
-    assert last_response.ok?
+    assert_ok
   end
 end

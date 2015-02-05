@@ -15,4 +15,8 @@ module ControllerTesting
   def self.included(klass)
    klass.include Rack::Test::Methods
   end
+
+  def assert_ok(response=last_response)
+    assert response.ok?, "Response was #{last_response.status} not OK"
+  end
 end

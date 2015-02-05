@@ -9,6 +9,6 @@ class HomeControllerTest < MiniTest::Test
 
   def test_home_page_is_available
     get '/'
-    assert last_response.ok?
+    assert_ok
   end
 end
