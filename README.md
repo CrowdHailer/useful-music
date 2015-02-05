@@ -10,7 +10,10 @@ Ecomerce cart
 ### Commands
 
 > Migrate up  
-> `sequel -m db/migrations postgres://localhost/useful_music_development`  
+> `sequel -m db/migrations postgres://localhost/useful_music_development`
+
+> Migrate down
+> `sequel -m db/migrations postgres://localhost/useful_music_development -M 0`
 
 > Test  
 > `rake test`
