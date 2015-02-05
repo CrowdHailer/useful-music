@@ -16,4 +16,5 @@ group :test do
   gem 'minitest', :require => 'minitest/autorun'
   gem 'minitest-reporters'
   gem 'rack-test', :require => 'rack/test'
+  gem 'factory_girl'
 end
