@@ -1,1 +1,159 @@
 <h1>New arrangement</h1>
+
+<form class="pure-form pure-form-aligned">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="arrangement_catalogue_number">Catalog <em>UD</em></label>
+            <input
+                id="arrangement_catalogue_number"
+                name="arrangement[catalogue_number]"
+                type="number"
+                autofocus
+                required
+                placeholder="XXX">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_title">Title</label>
+            <input
+                id="arrangement_title"
+                name="arrangement[title]"
+                type="text"
+                required
+                placeholder="">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_sub_heading">Sub heading</label>
+            <input
+                id="arrangement_sub_heading"
+                name="arrangement[sub_heading]"
+                type="text"
+                required
+                placeholder="e.g. Flute and keyboard">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_sub_heading">Product name</label>
+            <input
+                id="arrangement_sub_heading"
+                type="text"
+                disabled
+                placeholder="generated from title and subheading">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_description">Description</label>
+            <textarea
+                id="arrangement_description"
+                name="arrangement[description]"
+                required
+                placeholder="product description"></textarea>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_category">Category</label>
+            <select
+                id="arrangement_category"
+                name="arrangement[category]"
+                required>
+                <option value>-- category --</option>
+                <option value="solo">Solo</option>
+                <option value="solo_with_accompanyment">Solo with accompanyment</option>
+                <option value="duet">Duet</option>
+                <option value="trio">Trio</option>
+                <option value="quartet">Quartet</option>
+                <option value="larger_ensembles">Larger ensembles</option>
+            </select>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_beginner_level">Beginner (level 1-3)</label>
+            <input
+                id="arrangement_beginner_level"
+                name="arrangement[beginner_level]"
+                type="checkbox"
+                placeholder="">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_intermediate_level">Intermediate (level 4-6)</label>
+            <input
+                id="arrangement_intermediate_level"
+                name="arrangement[intermediate_level]"
+                type="checkbox"
+                placeholder="">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_advanced_level">Advanced (level 7&amp;8)</label>
+            <input
+                id="arrangement_advanced_level"
+                name="arrangement[advanced_level]"
+                type="checkbox"
+                placeholder="">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_professional_level">Proffesional</label>
+            <input
+                id="arrangement_professional_level"
+                name="arrangement[professional_level]"
+                type="checkbox"
+                placeholder="">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_sheet_preview">Sheet Preview</label>
+            <input
+                id="arrangement_sheet_preview"
+                name="arrangement[sheet_preview]"
+                type="file"
+                required>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_audio_preview">Audio Preview</label>
+            <input
+                id="arrangement_audio_preview"
+                name="arrangement[audio_preview]"
+                type="file"
+                required>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_cover_image">Cover Image</label>
+            <input
+                id="arrangement_cover_image"
+                name="arrangement[cover_image]"
+                type="file"
+                required>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_meta_description">Meta description</label>
+            <input
+                id="arrangement_meta_description"
+                name="arrangement[meta_description]"
+                type="text"
+                placeholder="">
+        </div>
+
+        <div class="pure-control-group">
+            <label for="arrangement_meta_keywords">Meta keywords</label>
+            <input
+                id="arrangement_meta_keywords"
+                name="arrangement[meta_keywords]"
+                type="text"
+                placeholder="">
+        </div>
+
+        <div class="pure-controls">
+            <label for="cb" class="pure-checkbox">
+                <input id="cb" type="checkbox"> I've read the terms and conditions
+            </label>
+
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>
