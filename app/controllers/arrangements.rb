@@ -5,7 +5,10 @@ class ArrangementsController < UsefulMusic::App
   render_defaults[:dir] += '/arrangements'
 
   def new
-    # ap render_defaults
     render :new
+  end
+
+  def create
+    request.POST['arrangement'].to_s
   end
 end
