@@ -1,9 +1,0 @@
-<%= piece.title %><br>
-<%= piece.track %>
-<hr>
-<a href="/pieces/<%= piece.id %>/edit">edit</a>
-<form action="/pieces/<%= piece.id %>" method="post">
-  <input name="_method" type="hidden" value="delete" />
-  <input type="submit" value="destroy">
-</form>
-<a href="/pieces">back</a>

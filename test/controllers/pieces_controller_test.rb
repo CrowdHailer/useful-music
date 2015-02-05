@@ -1,10 +1,10 @@
 require_relative '../test_config'
 
-class ArrangementsControllerTest < MiniTest::Test
+class PiecesControllerTest < MiniTest::Test
   include ControllerTesting
 
   def app
-    ArrangementsController
+    PiecesController
   end
 
   # def test_home_page_is_available
