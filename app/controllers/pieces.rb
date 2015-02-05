@@ -4,6 +4,10 @@ class PiecesController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/pieces'
 
+  def index
+    render :index
+  end
+
   def new
     render :new
   end

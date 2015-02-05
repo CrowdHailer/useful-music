@@ -7,13 +7,11 @@ class PiecesControllerTest < MiniTest::Test
     PiecesController
   end
 
-  # def test_home_page_is_available
-  #   get '/'
-  #   assert last_response.ok?
-  # end
+  def test_home_page_is_available
+    assert_ok get '/'
+  end
 
   def test_new_page_is_available
-    get '/new'
-    assert_ok
+    assert_ok get '/new'
   end
 end

@@ -16,6 +16,11 @@ module ControllerTesting
    klass.include Rack::Test::Methods
   end
 
+  # NOTE http test methods return response
+  # can use as follows
+  #
+  # assert_ok verb '/url'
+  # 
   def assert_ok(response=last_response)
     assert response.ok?, "Response was #{last_response.status} not OK"
   end
