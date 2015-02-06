@@ -10,7 +10,7 @@ class CoverImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    'notation_preview.jpg' if file
+    'cover_image.jpg' if file
   end
 
 end

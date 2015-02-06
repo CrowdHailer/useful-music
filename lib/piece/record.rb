@@ -1,4 +1,6 @@
 require_relative './uploaders/cover_image_uploader'
+require_relative './uploaders/audio_preview_uploader'
+require_relative './uploaders/notation_preview_uploader'
 
 class Piece
   class Record < Sequel::Model(:pieces)
@@ -10,5 +12,7 @@ class Piece
     #   lambda{|v| "UD%04d" % v}
     # ], :catalogue_number
     mount_uploader :cover_image, CoverImageUploader
+    mount_uploader :audio_preview, AudioPreviewUploader
+    mount_uploader :notation_preview, NotationPreviewUploader
   end
 end
