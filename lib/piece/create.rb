@@ -1,3 +1,4 @@
+
 class Piece
   class Create
     class Form
@@ -11,6 +12,8 @@ class Piece
       attribute :notation_preview, String
       attribute :audio_preview, String
       attribute :cover_image, String
+
+      # mount_uploader
     end
   end
 end

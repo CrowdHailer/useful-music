@@ -6,6 +6,9 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (4.2.0)
+      activesupport (= 4.2.0)
+      builder (~> 3.1)
     activesupport (4.2.0)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -19,6 +22,14 @@ GEM
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     builder (3.2.2)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-sequel (0.1.0)
+      carrierwave
+      sequel
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     daemons (1.1.9)
@@ -31,6 +42,7 @@ GEM
     i18n (0.7.0)
     ice_nine (0.11.1)
     json (1.8.2)
+    mime-types (2.4.3)
     minitest (5.5.1)
     minitest-reporters (1.0.10)
       ansi
@@ -73,6 +85,8 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  carrierwave
+  carrierwave-sequel
   factory_girl
   minitest
   minitest-reporters

@@ -15,6 +15,9 @@ gem 'sequel'
 gem 'virtus'
 gem 'veto'
 
+gem 'carrierwave'
+gem 'carrierwave-sequel'
+
 group :test do
   gem 'minitest', :require => 'minitest/autorun'
   gem 'minitest-reporters'
