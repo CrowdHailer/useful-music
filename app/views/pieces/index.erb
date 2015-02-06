@@ -1,2 +1,42 @@
 <h1>pieces</h1>
+<table class="pure-table">
+    <thead>
+        <tr>
+            <th>Catalogue number</th>
+            <th>Title</th>
+            <th>Sub heading</th>
+            <th>Category</th>
+            <th colspan=2>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @pieces.each do |piece| %>
+            <tr>
+                <th>
+                    UD<%= piece.catalogue_number %>
+                </th>
+                <th>
+                    <%= piece.title %>
+                </th>
+                <th>
+                    <%= piece.sub_heading %>
+                </th>
+                <th>
+                    <%= piece.category %>
+                </th>
+                <th>
+                    <a href="/pieces/<%= piece.catalogue_number %>">show</a>
+                </th>
+                <th>
+                    <form id="form_id" action="/pieces/<%= piece.catalogue_number %>" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" name="some_name" value="Destroy">
+                    </form>
+                </th>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
 <a href="/pieces/new">New Piece</a>
+<a href="/">Home</a>

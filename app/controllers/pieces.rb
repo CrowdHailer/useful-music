@@ -5,6 +5,7 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
+    @pieces = Piece::Record.all
     render :index
   end
 
@@ -23,9 +24,13 @@ class PiecesController < UsefulMusic::App
   end
 
   def show(id)
-    ap url('')
     @piece = Piece::Record[id]
     render :show
+  end
+
+  def destroy(id)
+    Piece::Record[id].destroy
+    redirect '/pieces'
   end
 
   def show_path(piece)

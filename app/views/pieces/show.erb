@@ -1,6 +1,12 @@
-<h1><%= @piece.title %></h1>
-<h2><%= @piece.description %></h2>
-
+<a href="/pieces">Back</a>
+<a href="/">Home</a>
+<h1><%= "UD#{@piece.catalogue_number}: " %><%= @piece.title %></h1>
+<h2><%= @piece.sub_heading %></h2>
+<p>
+  <%= @piece.description %>
+</p>
+  <%= @piece.category %>
+  <br>
 <a href="<%= @piece.notation_preview.url %>" target="_blank">pdf preview</a>
 <br>
 <audio preload="auto" controls>
