@@ -22,8 +22,15 @@ class PiecesController < UsefulMusic::App
     redirect show_path(record)
   end
 
+  def show(id)
+    ap url('')
+    @piece = Piece::Record[id]
+    render :show
+  end
+
   def show_path(piece)
-    absolute(piece.catalogue_number.to_s)
+    # absolute(piece.catalogue_number.to_s)
+    "/pieces/#{piece.catalogue_number}"
   end
 
   def create_form
