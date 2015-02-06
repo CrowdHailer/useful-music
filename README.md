@@ -7,6 +7,10 @@ Application to sell tracks
 
 Ecomerce cart
 
+### Class Diagram
+
+http://yuml.me/edit/668b5dff
+
 ### Commands
 
 > Migrate up  
