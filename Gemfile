@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 ruby '2.2.0'
 
+gem 'dotenv'
+
 gem 'thin'
 gem 'shotgun'
 gem 'scorched'
@@ -14,6 +16,10 @@ gem 'sequel'
 
 gem 'virtus'
 gem 'veto'
+
+gem 'carrierwave'
+gem 'carrierwave-sequel'
+gem 'carrierwave-aws'
 
 group :test do
   gem 'minitest', :require => 'minitest/autorun'
