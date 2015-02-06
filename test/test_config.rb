@@ -13,9 +13,8 @@ require File.expand_path('../../config/application', __FILE__)
 
 FactoryGirl.find_definitions
 FactoryGirl.to_create { |i| i.save }
-# FactoryGirl.lint
 
-class RecordTest < MiniTest::Test
+class MyRecordTest < MiniTest::Test
   include FactoryGirl::Syntax::Methods
 
   def run(*args, &block)
@@ -38,5 +37,11 @@ module ControllerTesting
   #
   def assert_ok(response=last_response)
     assert response.ok?, "Response was #{last_response.status} not OK"
+  end
+end
+
+class MyRecordTest
+  def test_lint_factories
+    FactoryGirl.lint
   end
 end

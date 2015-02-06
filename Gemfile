@@ -12,6 +12,9 @@ gem 'awesome_print'
 gem 'pg'
 gem 'sequel'
 
+gem 'virtus'
+gem 'veto'
+
 group :test do
   gem 'minitest', :require => 'minitest/autorun'
   gem 'minitest-reporters'

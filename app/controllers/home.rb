@@ -5,4 +5,8 @@ class HomeController < UsefulMusic::App
   get '/' do
     render :index
   end
+
+  get '/b' do
+    raise StandardError
+  end
 end

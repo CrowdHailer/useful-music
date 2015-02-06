@@ -1,7 +1,7 @@
 require_relative '../test_config'
 
 class Piece
-  class RecordTest < RecordTest
+  class RecordTest < MyRecordTest
     def values
 
     end

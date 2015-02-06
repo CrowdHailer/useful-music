@@ -14,12 +14,22 @@ GEM
       tzinfo (~> 1.1)
     ansi (1.5.0)
     awesome_print (1.6.1)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     builder (3.2.2)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     daemons (1.1.9)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
+    equalizer (0.0.9)
     eventmachine (1.0.5)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     i18n (0.7.0)
+    ice_nine (0.11.1)
     json (1.8.2)
     minitest (5.5.1)
     minitest-reporters (1.0.10)
@@ -51,6 +61,12 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    veto (1.0.1)
+    virtus (1.0.4)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
   ruby
@@ -68,3 +84,5 @@ DEPENDENCIES
   sequel
   shotgun
   thin
+  veto
+  virtus
