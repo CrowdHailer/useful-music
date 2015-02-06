@@ -25,6 +25,9 @@ Ecomerce cart
 will use the _method field in a form to decide the http verb that the application will be shown
 [link](http://stackoverflow.com/questions/5166484/sending-a-delete-request-from-sinatra)
 
+### App Comments
+Note Factorygirl lint checks be database creation and does not clean up. lint within test space
+
 ### Scorched Comments
 
 ##### Render defaults
