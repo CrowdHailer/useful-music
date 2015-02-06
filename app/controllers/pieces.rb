@@ -18,16 +18,12 @@ class PiecesController < UsefulMusic::App
     # ap validator.valid? form
     # ap form.to_hash
 
-    begin
-      record = Piece::Record.create form.to_hash
-      redirect show_path(record)
-    rescue StandardError => err
-      puts err
-    end
+    record = Piece::Record.create form.to_hash
+    redirect show_path(record)
   end
 
   def show_path(piece)
-    "/pieces/#{piece.catalogue_number}"
+    absolute(piece.catalogue_number.to_s)
   end
 
   def create_form
