@@ -10,6 +10,6 @@ FactoryGirl.define do
     category 'Solo'
     notation_preview 'Preview.pdf'
     audio_preview 'Audio.mp3'
-    cover_image Rack::Multipart::UploadedFile.new 'test/fixtures/dummy.jpg', 'image/jpeg'
+    cover_image Rack::Multipart::UploadedFile.new 'test/fixtures/UD477.jpg', 'image/jpeg'
   end
 end
