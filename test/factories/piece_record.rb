@@ -11,5 +11,17 @@ FactoryGirl.define do
     notation_preview Rack::Multipart::UploadedFile.new 'test/fixtures/UD477sa.pdf', 'image/pdf'
     audio_preview Rack::Multipart::UploadedFile.new 'test/fixtures/UD477sa.mp3', 'audio/mp3'
     cover_image Rack::Multipart::UploadedFile.new 'test/fixtures/UD477.jpg', 'image/jpeg'
+    trait :beginner do
+      beginner_level true
+    end
+    trait :intermediate do
+      intermediate_level true
+    end
+    trait :advanced do
+      advanced_level true
+    end
+    trait :professional do
+      professional_level true
+    end
   end
 end
