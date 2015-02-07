@@ -6,6 +6,7 @@ Sequel.migration do
       Integer :initial_price, :null => false
       Integer :subsequent_price
       String :asset, :null => false
+      foreign_key :piece_id, :pieces
     end
   end
 

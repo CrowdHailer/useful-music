@@ -5,6 +5,9 @@ require_relative './uploaders/notation_preview_uploader'
 class Piece
   class Record < Sequel::Model(:pieces)
     unrestrict_primary_key
+
+    one_to_many :item_records, :class => :'Item::Record', :key => :piece_id
+
     plugin :serialization
     # TODO catalogue_number class throw error when providing bad value
     # serialize_attributes [

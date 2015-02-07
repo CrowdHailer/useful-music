@@ -2,7 +2,15 @@ require_relative '../test_config'
 
 class Piece
   class RecordTest < MyRecordTest
+    # Associations
 
+    def test_can_have_multiple_items
+      record = create :piece_record
+      2.times { record.add_item_record create(:item_record) }
+      assert_equal 2, record.item_records.count
+    end
+
+    # Storage
     def test_requires_catalogue_number
       err = assert_raises Sequel::NotNullConstraintViolation do
         create :piece_record, :catalogue_number => nil
