@@ -10,11 +10,10 @@ class Piece
       attribute :sub_heading, String
       attribute :description, String
       attribute :category, String
-      attribute :notation_preview, String
-      attribute :audio_preview, String
-      attribute :cover_image, String
+      attribute :notation_preview, Hash
+      attribute :audio_preview, Hash
+      attribute :cover_image, Hash
 
-      # mount_uploader
     end
   end
 end

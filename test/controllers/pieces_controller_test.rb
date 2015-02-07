@@ -15,9 +15,8 @@ class PiecesControllerTest < MyRecordTest
     assert_ok get '/new'
   end
 
-  # def test_can_create_piece
-  #   assert_empty Piece::Record
-  #   post '/', :piece => FactoryGirl.attributes_for(:piece_record)
-  #   assert Piece::Record.last
-  # end
+  def test_can_create_piece
+    post '/', :piece => attributes_for(:piece_record)
+    assert Piece::Record.last
+  end
 end

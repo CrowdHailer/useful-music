@@ -16,8 +16,6 @@ class PiecesController < UsefulMusic::App
   def create
     form = create_form
     validator = Piece::Create::Validator.new
-    # ap validator.valid? form
-    # ap form.to_hash
 
     record = Piece::Record.create form.to_hash
     redirect show_path(record)
