@@ -2,17 +2,6 @@ require_relative '../test_config'
 
 class Piece
   class RecordTest < MyRecordTest
-    # def values
-    #
-    # end
-    # def test_can_save_a_catalogue_number
-    #   assert_silent do
-    #     skip
-    #     r = Record.new :catalogue_number => 'UD001'
-    #     r.save
-    #   end
-    # end
-
     def test_can_save_cover_image
       record = create :piece_record
       assert record.cover_image.path
@@ -21,6 +10,14 @@ class Piece
     def test_requires_catalogue_number
       err = assert_raises Sequel::NotNullConstraintViolation do
         create :piece_record, :catalogue_number => nil
+      end
+      assert_match(/catalogue_number/, err.message)
+    end
+
+    def test_catalogue_number_must_be_unique
+      err = assert_raises Sequel::UniqueConstraintViolation do
+        create :piece_record, :catalogue_number => 20
+        create :piece_record, :catalogue_number => 20
       end
       assert_match(/catalogue_number/, err.message)
     end
