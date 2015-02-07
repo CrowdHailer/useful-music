@@ -10,6 +10,7 @@ Ecomerce cart
 ### Class Diagram
 
 http://yuml.me/edit/668b5dff
+http://yuml.me/edit/230cf55f
 
 ### Commands
 
