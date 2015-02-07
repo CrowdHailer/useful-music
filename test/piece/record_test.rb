@@ -95,5 +95,15 @@ class Piece
       assert_match(/cover_image/, err.message)
     end
 
+    def test_can_have_meta_description
+      record = create :piece_record, :meta_data
+      assert record.meta_description
+    end
+
+    def test_can_have_meta_keywords
+      record = create :piece_record, :meta_data
+      assert record.meta_keywords
+    end
+
   end
 end
