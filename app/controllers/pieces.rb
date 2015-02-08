@@ -32,8 +32,11 @@ class PiecesController < UsefulMusic::App
   end
 
   def show_path(piece)
-    # absolute(piece.catalogue_number.to_s)
-    "/pieces/#{piece.catalogue_number}"
+    File.join(controller_path, piece.catalogue_number.to_s)
+  end
+
+  def controller_path
+    File.join *request.breadcrumb[0...-1].map(&:path)
   end
 
   def create_form
