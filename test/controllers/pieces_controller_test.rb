@@ -21,10 +21,8 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_show_page_is_available
-    record = create :piece_record
-    ap record.notation_preview.url
+    record = create :piece_record, :catalogue_number => 123
     get "/#{record.catalogue_number}"
-    ap 's'
-    assert_includes 's', last_response.body
+    assert_includes last_response.body, 'UD123'
   end
 end

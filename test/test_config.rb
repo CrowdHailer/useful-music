@@ -43,6 +43,7 @@ CarrierWave.configure do |config|
    config.storage = :file
    config.enable_processing = false
    config.store_dir = 'tmp'
+   config.root = 'tmp'
  end
 # TODO runs everytime
 # class MyRecordTest
