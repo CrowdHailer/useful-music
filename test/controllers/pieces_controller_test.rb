@@ -19,4 +19,12 @@ class PiecesControllerTest < MyRecordTest
     post '/', :piece => attributes_for(:piece_record)
     assert Piece::Record.last
   end
+
+  def test_show_page_is_available
+    record = create :piece_record
+    ap record.notation_preview.url
+    get "/#{record.catalogue_number}"
+    ap 's'
+    assert_includes 's', last_response.body
+  end
 end
