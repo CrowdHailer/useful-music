@@ -33,6 +33,9 @@ will use the _method field in a form to decide the http verb that the applicatio
 ### App Comments
 Note Factorygirl lint checks be database creation and does not clean up. lint within test space
 
+Note CarrierWave needs root set for url generation when saving to file. Gem could use better error currently unable to coerce nil to string. In app url handled by aws but root needed for testing
+
+
 ### Scorched Comments
 
 ##### Render defaults
