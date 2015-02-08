@@ -1,5 +1,5 @@
 # Setup rack enviroment to test unless specified
-RACK_ENV = 'test' unless defined?(RACK_ENV)
+RACK_ENV = ENV['RACK_ENV'] = 'test' unless defined?(RACK_ENV)
 
 require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'

@@ -16,7 +16,6 @@ end
 Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
-  config[:show_exceptions] = false if RACK_ENV == 'test'
   controller '/users', UsersController
   controller '/pieces', PiecesController
   controller '/', HomeController
