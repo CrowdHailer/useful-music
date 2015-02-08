@@ -25,4 +25,10 @@ class PiecesControllerTest < MyRecordTest
     get "/#{record.catalogue_number}"
     assert_includes last_response.body, 'UD123'
   end
+
+  def test_destroy_action_redirects_to_index
+    record = create :piece_record
+    delete "/#{record.catalogue_number}"
+    assert_equal '/', last_response.location 
+  end
 end

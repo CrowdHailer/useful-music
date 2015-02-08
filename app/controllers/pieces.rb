@@ -28,14 +28,14 @@ class PiecesController < UsefulMusic::App
 
   def destroy(id)
     Piece::Record[id].destroy
-    redirect '/pieces'
+    redirect index_path
   end
 
   def show_path(piece)
-    File.join(controller_path, piece.catalogue_number.to_s)
+    File.join(index_path, piece.catalogue_number.to_s)
   end
 
-  def controller_path
+  def index_path
     File.join *request.breadcrumb[0...-1].map(&:path)
   end
 
