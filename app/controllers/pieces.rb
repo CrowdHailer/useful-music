@@ -22,8 +22,11 @@ class PiecesController < UsefulMusic::App
   end
 
   def show(id)
-    @piece = Piece::Record[id]
-    render :show
+    if @piece = Piece::Record[id]
+      render :show
+    else
+      redirect index_path
+    end
   end
 
   def destroy(id)
