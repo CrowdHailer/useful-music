@@ -14,3 +14,16 @@
 </audio>
 <br>
 <img src="<%= @piece.cover_image.url %>" alt="" />
+<hr>
+<form id="form_id" action="/basket/add_purchases" method="post">
+
+<% @piece.item_records.each do |item| %>
+  <input type="number" min="0" name="purchases[][quantity]" value="">
+  <input type="hidden" name="purchases[][id]" value="<%= item.id %>">
+  <%= item.name %>
+<% end %>
+<input type="submit" value="Add To basket">
+<br>
+<br>
+<br>
+</form>
