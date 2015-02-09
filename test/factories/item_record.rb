@@ -5,6 +5,6 @@ FactoryGirl.define do
     name 'Flute part'
     initial_price 50
     subsequent_price 25
-    asset 'download.mp3'
+    asset Rack::Test::UploadedFile.new 'test/fixtures/Ud477.mp3', 'audio/mp3'
   end
 end
