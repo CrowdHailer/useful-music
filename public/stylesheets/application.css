@@ -68,10 +68,17 @@ main.content {
 aside {
   width: 20%;
   float: left;
+  padding: 2em;
 }
 
 aside li {
   display: block;
+}
+
+aside ul {
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #01344c;
 }
 
 aside li a {
@@ -89,6 +96,17 @@ article {
 article table {
   width: 100%;
 }
+article th {
+  text-align: center;
+}
 article tbody tr {
   background-color: white;
+}
+@media (max-width: 960px) {
+  aside {
+    width: 100%;
+  }
+  article {
+    width: 100%;
+  }
 }
