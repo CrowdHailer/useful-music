@@ -18,8 +18,11 @@ header {
   margin-right: auto;
   min-width: 320px;
   max-width: 1260px;
-  padding: 1em;
   overflow: hidden;
+}
+
+header .content {
+  padding: 1em;
 }
 
 h1 {
@@ -29,17 +32,17 @@ h1 {
   font-weight: 100;
 }
 
-li {
+header li {
   display: inline-block;
 }
 
-li a {
+header li a {
   text-decoration: none;
   color: white;
   padding: 4px 19px;
 }
 
-li a:hover {
+header li a:hover {
   padding: 4px 18px;
   border: 1px solid white;
 }
@@ -48,4 +51,41 @@ li a:hover {
   padding: 13px 10px;
   float: right;
   color: white;
+}
+
+/*################## Main ###########################*/
+
+main.content {
+  background-color: aliceblue;
+}
+
+.col-2 {
+  width: 50%;
+  float: left;
+  border: 1px solid red;
+}
+
+aside {
+  width: 20%;
+  float: left;
+}
+
+aside li {
+  display: block;
+}
+
+aside li a {
+  color: grey;
+  font-size: 1.5em;
+}
+aside li a:hover {
+  color: #01344c;
+}
+article {
+  float: left;
+  width: 80%;
+  padding: 2em;
+}
+article table {
+  width: 100%;
 }
