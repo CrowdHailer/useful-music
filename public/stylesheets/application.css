@@ -31,6 +31,9 @@ h1 {
   font-size: 2.4em;
   font-weight: 100;
 }
+a h1 {
+  color: white;
+}
 
 header li {
   display: inline-block;
