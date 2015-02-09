@@ -21,6 +21,8 @@ gem 'carrierwave'
 gem 'carrierwave-sequel'
 gem 'carrierwave-aws'
 
+gem 'money'
+
 group :test do
   gem 'minitest', :require => 'minitest/autorun'
   gem 'minitest-reporters'

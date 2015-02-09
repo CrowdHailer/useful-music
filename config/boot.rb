@@ -51,5 +51,15 @@ end
 
 ######### END ###########
 
+########################################
+
+## Belongs in a config/money.rb file
+
+########################################
+
+Money.default_currency = Money::Currency.new("GBP")
+
+######### END ###########
+
 # # require the lib directory
 Dir[APP_ROOT + '/lib/**/*.rb'].each {|file| require file }
