@@ -11,6 +11,7 @@ Ecomerce cart
 
 http://yuml.me/edit/668b5dff
 http://yuml.me/edit/230cf55f
+http://yuml.me/bc67d93c
 
 ### Commands
 
