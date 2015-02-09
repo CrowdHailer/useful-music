@@ -7,10 +7,7 @@ class BasketController < UsefulMusic::App
   # end
 
   get '/:id' do |id|
-    id
     basket = Basket::Record[id]
-    ap basket.purchase_records
-    ap basket.purchase_records.first.item_record
 
     basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}
     @basket = basket
