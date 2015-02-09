@@ -89,3 +89,6 @@ article {
 article table {
   width: 100%;
 }
+article tbody tr {
+  background-color: white;
+}

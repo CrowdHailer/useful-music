@@ -17,7 +17,7 @@ class Piece
       # TODO untested because admin control only
       include Virtus.model
 
-      attribute :catalogue_number, Integer
+      attribute :id, Integer
       attribute :title, String
       attribute :sub_heading, String
       attribute :description, String
