@@ -1,6 +1,6 @@
 class BasketController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
-  # render_defaults[:dir] += '/home'
+  render_defaults[:dir] += '/basket'
 
   # get '/' do
   #   render :index
@@ -13,6 +13,8 @@ class BasketController < UsefulMusic::App
     ap basket.purchase_records.first.item_record
 
     basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}
+    @basket = basket
+    render :show
   end
 
   post '/add_purchases' do
