@@ -17,6 +17,12 @@ class BasketController < UsefulMusic::App
     render :show
   end
 
+  delete '/*/purchase/*' do |basket_id, purchase_id|
+    # "#{basket_id} + #{purchase_id}"
+    Purchase::Record[purchase_id].destroy
+    redirect "/basket/#{basket_id}"
+  end
+
   post '/add_purchases' do
     if session['useful_music.basket_id']
       basket = Basket::Record[session['useful_music.basket_id']]
