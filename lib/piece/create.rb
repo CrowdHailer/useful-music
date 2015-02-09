@@ -1,4 +1,16 @@
+class Item
+  class Create
+    class Form
+      # TODO untested because admin control only
+      include Virtus.model
 
+      attribute :name, String
+      attribute :initial_price, Float
+      attribute :subsequent_price, Float
+      attribute :asset, Hash
+    end
+  end
+end
 class Piece
   class Create
     class Form
@@ -13,7 +25,7 @@ class Piece
       attribute :notation_preview, Hash
       attribute :audio_preview, Hash
       attribute :cover_image, Hash
-
+      attribute :items, Array[Item]
     end
   end
 end
