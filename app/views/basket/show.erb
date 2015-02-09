@@ -1,0 +1,15 @@
+<h1>Shopping Basket</h1>
+
+<% @basket.purchase_records.map{|r| Purchase.new r}.each do |purchase| %>
+  <%= purchase.quantity %><br>
+  <%= Money.new(purchase.item.initial_price).format %><br>
+  <%= Money.new(purchase.item.subsequent_price).format %><br>
+  <%= Money.new(purchase.price).format %> <br>
+  <form id="form_id" action="/basket/<%= @basket.id %>/purchase/<%= purchase.record.id %>" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" name="some_name" value="Destroy">
+  </form>
+  <hr>
+<% end %>
+
+<h3><%= Money.new(@basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| t + i.price}).format %></h3>

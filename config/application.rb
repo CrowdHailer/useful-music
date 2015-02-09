@@ -5,7 +5,9 @@ module UsefulMusic
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
     render_defaults[:layout] = File.expand_path('app/views/application', APP_ROOT).to_sym
     middleware << proc do
-      # use Rack::Session::Cookie, secret: 'blah'
+      # TODO secure session
+      use Rack::Session::Cookie, secret: 'blah'
+      # TODO secure csrf
       # use Rack::Csrf, :raise => true
       use Rack::MethodOverride
     end
