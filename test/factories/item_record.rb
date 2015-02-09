@@ -6,5 +6,6 @@ FactoryGirl.define do
     initial_price 50
     subsequent_price 25
     asset Rack::Test::UploadedFile.new 'test/fixtures/Ud477.mp3', 'audio/mp3'
+    piece_record
   end
 end

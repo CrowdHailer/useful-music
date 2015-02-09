@@ -6,7 +6,7 @@ class NotationPreviewUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    super + "/pieces/#{model.catalogue_number}"
+    super + "/pieces/#{model.id}"
   end
 
   def filename

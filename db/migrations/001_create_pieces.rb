@@ -1,7 +1,7 @@
 Sequel.migration do
   up do
     create_table(:pieces) do
-      primary_key :catalogue_number, :type => :integer, :auto_increment => false, :unique => true
+      primary_key :id, :type => :integer, :auto_increment => false, :unique => true
       String :title, :null => false
       String :sub_heading, :null => false
       String :description, :null => false
