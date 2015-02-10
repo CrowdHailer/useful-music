@@ -14,7 +14,6 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_new_page_is_available
-    skip
     assert_ok get '/new'
   end
 
