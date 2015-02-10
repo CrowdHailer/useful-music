@@ -5,8 +5,8 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
-    @pieces = Piece::Record.all
-    render :index
+    pieces = Piece::Record.all
+    render :index, :locals => {:pieces => pieces}
   end
 
   def new
