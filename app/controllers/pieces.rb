@@ -22,8 +22,10 @@ class PiecesController < UsefulMusic::App
     redirect show_path(piece)
   end
 
-  def show(id)
-    if @piece = Piece::Record[id]
+  def show(catalogue_number)
+    id = catalogue_number[/\d+/]
+    if record = Piece::Record[id]
+      @piece = Piece.new(record)
       render :show
     else
       redirect index_path

@@ -24,9 +24,8 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_show_page_is_available
-    skip
-    record = create :piece_record, :catalogue_number => 123
-    get "/#{record.catalogue_number}"
+    record = create :piece_record, :id => 123
+    assert_ok get "/UD#{record.id}"
     assert_includes last_response.body, 'UD123'
     end
 

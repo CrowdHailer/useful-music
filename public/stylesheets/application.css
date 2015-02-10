@@ -76,6 +76,14 @@ h2 {
   border-bottom: 2px solid #01344c;
 }
 
+h3 {
+  margin: 0;
+  padding: 0.2em 1em;
+  color: grey;
+  font-weigth: 100;
+  font-size: 1.5em;
+}
+
 .col-1 {
   width: 100%;
   padding: 2em;
@@ -84,7 +92,7 @@ h2 {
 .col-2 {
   width: 50%;
   float: left;
-  border: 1px solid red;
+  padding: 1em;
 }
 
 aside {
@@ -128,6 +136,17 @@ article th {
 
 article tbody tr {
   background-color: white;
+}
+.clearfix {
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+}
+
+audio {
+  width: 100%;
 }
 
 @media (max-width: 960px) {
