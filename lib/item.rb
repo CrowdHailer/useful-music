@@ -3,6 +3,14 @@ class Item
     @record = record
   end
 
+  def name
+    record.name
+  end
+
+  def name=(name)
+    record.name = name
+  end
+
   def initial_price
     record.initial_price
   end
