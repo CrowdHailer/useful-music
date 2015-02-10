@@ -19,13 +19,21 @@ class Item
       @record = nil
     end
 
+    # TODO test on generic version
     def test_default_record_klass
       assert_equal Item::Record, Item.record_klass
       assert_equal Item::Record, Item.new.record.class
     end
 
+    # TODO test on generic version
     def test_can_be_build_with_params
       item = Item.build(:initial_price => 30)
+      assert_equal 30, item.initial_price
+    end
+
+    # TODO test on generic version
+    def test_can_be_create_with_params
+      item = Item.create(attributes_for(:item_record, :initial_price => 30).merge(:piece => Piece.new(create :piece_record)))
       assert_equal 30, item.initial_price
     end
 

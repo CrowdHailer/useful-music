@@ -19,6 +19,10 @@ class BaseEntity
     end
   end
 
+  def self.create(*args)
+    build(*args).record.save
+  end
+
   def self.entry_accessor(*entries)
     delegate *entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record
   end

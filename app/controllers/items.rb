@@ -18,8 +18,7 @@ class ItemsController < UsefulMusic::App
   def create
     form = Item::Create::Form.new request.POST['item']
     form.piece = Piece.new(Piece::Record[form.piece])
-    item = Item.build form.to_hash
-    item.record.save
+    item = Item.create form.to_hash
     redirect "/pieces/UD#{form.piece.id}"
     # ap form.to_hash
 
