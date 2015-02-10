@@ -35,6 +35,13 @@ class PiecesControllerTest < MyRecordTest
     # assert_includes last_response.body, 'UD123'
   end
 
+  def test_can_update_a_piece
+    record = create :piece_record, :id => 123
+    put '/UD123', :piece => attributes_for(:piece_record, :id => record.id, :title => 'All change')
+    assert_equal 'All change', Piece::Record[123].title
+    assert_equal '/UD123', last_response.location
+  end
+
   def test_destroy_action_redirects_to_index
     skip
     record = create :piece_record

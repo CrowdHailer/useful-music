@@ -42,6 +42,18 @@ class PiecesController < UsefulMusic::App
     end
   end
 
+  def update(catalogue_number)
+    id = catalogue_number[/\d+/]
+    if record = Piece::Record[id]
+      form = Piece::Update::Form.new request.POST['piece']
+      record.update form.to_hash
+      piece = Piece.new(record)
+      redirect show_path(piece)
+    else
+      redirect index_path
+    end
+  end
+
   def destroy(id)
     Piece::Record[id].destroy
     redirect index_path

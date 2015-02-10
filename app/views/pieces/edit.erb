@@ -1,6 +1,7 @@
 <main class="content">
-    <h2>New Piece</h2>
-    <form class="pure-form pure-form-aligned col-1" action="/pieces" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+    <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
+    <form class="pure-form pure-form-aligned col-1" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+      <input type="hidden" name="_method" value="PUT">
         <fieldset>
             <div class="pure-control-group">
                 <label for="piece_id">Catalog <em>UD</em></label>
@@ -119,8 +120,7 @@
                 <input
                     id="piece_notation_preview"
                     name="piece[notation_preview]"
-                    type="file"
-                    required>
+                    type="file">
             </div>
 
             <div class="pure-control-group">
@@ -136,8 +136,7 @@
                 <input
                     id="piece_cover_image"
                     name="piece[cover_image]"
-                    type="file"
-                    required>
+                    type="file">
             </div>
 
             <div class="pure-control-group">
