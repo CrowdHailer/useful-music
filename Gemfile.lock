@@ -3,11 +3,6 @@ PATH
   specs:
     scorched-rest (0.0.2)
 
-PATH
-  remote: ./gems/usecase
-  specs:
-    usecase (0.0.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -120,6 +115,5 @@ DEPENDENCIES
   sequel
   shotgun
   thin
-  usecase!
   veto
   virtus
