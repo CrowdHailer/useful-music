@@ -18,7 +18,7 @@
                     <th>Title</th>
                     <th>Sub heading</th>
                     <th>Category</th>
-                    <th colspan=2>Action</th>
+                    <th colspan=3>Action</th>
                 </tr>
             </thead>
 
@@ -39,6 +39,9 @@
                         </th>
                         <th>
                             <a href="/pieces/<%= piece.id %>">show</a>
+                        </th>
+                        <th>
+                            <a href="/pieces/UD<%= piece.id %>/edit">edit</a>
                         </th>
                         <th>
                             <form id="form_id" action="/pieces/<%= piece.id %>" method="post">

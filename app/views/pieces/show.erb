@@ -1,13 +1,16 @@
 <main class="content">
     <aside>
-      <ul>
-        <li>
-          <a href="/pieces">Back</a>
-        </li>
-        <li>
-          <a href="/">Home</a>
-        </li>
-      </ul>
+        <ul>
+            <li>
+                <a href="/pieces/<%= @piece.catalogue_number %>/edit">Edit</a>
+            </li>
+            <li>
+                <a href="/pieces">Back</a>
+            </li>
+            <li>
+                <a href="/">Home</a>
+            </li>
+        </ul>
     </aside>
     <article>
         <h2><%= "#{@piece.catalogue_number}: " %><%= @piece.title %></h2>
