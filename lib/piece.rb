@@ -1,7 +1,6 @@
-class Piece
-  def initialize(record)
-    @record = record
-  end
+require_relative './base_entity'
+
+class Piece < BaseEntity
 
   def title
     record.title
@@ -43,7 +42,4 @@ class Piece
     "#{title} - #{sub_heading}"
   end
 
-  def record
-    @record
-  end
 end
