@@ -66,5 +66,35 @@ class Piece
       piece.category = 'Duet'
       assert_equal 'Duet', record.category
     end
+
+    def test_can_access_notation_preview
+      record.notation_preview = :file
+      assert_equal :file, piece.notation_preview
+    end
+
+    def test_can_set_notation_preview
+      piece.notation_preview = :file
+      assert_equal :file, record.notation_preview
+    end
+
+    def test_can_access_audio_preview
+      record.audio_preview = :file
+      assert_equal :file, piece.audio_preview
+    end
+
+    def test_can_set_audio_preview
+      piece.audio_preview = :file
+      assert_equal :file, record.audio_preview
+    end
+
+    def test_can_access_cover_image
+      record.cover_image = :file
+      assert_equal :file, piece.cover_image
+    end
+
+    def test_can_set_cover_image
+      piece.cover_image = :file
+      assert_equal :file, record.cover_image
+    end
   end
 end
