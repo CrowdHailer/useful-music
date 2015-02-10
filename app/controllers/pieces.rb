@@ -40,7 +40,6 @@ class PiecesController < UsefulMusic::App
     else
       redirect index_path
     end
-
   end
 
   def destroy(id)
