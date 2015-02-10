@@ -7,10 +7,14 @@ class Item
     record.initial_price
   end
 
-  def subsequent_price
-    record.subsequent_price || record.initial_price
+  def initial_price=(initial_price)
+    record.initial_price = initial_price
   end
 
+  # def subsequent_price
+  #   record.subsequent_price || record.initial_price
+  # end
+  #
   def record
     @record
   end
