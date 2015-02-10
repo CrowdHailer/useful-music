@@ -6,7 +6,12 @@ class ItemsController < UsefulMusic::App
 
   def new
     piece_id = request.GET.fetch('piece_id')
-    @piece_record = Piece::Record[piece_id]
-    render :new
+    piece_record = Piece::Record[piece_id]
+    if piece_record
+      @piece = Piece.new piece_record
+      render :new
+    else
+      redirect '/pieces'
+    end
   end
 end
