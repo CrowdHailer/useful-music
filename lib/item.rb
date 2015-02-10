@@ -3,6 +3,14 @@ class Item
     @record = record
   end
 
+  def piece
+    Piece.new record.piece_record if record.piece_record
+  end
+
+  def piece=(piece)
+    record.piece_record = piece.record
+  end
+
   def name
     record.name
   end

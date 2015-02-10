@@ -19,6 +19,26 @@ class Item
       @record = nil
     end
 
+    ################# Associations #####################
+
+    def test_has_piece
+      @record = create :item_record
+      assert_equal Piece, item.piece.class
+    end
+
+    def test_does_not_have_piece_if_no_piece_record
+      assert_nil item.piece
+    end
+
+    def test_can_set_piece
+      piece = Piece.new(create :piece_record)
+      @record = create :item_record
+      item.piece = piece
+      assert_equal piece.record, item.record.piece_record
+    end
+
+    ################# Archive #####################
+
     def test_can_access_name
       record.name = 'Sinatra'
       assert_equal 'Sinatra', item.name
