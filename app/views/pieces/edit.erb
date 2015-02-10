@@ -97,7 +97,7 @@
                         id="piece_beginner_level"
                         name="piece[beginner_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.beginner_level %>
+                        <%= 'checked' if @piece.beginner_level? %>
                         placeholder="">
                 </div>
 
@@ -107,7 +107,7 @@
                         id="piece_intermediate_level"
                         name="piece[intermediate_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.intermediate_level %>
+                        <%= 'checked' if @piece.intermediate_level? %>
                         placeholder="">
                 </div>
 
@@ -117,7 +117,7 @@
                         id="piece_advanced_level"
                         name="piece[advanced_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.advanced_level %>
+                        <%= 'checked' if @piece.advanced_level? %>
                         placeholder="">
                 </div>
 
@@ -127,7 +127,7 @@
                         id="piece_professional_level"
                         name="piece[professional_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.professional_level %>
+                        <%= 'checked' if @piece.professional_level? %>
                         placeholder="">
                 </div>
 

@@ -39,7 +39,7 @@
         <h2>Available Downloads</h2>
         <form class="pure-form pure-form-aligned col-1" id="form_id" action="/basket/add_purchases" method="post">
 
-        <% @piece.item_records.each do |item| %>
+        <% @piece.items.each do |item| %>
             <input type="number" min="0" name="purchases[][quantity]" value="">
             <input type="hidden" name="purchases[][item_id]" value="<%= item.id %>">
             <%= item.name %>

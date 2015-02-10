@@ -10,4 +10,8 @@ class BaseEntity
   def record
     @record
   end
+
+  def id
+    record.id
+  end
 end
