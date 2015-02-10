@@ -54,7 +54,8 @@ class PiecesController < UsefulMusic::App
     end
   end
 
-  def destroy(id)
+  def destroy(catalogue_number)
+    id = catalogue_number[/\d+/]
     Piece::Record[id].destroy
     redirect index_path
   end

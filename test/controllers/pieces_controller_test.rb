@@ -43,9 +43,8 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_destroy_action_redirects_to_index
-    skip
     record = create :piece_record
-    delete "/#{record.catalogue_number}"
+    delete "/UD#{record.id}"
     assert_equal '/', last_response.location
   end
 end
