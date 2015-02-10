@@ -7,7 +7,7 @@ class BasketController < UsefulMusic::App
   # end
 
   get '/:id' do |id|
-    basket = Basket::Record[id]
+    basket = ShoppingBasket::Record[id]
 
     basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}
     @basket = basket
@@ -22,9 +22,9 @@ class BasketController < UsefulMusic::App
 
   post '/add_purchases' do
     if session['useful_music.basket_id']
-      basket = Basket::Record[session['useful_music.basket_id']]
+      basket = ShoppingBasket::Record[session['useful_music.basket_id']]
     else
-      basket = Basket::Record.create
+      basket = ShoppingBasket::Record.create
       session['useful_music.basket_id'] = basket.id
     end
     add_form.each do |purchase_data|
