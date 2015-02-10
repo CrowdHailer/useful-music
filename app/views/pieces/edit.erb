@@ -8,6 +8,11 @@
               <a href="/pieces/<%= @piece.catalogue_number %>">Show</a>
           </li>
           <hr>
+          <% @piece.items.each do |item| %>
+              <li>
+                  <a href="/items/<%= item.id %>"><%= item.name %></a>
+              </li>
+          <% end %>
           <li>
               <a href="/items/new?piece_id=<%= @piece.id %>">Add Item</a>
           </li>
@@ -97,7 +102,7 @@
                         id="piece_beginner_level"
                         name="piece[beginner_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.beginner_level %>
+                        <%= 'checked' if @piece.beginner_level? %>
                         placeholder="">
                 </div>
 
@@ -107,7 +112,7 @@
                         id="piece_intermediate_level"
                         name="piece[intermediate_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.intermediate_level %>
+                        <%= 'checked' if @piece.intermediate_level? %>
                         placeholder="">
                 </div>
 
@@ -117,7 +122,7 @@
                         id="piece_advanced_level"
                         name="piece[advanced_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.advanced_level %>
+                        <%= 'checked' if @piece.advanced_level? %>
                         placeholder="">
                 </div>
 
@@ -127,7 +132,7 @@
                         id="piece_professional_level"
                         name="piece[professional_level]"
                         type="checkbox"
-                        <%= 'checked' if @piece.professional_level %>
+                        <%= 'checked' if @piece.professional_level? %>
                         placeholder="">
                 </div>
 
@@ -175,27 +180,50 @@
                         placeholder="">
                 </div>
 
-                <!-- <h1>Items</h1>
-                <ul>
-                    <li>
-                           <fieldset>
-
-                               <select name="piece[item][][type]">
-                                  <option value=></option>
-                                  <option value="audio">Audio</option>
-                                  <option value="part">Part</option>
-                               </select>
-                               <input name="piece[items][][name]" type="text" placeholder="Name">
-                               <input name="piece[items][][initial_price]" type="number" min="0" step="0.01" placeholder="initial price">
-                               <input name="piece[items][][subsequent_price]" type="number" min="0" step="0.01" placeholder="subsequent price">
-                               <input type="file" name="piece[items][][asset]" placeholder="asset">
-                           </fieldset>
-                    </li>
-                </ul> -->
                 <div class="pure-controls">
                     <button type="submit" class="pure-button pure-button-primary">Submit</button>
                 </div>
             </fieldset>
         </form>
+        <h2>Items</h2>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Initial Price</th>
+                    <th>Subsequent Price</th>
+                    <th>asset</th>
+                    <th colspan=2>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% @piece.items.each do |item| %>
+                    <tr>
+                        <th>
+                            <%= item.name %>
+                        </th>
+                        <th>
+                            <%= item.initial_price %>
+                        </th>
+                        <th>
+                            <%= item.subsequent_price %>
+                        </th>
+                        <th>
+                            <a href="<%= item.asset.url %>"><%= item.asset.path.split('/').last %></a>
+                        </th>
+                        <th>
+                          edit
+                        </th>
+                        <th>
+                            <form id="form_id" action="/pieces/<%= item.id %>" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="submit" name="some_name" value="Destroy">
+                            </form>
+                        </th>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
     </article>
 </main>
