@@ -1,7 +1,15 @@
-class Piece < SimpleDelegator
-  # def initialize(record)
-  #   @record = record
-  # end
+class Piece
+  def initialize(record)
+    @record = record
+  end
+
+  def title
+    record.title
+  end
+
+  def title=(title)
+    record.title = title
+  end
 
   def catalogue_number
     "UD#{record.id}" if record.id
@@ -13,6 +21,5 @@ class Piece < SimpleDelegator
 
   def record
     @record
-    __getobj__
   end
 end
