@@ -95,5 +95,45 @@ class Piece
       piece.cover_image = :file
       assert_equal :file, record.cover_image
     end
+
+    def test_can_access_beginner_level
+      record.beginner_level = true
+      assert piece.beginner_level?
+    end
+
+    def test_can_set_beginner_level
+      piece.beginner_level = true
+      assert_equal true, record.beginner_level
+    end
+
+    def test_can_access_intermediate_level
+      record.intermediate_level = true
+      assert piece.intermediate_level?
+    end
+
+    def test_can_set_intermediate_level
+      piece.intermediate_level = true
+      assert_equal true, record.intermediate_level
+    end
+
+    def test_can_access_advanced_level
+      record.advanced_level = true
+      assert piece.advanced_level?
+    end
+
+    def test_can_set_advanced_level
+      piece.advanced_level = true
+      assert_equal true, record.advanced_level
+    end
+
+    def test_can_access_professional_level
+      record.professional_level = true
+      assert piece.professional_level?
+    end
+
+    def test_can_set_professional_level
+      piece.professional_level = true
+      assert_equal true, record.professional_level
+    end
   end
 end
