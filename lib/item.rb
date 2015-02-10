@@ -27,6 +27,14 @@ class Item
     record.subsequent_price = subsequent_price
   end
 
+  def asset
+    record.asset
+  end
+
+  def asset=(asset)
+    record.asset = asset
+  end
+
   def record
     @record
   end

@@ -53,5 +53,16 @@ class Item
       item.subsequent_price = full_price
       assert_equal full_price, record.subsequent_price
     end
+
+    # TODO consider appropriate file type for testing
+    def test_can_access_asset
+      record.asset = :asset
+      assert_equal :asset, item.asset
+    end
+
+    def test_can_set_initial_price
+      item.asset = :asset
+      assert_equal :asset, record.asset
+    end
   end
 end
