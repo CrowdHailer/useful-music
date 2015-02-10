@@ -31,7 +31,6 @@ class BasketController < UsefulMusic::App
       purchase_record = Purchase::Record.new purchase_data
       basket.add_purchase_record purchase_record
     end
-    ap add_form.to_s
     redirect "/basket/#{basket.id}"
   end
 

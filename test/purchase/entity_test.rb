@@ -18,9 +18,9 @@ class PurchaseTest < MiniTest::Test
   end
 
   def test_delegates_item_getter_to_cartridge
-
-    ap record
+    skip
   end
+  
   def test_calculates_price_of_single_single_price_item
     record.item_record = single_price_item
     record.quantity = 1
