@@ -15,14 +15,11 @@ class PiecesController < UsefulMusic::App
 
   def create
     form = create_form.to_hash
-    items = form.delete(:items)
     validator = Piece::Create::Validator.new
 
     record = Piece::Record.create form
-    items.each do |item|
-      record.add_item_record item
-    end
-    redirect show_path(record)
+    piece = Piece.new record
+    redirect show_path(piece)
   end
 
   def show(id)

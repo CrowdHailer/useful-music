@@ -25,7 +25,6 @@ class Piece
       attribute :notation_preview, Hash
       attribute :audio_preview, Hash
       attribute :cover_image, Hash
-      attribute :items, Array[Item]
     end
   end
 end

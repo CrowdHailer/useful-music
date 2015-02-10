@@ -18,9 +18,9 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_can_create_piece
-    skip
-    post '/', :piece => attributes_for(:piece_record)
-    assert Piece::Record.last
+    post '/', :piece => attributes_for(:piece_record, :id => 212)
+    assert_equal 212, Piece::Record.last.id
+    assert_equal '/UD212', last_response.location
   end
 
   def test_show_page_is_available
