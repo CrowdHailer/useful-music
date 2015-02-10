@@ -18,7 +18,7 @@ class ItemsController < UsefulMusic::App
   def create
     form = Item::Create::Form.new request.POST['item']
     form.piece = Piece.new(Piece::Record[form.piece])
-    item = Item.new(Item::Record.new)
+    item = Item.new
     form.to_hash.each do |key, value|
       item.send "#{key}=", value
     end

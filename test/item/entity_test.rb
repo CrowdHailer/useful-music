@@ -19,6 +19,11 @@ class Item
       @record = nil
     end
 
+    def test_default_record_klass
+      assert_equal Item::Record, Item.record_klass
+      assert_equal Item::Record, Item.new.record.class
+    end
+
     ################# Associations #####################
 
     def test_has_piece
