@@ -32,6 +32,17 @@ class PiecesController < UsefulMusic::App
     end
   end
 
+  def edit(catalogue_number)
+    id = catalogue_number[/\d+/]
+    if record = Piece::Record[id]
+      @piece = Piece.new(record)
+      render :edit
+    else
+      redirect index_path
+    end
+
+  end
+
   def destroy(id)
     Piece::Record[id].destroy
     redirect index_path

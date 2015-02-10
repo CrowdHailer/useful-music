@@ -27,7 +27,13 @@ class PiecesControllerTest < MyRecordTest
     record = create :piece_record, :id => 123
     assert_ok get "/UD#{record.id}"
     assert_includes last_response.body, 'UD123'
-    end
+  end
+
+  def test_edit_page_is_available
+    record = create :piece_record, :id => 123
+    assert_ok get "/UD#{record.id}/edit"
+    # assert_includes last_response.body, 'UD123'
+  end
 
   def test_destroy_action_redirects_to_index
     skip
