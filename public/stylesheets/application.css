@@ -1,6 +1,7 @@
 html, body {
   padding: 0;
   margin: 0;
+  color: #01344c;
 }
 
 * {
@@ -64,6 +65,22 @@ main.content {
   background-color: aliceblue;
 }
 
+h2 {
+  width: 100%;
+  text-align: center;
+  color: #01344c;
+  font-weight: 100;
+  margin: 0;
+  font-size: 2em;
+  padding: 0.2em 1em;
+  border-bottom: 2px solid #01344c;
+}
+
+.col-1 {
+  width: 100%;
+  padding: 2em;
+}
+
 .col-2 {
   width: 50%;
   float: left;
@@ -90,23 +107,29 @@ aside li a {
   color: grey;
   font-size: 1.5em;
 }
+
 aside li a:hover {
   color: #01344c;
 }
+
 article {
   float: left;
   width: 80%;
   padding: 2em;
 }
+
 article table {
   width: 100%;
 }
+
 article th {
   text-align: center;
 }
+
 article tbody tr {
   background-color: white;
 }
+
 @media (max-width: 960px) {
   aside {
     width: 100%;
