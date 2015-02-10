@@ -1,29 +1,51 @@
-<a href="/pieces">Back</a>
-<a href="/">Home</a>
-<h1><%= "UD#{@piece.catalogue_number}: " %><%= @piece.title %></h1>
-<h2><%= @piece.sub_heading %></h2>
-<p>
-  <%= @piece.description %>
-</p>
-  <%= @piece.category %>
-  <br>
-<a href="<%= @piece.notation_preview.url %>" target="_blank">pdf preview</a>
-<br>
-<audio preload="auto" controls>
-    <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
-</audio>
-<br>
-<img src="<%= @piece.cover_image.url %>" alt="" />
-<hr>
-<form id="form_id" action="/basket/add_purchases" method="post">
+<main class="content">
+    <aside>
+        <ul>
+            <li>
+                <a href="/pieces/<%= @piece.catalogue_number %>/edit">Edit</a>
+            </li>
+            <li>
+                <a href="/pieces">Back</a>
+            </li>
+            <li>
+                <a href="/">Home</a>
+            </li>
+        </ul>
+    </aside>
+    <article>
+        <h2><%= "#{@piece.catalogue_number}: " %><%= @piece.title %></h2>
+        <h3><%= @piece.sub_heading %></h3>
+        <div class="clearfix">
+          <section class="col-2">
+              <img src="<%= @piece.cover_image.url %>" alt="" />
+              <audio preload="auto" controls>
+                  <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
+              </audio>
 
-<% @piece.item_records.each do |item| %>
-  <input type="number" min="0" name="purchases[][quantity]" value="">
-  <input type="hidden" name="purchases[][item_id]" value="<%= item.id %>">
-  <%= item.name %>
-<% end %>
-<input type="submit" value="Add To basket">
-<br>
-<br>
-<br>
-</form>
+          </section>
+          <section class="col-2">
+              <p>
+                  Category: <%= @piece.category %>
+              </p>
+              <p>
+                  <a href="<%= @piece.notation_preview.url %>" target="_blank">pdf preview</a>
+              </p>
+              <p>
+                  Description: <%= @piece.description %>
+              </p>
+
+          </section>
+        </div>
+        <h2>Available Downloads</h2>
+        <form class="pure-form pure-form-aligned col-1" id="form_id" action="/basket/add_purchases" method="post">
+
+        <% @piece.item_records.each do |item| %>
+            <input type="number" min="0" name="purchases[][quantity]" value="">
+            <input type="hidden" name="purchases[][item_id]" value="<%= item.id %>">
+            <%= item.name %>
+        <% end %>
+        <input type="submit" value="Add To basket">
+        </form>
+
+    </article>
+</main>

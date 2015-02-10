@@ -1,0 +1,41 @@
+<main class="content">
+    <aside id="">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+      </ul>
+    </aside>
+    <article>
+        <h2>Items</h2>
+        <p>
+          Add a new item to the following piece
+        </p>
+        <li>
+          <em>Catalogue Number:</em> <%= @piece.catalogue_number %>
+        </li>
+        <li>
+          <em>Product Name:</em> <%= @piece.product_name %>
+        </li>
+        <hr>
+        <form class="pure-form pure-form-aligned" action="/items/" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="item[piece]" value="<%= @piece.id %>">
+            <fieldset>
+
+                <select name="piece[item][][type]">
+                    <option value=></option>
+                    <option value="audio">Audio</option>
+                    <option value="part">Part</option>
+                </select>
+
+                <input name="[item][name]" type="text" placeholder="Name">
+                <input name="[item][initial_price]" type="number" min="0" step="0.01" placeholder="initial price">
+                <input name="[item][subsequent_price]" type="number" min="0" step="0.01" placeholder="subsequent price">
+                <input type="file" name="[item][asset]" placeholder="asset">
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+        </form>
+    </article>
+</main>

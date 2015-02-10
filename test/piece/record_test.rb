@@ -13,17 +13,17 @@ class Piece
     # Storage
     def test_requires_catalogue_number
       err = assert_raises Sequel::NotNullConstraintViolation do
-        create :piece_record, :catalogue_number => nil
+        create :piece_record, :id => nil
       end
-      assert_match(/catalogue_number/, err.message)
+      assert_match(/id/, err.message)
     end
 
     def test_catalogue_number_must_be_unique
       err = assert_raises Sequel::UniqueConstraintViolation do
-        create :piece_record, :catalogue_number => 20
-        create :piece_record, :catalogue_number => 20
+        create :piece_record, :id => 20
+        create :piece_record, :id => 20
       end
-      assert_match(/catalogue_number/, err.message)
+      assert_match(/id/, err.message)
     end
 
     def test_requires_title

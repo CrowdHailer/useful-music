@@ -5,8 +5,8 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
-    @pieces = Piece::Record.all
-    render :index
+    pieces = Piece::Record.all
+    render :index, :locals => {:pieces => pieces}
   end
 
   def new
@@ -15,25 +15,47 @@ class PiecesController < UsefulMusic::App
 
   def create
     form = create_form.to_hash
-    items = form.delete(:items)
     validator = Piece::Create::Validator.new
 
     record = Piece::Record.create form
-    items.each do |item|
-      record.add_item_record item
-    end
-    redirect show_path(record)
+    piece = Piece.new record
+    redirect show_path(piece)
   end
 
-  def show(id)
-    if @piece = Piece::Record[id]
+  def show(catalogue_number)
+    id = catalogue_number[/\d+/]
+    if record = Piece::Record[id]
+      @piece = Piece.new(record)
       render :show
     else
       redirect index_path
     end
   end
 
-  def destroy(id)
+  def edit(catalogue_number)
+    id = catalogue_number[/\d+/]
+    if record = Piece::Record[id]
+      @piece = Piece.new(record)
+      render :edit
+    else
+      redirect index_path
+    end
+  end
+
+  def update(catalogue_number)
+    id = catalogue_number[/\d+/]
+    if record = Piece::Record[id]
+      form = Piece::Update::Form.new request.POST['piece']
+      record.update form.to_hash
+      piece = Piece.new(record)
+      redirect show_path(piece)
+    else
+      redirect index_path
+    end
+  end
+
+  def destroy(catalogue_number)
+    id = catalogue_number[/\d+/]
     Piece::Record[id].destroy
     redirect index_path
   end

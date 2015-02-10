@@ -17,7 +17,7 @@ class Piece
       # TODO untested because admin control only
       include Virtus.model
 
-      attribute :catalogue_number, Integer
+      attribute :id, Integer
       attribute :title, String
       attribute :sub_heading, String
       attribute :description, String
@@ -25,7 +25,6 @@ class Piece
       attribute :notation_preview, Hash
       attribute :audio_preview, Hash
       attribute :cover_image, Hash
-      attribute :items, Array[Item]
     end
   end
 end

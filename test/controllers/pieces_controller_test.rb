@@ -7,8 +7,10 @@ class PiecesControllerTest < MyRecordTest
     PiecesController
   end
 
-  def test_home_page_is_available
+  def test_index_page_is_available
+    create :piece_record, :id => 100
     assert_ok get '/'
+    assert_includes last_response.body, 'UD100'
   end
 
   def test_new_page_is_available
@@ -16,19 +18,33 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_can_create_piece
-    post '/', :piece => attributes_for(:piece_record)
-    assert Piece::Record.last
+    post '/', :piece => attributes_for(:piece_record, :id => 212)
+    assert_equal 212, Piece::Record.last.id
+    assert_equal '/UD212', last_response.location
   end
 
   def test_show_page_is_available
-    record = create :piece_record, :catalogue_number => 123
-    get "/#{record.catalogue_number}"
+    record = create :piece_record, :id => 123
+    assert_ok get "/UD#{record.id}"
     assert_includes last_response.body, 'UD123'
+  end
+
+  def test_edit_page_is_available
+    record = create :piece_record, :id => 123
+    assert_ok get "/UD#{record.id}/edit"
+    # assert_includes last_response.body, 'UD123'
+  end
+
+  def test_can_update_a_piece
+    record = create :piece_record, :id => 123
+    put '/UD123', :piece => attributes_for(:piece_record, :id => record.id, :title => 'All change')
+    assert_equal 'All change', Piece::Record[123].title
+    assert_equal '/UD123', last_response.location
   end
 
   def test_destroy_action_redirects_to_index
     record = create :piece_record
-    delete "/#{record.catalogue_number}"
-    assert_equal '/', last_response.location 
+    delete "/UD#{record.id}"
+    assert_equal '/', last_response.location
   end
 end
