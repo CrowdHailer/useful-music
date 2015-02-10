@@ -20,6 +20,7 @@ Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require fi
 class UsefulMusic::App
   controller '/users', UsersController
   controller '/pieces', PiecesController
+  controller '/items', ItemsController
   controller '/basket', BasketController
   controller '/', HomeController
 end
