@@ -7,7 +7,9 @@ class Piece < BaseEntity
                   :category,
                   :notation_preview,
                   :audio_preview,
-                  :cover_image
+                  :cover_image,
+                  :meta_description,
+                  :meta_keywords
 
   def beginner_level?
     record.beginner_level

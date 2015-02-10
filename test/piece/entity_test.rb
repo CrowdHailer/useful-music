@@ -135,5 +135,25 @@ class Piece
       piece.professional_level = true
       assert_equal true, record.professional_level
     end
+
+    def test_can_access_meta_description
+      record.meta_description = 'Description'
+      assert_equal 'Description', piece.meta_description
+    end
+
+    def test_can_set_meta_description
+      piece.meta_description = 'Description'
+      assert_equal 'Description', record.meta_description
+    end
+
+    def test_can_access_meta_keywords
+      record.meta_keywords = 'Music players'
+      assert_equal 'Music players', piece.meta_keywords
+    end
+
+    def test_can_set_meta_keywords
+      piece.meta_keywords = 'Music players'
+      assert_equal 'Music players', record.meta_keywords
+    end
   end
 end
