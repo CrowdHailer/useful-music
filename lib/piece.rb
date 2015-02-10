@@ -11,6 +11,30 @@ class Piece
     record.title = title
   end
 
+  def sub_heading
+    record.sub_heading
+  end
+
+  def sub_heading=(sub_heading)
+    record.sub_heading = sub_heading
+  end
+
+  def description
+    record.description
+  end
+
+  def description=(description)
+    record.description = description
+  end
+
+  def category
+    record.category
+  end
+
+  def category=(category)
+    record.category = category
+  end
+
   def catalogue_number
     "UD#{record.id}" if record.id
   end

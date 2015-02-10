@@ -36,5 +36,35 @@ class Piece
       piece.title = 'Garden Piece'
       assert_equal 'Garden Piece', record.title
     end
+
+    def test_can_access_sub_heading
+      record.sub_heading = 'oboe and keyboard'
+      assert_equal 'oboe and keyboard', piece.sub_heading
+    end
+
+    def test_can_set_sub_heading
+      piece.sub_heading = 'oboe and keyboard'
+      assert_equal 'oboe and keyboard', record.sub_heading
+    end
+
+    def test_can_access_description
+      record.description = 'Lots of interesting information'
+      assert_equal 'Lots of interesting information', piece.description
+    end
+
+    def test_can_set_description
+      piece.description = 'Lots of interesting information'
+      assert_equal 'Lots of interesting information', record.description
+    end
+
+    def test_can_access_category
+      record.category = 'Duet'
+      assert_equal 'Duet', piece.category
+    end
+
+    def test_can_set_category
+      piece.category = 'Duet'
+      assert_equal 'Duet', record.category
+    end
   end
 end
