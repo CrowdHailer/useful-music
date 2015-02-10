@@ -14,4 +14,10 @@ class ItemsController < UsefulMusic::App
       redirect '/pieces'
     end
   end
+
+  def create
+    form = Item::Create::Form.new request.POST['item']
+    ap form.to_hash
+    Item::Record.create form.to_hash
+  end
 end
