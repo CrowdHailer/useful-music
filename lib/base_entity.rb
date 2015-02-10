@@ -9,6 +9,16 @@ class BaseEntity
     self.const_get :Record
   end
 
+  # TODO send only sends to public methods
+  # TODO nice error for undefined
+  def self.build(attributes={})
+    new.tap do |entity|
+      attributes.each do |attribute, value|
+        entity.public_send "#{attribute}=", value
+      end
+    end
+  end
+
   def self.entry_accessor(*entries)
     delegate *entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record
   end

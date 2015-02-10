@@ -24,6 +24,11 @@ class Item
       assert_equal Item::Record, Item.new.record.class
     end
 
+    def test_can_be_build_with_params
+      item = Item.build(:initial_price => 30)
+      assert_equal 30, item.initial_price
+    end
+
     ################# Associations #####################
 
     def test_has_piece
