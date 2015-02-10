@@ -1,30 +1,9 @@
 require_relative './base_entity'
 
 class Piece < BaseEntity
-
-  def title
-    record.title
-  end
-
-  def title=(title)
-    record.title = title
-  end
-
-  def sub_heading
-    record.sub_heading
-  end
-
-  def sub_heading=(sub_heading)
-    record.sub_heading = sub_heading
-  end
-
-  def description
-    record.description
-  end
-
-  def description=(description)
-    record.description = description
-  end
+  entry_accessor  :title,
+                  :sub_heading,
+                  :description
 
   def category
     record.category
