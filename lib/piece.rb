@@ -11,6 +11,10 @@ class Piece < BaseEntity
                   :meta_description,
                   :meta_keywords
 
+  def items
+    record.item_records.map{ |r| Item.new r }
+  end
+
   def beginner_level?
     record.beginner_level
   end

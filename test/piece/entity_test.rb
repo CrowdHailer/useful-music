@@ -24,6 +24,13 @@ class Piece
       assert_nil piece.catalogue_number
     end
 
+    ################# Associations #####################
+
+    def test_has_items
+      @record = create :item_record
+      assert_equal Item, Piece.new(record.piece_record).items.first.class
+    end
+
     ################# Archive #####################
 
     def test_can_access_title
