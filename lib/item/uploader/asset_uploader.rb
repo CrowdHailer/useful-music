@@ -6,11 +6,11 @@ class AssetUploader < CarrierWave::Uploader::Base
   # end
 
   def store_dir
-    super + "/items/#{model.id}"
+    super + "/pieces/UD#{model.piece_record.id}/items"
   end
 
-  # def filename
-  #   'audio.mp3' if file
-  # end
+  def filename
+    "UD#{model.piece_record.id}_#{model.name.gsub(' ', '_') if model.name}.#{file.extension.downcase}" if file
+  end
 
 end

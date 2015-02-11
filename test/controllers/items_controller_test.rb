@@ -18,4 +18,23 @@ class ItemsControllerTest < MyRecordTest
     post '/', :item => attributes_for(:item_record).merge(:piece => piece_record.id)
     assert_equal "/pieces/UD#{piece_record.id}", last_response.location
   end
+
+  def test_edit_page_is_available
+    record = create :item_record
+    assert_ok get "/#{record.id}/edit"
+  end
+
+  def test_can_update_item
+    record = create :item_record, :name => 'test'
+    put "/#{record.id}", :item => {:name => 'test', :initial_price => 41, :subsequent_price => 21}
+    assert_match /pieces\/UD\d{3}/, last_response.location
+    assert_equal 41, Item::Record.last.initial_price
+  end
+
+  def test_can_delete_an_item
+    record = create :item_record
+    delete "/#{record.id}"
+    assert_empty Item::Record
+    assert_match /pieces\/UD\d{3}/, last_response.location
+  end
 end

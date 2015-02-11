@@ -6,11 +6,11 @@ class AudioPreviewUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    super + "/pieces/#{model.id}"
+    super + "/pieces/UD#{model.id}"
   end
 
   def filename
-    'audio.mp3' if file
+    "UD#{model.id}_audio_preview.mp3" if file
   end
 
 end

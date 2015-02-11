@@ -86,14 +86,29 @@ class Piece
       assert_match(/notation_preview/, err.message)
     end
 
+    def test_renames_notation_preview_file
+      record = create :piece_record, :id => 101
+      assert_match /pieces\/UD101\/UD101_notation_preview\.pdf$/, record.notation_preview.path
+    end
+
     def test_can_save_audio_preview
       record = create :piece_record
       assert record.audio_preview.path
     end
 
+    def test_renames_audio_preview_file
+      record = create :piece_record, :id => 101
+      assert_match /pieces\/UD101\/UD101_audio_preview\.mp3$/, record.audio_preview.path
+    end
+
     def test_can_save_cover_image
       record = create :piece_record
       assert record.cover_image.path
+    end
+
+    def test_renames_cover_image_file
+      record = create :piece_record, :id => 101
+      assert_match /pieces\/UD101\/UD101_cover_image\.jpg$/, record.cover_image.path
     end
 
     def test_requires_cover_image

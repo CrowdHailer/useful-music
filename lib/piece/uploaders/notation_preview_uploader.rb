@@ -6,15 +6,11 @@ class NotationPreviewUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    super + "/pieces/#{model.id}"
+    super + "/pieces/UD#{model.id}"
   end
 
   def filename
-    'notation_preview.pdf' if file
-  end
-
-  def default_url
-    'standin url'
+    "UD#{model.id}_notation_preview.pdf" if file
   end
 
 end

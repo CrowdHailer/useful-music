@@ -6,11 +6,11 @@ class CoverImageUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    super + "/pieces/#{model.id}"
+    super + "/pieces/UD#{model.id}"
   end
 
   def filename
-    'cover_image.jpg' if file
+    "UD#{model.id}_cover_image.jpg" if file
   end
 
 end
