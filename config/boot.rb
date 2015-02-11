@@ -65,4 +65,6 @@ Money.default_currency = Money::Currency.new("GBP")
 ######### END ###########
 
 # # require the lib directory
+# TODO either move entities into namespace module or set requirements as tree
+Dir[APP_ROOT + '/lib/*.rb'].each {|file| require file }
 Dir[APP_ROOT + '/lib/**/*.rb'].each {|file| require file }
