@@ -20,8 +20,9 @@ class PurchaseTest < MiniTest::Test
   def test_delegates_item_getter_to_cartridge
     skip
   end
-  
+
   def test_calculates_price_of_single_single_price_item
+    skip
     record.item_record = single_price_item
     record.quantity = 1
     purchase = Purchase.new record
@@ -29,6 +30,7 @@ class PurchaseTest < MiniTest::Test
   end
 
   def test_calculates_price_of_several_single_price_items
+    skip
     record.item_record = single_price_item
     record.quantity = 3
     purchase = Purchase.new record
@@ -36,6 +38,7 @@ class PurchaseTest < MiniTest::Test
   end
 
   def test_calculates_discount_on_subsequent_pricing
+    skip
     record.item_record = discount_price_item
     record.quantity = 3
     purchase = Purchase.new record
