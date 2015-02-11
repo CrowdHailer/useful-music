@@ -39,6 +39,9 @@ Note CarrierWave needs root set for url generation when saving to file. Gem coul
 
 ### Scorched Comments
 
+##### Static files
+In production static_dir is set to false. This is why stylesheets have trouble loading
+
 ##### Render defaults
 When inherited the default has references the parent hash rather than having its own copy.
 This code will cause bugs in other controllers
