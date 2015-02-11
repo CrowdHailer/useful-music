@@ -22,6 +22,11 @@ class ItemsController < UsefulMusic::App
     redirect "/pieces/UD#{form.piece.id}"
   end
 
+  def edit(id)
+    @item = Item.new(Item::Record[id])
+    render :edit
+  end
+
   def destroy(id)
     item = Item::Record[id]
     item.destroy

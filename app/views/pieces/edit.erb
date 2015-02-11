@@ -213,7 +213,7 @@
                             <a href="<%= item.asset.url %>"><%= item.asset.path.split('/').last %></a>
                         </th>
                         <th>
-                          edit
+                            <a href="/items/<%= item.id %>/edit">Edit</a>
                         </th>
                         <th>
                             <form id="form_id" action="/items/<%= item.id %>" method="post">
