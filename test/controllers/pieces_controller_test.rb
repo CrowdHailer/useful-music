@@ -45,6 +45,13 @@ class PiecesControllerTest < MyRecordTest
   def test_destroy_action_redirects_to_index
     record = create :piece_record
     delete "/UD#{record.id}"
+    assert_empty Piece::Record
     assert_equal '/', last_response.location
+  end
+
+  def test_destroys_associated_items
+    item_record = create :item_record
+    delete "/UD#{item_record.piece_record.id}"
+    assert_empty Item::Record
   end
 end

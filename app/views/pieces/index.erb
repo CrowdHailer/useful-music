@@ -44,7 +44,7 @@
                             <a href="/pieces/UD<%= piece.id %>/edit">edit</a>
                         </th>
                         <th>
-                            <form id="form_id" action="/pieces/<%= piece.id %>" method="post">
+                            <form id="form_id" action="/pieces/<%= piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= piece.id %> and <%= piece.item_records.count %> associated items?')">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="submit" name="some_name" value="Destroy">
                             </form>

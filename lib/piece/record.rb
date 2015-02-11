@@ -8,6 +8,8 @@ class Piece
     # primary_key = :catalogue_number
 
     one_to_many :item_records, :class => :'Item::Record', :key => :piece_id
+    
+    plugin :association_dependencies, :item_records => :delete
 
     plugin :serialization
     # TODO catalogue_number class throw error when providing bad value
