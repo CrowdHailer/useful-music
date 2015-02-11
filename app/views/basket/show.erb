@@ -62,7 +62,7 @@
                   <%= Money.new(@basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| t + i.price}).format %>
                 </th>
                 <th>
-                  
+                  <a href="#" onclick="alert('coming soon');">Checkout</a>
                 </th>
               </tr>
           </tbody>
