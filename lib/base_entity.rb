@@ -20,7 +20,9 @@ class BaseEntity
   end
 
   def self.create(*args)
-    build(*args).record.save
+    entity = build(*args)
+    entity.record.save
+    entity
   end
 
   def self.entry_accessor(*entries)
