@@ -4,6 +4,7 @@ module UsefulMusic
   class App < Scorched::Controller
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
     render_defaults[:layout] = File.expand_path('app/views/application', APP_ROOT).to_sym
+    config[:static_dir] = 'public'
     middleware << proc do
       # TODO secure session
       use Rack::Session::Cookie, secret: 'blah'
