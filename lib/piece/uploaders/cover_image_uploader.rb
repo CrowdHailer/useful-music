@@ -10,7 +10,7 @@ class CoverImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    'cover_image.jpg' if file
+    "UD#{model.id}_cover_image.jpg" if file
   end
 
 end
