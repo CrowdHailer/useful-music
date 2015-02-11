@@ -20,8 +20,11 @@ class ItemsController < UsefulMusic::App
     form.piece = Piece.new(Piece::Record[form.piece])
     item = Item.create form.to_hash
     redirect "/pieces/UD#{form.piece.id}"
-    # ap form.to_hash
+  end
 
-    # Item::Record.create form.to_hash
+  def destroy(id)
+    item = Item::Record[id]
+    item.destroy
+    redirect "/pieces/UD#{item.piece_record.id}"
   end
 end
