@@ -6,7 +6,7 @@ class AudioPreviewUploader < CarrierWave::Uploader::Base
   end
 
   def store_dir
-    super + "/pieces/#{model.id}"
+    super + "/pieces/UD#{model.id}"
   end
 
   def filename
