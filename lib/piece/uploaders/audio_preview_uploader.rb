@@ -10,7 +10,7 @@ class AudioPreviewUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    'audio.mp3' if file
+    'audio_preview.mp3' if file
   end
 
 end
