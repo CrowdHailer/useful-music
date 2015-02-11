@@ -16,7 +16,7 @@ class ItemsControllerTest < MyRecordTest
   def test_can_create_new_item
     piece_record = create :piece_record
     post '/', :item => attributes_for(:item_record).merge(:piece => piece_record.id)
-    assert_equal "/pieces/UD#{piece_record.id}", last_response.location
+    assert_match /pieces\/UD#{piece_record.id}/, last_response.location
   end
 
   def test_edit_page_is_available

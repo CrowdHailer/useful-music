@@ -19,7 +19,7 @@ class ItemsController < UsefulMusic::App
     form = Item::Create::Form.new request.POST['item']
     form.piece = Piece.new(Piece::Record[form.piece])
     item = Item.create form.to_hash
-    redirect "/pieces/UD#{form.piece.id}"
+    redirect "/pieces/UD#{form.piece.id}/edit"
   end
 
   def edit(id)
@@ -36,6 +36,6 @@ class ItemsController < UsefulMusic::App
   def destroy(id)
     item = Item::Record[id]
     item.destroy
-    redirect "/pieces/UD#{item.piece_record.id}"
+    redirect "/pieces/UD#{item.piece_record.id}/edit"
   end
 end

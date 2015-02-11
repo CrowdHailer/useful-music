@@ -6,6 +6,17 @@ class HomeController < UsefulMusic::App
     render :index
   end
 
+  get '/my-shopping-basket' do
+    if session['useful_music.basket_id']
+      basket = ShoppingBasket::Record[session['useful_music.basket_id']]
+    else
+      basket = ShoppingBasket::Record.create
+      session['useful_music.basket_id'] = basket.id
+    end
+    redirect "/basket/#{basket.id}"
+    # TODO move logic from this controller. redirect to new or show route
+  end
+
   get '/b' do
     raise StandardError
   end
