@@ -19,6 +19,7 @@
         </li>
         <hr>
         <form class="pure-form pure-form-aligned" action="/items/<%= @item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="_method" value="PUT">
             <fieldset>
 
                 <select name="piece[item][][type]" style="display:none">
@@ -31,6 +32,9 @@
                 <input name="[item][initial_price]" type="number" min="0" step="0.01" placeholder="initial price" value="<%= @item.initial_price %>">
                 <input name="[item][subsequent_price]" type="number" min="0" step="0.01" placeholder="subsequent price" value="<%= @item.subsequent_price %>">
                 <hr>
+                <p>
+                  NB if changing name reupload asset as names are currently assigned on upload
+                </p>
                 <p>
                   Leave blank to use <a href="<%= @item.asset.url %>" target="_blank">exisiting asset</a>
                 </p>

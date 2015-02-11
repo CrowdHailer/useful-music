@@ -27,6 +27,12 @@ class ItemsController < UsefulMusic::App
     render :edit
   end
 
+  def update(id)
+    item_record = Item::Record[id]
+    item_record.update request.POST['item']
+    redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+  end
+
   def destroy(id)
     item = Item::Record[id]
     item.destroy
