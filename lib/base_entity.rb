@@ -26,7 +26,7 @@ class BaseEntity
   end
 
   def self.entry_accessor(*entries)
-    delegate *entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record
+    delegate(*entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record)
   end
 
   def record
