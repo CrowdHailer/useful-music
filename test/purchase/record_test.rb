@@ -20,5 +20,6 @@ class Purchase
       end
       assert_match(/item_id/, err.message)
     end
+    # TODO Require basket
   end
 end
