@@ -11,6 +11,7 @@ class BaseEntity
 
   # TODO send only sends to public methods
   # TODO nice error for undefined
+  # TODO with block
   def self.build(attributes={})
     new.tap do |entity|
       attributes.each do |attribute, value|
@@ -19,6 +20,7 @@ class BaseEntity
     end
   end
 
+  # TODO use tap
   def self.create(*args)
     entity = build(*args)
     entity.record.save
@@ -33,6 +35,7 @@ class BaseEntity
     @record
   end
 
+  # TODO nice error
   def id
     record.id
   end
