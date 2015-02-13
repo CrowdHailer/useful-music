@@ -1,6 +1,7 @@
 require_relative './base_entity'
 
 class Purchase < BaseEntity
+  entry_accessor  :quantity
 
   def price
     item.initial_price + (item.subsequent_price * (quantity - 1))

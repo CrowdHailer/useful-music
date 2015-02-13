@@ -71,12 +71,24 @@ class PurchaseTest < MyRecordTest
   def test_does_not_have_shopping_basket_if_no_shopping_basket_record
     assert_nil purchase.shopping_basket
   end
-  
+
   def test_can_set_shopping_basket
     shopping_basket = ShoppingBasket.new(create :shopping_basket_record)
     @record = create :purchase_record
     purchase.shopping_basket = shopping_basket
     assert_equal shopping_basket.record, purchase.record.shopping_basket_record
+  end
+
+  ################# Archive #####################
+
+  def test_can_access_quantity
+    record.quantity = 5
+    assert_equal 5, purchase.quantity
+  end
+
+  def test_can_set_quantity
+    purchase.quantity = 5
+    assert_equal 5, record.quantity
   end
 
 end
