@@ -6,6 +6,8 @@ class BaseEntity
   def self.record_klass
     # TODO nice error for undefined Record
     # TODO look up one level so works for module
+    # Module.nesting.find{|x| x.const_defined? :Record}.const_get :Record
+    # Probably too magic.
     self.const_get :Record
   end
 

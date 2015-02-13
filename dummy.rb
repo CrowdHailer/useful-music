@@ -14,7 +14,7 @@ module A
   end
 end
 
-puts A.new('x').greet
+# puts A.new('x').greet
 
 begin
   begin
@@ -25,3 +25,24 @@ begin
 rescue StandardError => e
   puts e.cause
 end
+
+# puts A.const_defined? :B
+# puts A.methods.select { |n| n[/^cons/]}
+
+
+module A
+  class C
+  end
+  module B
+    class C
+    end
+    class D
+      def self.c
+        puts Module.nesting.find{|x| x.const_defined? :C}
+        puts const_defined? :C
+      end
+    end
+  end
+end
+
+puts A::B::D.c
