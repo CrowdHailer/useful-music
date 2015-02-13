@@ -37,5 +37,18 @@ class Purchase
       end
       assert_match(/shopping_basket_id/, err.message)
     end
+
+    def test_requires_unique_basket_item_combination
+      shopping_basket_record = create :shopping_basket_record
+      item_record = create :item_record
+      err = assert_raises Sequel::UniqueConstraintViolation do
+        2.times do
+          create :purchase_record,
+            :item_record => item_record,
+            :shopping_basket_record => shopping_basket_record
+        end
+      end
+      assert_match(/shopping_basket_item_groups/, err.message)
+    end
   end
 end

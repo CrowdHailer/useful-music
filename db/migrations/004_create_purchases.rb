@@ -5,6 +5,7 @@ Sequel.migration do
       Integer :quantity, :null => false
       foreign_key :item_id, :items, :null => false
       foreign_key :shopping_basket_id, :shopping_baskets, :null => false
+      unique [:shopping_basket_id, :item_id], :name => :shopping_basket_item_groups
     end
   end
 
