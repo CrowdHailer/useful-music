@@ -20,7 +20,7 @@ class PurchaseTest < MyRecordTest
   def teardown
     @record = nil
   end
-  
+
   def test_calculates_price_of_single_single_price_item
     skip
     record.item_record = single_price_item
@@ -63,5 +63,20 @@ class PurchaseTest < MyRecordTest
     assert_equal item.record, purchase.record.item_record
   end
 
+  def test_has_shopping_basket
+    @record = create :purchase_record
+    assert_equal ShoppingBasket, purchase.shopping_basket.class
+  end
+
+  def test_does_not_have_shopping_basket_if_no_shopping_basket_record
+    assert_nil purchase.shopping_basket
+  end
+  
+  def test_can_set_shopping_basket
+    shopping_basket = ShoppingBasket.new(create :shopping_basket_record)
+    @record = create :purchase_record
+    purchase.shopping_basket = shopping_basket
+    assert_equal shopping_basket.record, purchase.record.shopping_basket_record
+  end
 
 end
