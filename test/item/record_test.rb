@@ -16,9 +16,9 @@ class Item
       assert_match(/initial_price/, err.message)
     end
 
-    def test_does_not_require_subsequent_price
+    def test_does_not_require_discounted_price
       assert_silent do
-        create :item_record, :subsequent_price => nil
+        create :item_record, :discounted_price => nil
       end
     end
 

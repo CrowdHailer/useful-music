@@ -4,7 +4,7 @@ Sequel.migration do
       primary_key :id
       String :name, :null => false
       Integer :initial_price, :null => false
-      Integer :subsequent_price
+      Integer :discounted_price
       String :asset, :null => false
       foreign_key :piece_id, :pieces, :null => false
     end

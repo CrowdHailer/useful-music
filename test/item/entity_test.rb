@@ -19,6 +19,31 @@ class Item
       @record = nil
     end
 
+    def test_calculates_price_of_single_single_price_item
+      record.initial_price = Money.new(100)
+      assert_equal Money.new(100, 'gbp'), item.price_for(1)
+    end
+
+    def test_calculates_price_of_several_single_price_items
+      record.initial_price = Money.new(100)
+      assert_equal Money.new(300, 'gbp'), item.price_for(3)
+    end
+
+    def test_calculates_discount_on_subsequent_pricing
+      record.initial_price = Money.new(100)
+      record.discounted_price = Money.new(50)
+      assert_equal Money.new(200, 'gbp'), item.price_for(3)
+    end
+
+    def test_shows_if_multibuy_available
+      record.discounted_price = Money.new(50)
+      assert item.multibuy_discount?
+    end
+
+    def test_shows_if_multibuy_unavailable
+      refute item.multibuy_discount?
+    end
+
     # TODO test on generic version
     def test_default_record_klass
       assert_equal Item::Record, Item.record_klass
@@ -77,19 +102,14 @@ class Item
       assert_equal full_price, record.initial_price
     end
 
-    def test_can_access_subsequent_price
-      record.subsequent_price = full_price
-      assert_equal full_price, item.subsequent_price
+    def test_can_access_discounted_price
+      record.discounted_price = full_price
+      assert_equal full_price, item.discounted_price
     end
 
-    # def test_uses_initial_price_if_subsequent_price_undefined
-    #   record.initial_price = full_price
-    #   assert_equal full_price, item.subsequent_price
-    # end
-
-    def test_can_set_subsequent_price
-      item.subsequent_price = full_price
-      assert_equal full_price, record.subsequent_price
+    def test_can_set_discounted_price
+      item.discounted_price = full_price
+      assert_equal full_price, record.discounted_price
     end
 
     # TODO consider appropriate file type for testing

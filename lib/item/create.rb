@@ -6,7 +6,7 @@ class Item
       attribute :piece, Integer
       attribute :name, String
       attribute :initial_price, Integer
-      attribute :subsequent_price, Integer
+      attribute :discounted_price, Integer
       attribute :asset, Hash
     end
   end
