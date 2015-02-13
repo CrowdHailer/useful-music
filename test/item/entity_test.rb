@@ -19,6 +19,22 @@ class Item
       @record = nil
     end
 
+    def test_calculates_price_of_single_single_price_item
+      record.initial_price = Money.new(100)
+      assert_equal Money.new(100, 'gbp'), item.price_for(1)
+    end
+
+    def test_calculates_price_of_several_single_price_items
+      record.initial_price = Money.new(100)
+      assert_equal Money.new(300, 'gbp'), item.price_for(3)
+    end
+
+    def test_calculates_discount_on_subsequent_pricing
+      record.initial_price = Money.new(100)
+      record.discounted_price = Money.new(50)
+      assert_equal Money.new(200, 'gbp'), item.price_for(3)
+    end
+
     # TODO test on generic version
     def test_default_record_klass
       assert_equal Item::Record, Item.record_klass

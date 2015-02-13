@@ -21,30 +21,6 @@ class PurchaseTest < MyRecordTest
     @record = nil
   end
 
-  def test_calculates_price_of_single_single_price_item
-    skip
-    record.item_record = single_price_item
-    record.quantity = 1
-    purchase = Purchase.new record
-    assert_equal Money.new(50, 'gbp'), purchase.price
-  end
-
-  def test_calculates_price_of_several_single_price_items
-    skip
-    record.item_record = single_price_item
-    record.quantity = 3
-    purchase = Purchase.new record
-    assert_equal Money.new(150, 'gbp'), purchase.price
-  end
-
-  def test_calculates_discount_on_subsequent_pricing
-    skip
-    record.item_record = discount_price_item
-    record.quantity = 3
-    purchase = Purchase.new record
-    assert_equal Money.new(100, 'gbp'), purchase.price
-  end
-
   ################# Associations #####################
 
   def test_has_item
