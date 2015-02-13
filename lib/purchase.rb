@@ -1,11 +1,6 @@
-class Purchase
-  def initialize(record)
-    @record = record
-  end
+require_relative './base_entity'
 
-  def quantity
-    record.quantity
-  end
+class Purchase < BaseEntity
 
   def price
     item.initial_price + (item.subsequent_price * (quantity - 1))
@@ -27,7 +22,4 @@ class Purchase
     record.shopping_basket_record = shopping_basket.record
   end
 
-  def record
-    @record
-  end
 end
