@@ -17,10 +17,10 @@ class Item < BaseEntity
   def subsequent_price
     discounted_price || initial_price
   end
-  #
-  # def multibuy_discount?
-  #   !!discounted_price
-  # end
+  
+  def multibuy_discount?
+    !!discounted_price
+  end
 
   def price_for(n)
     initial_price + subsequent_price * (n-1)

@@ -35,6 +35,15 @@ class Item
       assert_equal Money.new(200, 'gbp'), item.price_for(3)
     end
 
+    def test_shows_if_multibuy_available
+      record.discounted_price = Money.new(50)
+      assert item.multibuy_discount?
+    end
+
+    def test_shows_if_multibuy_unavailable
+      refute item.multibuy_discount?
+    end
+
     # TODO test on generic version
     def test_default_record_klass
       assert_equal Item::Record, Item.record_klass
