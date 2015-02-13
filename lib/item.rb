@@ -3,7 +3,7 @@ require_relative './base_entity'
 class Item < BaseEntity
   entry_accessor  :name,
                   :initial_price,
-                  :subsequent_price,
+                  :discounted_price,
                   :asset
 
   def piece
@@ -13,6 +13,18 @@ class Item < BaseEntity
   def piece=(piece)
     record.piece_record = piece.record
   end
+
+  # def subsequent_price
+  #   discounted_price || initial_price
+  # end
+  #
+  # def multibuy_discount?
+  #   !!discounted_price
+  # end
+  #
+  # def price_of(n=1)
+  #   initial_price + subsequent_price * (n-1)
+  # end
 
   # TODO clear possible price of method
   # def subsequent_price
