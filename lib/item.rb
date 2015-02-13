@@ -17,7 +17,7 @@ class Item < BaseEntity
   def subsequent_price
     discounted_price || initial_price
   end
-  
+
   def multibuy_discount?
     !!discounted_price
   end
@@ -25,14 +25,5 @@ class Item < BaseEntity
   def price_for(n)
     initial_price + subsequent_price * (n-1)
   end
-
-  # TODO clear possible price of method
-  # def subsequent_price
-  #   record.subsequent_price || record.initial_price
-  # end
-  #
-  # def subsequent_price=(subsequent_price)
-  #   record.subsequent_price = subsequent_price
-  # end
 
 end

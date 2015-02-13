@@ -9,14 +9,6 @@ class PurchaseTest < MyRecordTest
     @purchase = Purchase.new record
   end
 
-  def single_price_item
-    OpenStruct.new :initial_price => Money.new(50)
-  end
-
-  def discount_price_item
-    OpenStruct.new :initial_price => Money.new(50), :subsequent_price => Money.new(25)
-  end
-
   def teardown
     @record = nil
   end
