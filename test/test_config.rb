@@ -39,12 +39,13 @@ module ControllerTesting
     assert response.ok?, "Response was #{last_response.status} not OK"
   end
 end
+
 CarrierWave.configure do |config|
-   config.storage = :file
-   config.enable_processing = false
-   config.store_dir = 'tmp'
-   config.root = 'tmp'
- end
+  config.storage = :file
+  config.enable_processing = false
+  config.store_dir = 'tmp'
+  config.root = 'tmp'
+end
 # TODO runs everytime
 # class MyRecordTest
 #   def test_lint_factories
