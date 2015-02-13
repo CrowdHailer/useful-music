@@ -13,26 +13,22 @@ class ItemsControllerTest < MyRecordTest
     assert_includes last_response.body, "UD#{record.id}"
   end
 
-  def test_can_create_new_item
-    skip
+  def test_can_create_item
     piece_record = create :piece_record
     post '/', :item => attributes_for(:item_record).merge(:piece => piece_record.id)
-    assert_match /pieces\/UD#{piece_record.id}/, last_response.location
+    assert_match(/pieces\/UD#{piece_record.id}/, last_response.location)
   end
 
   def test_edit_page_is_available
-    skip
     record = create :item_record
     assert_ok get "/#{record.id}/edit"
   end
 
   def test_can_update_item
-    skip
-    skip
     record = create :item_record, :name => 'test'
-    put "/#{record.id}", :item => {:name => 'test', :initial_price => 41, :subsequent_price => 21}
+    put "/#{record.id}", :item => {:name => 'test2'}
     assert_match /pieces\/UD\d{3}/, last_response.location
-    assert_equal 41, Item::Record.last.initial_price
+    assert_equal 'test2', Item::Record.last.name
   end
 
   def test_can_delete_an_item

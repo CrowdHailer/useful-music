@@ -1,16 +1,3 @@
-class Item
-  class Create
-    class Form
-      # TODO untested because admin control only
-      include Virtus.model
-
-      attribute :name, String
-      attribute :initial_price, Float
-      attribute :subsequent_price, Float
-      attribute :asset, Hash
-    end
-  end
-end
 class Piece
   class Create
     class Form
