@@ -4,8 +4,7 @@ class Purchase < BaseEntity
   entry_accessor  :quantity
 
   def price
-    item.initial_price + (item.subsequent_price * (quantity - 1))
-    # item.price_for(quantity)
+    item.price_for(quantity)
   end
 
   def item
