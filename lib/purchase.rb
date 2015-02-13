@@ -12,7 +12,11 @@ class Purchase
   end
 
   def item
-    Item.new record.item_record
+    Item.new record.item_record if record.item_record
+  end
+
+  def item=(item)
+    record.item_record = item.record
   end
 
   def record

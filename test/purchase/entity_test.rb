@@ -1,8 +1,12 @@
 require_relative '../test_config'
 
-class PurchaseTest < MiniTest::Test
+class PurchaseTest < MyRecordTest
   def record
     @record ||= OpenStruct.new
+  end
+
+  def purchase
+    @purchase = Purchase.new record
   end
 
   def single_price_item
@@ -15,6 +19,24 @@ class PurchaseTest < MiniTest::Test
 
   def teardown
     @record = nil
+  end
+
+  ################# Associations #####################
+
+  def test_has_item
+    @record = create :purchase_record
+    assert_equal Item, purchase.item.class
+  end
+
+  def test_does_not_have_item_if_no_item_record
+    assert_nil purchase.item
+  end
+
+  def test_can_set_item
+    item = Item.new(create :item_record)
+    @record = create :purchase_record
+    purchase.item = item
+    assert_equal item.record, purchase.record.item_record
   end
 
   def test_delegates_item_getter_to_cartridge
