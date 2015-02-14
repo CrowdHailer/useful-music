@@ -9,6 +9,7 @@ class Customer
       attribute :password, String
       attribute :country, String
 
+      delegate :each, :to => :to_hash
     end
   end
 end

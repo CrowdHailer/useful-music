@@ -2,8 +2,11 @@ require_relative './base_entity'
 
 class Customer < BaseEntity
   # TODO test all
-  entry_accessor  :email,
-                  :password
+  entry_accessor  :first_name,
+                  :last_name,
+                  :email,
+                  :password,
+                  :country
 
   def check_password(candidate_password)
     password == candidate_password

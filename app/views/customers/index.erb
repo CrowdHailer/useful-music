@@ -2,7 +2,7 @@
     <aside>
       <ul>
         <li>
-          <a href="/pieces/new">New Piece</a>
+          <a href="/customers/new">New Customer</a>
         </li>
         <li>
           <a href="/">Back</a>
@@ -10,41 +10,44 @@
       </ul>
     </aside>
     <article>
-
+        <h2>Customers</h2>
+        <p>
+          Add Pagination
+        </p>
         <table class="pure-table">
             <thead>
                 <tr>
-                    <th>Catalogue number</th>
-                    <th>Title</th>
-                    <th>Sub heading</th>
-                    <th>Category</th>
+                    <th>Customer</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>email</th>
                     <th colspan=3>Action</th>
                 </tr>
             </thead>
 
             <tbody>
-                <% pieces.each do |piece| %>
+                <% @customers.each do |customer| %>
                     <tr>
                         <th>
-                            UD<%= piece.id %>
+                            <%= customer.id %>
                         </th>
                         <th>
-                            <%= piece.title %>
+                            <%= customer.first_name %>
                         </th>
                         <th>
-                            <%= piece.sub_heading %>
+                            <%= customer.last_name %>
                         </th>
                         <th>
-                            <%= piece.category %>
+                            <%= customer.email %>
                         </th>
                         <th>
-                            <a href="/pieces/<%= piece.id %>">show</a>
+                            <a href="/customers/<%= customer.id %>">show</a>
                         </th>
                         <th>
-                            <a href="/pieces/UD<%= piece.id %>/edit">edit</a>
+                            <a href="/customers/<%= customer.id %>/edit">edit</a>
                         </th>
                         <th>
-                            <form id="form_id" action="/pieces/<%= piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= piece.id %> and <%= piece.item_records.count %> associated items?')">
+                            <form id="form_id" action="/customers/<%= customer.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= customer.id %> ')">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="submit" name="some_name" value="Destroy">
                             </form>
