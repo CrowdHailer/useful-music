@@ -23,16 +23,18 @@
         <li>
           |
         </li>
-        <li>
-          <b>
-            <a href="#" onclick="alert('coming soon');">Login</a>
-          </b>
-        </li>
-        <li>
-          <b>
-            <a href="#" onclick="alert('coming soon');">Create Account</a>
-          </b>
-        </li>
+        <% if current_customer.guest? %>
+          <li>
+            <b>
+              <a href="/authentication/unauthenticated">Login</a>
+            </b>
+          </li>
+          <li>
+            <b>
+              <a href="/customers/new">Create Account</a>
+            </b>
+          </li>
+        <% end %>
       </ul>
     </div>
   </header>

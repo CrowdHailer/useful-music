@@ -1,5 +1,12 @@
 require File.expand_path("../boot.rb", __FILE__)
 
+class Guest
+  # TODO untested
+  def guest?
+    true
+  end
+end
+
 module UsefulMusic
   class App < Scorched::Controller
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
@@ -10,7 +17,7 @@ module UsefulMusic
     end
 
     def current_customer
-      warden_handler.user || :guest
+      warden_handler.user || Guest.new
     end
   end
 end
@@ -33,6 +40,7 @@ class UsefulMusic::App
     end
   end
   controller '/authentication', AuthenticationController
+  controller '/customers', CustomersController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
   controller '/basket', BasketController
