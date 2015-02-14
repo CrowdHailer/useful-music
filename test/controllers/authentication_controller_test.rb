@@ -25,7 +25,5 @@ class AuthenticationControllerTest < MyRecordTest
   def test_login
     post '/', :email => 'test@example.com', :password => 'password'
     get '/private'
-    ap last_response.status
-    ap last_response.body
   end
 end
