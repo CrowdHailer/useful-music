@@ -20,4 +20,15 @@ class HomeController < UsefulMusic::App
   get '/b' do
     raise StandardError
   end
+
+  get '/secure' do
+    ap 'hello'
+    env['warden'].authenticate!
+  end
+
+  get '/unauthenticated' do
+    ap 'x'
+    ap env['warden.options']
+  end
+
 end

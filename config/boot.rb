@@ -35,6 +35,26 @@ Sequel.connect(DATABASE_URL)
 
 ########################################
 
+## Belongs in a config/warden.rb file
+
+########################################
+
+Warden::Strategies.add(:password) do
+  def valid?
+    ap request.POST['customer']
+    params['owner'] && params['owner']['email'] && params['owner']['password']
+  end
+
+  def authenticate!
+    owner = Owner::Repo.authenticate(params['owner']['email'], params['owner']['password'])
+    owner ? success!(owner, "Welcome back: #{owner.email}") : fail!('no luck jimmey')
+  end
+end
+
+######### END ###########
+
+########################################
+
 ## Belongs in a config/carrierwave.rb file
 
 ########################################

@@ -11,6 +11,12 @@ module UsefulMusic
       # TODO secure csrf
       # use Rack::Csrf, :raise => true
       use Rack::MethodOverride
+      use Warden::Manager do |manager|
+        manager.default_strategies :password
+        manager.failure_app = App
+        manager.serialize_into_session { |customer| customer.id }
+        manager.serialize_from_session { |id| Customers.find(id) }
+      end
     end
   end
 end
@@ -19,7 +25,6 @@ end
 Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
-  controller '/users', UsersController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
   controller '/basket', BasketController

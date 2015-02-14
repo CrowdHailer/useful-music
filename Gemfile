@@ -10,6 +10,7 @@ gem 'scorched'
 gem 'scorched-rest', :path => './gems/scorched-rest', :require => 'scorched/rest', :branch => 'master'
 gem 'rack_csrf', :require => 'rack/csrf'
 # gem 'usecase', :path => './gems/usecase', :branch => 'master'
+gem 'warden'
 gem 'awesome_print'
 
 gem 'pg'
