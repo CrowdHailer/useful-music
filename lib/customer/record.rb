@@ -4,5 +4,7 @@ class Customer
       super
       self.id ||= SecureRandom.uuid()
     end
+
+    plugin :timestamps, :update_on_create=>true
   end
 end
