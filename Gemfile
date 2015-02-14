@@ -22,6 +22,7 @@ gem 'carrierwave'
 gem 'carrierwave-sequel'
 gem 'carrierwave-aws'
 
+gem 'bcrypt'
 gem 'money'
 
 group :test do

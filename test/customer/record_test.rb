@@ -43,6 +43,13 @@ class Customer
       assert_match(/password/, err.message)
     end
 
+    def test_crypts_password
+      record = create :customer_record, :password => 'password'
+      record.reload
+      assert_equal record.password, 'password'
+      refute_equal 'password', record.password
+    end
+
     def test_requires_country
       err = assert_raises Sequel::NotNullConstraintViolation do
         create :customer_record, :country => nil

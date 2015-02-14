@@ -6,5 +6,11 @@ class Customer
     end
 
     plugin :timestamps, :update_on_create=>true
+    plugin :serialization
+    serialize_attributes [
+      lambda{ |password| BCrypt::Password.create(password) },
+      lambda{ |crypted| BCrypt::Password.new(crypted) }
+    ], :password
+
   end
 end
