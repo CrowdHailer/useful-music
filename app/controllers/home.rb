@@ -22,13 +22,7 @@ class HomeController < UsefulMusic::App
   end
 
   get '/secure' do
-    ap 'hello'
     env['warden'].authenticate!
-  end
-
-  get '/unauthenticated' do
-    ap 'x'
-    ap env['warden.options']
   end
 
 end

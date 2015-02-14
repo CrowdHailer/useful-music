@@ -13,7 +13,5 @@ class HomeControllerTest < MiniTest::Test
 
   def test_auth
     get '/secure'
-    ap last_response.status
-    ap last_response.location
   end
 end
