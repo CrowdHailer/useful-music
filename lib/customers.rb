@@ -1,6 +1,8 @@
 module Customers
   extend self
-    def x
-      5
-    end
+  # TODO untested
+
+  def all
+    Customer::Record.all.map{ |r| Customer.new r }
+  end
 end

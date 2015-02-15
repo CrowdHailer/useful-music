@@ -5,7 +5,7 @@ class CustomersController < UsefulMusic::App
   render_defaults[:dir] += '/customers'
 
   def index
-    @customers = Customer::Record.all.map{ |r| Customer.new r }
+    @customers = Customers.all
     render :index
   end
 
