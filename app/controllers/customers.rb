@@ -17,7 +17,8 @@ class CustomersController < UsefulMusic::App
     form = Customer::Create::Form.new request.POST['customer']
     validator = Customer::Create::Validator.new
     validator.validate! form
-    Customer.create form
+    customer = Customer.create form
+    warden_handler.set_user(customer) # TODO test
     redirect '/customers'
   end
 end

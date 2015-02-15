@@ -21,6 +21,10 @@ class Customer < BaseEntity
     false
   end
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def record_login

@@ -3,6 +3,7 @@ class AuthenticationController < UsefulMusic::App
   render_defaults[:dir] += '/authentication'
 
   get '/login' do
+    # Session new
     render :login
   end
 
@@ -12,13 +13,15 @@ class AuthenticationController < UsefulMusic::App
   end
 
   post '/login' do
+    # Session create
     warden_handler.authenticate!
-    redirect request.GET.fetch('attempted_path')
+    redirect request.GET.fetch('attempted_path'){ '/' }
   end
 
-  get '/private' do
-    warden_handler.authenticate!
-    'hello'
+  get '/logout' do
+    # Session delete
+    warden_handler.logout
+    redirect '/'
   end
 
 end

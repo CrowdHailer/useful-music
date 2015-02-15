@@ -47,7 +47,7 @@
                             <a href="/customers/<%= customer.id %>/edit">edit</a>
                         </th>
                         <th>
-                            <form id="form_id" action="/customers/<%= customer.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= customer.id %> ')">
+                            <form id="form_id" action="/customers/<%= customer.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= customer.name %> ')">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="submit" name="some_name" value="Destroy">
                             </form>
