@@ -7,7 +7,7 @@
       </ul>
     </aside>
     <article>
-        <form class="pure-form pure-form-aligned" action="/authenticate" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form class="pure-form pure-form-aligned" action="<%= request.fullpath %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <fieldset>
 
                 <input name="email" type="email" placeholder="email" required>

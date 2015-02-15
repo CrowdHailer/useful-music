@@ -2,23 +2,23 @@ class AuthenticationController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/authentication'
 
-  get '/unauthenticated' do
-    env['warden.options']
+  get '/login' do
     render :login
   end
 
-  post '/' do
-    warden_handler.authenticate!
+  post '/unauthenticated' do
+    # ap env['warden.options']
+    redirect "/authentication/login?attempted_path=#{env['warden.options'][:attempted_path]}"
   end
 
-  def xsc
-    5
+  post '/login' do
+    warden_handler.authenticate!
+    redirect request.GET.fetch('attempted_path')
   end
 
   get '/private' do
     warden_handler.authenticate!
-    ap 'private'
+    'hello'
   end
 
-  # def
 end

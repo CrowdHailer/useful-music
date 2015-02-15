@@ -38,6 +38,9 @@ Sequel.connect(DATABASE_URL)
 ## Belongs in a config/warden.rb file
 
 ########################################
+Warden::Manager.before_failure do |env, opts|
+  env['REQUEST_METHOD'] = 'POST'
+end
 
 Warden::Strategies.add(:password) do
   def valid?
@@ -45,8 +48,7 @@ Warden::Strategies.add(:password) do
   end
 
   def authenticate!
-    return false
-    owner = Customers.authenticate(params['owner']['email'], params['owner']['password'])
+    owner = Customers.authenticate(request.POST['email'], request.POST['password'])
     owner ? success!(owner, "Welcome back: #{owner.email}") : fail!('no luck jimmey')
   end
 end

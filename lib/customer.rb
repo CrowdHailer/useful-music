@@ -6,7 +6,8 @@ class Customer < BaseEntity
                   :last_name,
                   :email,
                   :password,
-                  :country
+                  :country,
+                  :last_login_at
 
   def check_password(candidate_password)
     password == candidate_password
@@ -14,6 +15,10 @@ class Customer < BaseEntity
 
   def authenticate(candidate_password)
     check_password(candidate_password) && record_login
+  end
+
+  def guest?
+    false
   end
 
   private
