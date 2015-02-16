@@ -15,6 +15,12 @@ class Customer
       @record = nil
     end
 
+    def test_has_a_name
+      record.first_name = 'Rob'
+      record.last_name = 'Roy'
+      assert_equal 'Rob Roy', customer.name
+    end
+
     def test_is_not_a_guest
       refute customer.guest?
     end

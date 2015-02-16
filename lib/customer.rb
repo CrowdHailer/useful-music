@@ -16,6 +16,10 @@ class Customer < BaseEntity
   #   check_password(candidate_password) && record_login
   # end
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def guest?
     false
   end
@@ -27,11 +31,7 @@ class Customer < BaseEntity
   def admin?
     false
   end
-  #
-  # def name
-  #   "#{first_name} #{last_name}"
-  # end
-  #
+
   # private
   #
   # def record_login
