@@ -15,10 +15,18 @@ class Customer < BaseEntity
   # def authenticate(candidate_password)
   #   check_password(candidate_password) && record_login
   # end
-  #
-  # def guest?
-  #   false
-  # end
+
+  def guest?
+    false
+  end
+
+  def customer?
+    true
+  end
+
+  def admin?
+    false
+  end
   #
   # def name
   #   "#{first_name} #{last_name}"

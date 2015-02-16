@@ -15,6 +15,18 @@ class Customer
       @record = nil
     end
 
+    def test_is_not_a_guest
+      refute customer.guest?
+    end
+
+    def test_is_not_an_admin
+      refute customer.admin?
+    end
+
+    def test_is_a_customer
+      assert customer.customer?
+    end
+
     ################# Archive #####################
 
     def test_can_access_first_name
