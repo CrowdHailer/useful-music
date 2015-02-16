@@ -1,7 +1,6 @@
 require_relative './base_entity'
 
 class Customer < BaseEntity
-  # TODO test all
   entry_accessor  :first_name,
                   :last_name,
                   :email,
@@ -9,20 +8,28 @@ class Customer < BaseEntity
                   :country,
                   :last_login_at
 
-  def check_password(candidate_password)
+  def correct_password?(candidate_password)
     password == candidate_password
   end
 
   def authenticate(candidate_password)
-    check_password(candidate_password) && record_login
+    self if correct_password?(candidate_password) && record_login
+  end
+
+  def name
+    "#{first_name} #{last_name}"
   end
 
   def guest?
     false
   end
 
-  def name
-    "#{first_name} #{last_name}"
+  def customer?
+    true
+  end
+
+  def admin?
+    false
   end
 
   private

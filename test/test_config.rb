@@ -11,6 +11,8 @@ Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_opti
 # Could be moved to individual test files for setup speed
 require File.expand_path('../../config/application', __FILE__)
 
+BCrypt::Engine.cost = 1
+
 FactoryGirl.find_definitions
 FactoryGirl.to_create { |i| i.save }
 
