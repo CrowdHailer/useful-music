@@ -7,14 +7,14 @@ class Customer < BaseEntity
                   :password,
                   :country,
                   :last_login_at
-  #
-  # def check_password(candidate_password)
-  #   password == candidate_password
-  # end
-  #
-  # def authenticate(candidate_password)
-  #   check_password(candidate_password) && record_login
-  # end
+
+  def correct_password?(candidate_password)
+    password == candidate_password
+  end
+
+  def authenticate(candidate_password)
+    self if correct_password?(candidate_password) && record_login
+  end
 
   def name
     "#{first_name} #{last_name}"
@@ -32,9 +32,9 @@ class Customer < BaseEntity
     false
   end
 
-  # private
-  #
-  # def record_login
-  #   self.last_login_at = Time.now
-  # end
+  private
+
+  def record_login
+    self.last_login_at = Time.now
+  end
 end

@@ -15,6 +15,37 @@ class Customer
       @record = nil
     end
 
+    def test_authenticate_on_password_match
+      record.password = BCrypt::Password.create('password')
+      assert customer.correct_password?('password')
+    end
+
+    def test_password_will_not_check_without_match
+      record.password = BCrypt::Password.create('password')
+      refute customer.correct_password?('other')
+    end
+
+    def test_authenticates_if_correct_password
+      customer.stub :correct_password?, true do
+        assert_equal customer, customer.authenticate('password')
+      end
+    end
+
+    def test_authenticate_returns_nil_if_password_incorect
+      customer.stub :correct_password?, false do
+        refute customer.authenticate('password')
+      end
+    end
+
+    def test_records_a_login_on_successful_auth
+      def test_authenticates_if_correct_password
+        customer.stub :correct_password?, true do
+          customer.authenticate('password')
+        end
+        assert customer.last_login_at
+      end
+    end
+
     def test_has_a_name
       record.first_name = 'Rob'
       record.last_name = 'Roy'
