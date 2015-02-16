@@ -32,4 +32,11 @@ class CustomersControllerTest < MyRecordTest
     record = create :customer_record
     assert_ok get "/#{record.id}/edit"
   end
+
+  def test_can_update_a_customer
+    record = create :customer_record
+    put "/#{record.id}", :customer => record.values.merge(:first_name => 'enrique')
+    assert_match(/#{record.id}/, last_response.location)
+    assert_equal 'enrique', Customers.last.first_name
+  end
 end

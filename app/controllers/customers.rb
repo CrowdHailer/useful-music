@@ -31,4 +31,16 @@ class CustomersController < UsefulMusic::App
     @customer = Customers.find(id)
     render :edit
   end
+
+  def update(id)
+    customer = Customers.find(id)
+    form = Customer::Update::Form.new request.POST['customer']
+    validator = Customer::Update::Validator.new
+    validator.validate! form
+    form.each do |attr, value|
+      customer.public_send "#{attr}=", value
+    end
+    customer.record.save
+    redirect "/customers/#{customer.id}"
+  end
 end
