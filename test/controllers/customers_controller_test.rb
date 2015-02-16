@@ -21,4 +21,9 @@ class CustomersControllerTest < MyRecordTest
     post '/', :customer => attributes_for(:customer_record)
     assert_match(/#{Customers.last.id}/, last_response.location)
   end
+
+  def test_edit_page_is_available
+    record = create :customer_record
+    assert_ok get "/#{record.id}/edit"
+  end
 end

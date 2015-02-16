@@ -21,4 +21,9 @@ class CustomersController < UsefulMusic::App
     warden_handler.set_user(customer) # TODO test
     redirect "/customers/#{customer.id}"
   end
+
+  def edit(id)
+    @customer = Customers.find(id)
+    render :edit
+  end
 end
