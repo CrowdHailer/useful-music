@@ -10,16 +10,24 @@ class CustomersController < UsefulMusic::App
   end
 
   def new
+    @form = Customer::Create::Form.new
+    @validator = Customer::Create::Validator.new
     render :new
   end
 
   def create
-    form = Customer::Create::Form.new request.POST['customer']
-    validator = Customer::Create::Validator.new
-    validator.validate! form
-    customer = Customer.create form
-    warden_handler.set_user(customer) # TODO test
-    redirect "/customers/#{customer.id}"
+    begin
+      form = Customer::Create::Form.new request.POST['customer']
+      validator = Customer::Create::Validator.new
+      validator.validate! form
+      customer = Customer.create form
+      warden_handler.set_user(customer) # TODO test
+      redirect "/customers/#{customer.id}"
+    rescue Veto::InvalidEntity => err
+      @form = form
+      @validator = validator
+      render :new
+    end
   end
 
   def show(id)
@@ -41,6 +49,7 @@ class CustomersController < UsefulMusic::App
       customer.public_send "#{attr}=", value
     end
     customer.record.save
+    flash[:success] = "#{customer.name} Your Useful Music account is created"
     redirect "/customers/#{customer.id}"
   end
 

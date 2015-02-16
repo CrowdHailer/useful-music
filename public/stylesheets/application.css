@@ -157,3 +157,37 @@ audio {
     width: 100%;
   }
 }
+
+
+/*############## Form #############*/
+.pure-form .errors {
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  /* -webkit-box-sizing: border-box; */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: red;
+}
+
+.flash {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  font-size: 1.4em;
+  padding: 0.2em 1em;
+  max-height: 2em;
+  /*animation: flash 1s ease forwards;*/
+  transition: max-height 1s, padding 1s;
+  transition-delay: 3s;
+}
+
+/*.flash.loaded {
+  max-height: 0em;
+  padding: 0 1em;
+}*/
+
+/*@keyframes flash {
+    from { max-height: 2em; }
+    to { max-height: 0; }
+}*/

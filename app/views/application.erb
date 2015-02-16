@@ -49,6 +49,24 @@
       </ul>
     </div>
   </header>
+  <div class="content flash success">
+    <%= flash[:success] %>
+  </div>
   <%= yield %>
+  <script charset="utf-8">
+
+    function ready(fn) {
+      if (document.readyState != 'loading'){
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    }
+
+    var flashElement = document.querySelector('.flash')
+    ready(function(){
+      flashElement.classList.add('loaded');
+    })
+  </script>
 </body>
 </html>
