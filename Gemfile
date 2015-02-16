@@ -32,3 +32,8 @@ group :test do
   gem 'rack-test', :require => 'rack/test'
   gem 'factory_girl'
 end
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
