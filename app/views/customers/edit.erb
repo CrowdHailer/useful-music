@@ -7,9 +7,10 @@
       </ul>
     </aside>
     <article>
-        <h2>Create Account</h2>
+        <h2><%= @customer.name %>: Edit Account</h2>
         <!-- TODO remove no validate -->
-        <form novalidate class="pure-form pure-form-aligned col-1" action="/customers" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form novalidate class="pure-form pure-form-aligned col-1" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="_method" value="PUT">
             <fieldset>
 
                 <div class="pure-control-group">
@@ -18,6 +19,7 @@
                         id="customer_first_name"
                         name="customer[first_name]"
                         type="text"
+                        value="<%= @customer.first_name %>"
                         required
                         placeholder="">
                 </div>
@@ -28,6 +30,7 @@
                         id="customer_last_name"
                         name="customer[last_name]"
                         type="text"
+                        value="<%= @customer.last_name %>"
                         required
                         placeholder="">
                 </div>
@@ -37,41 +40,26 @@
                     <input
                         id="customer_email"
                         name="customer[email]"
+                        value="<%= @customer.email %>"
                         type="email"
                         required
                         placeholder="">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="customer_password">password</label>
-                    <input
-                        id="customer_password"
-                        name="customer[password]"
-                        type="password"
-                        required
-                        placeholder="">
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="customer_password_confirmation">confirmation</label>
-                    <input
-                        id="customer_password_confirmation"
-                        name="customer[password_confirmation]"
-                        type="password"
-                        required
-                        placeholder="">
-                </div>
-
-
-                <div class="pure-control-group">
                     <label for="customer_country">Country</label>
                     <select
                         id="customer_country"
                         name="customer[country]"
+                        value="<%= @customer.country %>"
                         required>
                         <option value>-- country --</option>
                         <% Country.all.sort_by!{ |c| c.first.downcase }.each do |name, code| %>
-                            <option value="<%= code %>"><%= name %></option>
+                            <option
+                                value="<%= code %>"
+                                <%= 'selected' if code == @customer.country %>>
+                                <%= name %>
+                            </option>
                         <% end %>
                     </select>
                 </div>

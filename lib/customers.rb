@@ -2,8 +2,17 @@ module Customers
   extend self
   # TODO untested
 
+  def empty?
+    Customer::Record.empty?
+  end
+
   def all
     Customer::Record.all.map{ |r| Customer.new r }
+  end
+
+  def last
+    record = Customer::Record.last
+    Customer.new(record) if record
   end
 
   def find(id)
