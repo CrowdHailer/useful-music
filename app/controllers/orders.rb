@@ -5,10 +5,12 @@ class OrdersController < UsefulMusic::App
   render_defaults[:dir] += '/orders'
 
   def create
-    ap request.POST
-    shopping_basket = ShoppingBasket::Record[request.POST['order']['shopping_basket_id']]
-    ap shopping_basket.purchase_records
-    ap shopping_basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}
+    shopping_basket_record = ShoppingBasket::Record[request.POST['order']['shopping_basket_id']]
+    order = Order.build do |order|
+      order.record.shopping_basket_record = shopping_basket_record
+    end
+    ap shopping_basket_record.purchase_records
+    ap shopping_basket_record.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}
     paypal_options = {
       no_shipping: true, # if you want to disable shipping information
       allow_note: false, # if you want to disable notes

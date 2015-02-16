@@ -19,6 +19,7 @@ class BaseEntity
       attributes.each do |attribute, value|
         entity.public_send "#{attribute}=", value
       end
+      yield entity if block_given?
     end
   end
 

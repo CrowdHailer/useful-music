@@ -7,7 +7,7 @@ Sequel.migration do
       DateTime :created_at
       DateTime :updated_at
       DateTime :last_login_at
-      foreign_key :shopping_basket_id, :shopping_baskets, :null => false
+      foreign_key :shopping_basket_id, :shopping_baskets, :unique => true, :null => false
       foreign_key :customer_id, :customers, :type => :varchar, :null => false
     end
   end
