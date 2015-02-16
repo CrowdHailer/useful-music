@@ -22,6 +22,11 @@ class CustomersController < UsefulMusic::App
     redirect "/customers/#{customer.id}"
   end
 
+  def show(id)
+    @customer = Customers.find(id)
+    render :show
+  end
+
   def edit(id)
     @customer = Customers.find(id)
     render :edit

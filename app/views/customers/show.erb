@@ -1,0 +1,19 @@
+<main class="content">
+    <aside>
+        <ul>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Edit</a>
+            </li>
+            <li>
+                <a href="/customers">Back</a>
+            </li>
+            <li>
+                <a href="/">Home</a>
+            </li>
+        </ul>
+    </aside>
+    <article>
+        <h2><%= @customer.name %></h2>
+        <h3><%= @customer.email %></h3>
+    </article>
+</main>

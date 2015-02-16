@@ -22,6 +22,12 @@ class CustomersControllerTest < MyRecordTest
     assert_match(/#{Customers.last.id}/, last_response.location)
   end
 
+  def test_show_page_is_available
+    record = create :customer_record, :email => 'test@example.com'
+    assert_ok get "/#{record.id}"
+    assert_includes last_response.body, 'test@example.com'
+  end
+
   def test_edit_page_is_available
     record = create :customer_record
     assert_ok get "/#{record.id}/edit"
