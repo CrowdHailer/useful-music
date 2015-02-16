@@ -25,6 +25,7 @@ gem 'carrierwave-aws'
 
 gem 'bcrypt'
 gem 'money'
+gem 'countries'
 
 group :test do
   gem 'minitest', :require => 'minitest/autorun'

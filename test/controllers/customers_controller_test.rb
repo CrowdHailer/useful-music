@@ -12,4 +12,8 @@ class CustomersControllerTest < MyRecordTest
     assert_ok get '/'
     assert_includes last_response.body, 'test@example.com'
   end
+
+  def test_new_page_is_available
+    assert_ok get '/new'
+  end
 end
