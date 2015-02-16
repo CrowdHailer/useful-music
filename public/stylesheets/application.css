@@ -157,3 +157,16 @@ audio {
     width: 100%;
   }
 }
+
+
+/*############## Form #############*/
+.pure-form .errors {
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  /* -webkit-box-sizing: border-box; */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: red;
+}

@@ -11,13 +11,19 @@
         <!-- TODO remove no validate -->
         <form novalidate class="pure-form pure-form-aligned col-1" action="/customers" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <fieldset>
-
+                <% @validator.errors.full_messages.each do |message| %>
+                    <div class="pure-control-group">
+                        <label></label>
+                        <span class="errors"><%= message.gsub('_', ' ').capitalize %></span>
+                    </div>
+                <% end %>
                 <div class="pure-control-group">
                     <label for="customer_first_name">first name</label>
                     <input
                         id="customer_first_name"
                         name="customer[first_name]"
                         type="text"
+                        value="<%= @form.first_name %>"
                         required
                         placeholder="">
                 </div>
@@ -28,6 +34,7 @@
                         id="customer_last_name"
                         name="customer[last_name]"
                         type="text"
+                        value="<%= @form.last_name %>"
                         required
                         placeholder="">
                 </div>
@@ -38,6 +45,7 @@
                         id="customer_email"
                         name="customer[email]"
                         type="email"
+                        value="<%= @form.email %>"
                         required
                         placeholder="">
                 </div>
