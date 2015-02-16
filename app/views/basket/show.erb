@@ -62,10 +62,15 @@
                   <%= Money.new(@basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| t + i.price}).format %>
                 </th>
                 <th>
-                  <a href="#" onclick="alert('coming soon');">Checkout</a>
+
                 </th>
               </tr>
           </tbody>
       </table>
+      <form id="form_id" action="/orders" method="post">
+          <input type="hidden" name="order[shopping_basket_id]" value="<%= @basket.id %>">
+          <input type="text" name="order[discount_code]" value="" placeholder="discount code">
+          <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" />
+      </form>
     </article>
 </main>
