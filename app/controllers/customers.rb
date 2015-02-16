@@ -19,6 +19,6 @@ class CustomersController < UsefulMusic::App
     validator.validate! form
     customer = Customer.create form
     warden_handler.set_user(customer) # TODO test
-    redirect '/customers'
+    redirect "/customers/#{customer.id}"
   end
 end

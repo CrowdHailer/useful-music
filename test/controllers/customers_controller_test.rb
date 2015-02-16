@@ -16,4 +16,9 @@ class CustomersControllerTest < MyRecordTest
   def test_new_page_is_available
     assert_ok get '/new'
   end
+
+  def test_can_create_customer
+    post '/', :customer => attributes_for(:customer_record)
+    assert_match(/#{Customers.last.id}/, last_response.location)
+  end
 end
