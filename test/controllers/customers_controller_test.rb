@@ -39,4 +39,11 @@ class CustomersControllerTest < MyRecordTest
     assert_match(/#{record.id}/, last_response.location)
     assert_equal 'enrique', Customers.last.first_name
   end
+
+  def test_can_destroy_a_customer
+    record = create :customer_record
+    delete "/#{record.id}"
+    assert_empty Customers
+    assert_match(/customers/, last_response.location)
+  end
 end

@@ -2,6 +2,10 @@ module Customers
   extend self
   # TODO untested
 
+  def empty?
+    Customer::Record.empty?
+  end
+
   def all
     Customer::Record.all.map{ |r| Customer.new r }
   end

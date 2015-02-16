@@ -43,4 +43,10 @@ class CustomersController < UsefulMusic::App
     customer.record.save
     redirect "/customers/#{customer.id}"
   end
+
+  def destroy(id)
+    customer = Customers.find(id)
+    customer.record.destroy
+    redirect "/customers/"
+  end
 end
