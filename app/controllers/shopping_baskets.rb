@@ -1,4 +1,4 @@
-class BasketController < UsefulMusic::App
+class ShoppingBasketsController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/basket'
 

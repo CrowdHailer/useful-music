@@ -1,6 +1,6 @@
 require_relative '../test_config'
 
-class Basket
+class ShoppingBasket
   class RecordTest < MyRecordTest
     def test_can_have_purchase_records
       record = create :shopping_basket_record

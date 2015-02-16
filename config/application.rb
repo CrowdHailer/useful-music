@@ -43,7 +43,7 @@ class UsefulMusic::App
   controller '/customers', CustomersController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
-  controller '/basket', BasketController
+  controller '/shopping_baskets', ShoppingBasketsController
   controller '/orders', OrdersController
   controller '/', HomeController
 end
