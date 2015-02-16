@@ -49,6 +49,7 @@ class CustomersController < UsefulMusic::App
       customer.public_send "#{attr}=", value
     end
     customer.record.save
+    flash[:success] = "#{customer.name} Your Useful Music account is created"
     redirect "/customers/#{customer.id}"
   end
 
