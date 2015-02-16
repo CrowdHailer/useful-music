@@ -8,14 +8,7 @@ class HomeController < UsefulMusic::App
   end
 
   get '/my-shopping-basket' do
-    if session['useful_music.basket_id']
-      basket = ShoppingBasket::Record[session['useful_music.basket_id']]
-    else
-      basket = ShoppingBasket::Record.create
-      session['useful_music.basket_id'] = basket.id
-    end
-    redirect "/basket/#{basket.id}"
-    # TODO move logic from this controller. redirect to new or show route
+    redirect "/shopping_baskets/#{live_shopping_basket_id}"
   end
 
   get '/b' do

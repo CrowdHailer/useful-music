@@ -19,6 +19,14 @@ module UsefulMusic
     def current_customer
       warden_handler.user || Guest.new
     end
+
+    def live_shopping_basket_id
+      if session['useful_music.basket_id']
+        session['useful_music.basket_id']
+      else
+        session['useful_music.basket_id'] = ShoppingBasket::Record.create.id
+      end
+    end
   end
 end
 
