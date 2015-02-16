@@ -35,6 +35,28 @@ Sequel.connect(DATABASE_URL)
 
 ########################################
 
+## Belongs in a config/warden.rb file
+
+########################################
+Warden::Manager.before_failure do |env, opts|
+  env['REQUEST_METHOD'] = 'POST'
+end
+
+Warden::Strategies.add(:password) do
+  def valid?
+    request.POST['email'] && request.POST['password']
+  end
+
+  def authenticate!
+    owner = Customers.authenticate(request.POST['email'], request.POST['password'])
+    owner ? success!(owner, "Welcome back: #{owner.email}") : fail!('no luck jimmey')
+  end
+end
+
+######### END ###########
+
+########################################
+
 ## Belongs in a config/carrierwave.rb file
 
 ########################################

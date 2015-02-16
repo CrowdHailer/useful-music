@@ -10,4 +10,8 @@ class HomeControllerTest < MiniTest::Test
   def test_home_page_is_available
     assert_ok get '/'
   end
+
+  def test_auth
+    get '/secure'
+  end
 end

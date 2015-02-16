@@ -1,0 +1,84 @@
+<main class="content">
+    <aside id="">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+      </ul>
+    </aside>
+    <article>
+        <h2>Create Account</h2>
+        <!-- TODO remove no validate -->
+        <form novalidate class="pure-form pure-form-aligned col-1" action="/customers" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <fieldset>
+
+                <div class="pure-control-group">
+                    <label for="customer_first_name">first name</label>
+                    <input
+                        id="customer_first_name"
+                        name="customer[first_name]"
+                        type="text"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_last_name">last name</label>
+                    <input
+                        id="customer_last_name"
+                        name="customer[last_name]"
+                        type="text"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_email">email</label>
+                    <input
+                        id="customer_email"
+                        name="customer[email]"
+                        type="email"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_password">password</label>
+                    <input
+                        id="customer_password"
+                        name="customer[password]"
+                        type="password"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_password_confirmation">confirmation</label>
+                    <input
+                        id="customer_password_confirmation"
+                        name="customer[password_confirmation]"
+                        type="text"
+                        required
+                        placeholder="">
+                </div>
+
+
+                <div class="pure-control-group">
+                    <label for="customer_country">Country</label>
+                    <select
+                        id="customer_country"
+                        name="customer[country]"
+                        required>
+                        <option value>-- category --</option>
+                        <option value="uk">United Kingdom</option>
+                    </select>
+                </div>
+
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+</main>
