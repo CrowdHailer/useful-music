@@ -48,6 +48,9 @@ GEM
     coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
+    countries (0.10.0)
+      currencies (~> 0.4.2)
+    currencies (0.4.2)
     daemons (1.1.9)
     debug_inspector (0.0.2)
     descendants_tracker (0.0.4)
@@ -117,6 +120,7 @@ DEPENDENCIES
   carrierwave
   carrierwave-aws
   carrierwave-sequel
+  countries
   dotenv
   factory_girl
   minitest
