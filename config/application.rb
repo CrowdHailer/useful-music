@@ -19,6 +19,15 @@ module UsefulMusic
     def current_customer
       warden_handler.user || Guest.new
     end
+
+    def live_shopping_basket_id
+      # TODO test
+      if session['useful_music.basket_id']
+        session['useful_music.basket_id']
+      else
+        session['useful_music.basket_id'] = ShoppingBasket::Record.create.id
+      end
+    end
   end
 end
 
@@ -43,6 +52,7 @@ class UsefulMusic::App
   controller '/customers', CustomersController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
-  controller '/basket', BasketController
+  controller '/shopping_baskets', ShoppingBasketsController
+  controller '/orders', OrdersController
   controller '/', HomeController
 end

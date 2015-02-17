@@ -19,12 +19,13 @@ class BaseEntity
       attributes.each do |attribute, value|
         entity.public_send "#{attribute}=", value
       end
+      yield entity if block_given?
     end
   end
 
   # TODO use tap
-  def self.create(*args)
-    entity = build(*args)
+  def self.create(*args, &block)
+    entity = build(*args, &block)
     entity.record.save
     entity
   end

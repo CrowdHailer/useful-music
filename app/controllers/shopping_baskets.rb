@@ -1,6 +1,6 @@
-class BasketController < UsefulMusic::App
+class ShoppingBasketsController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
-  render_defaults[:dir] += '/basket'
+  render_defaults[:dir] += '/shopping_baskets'
 
   # get '/' do
   #   render :index
@@ -17,7 +17,7 @@ class BasketController < UsefulMusic::App
   delete '/*/purchase/*' do |basket_id, purchase_id|
     # "#{basket_id} + #{purchase_id}"
     Purchase::Record[purchase_id].destroy
-    redirect "/basket/#{basket_id}"
+    redirect "/shopping_baskets/#{basket_id}"
   end
 
   post '/add_purchases' do
@@ -31,7 +31,7 @@ class BasketController < UsefulMusic::App
       purchase_record = Purchase::Record.new purchase_data
       basket.add_purchase_record purchase_record
     end
-    redirect "/basket/#{basket.id}"
+    redirect "/shopping_baskets/#{basket.id}"
   end
 
   def add_form
