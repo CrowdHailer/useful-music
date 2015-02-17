@@ -24,8 +24,8 @@ class BaseEntity
   end
 
   # TODO use tap
-  def self.create(*args)
-    entity = build(*args)
+  def self.create(*args, &block)
+    entity = build(*args, &block)
     entity.record.save
     entity
   end

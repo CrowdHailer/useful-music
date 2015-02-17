@@ -17,7 +17,7 @@ class ShoppingBasketsController < UsefulMusic::App
   delete '/*/purchase/*' do |basket_id, purchase_id|
     # "#{basket_id} + #{purchase_id}"
     Purchase::Record[purchase_id].destroy
-    redirect "/basket/#{basket_id}"
+    redirect "/shopping_baskets/#{basket_id}"
   end
 
   post '/add_purchases' do
