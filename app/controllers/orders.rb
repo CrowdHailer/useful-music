@@ -94,6 +94,6 @@ class OrdersController < UsefulMusic::App
       payment_request
     )
     ap checkout_response
-    
+    ap order_record.shopping_basket_record.purchase_records.map(&:item_record).map{|r| "UD#{r.piece_id} #{r.name}"}
   end
 end
