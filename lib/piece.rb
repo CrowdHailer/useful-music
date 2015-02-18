@@ -11,8 +11,9 @@ class Piece < BaseEntity
                   :meta_description,
                   :meta_keywords
 
-  boolean_accessor :beginner
-  
+  boolean_accessor  :beginner,
+                    :recorder
+
   def items
     record.item_records.map{ |r| Item.new r }
   end

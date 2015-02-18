@@ -133,16 +133,6 @@ class Piece
       assert_equal true, record.advanced
     end
 
-    def test_can_access_piano
-      record.piano = true
-      assert piece.piano?
-    end
-
-    def test_can_set_piano
-      piece.piano = true
-      assert_equal true, record.piano
-    end
-
     def test_can_access_professional
       record.professional = true
       assert piece.professional?
@@ -151,6 +141,18 @@ class Piece
     def test_can_set_professional
       piece.professional = true
       assert_equal true, record.professional
+    end
+
+    [:piano, :recorder].each do |bool_entry|
+      define_method "test_can_access_#{bool_entry}" do
+        record.public_send "#{bool_entry}=", true
+        assert piece.public_send "#{bool_entry}?"
+      end
+
+      define_method "test_can_set_#{bool_entry}" do
+        piece.public_send "#{bool_entry}=", true
+        assert_equal true, record.public_send("#{bool_entry}")
+      end
     end
 
     def test_can_access_meta_description
