@@ -11,17 +11,12 @@ class Piece < BaseEntity
                   :meta_description,
                   :meta_keywords
 
+  boolean_accessor :beginner
+  
   def items
     record.item_records.map{ |r| Item.new r }
   end
 
-  def beginner?
-    record.beginner
-  end
-
-  def beginner=(bool)
-    record.beginner = bool
-  end
 
   def intermediate?
     record.intermediate

@@ -34,6 +34,15 @@ class BaseEntity
     delegate(*entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record)
   end
 
+  def self.boolean_accessor(*entries)
+    entries.flat_map do |entry|
+      delegate "#{entry}=", :to => :record
+      define_method "#{entry}?" do
+        record.send entry
+      end
+    end
+  end
+
   def record
     @record
   end
