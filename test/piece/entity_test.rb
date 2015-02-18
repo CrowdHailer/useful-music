@@ -103,44 +103,44 @@ class Piece
       assert_equal :file, record.cover_image
     end
 
-    def test_can_access_beginner_level
-      record.beginner_level = true
-      assert piece.beginner_level?
+    def test_can_access_beginner
+      record.beginner = true
+      assert piece.beginner?
     end
 
-    def test_can_set_beginner_level
-      piece.beginner_level = true
-      assert_equal true, record.beginner_level
+    def test_can_set_beginner
+      piece.beginner = true
+      assert_equal true, record.beginner
     end
 
-    def test_can_access_intermediate_level
-      record.intermediate_level = true
-      assert piece.intermediate_level?
+    def test_can_access_intermediate
+      record.intermediate = true
+      assert piece.intermediate?
     end
 
-    def test_can_set_intermediate_level
-      piece.intermediate_level = true
-      assert_equal true, record.intermediate_level
+    def test_can_set_intermediate
+      piece.intermediate = true
+      assert_equal true, record.intermediate
     end
 
-    def test_can_access_advanced_level
-      record.advanced_level = true
-      assert piece.advanced_level?
+    def test_can_access_advanced
+      record.advanced = true
+      assert piece.advanced?
     end
 
-    def test_can_set_advanced_level
-      piece.advanced_level = true
-      assert_equal true, record.advanced_level
+    def test_can_set_advanced
+      piece.advanced = true
+      assert_equal true, record.advanced
     end
 
-    def test_can_access_professional_level
-      record.professional_level = true
-      assert piece.professional_level?
+    def test_can_access_professional
+      record.professional = true
+      assert piece.professional?
     end
 
-    def test_can_set_professional_level
-      piece.professional_level = true
-      assert_equal true, record.professional_level
+    def test_can_set_professional
+      piece.professional = true
+      assert_equal true, record.professional
     end
 
     def test_can_access_meta_description

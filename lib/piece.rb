@@ -15,36 +15,36 @@ class Piece < BaseEntity
     record.item_records.map{ |r| Item.new r }
   end
 
-  def beginner_level?
-    record.beginner_level
+  def beginner?
+    record.beginner
   end
 
-  def beginner_level=(bool)
-    record.beginner_level = bool
+  def beginner=(bool)
+    record.beginner = bool
   end
 
-  def intermediate_level?
-    record.intermediate_level
+  def intermediate?
+    record.intermediate
   end
 
-  def intermediate_level=(bool)
-    record.intermediate_level = bool
+  def intermediate=(bool)
+    record.intermediate = bool
   end
 
-  def advanced_level?
-    record.advanced_level
+  def advanced?
+    record.advanced
   end
 
-  def advanced_level=(bool)
-    record.advanced_level = bool
+  def advanced=(bool)
+    record.advanced = bool
   end
 
-  def professional_level?
-    record.professional_level
+  def professional?
+    record.professional
   end
 
-  def professional_level=(bool)
-    record.professional_level = bool
+  def professional=(bool)
+    record.professional = bool
   end
 
   def catalogue_number
