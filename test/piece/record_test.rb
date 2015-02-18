@@ -74,6 +74,66 @@ class Piece
       assert record.professional_level
     end
 
+    def test_can_be_for_piano
+      record = create :piece_record, :piano => true
+      assert record.piano
+    end
+
+    def test_can_be_for_recorder
+      record = create :piece_record, :recorder => true
+      assert record.recorder
+    end
+
+    def test_can_be_for_flute
+      record = create :piece_record, :flute => true
+      assert record.flute
+    end
+
+    def test_can_be_for_oboe
+      record = create :piece_record, :oboe => true
+      assert record.oboe
+    end
+
+    def test_can_be_for_clarineo
+      record = create :piece_record, :clarineo => true
+      assert record.clarineo
+    end
+
+    def test_can_be_for_clarinet
+      record = create :piece_record, :clarinet => true
+      assert record.clarinet
+    end
+
+    def test_can_be_for_basson
+      record = create :piece_record, :basson => true
+      assert record.basson
+    end
+
+    def test_can_be_for_saxophone
+      record = create :piece_record, :saxophone => true
+      assert record.saxophone
+    end
+
+    def test_can_be_for_trumpet
+      record = create :piece_record, :trumpet => true
+      assert record.trumpet
+    end
+
+    def test_can_be_for_violin
+      record = create :piece_record, :violin => true
+      assert record.violin
+    end
+
+    def test_can_be_for_viola
+      record = create :piece_record, :viola => true
+      assert record.viola
+    end
+
+    def test_can_be_for_percussion
+      record = create :piece_record, :percussion => true
+      assert record.percussion
+    end
+
     def test_can_save_notation_preview
       record = create :piece_record
       assert record.notation_preview.path

@@ -10,6 +10,18 @@ Sequel.migration do
       TrueClass :intermediate_level
       TrueClass :advanced_level
       TrueClass :professional_level
+      TrueClass :piano
+      TrueClass :recorder
+      TrueClass :flute
+      TrueClass :oboe
+      TrueClass :clarineo
+      TrueClass :clarinet
+      TrueClass :basson
+      TrueClass :saxophone
+      TrueClass :trumpet
+      TrueClass :violin
+      TrueClass :viola
+      TrueClass :percussion
       String :notation_preview, :null => false
       String :audio_preview
       String :cover_image, :null => false
