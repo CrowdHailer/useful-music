@@ -21,6 +21,10 @@ module UsefulMusic
         session['useful_music.basket_id'] = ShoppingBasket::Record.create.id
       end
     end
+
+    def shopping_basket
+      ShoppingBasket.new(ShoppingBasket::Record[live_shopping_basket_id])
+    end
   end
 end
 
