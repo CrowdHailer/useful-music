@@ -24,6 +24,12 @@ class Piece
       assert_nil piece.catalogue_number
     end
 
+    def test_has_a_product_name
+      record.title = 'Title'
+      record.sub_heading = 'sub heading'
+      assert_equal 'Title - sub heading', piece.product_name
+    end
+
     ################# Associations #####################
 
     def test_has_items
@@ -103,44 +109,28 @@ class Piece
       assert_equal :file, record.cover_image
     end
 
-    def test_can_access_beginner_level
-      record.beginner_level = true
-      assert piece.beginner_level?
+    [:beginner, :intermediate, :advanced, :professional].each do |bool_entry|
+      define_method "test_can_access_#{bool_entry}" do
+        record.public_send "#{bool_entry}=", true
+        assert piece.public_send "#{bool_entry}?"
+      end
+
+      define_method "test_can_set_#{bool_entry}" do
+        piece.public_send "#{bool_entry}=", true
+        assert_equal true, record.public_send("#{bool_entry}")
+      end
     end
 
-    def test_can_set_beginner_level
-      piece.beginner_level = true
-      assert_equal true, record.beginner_level
-    end
+    [:piano, :recorder, :flute, :oboe, :clarineo, :clarinet, :basson, :saxophone, :trumpet, :violin, :viola, :percussion].each do |bool_entry|
+      define_method "test_can_access_#{bool_entry}" do
+        record.public_send "#{bool_entry}=", true
+        assert piece.public_send "#{bool_entry}?"
+      end
 
-    def test_can_access_intermediate_level
-      record.intermediate_level = true
-      assert piece.intermediate_level?
-    end
-
-    def test_can_set_intermediate_level
-      piece.intermediate_level = true
-      assert_equal true, record.intermediate_level
-    end
-
-    def test_can_access_advanced_level
-      record.advanced_level = true
-      assert piece.advanced_level?
-    end
-
-    def test_can_set_advanced_level
-      piece.advanced_level = true
-      assert_equal true, record.advanced_level
-    end
-
-    def test_can_access_professional_level
-      record.professional_level = true
-      assert piece.professional_level?
-    end
-
-    def test_can_set_professional_level
-      piece.professional_level = true
-      assert_equal true, record.professional_level
+      define_method "test_can_set_#{bool_entry}" do
+        piece.public_send "#{bool_entry}=", true
+        assert_equal true, record.public_send("#{bool_entry}")
+      end
     end
 
     def test_can_access_meta_description
