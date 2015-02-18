@@ -7,10 +7,7 @@ class ShoppingBasketsController < UsefulMusic::App
   # end
 
   get '/:id' do |id|
-    basket = ShoppingBasket::Record[id]
-
-    basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}
-    @basket = basket
+    @basket = ShoppingBasket::Record[id]
     render :show
   end
 

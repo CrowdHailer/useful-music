@@ -52,6 +52,7 @@ class UsefulMusic::App
   controller '/customers', CustomersController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
+  controller '/purchases', PurchasesController
   controller '/shopping_baskets', ShoppingBasketsController
   controller '/orders', OrdersController
   controller '/about', AboutController
