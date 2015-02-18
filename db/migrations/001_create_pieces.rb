@@ -6,10 +6,10 @@ Sequel.migration do
       String :sub_heading, :null => false
       String :description, :null => false
       String :category, :null => false
-      TrueClass :beginner_level
-      TrueClass :intermediate_level
-      TrueClass :advanced_level
-      TrueClass :professional_level
+      TrueClass :beginner
+      TrueClass :intermediate
+      TrueClass :advanced
+      TrueClass :professional
       TrueClass :piano
       TrueClass :recorder
       TrueClass :flute

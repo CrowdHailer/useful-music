@@ -54,24 +54,24 @@ class Piece
       assert_match(/category/, err.message)
     end
 
-    def test_can_be_beginner_level
+    def test_can_be_beginner
       record = create :piece_record, :beginner
-      assert record.beginner_level
+      assert record.beginner
     end
 
-    def test_can_be_intermediate_level
+    def test_can_be_intermediate
       record = create :piece_record, :intermediate
-      assert record.intermediate_level
+      assert record.intermediate
     end
 
-    def test_can_be_advanced_level
+    def test_can_be_advanced
       record = create :piece_record, :advanced
-      assert record.advanced_level
+      assert record.advanced
     end
 
-    def test_can_be_professional_level
+    def test_can_be_professional
       record = create :piece_record, :professional
-      assert record.professional_level
+      assert record.professional
     end
 
     def test_can_be_for_piano
