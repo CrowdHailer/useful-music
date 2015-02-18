@@ -73,7 +73,7 @@
       </table>
       <% if current_customer.customer? %>
           <form id="form_id" action="/orders" method="post">
-              <input type="hidden" name="order[shopping_basket_id]" value="<%= @basket.id %>">
+              <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
               <input type="text" name="order[discount_code]" value="" placeholder="discount code">
               <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" />
           </form>
