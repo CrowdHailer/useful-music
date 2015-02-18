@@ -133,6 +133,16 @@ class Piece
       assert_equal true, record.advanced
     end
 
+    def test_can_access_piano
+      record.piano = true
+      assert piece.piano?
+    end
+
+    def test_can_set_piano
+      piece.piano = true
+      assert_equal true, record.piano
+    end
+
     def test_can_access_professional
       record.professional = true
       assert piece.professional?

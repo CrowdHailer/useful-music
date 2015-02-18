@@ -47,6 +47,14 @@ class Piece < BaseEntity
     record.professional = bool
   end
 
+  def piano?
+    record.piano
+  end
+
+  def piano=(bool)
+    record.piano = bool
+  end
+
   def catalogue_number
     "UD#{record.id}" if record.id
   end
