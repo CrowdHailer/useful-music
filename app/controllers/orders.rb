@@ -25,20 +25,15 @@ class OrdersController < UsefulMusic::App
 
     payment_request = Paypal::Payment::Request.new(
       :currency_code => :GBP,   # if nil, PayPal use USD as default
-      # :description   => 'Lovely',    # item description
-      # :quantity      => 1,      # item quantity
-      # :amount        => order.record.shopping_basket_record.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price},   # item value
-      :amount => 2.64,
-      :items => [{
-        :name => 'blah',
-        :description => 'some',
-        :amount => 1.32,
-        :quantity => 2,
-        :category => :Digital
-      }],
+      :description   => 'Order on UsefulMusic.com',    # item description
+      :quantity      => 1,      # item quantity
+      # :amount        => order.record.shopping_basket_record.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| i.price}/100.0,   # item value
+      :amount => 2,
       :custom_fields => {
         CARTBORDERCOLOR: "01344C",
-        LOGOIMG: "https://example.com/logo.png"
+        :PAYMENTREQUEST_0_ITEMAMT => 1,
+        :PAYMENTREQUEST_0_TAXAMT => 1,
+        LOGOIMG: "https://pbs.twimg.com/profile_images/508255387154268161/Xj42svTM_bigger.jpeg"
       }
     )
     express_response = express_request.setup(
