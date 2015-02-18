@@ -12,6 +12,10 @@ class Piece < BaseEntity
                   :meta_keywords
 
   boolean_accessor  :beginner,
+                    :intermediate,
+                    :advanced,
+                    :professional,
+                    :piano,
                     :recorder,
                     :flute,
                     :oboe,
@@ -26,39 +30,6 @@ class Piece < BaseEntity
 
   def items
     record.item_records.map{ |r| Item.new r }
-  end
-
-
-  def intermediate?
-    record.intermediate
-  end
-
-  def intermediate=(bool)
-    record.intermediate = bool
-  end
-
-  def advanced?
-    record.advanced
-  end
-
-  def advanced=(bool)
-    record.advanced = bool
-  end
-
-  def professional?
-    record.professional
-  end
-
-  def professional=(bool)
-    record.professional = bool
-  end
-
-  def piano?
-    record.piano
-  end
-
-  def piano=(bool)
-    record.piano = bool
   end
 
   def catalogue_number
