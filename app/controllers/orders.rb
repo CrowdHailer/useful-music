@@ -16,7 +16,7 @@ class OrdersController < UsefulMusic::App
     order.checkout request.GET['token'], request.GET['PayerID']
     session['useful_music.basket_id'] = nil
 
-    redirect '/orders'
+    redirect "customers/#{current_customer.id}"
   end
 
 end

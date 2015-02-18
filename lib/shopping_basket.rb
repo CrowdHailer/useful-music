@@ -5,6 +5,10 @@ class ShoppingBasket < BaseEntity
     record.purchase_records.map{ |r| Purchase.new r }
   end
 
+  def order
+    Order.new(record.order_record)
+  end
+
   def price
     # TODO test
     purchases.reduce(0){ |t, p| t + p.price}/100.0

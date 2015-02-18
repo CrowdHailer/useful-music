@@ -1,6 +1,8 @@
 require_relative './base_entity'
 
 class Order < BaseEntity
+  entry_accessor :created_at
+  
   PAYPAL_OPTIONS = {
     no_shipping: true, # if you want to disable shipping information
     allow_note: false, # if you want to disable notes
