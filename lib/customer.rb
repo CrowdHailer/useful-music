@@ -32,6 +32,10 @@ class Customer < BaseEntity
     false
   end
 
+  def orders
+    record.order_records.map{ |r| Order.new r }
+  end
+
   private
 
   def record_login

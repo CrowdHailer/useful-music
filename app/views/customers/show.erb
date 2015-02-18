@@ -2,13 +2,10 @@
     <aside>
         <ul>
             <li>
-                <a href="/customers/<%= @customer.id %>/edit">Edit</a>
-            </li>
-            <li>
-                <a href="/customers">Back</a>
-            </li>
-            <li>
                 <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Edit</a>
             </li>
         </ul>
     </aside>
@@ -25,6 +22,12 @@
             <li>
                 <b>name </b><%= @customer.country %>
             </li>
+        </ul>
+        <h2>Available Downloads</h2>
+        <ul>
+            <% @customer.orders.map(&:shopping_basket).flat_map(&:purchases).each do |purchase| %>
+                <a target="_blank" download href="<%= purchase.item.asset.url %>"><%= purchase.item.piece.product_name %>:<%= purchase.item.name %></a> order id: <%= purchase.shopping_basket.order.id %><br>
+            <% end %>
         </ul>
     </article>
 </main>

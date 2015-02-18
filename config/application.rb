@@ -1,16 +1,5 @@
 require File.expand_path("../boot.rb", __FILE__)
 
-class Guest
-  # TODO untested
-  def guest?
-    true
-  end
-
-  def customer?
-    false
-  end
-end
-
 module UsefulMusic
   class App < Scorched::Controller
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
@@ -31,6 +20,10 @@ module UsefulMusic
       else
         session['useful_music.basket_id'] = ShoppingBasket::Record.create.id
       end
+    end
+
+    def shopping_basket
+      ShoppingBasket.new(ShoppingBasket::Record[live_shopping_basket_id])
     end
   end
 end

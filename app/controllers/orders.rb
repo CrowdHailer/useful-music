@@ -1,27 +1,3 @@
-class Order
-  class Create
-    class Form
-      include Virtus.model
-
-      attribute :shopping_basket, Integer
-      attribute :customer
-
-      def customer
-        @customer
-      end
-
-      def customer=(customer)
-        @customer = customer
-      end
-
-      def shopping_basket
-        ShoppingBasket.new(ShoppingBasket::Record[super])
-      end
-
-      delegate :each, :to => :to_hash
-    end
-  end
-end
 class OrdersController < UsefulMusic::App
   include Scorched::Rest
 
@@ -40,7 +16,7 @@ class OrdersController < UsefulMusic::App
     order.checkout request.GET['token'], request.GET['PayerID']
     session['useful_music.basket_id'] = nil
 
-    redirect '/orders'
+    redirect "customers/#{current_customer.id}"
   end
 
 end

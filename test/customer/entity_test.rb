@@ -64,6 +64,15 @@ class Customer
       assert customer.customer?
     end
 
+    ################# Associations #####################
+
+    def test_has_orders
+      order_record = create(:order_record)
+      @record = order_record.customer_record
+      assert_equal Order, customer.orders.first.class
+    end
+
+
     ################# Archive #####################
 
     def test_can_access_first_name
