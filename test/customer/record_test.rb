@@ -5,9 +5,8 @@ class Customer
     # Associations
 
     def test_can_have_multiple_orders
-      skip
       record = create :customer_record
-      2.times { record.add_order_record create(:order_record) }
+      2.times { record.add_order_record build(:order_record, :customer_record => nil) }
       assert_equal 2, record.order_records.count
     end
 
