@@ -1,5 +1,6 @@
 class BaseEntity
   def initialize(record=self.class.record_klass.new)
+    # TODO raise error for nil
     @record = record
   end
 
