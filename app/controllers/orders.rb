@@ -15,7 +15,15 @@ class OrdersController < UsefulMusic::App
     order.fetch_details request.GET['token']
     order.checkout request.GET['token'], request.GET['PayerID']
     session['useful_music.basket_id'] = nil
+    # template = Tilt::ERBTemplate.new('template.erb')
+    mail = Mail.new
+    mail.from 'info@usefulmusic.com'
+    mail.to order.customer.email
+    mail.subject 'Here is a message'
+    mail.body "Your purchases are available in your account for the next 4 days"
+    mail.deliver
 
+    flash[:success] = 'Order placed successfuly'
     redirect "customers/#{current_customer.id}"
   end
 

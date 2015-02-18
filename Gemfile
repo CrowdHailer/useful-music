@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 
 gem 'dotenv'
+gem 'awesome_print'
 
 gem 'thin'
 gem 'shotgun'
@@ -11,7 +12,8 @@ gem 'scorched-rest', :path => './gems/scorched-rest', :require => 'scorched/rest
 gem 'rack_csrf', :require => 'rack/csrf'
 # gem 'usecase', :path => './gems/usecase', :branch => 'master'
 gem 'warden'
-gem 'awesome_print'
+
+gem 'mail'
 
 gem 'pg'
 gem 'sequel'
