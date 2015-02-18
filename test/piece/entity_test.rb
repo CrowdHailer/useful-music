@@ -103,44 +103,16 @@ class Piece
       assert_equal :file, record.cover_image
     end
 
-    def test_can_access_beginner
-      record.beginner = true
-      assert piece.beginner?
-    end
+    [:beginner, :intermediate, :advanced, :professional].each do |bool_entry|
+      define_method "test_can_access_#{bool_entry}" do
+        record.public_send "#{bool_entry}=", true
+        assert piece.public_send "#{bool_entry}?"
+      end
 
-    def test_can_set_beginner
-      piece.beginner = true
-      assert_equal true, record.beginner
-    end
-
-    def test_can_access_intermediate
-      record.intermediate = true
-      assert piece.intermediate?
-    end
-
-    def test_can_set_intermediate
-      piece.intermediate = true
-      assert_equal true, record.intermediate
-    end
-
-    def test_can_access_advanced
-      record.advanced = true
-      assert piece.advanced?
-    end
-
-    def test_can_set_advanced
-      piece.advanced = true
-      assert_equal true, record.advanced
-    end
-
-    def test_can_access_professional
-      record.professional = true
-      assert piece.professional?
-    end
-
-    def test_can_set_professional
-      piece.professional = true
-      assert_equal true, record.professional
+      define_method "test_can_set_#{bool_entry}" do
+        piece.public_send "#{bool_entry}=", true
+        assert_equal true, record.public_send("#{bool_entry}")
+      end
     end
 
     [:piano, :recorder, :flute, :oboe, :clarineo, :clarinet, :basson, :saxophone, :trumpet, :violin, :viola, :percussion].each do |bool_entry|
