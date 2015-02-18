@@ -54,5 +54,6 @@ class UsefulMusic::App
   controller '/items', ItemsController
   controller '/shopping_baskets', ShoppingBasketsController
   controller '/orders', OrdersController
+  controller '/about', AboutController
   controller '/', HomeController
 end
