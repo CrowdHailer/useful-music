@@ -1,16 +1,5 @@
 require File.expand_path("../boot.rb", __FILE__)
 
-class Guest
-  # TODO untested
-  def guest?
-    true
-  end
-
-  def customer?
-    false
-  end
-end
-
 module UsefulMusic
   class App < Scorched::Controller
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
