@@ -2,6 +2,17 @@ require_relative '../test_config'
 
 class Customer
   class RecordTest < MyRecordTest
+    # Associations
+
+    def test_can_have_multiple_orders
+      skip
+      record = create :customer_record
+      2.times { record.add_order_record create(:order_record) }
+      assert_equal 2, record.order_records.count
+    end
+
+    # Storage
+
     def test_has_an_id
       record = create :customer_record
       # Checks id has non negligable length
