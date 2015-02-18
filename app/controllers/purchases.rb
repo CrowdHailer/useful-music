@@ -29,6 +29,13 @@ end
 class PurchasesController < UsefulMusic::App
   include Scorched::Rest
 
+  render_defaults[:dir] += '/purchases'
+
+  def index
+    @purchases = Purchase::Record.all.map{ |r| Purchase.new r }
+    render :index
+  end
+
   def create
     # TODO error tests
     form = Purchase::CreateMany::Form.new request.POST
