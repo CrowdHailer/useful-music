@@ -44,6 +44,11 @@ class PurchasesController < UsefulMusic::App
         purchase_record.save
       end
     end
+    redirect '/my-shopping-basket'
+    # forms = Purchase::Create::Form.map request.POST['purchases']
+    # forms.each do |form|
+    #   Purchase.create_or_update form
+    # end
   end
 
   def update(id)
