@@ -24,6 +24,12 @@ class Piece
       assert_nil piece.catalogue_number
     end
 
+    def test_has_a_product_name
+      record.title = 'Title'
+      record.sub_heading = 'sub heading'
+      assert_equal 'Title - sub heading', piece.product_name
+    end
+
     ################# Associations #####################
 
     def test_has_items
