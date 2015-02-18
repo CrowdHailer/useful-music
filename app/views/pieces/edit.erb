@@ -97,42 +97,42 @@
                   IN progress instrument selections
                 </p>
                 <div class="pure-control-group">
-                    <label for="piece_beginner_level">Beginner (level 1-3)</label>
+                    <label for="piece_beginner">Beginner (level 1-3)</label>
                     <input
-                        id="piece_beginner_level"
-                        name="piece[beginner_level]"
+                        id="piece_beginner"
+                        name="piece[beginner]"
                         type="checkbox"
-                        <%= 'checked' if @piece.beginner_level? %>
+                        <%= 'checked' if @piece.beginner? %>
                         placeholder="">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="piece_intermediate_level">Intermediate (level 4-6)</label>
+                    <label for="piece_intermediate">Intermediate (level 4-6)</label>
                     <input
-                        id="piece_intermediate_level"
-                        name="piece[intermediate_level]"
+                        id="piece_intermediate"
+                        name="piece[intermediate]"
                         type="checkbox"
-                        <%= 'checked' if @piece.intermediate_level? %>
+                        <%= 'checked' if @piece.intermediate? %>
                         placeholder="">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="piece_advanced_level">Advanced (level 7&amp;8)</label>
+                    <label for="piece_advanced">Advanced (level 7&amp;8)</label>
                     <input
-                        id="piece_advanced_level"
-                        name="piece[advanced_level]"
+                        id="piece_advanced"
+                        name="piece[advanced]"
                         type="checkbox"
-                        <%= 'checked' if @piece.advanced_level? %>
+                        <%= 'checked' if @piece.advanced? %>
                         placeholder="">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="piece_professional_level">Profesional</label>
+                    <label for="piece_professional">Profesional</label>
                     <input
-                        id="piece_professional_level"
-                        name="piece[professional_level]"
+                        id="piece_professional"
+                        name="piece[professional]"
                         type="checkbox"
-                        <%= 'checked' if @piece.professional_level? %>
+                        <%= 'checked' if @piece.professional? %>
                         placeholder="">
                 </div>
 
