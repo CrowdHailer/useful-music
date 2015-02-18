@@ -12,7 +12,17 @@ class Piece < BaseEntity
                   :meta_keywords
 
   boolean_accessor  :beginner,
-                    :recorder
+                    :recorder,
+                    :flute,
+                    :oboe,
+                    :clarineo,
+                    :clarinet,
+                    :basson,
+                    :saxophone,
+                    :trumpet,
+                    :violin,
+                    :viola,
+                    :percussion
 
   def items
     record.item_records.map{ |r| Item.new r }

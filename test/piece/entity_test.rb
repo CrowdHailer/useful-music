@@ -143,7 +143,7 @@ class Piece
       assert_equal true, record.professional
     end
 
-    [:piano, :recorder].each do |bool_entry|
+    [:piano, :recorder, :flute, :oboe, :clarineo, :clarinet, :basson, :saxophone, :trumpet, :violin, :viola, :percussion].each do |bool_entry|
       define_method "test_can_access_#{bool_entry}" do
         record.public_send "#{bool_entry}=", true
         assert piece.public_send "#{bool_entry}?"
