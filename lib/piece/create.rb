@@ -28,6 +28,8 @@ class Piece
       attribute :notation_preview, Hash
       attribute :audio_preview, Hash
       attribute :cover_image, Hash
+      attribute :print_version, String
+      attribute :weezic_version, String
       attribute :meta_description, String
       attribute :meta_keywords, String
     end

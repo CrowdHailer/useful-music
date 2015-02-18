@@ -8,6 +8,8 @@ class Piece < BaseEntity
                   :notation_preview,
                   :audio_preview,
                   :cover_image,
+                  :print_version,
+                  :weezic_version,
                   :meta_description,
                   :meta_keywords
 

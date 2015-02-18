@@ -133,6 +133,26 @@ class Piece
       end
     end
 
+    def test_can_access_print_version
+      record.print_version = 'Description'
+      assert_equal 'Description', piece.print_version
+    end
+
+    def test_can_set_print_version
+      piece.print_version = 'Description'
+      assert_equal 'Description', record.print_version
+    end
+
+    def test_can_access_weezic_version
+      record.weezic_version = 'Description'
+      assert_equal 'Description', piece.weezic_version
+    end
+
+    def test_can_set_weezic_version
+      piece.weezic_version = 'Description'
+      assert_equal 'Description', record.weezic_version
+    end
+
     def test_can_access_meta_description
       record.meta_description = 'Description'
       assert_equal 'Description', piece.meta_description
