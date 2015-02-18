@@ -5,6 +5,10 @@ class Guest
   def guest?
     true
   end
+
+  def customer?
+    false
+  end
 end
 
 module UsefulMusic

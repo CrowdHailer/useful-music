@@ -71,10 +71,17 @@
               </tr>
           </tbody>
       </table>
-      <form id="form_id" action="/orders" method="post">
-          <input type="hidden" name="order[shopping_basket_id]" value="<%= @basket.id %>">
-          <input type="text" name="order[discount_code]" value="" placeholder="discount code">
-          <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" />
-      </form>
+      <% if current_customer.customer? %>
+          <form id="form_id" action="/orders" method="post">
+              <input type="hidden" name="order[shopping_basket_id]" value="<%= @basket.id %>">
+              <input type="text" name="order[discount_code]" value="" placeholder="discount code">
+              <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" />
+          </form>
+      <% else %>
+          <p>
+            Please <a href="/authentication/login">login</a> or <a href="customers/new">create account</a>
+          </p>
+          <p title="Downloads can be large files and will be available in your account for 4 days from purchase">Why?</p>
+      <% end %>
     </article>
 </main>
