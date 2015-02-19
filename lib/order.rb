@@ -45,8 +45,8 @@ class Order < BaseEntity
   def setup
     express_response = express_request.setup(
       payment_request,
-      "http://http://wks14007-staging.herokuapp.com/orders/#{id}/success",
-      "http://http://wks14007-staging.herokuapp.com/orders/#{id}/cancel",
+      "http://wks14007-staging.herokuapp.com/orders/#{id}/success",
+      "http://wks14007-staging.herokuapp.com/orders/#{id}/cancel",
       PAYPAL_OPTIONS
     )
   end
