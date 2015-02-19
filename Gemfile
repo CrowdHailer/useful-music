@@ -4,6 +4,7 @@ ruby '2.2.0'
 
 gem 'dotenv'
 gem 'awesome_print'
+gem 'sass'
 
 gem 'thin'
 gem 'shotgun'

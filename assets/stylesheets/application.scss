@@ -1,0 +1,193 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  color: #01344c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #01344c;
+  color: white;
+}
+
+.content {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+  max-width: 1260px;
+  overflow: hidden;
+}
+
+header .content {
+  padding: 1em;
+}
+
+h1 {
+  float: left;
+  margin: 0;
+  font-size: 2.4em;
+  font-weight: 100;
+}
+a h1 {
+  color: white;
+}
+
+header li {
+  display: inline-block;
+}
+
+header li a {
+  text-decoration: none;
+  color: white;
+  border: 1px solid #01344c;
+  padding: 4px 19px;
+  transition : border 500ms ease-out;
+}
+
+header li a:hover {
+  /*padding: 4px 18px;*/
+  border: 1px solid white;
+}
+.inline {
+  margin: 0;
+  padding: 13px 10px;
+  float: right;
+  color: white;
+}
+
+/*################## Main ###########################*/
+
+main.content {
+  background-color: aliceblue;
+}
+
+h2 {
+  width: 100%;
+  text-align: center;
+  color: #01344c;
+  font-weight: 100;
+  margin: 0;
+  font-size: 2em;
+  padding: 0.2em 1em;
+  border-bottom: 2px solid #01344c;
+}
+
+h3 {
+  margin: 0;
+  padding: 0.2em 1em;
+  color: grey;
+  font-weigth: 100;
+  font-size: 1.5em;
+}
+
+.col-1 {
+  width: 100%;
+  padding: 2em;
+}
+
+.col-2 {
+  width: 50%;
+  float: left;
+  padding: 1em;
+}
+
+aside {
+  width: 20%;
+  float: left;
+  padding: 2em;
+}
+
+aside li {
+  display: block;
+}
+
+aside ul {
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #01344c;
+}
+
+aside li a {
+  color: grey;
+  font-size: 1.5em;
+}
+
+aside li a:hover {
+  color: #01344c;
+}
+
+article {
+  float: left;
+  width: 80%;
+  padding: 2em;
+}
+
+article table {
+  width: 100%;
+}
+
+article th {
+  text-align: center;
+}
+
+article tbody tr {
+  background-color: white;
+}
+.clearfix {
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+}
+
+audio {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  aside {
+    width: 100%;
+  }
+  article {
+    width: 100%;
+  }
+}
+
+
+/*############## Form #############*/
+.pure-form .errors {
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  /* -webkit-box-sizing: border-box; */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: red;
+}
+
+.flash {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  font-size: 1.4em;
+  padding: 0.2em 1em;
+  max-height: 2em;
+  /*animation: flash 1s ease forwards;*/
+  transition: max-height 1s, padding 1s;
+  transition-delay: 3s;
+}
+
+/*.flash.loaded {
+  max-height: 0em;
+  padding: 0 1em;
+}*/
+
+/*@keyframes flash {
+    from { max-height: 2em; }
+    to { max-height: 0; }
+}*/
