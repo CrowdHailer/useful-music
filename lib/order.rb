@@ -2,7 +2,7 @@ require_relative './base_entity'
 
 class Order < BaseEntity
   entry_accessor :created_at
-  
+
   PAYPAL_OPTIONS = {
     no_shipping: true, # if you want to disable shipping information
     allow_note: false, # if you want to disable notes
@@ -45,8 +45,8 @@ class Order < BaseEntity
   def setup
     express_response = express_request.setup(
       payment_request,
-      "http://localhost:9393/orders/#{id}/success",
-      "http://localhost:9393/orders/#{id}/cancel",
+      "http://http://wks14007-staging.herokuapp.com/orders/#{id}/success",
+      "http://http://wks14007-staging.herokuapp.com/orders/#{id}/cancel",
       PAYPAL_OPTIONS
     )
   end
