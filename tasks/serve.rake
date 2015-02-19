@@ -36,6 +36,6 @@ end
 namespace :sass do
   desc 'Start watching for Sass changes'
   task :watch do
-    system "bundle exec sass --watch assets/stylesheets:public/stylesheets --style compressed"
+    system "bundle exec sass --watch assets/stylesheets/application.scss:public/stylesheets/application.css --style compressed"
   end
 end

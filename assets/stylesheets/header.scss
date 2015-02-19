@@ -1,0 +1,42 @@
+.social-list {
+  @include scut-list-floated;
+  float: left;
+  margin-right: 4em;
+  li {
+    margin: 0.3em;
+    padding: 0.4em 0.2em;
+    background-color: orange;
+    border: 1px solid orange;
+    i {
+    }
+  }
+}
+
+.currency-list {
+  @include scut-list-floated;
+  float: left;
+  li {
+    margin: 0.3em;
+    padding: 0.4em 0.2em;
+    border: 1px solid white;
+    i {
+    }
+  }
+}
+
+.inverted {
+  color: white;
+  background-color: $primary-color;
+}
+
+header {
+  .ribbon {
+
+  }
+
+  img {
+    width: 120px;
+    height: 120px;
+    float: left;
+  }
+}
