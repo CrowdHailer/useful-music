@@ -15,7 +15,7 @@ module UsefulMusic
 
     def live_shopping_basket_id
       # TODO test
-      if session['useful_music.basket_id']
+      if session['useful_music.basket_id'] && ShoppingBasket::Record[session['useful_music.basket_id']]
         session['useful_music.basket_id']
       else
         session['useful_music.basket_id'] = ShoppingBasket::Record.create.id
