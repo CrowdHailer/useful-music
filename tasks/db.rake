@@ -8,10 +8,10 @@ namespace :db do
   DATABASE_URL = ENV.fetch('DATABASE_URL'){
     "postgres://localhost/useful_music_#{RACK_ENV}"
   }
+  Sequel.extension :migration
+  DB = Sequel.connect(DATABASE_URL)
 
   namespace :migrate do
-    Sequel.extension :migration
-    DB = Sequel.connect(DATABASE_URL)
 
     desc "Perform migration reset (full erase and migration up)"
     task :reset do
@@ -39,5 +39,11 @@ namespace :db do
       Sequel::Migrator.run(DB, "db/migrations", :target => 0)
       puts "<= sq:migrate:down executed"
     end
+  end
+
+  desc "seed database"
+  task :seed do
+    require './config/application'
+    require './db/seed'
   end
 end
