@@ -32,8 +32,8 @@ class Customer
         (super || '').strip
       end
 
-      def password_confirmed
-        false
+      def password_confirmed?
+        password == password_confirmation
       end
     end
   end
