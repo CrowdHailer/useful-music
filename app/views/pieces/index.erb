@@ -1,26 +1,26 @@
 <main class="content">
     <aside id="search" class="col col-1-5">
-      <form class="pure-form">
+      <form class="pure-form" action="/pieces" method="get">
           <h4>Category</h4>
           <% [:solo,
           :solo_with_accompaniment,
           :duet,
           :trio,
           :quarter,
-          :larger_ensembles].each do |instrument| %>
+          :larger_ensembles].each do |category| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="instrument" value="">
-                  <%= instrument.capitalize %>
+                  <input type="checkbox" name="catalogue_search[category][]" value="<%= category %>">
+                  <%= category.capitalize %>
               </label>
           <% end %>
           <h4>Level</h4>
           <% [:beginner,
             :intermediate,
             :advanced,
-            :professional].each do |instrument| %>
+            :professional].each do |level| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="instrument" value="">
-                  <%= instrument.capitalize %>
+                  <input type="checkbox" name="catalogue_search[level][]" value="<%= level %>">
+                  <%= level.capitalize %>
               </label>
           <% end %>
           <h4>Instrument</h4>
@@ -37,7 +37,7 @@
           :viola,
           :percussion].each do |instrument| %>
               <label class="pure-radio">
-                  <input type="radio" name="instrument" value="">
+                  <input type="radio" name="instrument" value="<%= instrument %>">
                   <%= instrument.capitalize %>
               </label>
           <% end %>
