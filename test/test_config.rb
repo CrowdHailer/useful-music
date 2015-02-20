@@ -40,6 +40,18 @@ module ControllerTesting
   def assert_ok(response=last_response)
     assert response.ok?, "Response was #{last_response.status} not OK"
   end
+
+  def clear_mail
+    require 'mail'
+    Mail.defaults do
+      delivery_method :test
+    end
+    Mail::TestMailer.deliveries.clear
+  end
+
+  def last_message
+    Mail::TestMailer.deliveries.pop
+  end
 end
 
 CarrierWave.configure do |config|
