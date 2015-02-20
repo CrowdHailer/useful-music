@@ -72,6 +72,11 @@ class Customer
         assert_includes validator.errors.on(:password), 'is longer than 55 characters'
       end
 
+      def test_is_invalid_without_confirmed_password
+        refute validator.valid? OpenStruct.new :password => 'password', :password_confirmation => 'passwordz'
+        assert_includes validator.errors.on(:password_confirmation), 'does not match'
+      end
+
       def test_is_invalid_without_country
         refute validator.valid? OpenStruct.new
         assert_includes validator.errors.on(:country), 'is not present'

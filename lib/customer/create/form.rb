@@ -31,6 +31,10 @@ class Customer
       def password_confirmation
         (super || '').strip
       end
+
+      def password_confirmed
+        false
+      end
     end
   end
 end
