@@ -37,13 +37,23 @@ main.content {
 .flash {
   margin-bottom: 15px;
   margin-top: 15px;
-  color: #4F8A10;
-  background-color: #DFF2BF;
   font-size: 1.4em;
   padding: 0.2em 1em;
   max-height: 2em;
-  transition: max-height 1s, padding 1s, margin 1s;
-  // transition-delay: 3s;
+  transition: max-height 1s, padding 1s, margin 1s, border 2s;
+}
+
+.success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  // border: 2px solid #DFF2BF;
+  border-radius: 4px;
+}
+
+.error {
+  color: #FF3800;
+  border: 2px solid #FFCDBF;
+  border-radius: 4px;
 }
 
 .flash.read {
@@ -51,6 +61,7 @@ main.content {
   padding: 0 1em;
   margin-top: 0;
   margin-bottom: 0;
+  // border: 2px solid #FFF;
 }
 
 

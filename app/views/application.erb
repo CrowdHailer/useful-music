@@ -13,6 +13,12 @@
   <div class="content flash success">
     <!-- <%= flash[:success] %> -->
     Test flash content
+    <!-- <i class="fa fa-times right"></i> -->
+  </div>
+  <div class="content flash error">
+    <!-- <%= flash[:success] %> -->
+    Test flash content
+     <!-- <i class="fa fa-times right"></i> -->
   </div>
   <%= yield %>
   <%= render :'../footer' %>
@@ -25,6 +31,7 @@
       evt.target.classList.add('read');
     }
     flash[0].addEventListener("click", slideUp);
+    flash[1].addEventListener("click", slideUp);
 
   </script>
 </body>
