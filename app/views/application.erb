@@ -8,51 +8,13 @@
   <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
-  <header>
-    <div class="content">
-      <a href="/">
-        <h1>Useful Music</h1>
-      </a>
-      <ul class="inline">
-        <li>
-          <a href="#" onclick="alert('coming soon');"><i class="fa fa-envelope"></i> Newsletter</a>
-        </li>
-        <li>
-          <a href="/my-shopping-basket"><i class="fa fa-shopping-cart"></i> Shopping Cart <%= shopping_basket.number_of_items %>:<%= shopping_basket.number_of_licenses %></a>
-        </li>
-        <li>
-          |
-        </li>
-        <% if current_customer.guest? %>
-          <li>
-            <b>
-              <a href="/authentication/login">Login</a>
-            </b>
-          </li>
-          <li>
-            <b>
-              <a href="/customers/new">Create Account</a>
-            </b>
-          </li>
-        <% else %>
-          <li>
-            <b>
-              <a href="/customers/<%= current_customer.id %>"><%= current_customer.name %></a>
-            </b>
-          </li>
-          <li>
-            <b>
-              <a href="/authentication/logout">Logout</a>
-            </b>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </header>
+  <%= render :'../header' %>
+
   <div class="content flash success">
     <%= flash[:success] %>
   </div>
   <%= yield %>
+  <%= render :'../footer' %>
   <script charset="utf-8">
 
     function ready(fn) {
