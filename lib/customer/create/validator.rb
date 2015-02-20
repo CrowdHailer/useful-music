@@ -8,6 +8,7 @@ class Customer
       validates :email, :presence => true
       validates :password, :presence => true
       validates :country, :presence => true
+
     end
   end
 end
