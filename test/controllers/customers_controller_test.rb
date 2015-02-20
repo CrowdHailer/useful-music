@@ -2,6 +2,7 @@ require_relative '../test_config'
 
 class CustomersControllerTest < MyRecordTest
   include ControllerTesting
+  include MailerTesting
 
   def app
     CustomersController
@@ -25,7 +26,7 @@ class CustomersControllerTest < MyRecordTest
     clear_mail
     post '/', :customer => attributes_for(:customer_record).merge(:password_confirmation => 'password')
     assert_match(/#{last_customer.id}/, last_response.location)
-    assert_includes last_message.to last_customer.email
+    assert_includes last_message.to, last_customer.email
     assert_includes last_message.body, last_customer.id
   end
 
