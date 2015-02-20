@@ -1,3 +1,12 @@
+class CatalogueSearch
+  def initialize(options={})
+    @options = options
+  end
+
+  attr_accessor :options
+
+
+end
 class PiecesController < UsefulMusic::App
   include Scorched::Rest
 
@@ -5,8 +14,8 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
-    ap request.GET['catalogue_search']
-    pieces = Piece::Record.all
+    search = CatalogueSearch.new request.GET['catalogue_search']
+    ap pieces = Catalogue.all search
     render :index, :locals => {:pieces => pieces}
   end
 
