@@ -2,40 +2,33 @@ class CustomerMailer
   def initialize(customer, options={})
     @customer = customer
     @options = options
-    @templates = File.join(APP_ROOT, 'app', 'views', 'customer_mailer')
   end
 
-  def confirm_account
+  attr_reader :customer, :options
+
+  def account_created
     mail = Mail.new
     mail.from 'info@usefulmusic.com'
     mail.to @customer.email
     mail.subject 'Here is a message'
-    mail.body %Q{
-      Your Account is now available at Useful Music
-      #{File.join(@options.fetch(:application_url), 'customers', @customer.id)}
-    }
+    mail.body render __method__
     mail.deliver
-    # Catch error failed to deliver email
-
-  end
-
-  def new_account
-    # account_created
-    # create account confirmation
-    render :new_account
   end
 
   def locals
-    OpenStruct.new(:customer => @customer, :application_url => @options.fetch(:application_url))
+    OpenStruct.new(:customer => customer, :account_url => account_url)
+  end
+
+  def account_url
+    File.join(options.fetch(:application_url), 'customers', customer.id)
   end
 
   def render(file)
     template = Tilt::ERBTemplate.new(template_file(file))
-    ap template.render locals
+    template.render locals
   end
 
   def template_file(file)
-    ap File.dirname(__FILE__)
-    File.expand_path("../customer/#{file}.erb", __FILE__)
+    File.expand_path("customer/#{file}.erb", File.dirname(__FILE__))
   end
 end

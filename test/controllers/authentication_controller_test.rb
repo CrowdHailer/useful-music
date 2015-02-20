@@ -17,7 +17,7 @@ class AuthenticationControllerTest < MyRecordTest
     password = 'password'
     record = create :customer_record, :email => email, :password => password
     post '/login?attempted_path=/private', :email => email, :password => password, :attempted_path => '/private'
-    ap last_response.location
+    # ap last_response.location
     get '/private'
     # ap last_response.status
 
