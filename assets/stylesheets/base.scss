@@ -14,3 +14,16 @@ html, body {
 * {
   box-sizing: border-box;
 }
+
+.col {
+  padding: 15px;
+  float: left;
+}
+
+.col-2 {
+  width: 50%;
+}
+
+.col-4 {
+  width: 25%;
+}
