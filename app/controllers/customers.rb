@@ -22,6 +22,7 @@ class CustomersController < UsefulMusic::App
       validator.validate! form
       customer = Customer.create form
       warden_handler.set_user(customer) # TODO test
+      customer_mailer.confirm_account
       redirect "/customers/#{customer.id}"
     rescue Veto::InvalidEntity => err
       @form = form

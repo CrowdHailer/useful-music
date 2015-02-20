@@ -11,24 +11,28 @@
   <%= render :'../header' %>
 
   <div class="content flash success">
-    <%= flash[:success] %>
+    <!-- <%= flash[:success] %> -->
+    Test flash content
+    <!-- <i class="fa fa-times right"></i> -->
+  </div>
+  <div class="content flash error">
+    <!-- <%= flash[:success] %> -->
+    Test flash content
+     <!-- <i class="fa fa-times right"></i> -->
   </div>
   <%= yield %>
   <%= render :'../footer' %>
   <script charset="utf-8">
+    var $$ = document.querySelectorAll
 
-    function ready(fn) {
-      if (document.readyState != 'loading'){
-        fn();
-      } else {
-        document.addEventListener('DOMContentLoaded', fn);
-      }
+    var flash = document.querySelectorAll('.flash')
+
+    function slideUp(evt){
+      evt.target.classList.add('read');
     }
+    flash[0].addEventListener("click", slideUp);
+    flash[1].addEventListener("click", slideUp);
 
-    var flashElement = document.querySelector('.flash')
-    ready(function(){
-      flashElement.classList.add('loaded');
-    })
   </script>
 </body>
 </html>

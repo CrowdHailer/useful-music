@@ -9,7 +9,7 @@
     <article>
         <h2><%= @customer.name %>: Edit Account</h2>
         <!-- TODO remove no validate -->
-        <form novalidate class="pure-form pure-form-aligned col-1" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form novalidate class="pure-form pure-form-aligned" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
 

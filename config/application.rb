@@ -1,5 +1,26 @@
 require File.expand_path("../boot.rb", __FILE__)
 
+class CustomerMailer
+  def initialize(customer, options)
+    @customer = customer
+    @options = options
+    @templates = File.join(APP_ROOT, 'app', 'views', 'customer_mailer')
+  end
+
+  def confirm_account
+    mail = Mail.new
+    mail.from 'info@usefulmusic.com'
+    mail.to @customer.email
+    mail.subject 'Here is a message'
+    mail.body %Q{
+      Your Account is now available at Useful Music
+      #{File.join(@options.fetch(:application_url), 'customers', @customer.id)}
+    }
+    mail.deliver
+
+  end
+end
+
 module UsefulMusic
   class App < Scorched::Controller
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
@@ -24,6 +45,10 @@ module UsefulMusic
 
     def shopping_basket
       ShoppingBasket.new(ShoppingBasket::Record[live_shopping_basket_id])
+    end
+
+    def customer_mailer
+      CustomerMailer.new(current_customer, :application_url => url)
     end
   end
 end

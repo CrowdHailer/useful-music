@@ -37,7 +37,7 @@
           </section>
         </div>
         <h2>Available Downloads</h2>
-        <form class="pure-form pure-form-aligned col-1" id="form_id" action="/purchases" method="post">
+        <form class="pure-form pure-form-aligned" id="form_id" action="/purchases" method="post">
 
         <% @piece.items.each do |item| %>
             <input type="hidden" name="purchases[][shopping_basket]" value="<%= live_shopping_basket_id %>">

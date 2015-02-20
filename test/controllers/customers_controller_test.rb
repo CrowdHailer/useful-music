@@ -18,8 +18,10 @@ class CustomersControllerTest < MyRecordTest
   end
 
   def test_can_create_customer
-    post '/', :customer => attributes_for(:customer_record)
+    clear_mail
+    post '/', :customer => attributes_for(:customer_record).merge(:password_confirmation => 'password')
     assert_match(/#{Customers.last.id}/, last_response.location)
+    ap last_message.body.to_s
   end
 
   def test_show_page_is_available
