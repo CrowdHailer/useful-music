@@ -9,7 +9,7 @@
     <article>
         <h2>Create Account</h2>
         <!-- TODO remove no validate -->
-        <form novalidate class="pure-form pure-form-aligned col-1" action="/customers" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form novalidate class="pure-form pure-form-aligned" action="/customers" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <fieldset>
                 <% @validator.errors.full_messages.each do |message| %>
                     <div class="pure-control-group">

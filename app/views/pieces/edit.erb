@@ -21,7 +21,7 @@
     <article id="">
         <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
 
-        <form class="pure-form pure-form-aligned col-1" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form class="pure-form pure-form-aligned" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
           <input type="hidden" name="_method" value="PUT">
             <fieldset>
                 <div class="pure-control-group">
