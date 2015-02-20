@@ -23,11 +23,25 @@
     }
   }
 }
-
+.credentials {
+  @include scut-list-floated;
+  padding: 13px 10px;
+  float: right;
+  li a {
+    border: 1px solid #01344c;
+    padding: 4px 19px;
+    transition : border 500ms ease-out;
+  }
+  li a:hover {
+    /*padding: 4px 18px;*/
+    border: 1px solid white;
+  }
+}
 .main-navigation {
   @include scut-list-floated;
   float: left;
   li {
+    cursor: pointer;
     padding: 1em;
     &:hover {
       background-color: red;
@@ -39,16 +53,15 @@
 }
 .bold {
   background-color: $emphasise;
-  a {
-    color: white;
-    text-decoration: none;
-  }
 }
 .inverted {
   color: white;
   background-color: $primary-color;
 }
-
+.bold a, .inverted a {
+  color: white;
+  text-decoration: none;
+}
 header {
   .ribbon {
 
