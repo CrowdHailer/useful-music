@@ -18,7 +18,7 @@ class CustomersControllerTest < MyRecordTest
   end
 
   def test_can_create_customer
-    post '/', :customer => attributes_for(:customer_record)
+    post '/', :customer => attributes_for(:customer_record).merge(:password_confirmation => 'password')
     assert_match(/#{Customers.last.id}/, last_response.location)
   end
 
