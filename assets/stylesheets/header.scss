@@ -24,6 +24,26 @@
   }
 }
 
+.main-navigation {
+  @include scut-list-floated;
+  float: left;
+  li {
+    padding: 1em;
+    &:hover {
+      background-color: red;
+    }
+  }
+}
+.right {
+  float: right;
+}
+.bold {
+  background-color: $emphasise;
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
 .inverted {
   color: white;
   background-color: $primary-color;

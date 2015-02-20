@@ -37,11 +37,24 @@
   <section class="content" id="top-bar">
     <img src="https://www.usefulmusic.com/image/data/logored.png" alt="" />
   </section>
-  <div class="ribbon inverted">
+  <nav class="ribbon inverted">
     <section class="content">
-hello
+      <ul class="main-navigation">
+        <li>Home</li>
+        <li>Piano</li>
+        <li>Woodwind</li>
+        <li>Other Instruments</li>
+        <li>Ensembles</li>
+        <li>About Useful Music</li>
+      </ul>
+
+      <ul class="main-navigation right bold">
+        <li>
+          <a href="/my-shopping-basket"><i class="fa fa-shopping-cart"></i> Shopping Cart <%= shopping_basket.number_of_items %>:<%= shopping_basket.number_of_licenses %></a>
+        </li>
+      </ul>
     </section>
-  </div>
+  </nav>
 </header>
 <header>
   <div class="content">
