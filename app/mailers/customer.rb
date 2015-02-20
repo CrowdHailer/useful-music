@@ -15,6 +15,7 @@ class CustomerMailer
       #{File.join(@options.fetch(:application_url), 'customers', @customer.id)}
     }
     mail.deliver
+    # Catch error failed to deliver email
 
   end
 
