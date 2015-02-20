@@ -2,9 +2,14 @@ require_relative '../test_config'
 
 class CustomersControllerTest < MyRecordTest
   include ControllerTesting
+  include MailerTesting
 
   def app
     CustomersController
+  end
+
+  def last_customer
+    Customers.last
   end
 
   def test_index_page_is_available
@@ -20,8 +25,9 @@ class CustomersControllerTest < MyRecordTest
   def test_can_create_customer
     clear_mail
     post '/', :customer => attributes_for(:customer_record).merge(:password_confirmation => 'password')
-    assert_match(/#{Customers.last.id}/, last_response.location)
-    ap last_message.body.to_s
+    assert_match(/#{last_customer.id}/, last_response.location)
+    assert_includes last_message.to, last_customer.email
+    assert_includes last_message.body, last_customer.id
   end
 
   def test_show_page_is_available

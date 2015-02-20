@@ -27,6 +27,20 @@ class MyRecordTest < MiniTest::Test
 
 end
 
+module MailerTesting
+  def clear_mail
+    require 'mail'
+    Mail.defaults do
+      delivery_method :test
+    end
+    Mail::TestMailer.deliveries.clear
+  end
+
+  def last_message
+    @last_message ||= Mail::TestMailer.deliveries.pop
+  end
+end
+
 module ControllerTesting
   def self.included(klass)
    klass.include Rack::Test::Methods
@@ -41,17 +55,6 @@ module ControllerTesting
     assert response.ok?, "Response was #{last_response.status} not OK"
   end
 
-  def clear_mail
-    require 'mail'
-    Mail.defaults do
-      delivery_method :test
-    end
-    Mail::TestMailer.deliveries.clear
-  end
-
-  def last_message
-    Mail::TestMailer.deliveries.pop
-  end
 end
 
 CarrierWave.configure do |config|
