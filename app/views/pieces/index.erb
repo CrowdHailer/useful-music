@@ -1,15 +1,50 @@
 <main class="content">
-    <aside>
-      <ul>
-        <li>
-          <a href="/pieces/new">New Piece</a>
-        </li>
-        <li>
-          <a href="/">Back</a>
-        </li>
-      </ul>
+    <aside id="search" class="col col-1-5">
+      <form class="pure-form">
+          <h4>Category</h4>
+          <% [:solo,
+          :solo_with_accompaniment,
+          :duet,
+          :trio,
+          :quarter,
+          :larger_ensembles].each do |instrument| %>
+              <label class="pure-checkbox">
+                  <input type="checkbox" name="instrument" value="">
+                  <%= instrument.capitalize %>
+              </label>
+          <% end %>
+          <h4>Level</h4>
+          <% [:beginner,
+            :intermediate,
+            :advanced,
+            :professional].each do |instrument| %>
+              <label class="pure-checkbox">
+                  <input type="checkbox" name="instrument" value="">
+                  <%= instrument.capitalize %>
+              </label>
+          <% end %>
+          <h4>Instrument</h4>
+          <% [:piano,
+          :recorder,
+          :flute,
+          :oboe,
+          :clarineo,
+          :clarinet,
+          :basson,
+          :saxophone,
+          :trumpet,
+          :violin,
+          :viola,
+          :percussion].each do |instrument| %>
+              <label class="pure-radio">
+                  <input type="radio" name="instrument" value="">
+                  <%= instrument.capitalize %>
+              </label>
+          <% end %>
+          <button type="submit" class="pure-button right">Search</button>
+      </form>
     </aside>
-    <article>
+    <article class="col col-4-5">
 
         <table class="pure-table">
             <thead>

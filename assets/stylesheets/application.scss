@@ -2,6 +2,7 @@
 @import 'base';
 @import 'header';
 @import 'footer';
+@import 'search';
 .right {
   float: right;
 }
@@ -84,12 +85,6 @@ h3 {
   font-size: 1.5em;
 }
 
-aside {
-  width: 20%;
-  float: left;
-  padding: 2em;
-}
-
 aside li {
   display: block;
 }
@@ -107,12 +102,6 @@ aside li a {
 
 aside li a:hover {
   color: #01344c;
-}
-
-article {
-  float: left;
-  width: 80%;
-  padding: 2em;
 }
 
 article table {
