@@ -1,3 +1,31 @@
+class Object
+  def to_query(key)
+    require 'cgi' unless defined?(CGI) && defined?(CGI::escape)
+    "#{CGI.escape(key.to_param)}=#{CGI.escape(to_param.to_s)}"
+  end
+end
+
+class Hash
+  def to_query(namespace = nil)
+    collect do |key, value|
+      unless (value.is_a?(Hash) || value.is_a?(Array)) && value.empty?
+        value.to_query(namespace ? "#{namespace}[#{key}]" : key)
+      end
+    end.compact.sort! * '&'
+  end
+end
+
+class Array
+  def to_query(key)
+    prefix = "#{key}[]"
+
+    if empty?
+      nil.to_query(prefix)
+    else
+      collect { |value| value.to_query(prefix) }.join '&'
+    end
+  end
+end
 class CatalogueSearch
   def initialize(options={})
     @options = options
@@ -5,8 +33,17 @@ class CatalogueSearch
 
   attr_accessor :options
 
+  def page
+    options.fetch('page', 1).to_i
+  end
+
+  def page_size
+    options.fetch('page_size', 3).to_i
+  end
 
 end
+require "addressable/template"
+
 class PiecesController < UsefulMusic::App
   include Scorched::Rest
 
@@ -14,8 +51,10 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
-    search = CatalogueSearch.new request.GET['catalogue_search']
-    ap pieces = Catalogue.all search
+
+    ap request.GET['catalogue_search']
+    search = CatalogueSearch.new request.GET.fetch('catalogue_search', {})
+    pieces = Catalogue.all search
     render :index, :locals => {:pieces => pieces}
   end
 

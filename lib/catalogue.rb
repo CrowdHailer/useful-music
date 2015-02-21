@@ -2,7 +2,7 @@
 module Catalogue
   extend self
 
-  def all(query_params={})
+  def all(query)
     # levels = query_params[:levels]
     # query = Piece::Record.where(levels.pop => true)
     #
@@ -17,6 +17,7 @@ module Catalogue
     # ap page.first_page?
     # ap page.page_range
     # ap page.map(&:class)
-    Piece::Record.dataset.all.map{ |r| Piece.new }
+
+    Piece::Record.dataset.paginate(query.page,query.page_size)
   end
 end

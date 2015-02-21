@@ -1,6 +1,6 @@
 <main class="content">
     <aside id="search" class="col col-1-5">
-      <form class="pure-form" action="/pieces" method="get">
+      <form class="pure-form" action="/pieces" method="get" id="search-form">
           <h4>Category</h4>
           <% [:solo,
           :solo_with_accompaniment,
@@ -45,7 +45,10 @@
       </form>
     </aside>
     <article class="col col-4-5">
-
+        <a href="#">previous</a>
+        <a href="/pieces?<%= @next_query %>">next</a>
+            <button name="catalogue_search[page]" value="<%= pieces.next_page %>" type="submit" form="search-form">Next</button>
+            <button name="catalogue_search[page]" value="<%= pieces.prev_page %>" type="submit" form="search-form">Previous</button>
         <table class="pure-table">
             <thead>
                 <tr>
@@ -58,10 +61,10 @@
             </thead>
 
             <tbody>
-                <% pieces.each do |piece| %>
+                <% pieces.map{ |r| Piece.new r }.each do |piece| %>
                     <tr>
                         <th>
-                            UD<%= piece %>
+                            <%= piece.catalogue_number %>
                         </th>
                         <th>
                             <%= piece.title %>
