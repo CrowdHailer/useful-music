@@ -67,6 +67,11 @@ class Customer
       assert_match(/country/, err.message)
     end
 
+    def test_can_have_a_country
+      record = create :customer_record
+      assert_equal Country.new('GB'), record.country
+    end
+
     def test_it_saves_time_of_creation
       Time.stub :now, Time.at(0) do
         record = create :customer_record

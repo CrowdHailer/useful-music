@@ -6,6 +6,6 @@ FactoryGirl.define do
     last_name 'Wasozki'
     email 'test@example.com'
     password 'password'
-    country 'uk'
+    country Country.new('GB')
   end
 end
