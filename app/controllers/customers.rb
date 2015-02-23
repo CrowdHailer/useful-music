@@ -42,6 +42,7 @@ class CustomersController < UsefulMusic::App
   end
 
   def update(id)
+    ap request.POST
     customer = Customers.find(id)
     form = Customer::Update::Form.new request.POST['customer']
     validator = Customer::Update::Validator.new
