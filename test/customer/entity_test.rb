@@ -155,6 +155,11 @@ class Customer
       assert_equal :uk, record.question_3
     end
 
+    def test_survey_unanswered
+      record.question_1 = ''
+      assert customer.survey_unanswered?
+    end
+
     def test_can_access_last_login_at
       record.last_login_at = Time.at(200)
       assert_equal Time.at(200), customer.last_login_at

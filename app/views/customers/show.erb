@@ -12,6 +12,9 @@
     <article class="col col-4-5">
         <h2><%= @customer.name %></h2>
         <h3><%= @customer.email %></h3>
+        <div class="bold">
+          <a href="/customers/<%= @customer.id %>/edit#customer-questions">Tell us more</a>
+        </div>
         <ul>
             <li>
                 <b>name </b><%= @customer.name %>
