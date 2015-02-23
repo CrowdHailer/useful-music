@@ -25,6 +25,10 @@ class Customer
         (super || '').strip.downcase
       end
 
+      def country
+        Country.new(super)
+      end
+
       def password
         (super || '').strip
       end
@@ -35,10 +39,6 @@ class Customer
 
       def password_confirmed?
         password == password_confirmation
-      end
-
-      def country
-        Country.new(super)
       end
 
       def terms_agreed?
