@@ -19,19 +19,8 @@ require 'erb'
 
 Dotenv.load
 
-########################################
-
-## Belongs in a config/db.rb file
-
-########################################
-
-DATABASE_URL = ENV.fetch('DATABASE_URL'){
-  "postgres://localhost/useful_music_#{RACK_ENV}"
-}
-Sequel::Model.plugin(:schema)
-DB = Sequel.connect(DATABASE_URL)
-DB.extension(:pagination)
-######### END ###########
+# requires all other configuration
+Dir[File.dirname(__FILE__) + '/*.rb'].each {|file| require file }
 
 ########################################
 
@@ -52,66 +41,6 @@ Warden::Strategies.add(:password) do
     owner ? success!(owner, "Welcome back: #{owner.email}") : fail!('no luck jimmey')
   end
 end
-
-######### END ###########
-
-########################################
-
-## Belongs in a config/carrierwave.rb file
-
-########################################
-
-CarrierWave.configure do |config|
-  config.storage    = :aws
-  config.aws_bucket = ENV.fetch('S3_BUCKET_NAME')
-  config.aws_acl    = :public_read
-  # config.asset_host = 'http://example.com'
-  config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
-
-  config.aws_credentials = {
-    access_key_id:     ENV.fetch('AWS_ACCESS_KEY_ID'),
-    secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY')
-  }
-end
-
-######### END ############
-
-########################################
-
-## Belongs in a config/paypal.rb file
-
-########################################
-
-Paypal.sandbox!
-
-######### END ############
-
-########################################
-
-## Belongs in a config/paypal.rb file
-
-########################################
-
-Mail.defaults do
-  delivery_method :smtp,
-    address: 'smtp.mandrillapp.com',
-    port: 587,
-    domain: 'herokuapp.com',
-    user_name: ENV.fetch('MANDRILL_USERNAME'),
-    password: ENV.fetch('MANDRILL_APIKEY'),
-    authentication: 'plain',
-    :enable_starttls_auto => true
-end
-
-######### END ############
-
-########################################
-
-## Belongs in a config/money.rb file
-
-########################################
-
-Money.default_currency = Money::Currency.new("GBP")
 
 ######### END ###########
 
