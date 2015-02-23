@@ -10,6 +10,7 @@
         <h2>Create Account</h2>
         <!-- TODO remove no validate -->
         <form novalidate class="pure-form pure-form-aligned" action="/customers" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
             <fieldset>
                 <% @validator.errors.full_messages.each do |message| %>
                     <div class="pure-control-group">
@@ -86,8 +87,8 @@
 
 
                 <div class="pure-controls">
-                    <label for="cb" class="pure-checkbox">
-                        <input id="cb" type="checkbox"> I've read the <a href="/about/terms_and_conditions" target="_blank">terms and conditions</a>
+                    <label for="customer_agreement" class="pure-checkbox">
+                        <input id="customer_agreement" name"customer=[agreement]" type="checkbox" required> I've read the <a href="/about/terms_and_conditions" target="_blank">terms and conditions</a>
                     </label>
                     <button type="submit" class="pure-button pure-button-primary">Submit</button>
                 </div>
