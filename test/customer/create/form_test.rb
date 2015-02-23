@@ -81,7 +81,6 @@ class Customer
       def test_obtains_country_when_known
         form = Form.new :country => 'GB'
         assert_equal Country.new('gb'), form.country
-        ap form.country.alpha2
       end
 
       def test_nil_country_when_unknown

@@ -16,7 +16,6 @@ class CustomersController < UsefulMusic::App
   end
 
   def create
-    ap request.POST
     begin
       form = Customer::Create::Form.new request.POST['customer']
       validator = Customer::Create::Validator.new
