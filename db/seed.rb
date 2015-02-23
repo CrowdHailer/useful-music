@@ -3,7 +3,7 @@ Customer.create(
   :last_name => 'Saxton',
   :email => 'peterhsaxton@gmail.com',
   :password => 'asdfghjk',
-  :country => 'GB'
+  :country => Country.new('GB')
 )
 
 Customer.create(
@@ -11,7 +11,7 @@ Customer.create(
   :last_name => 'Hill',
   :email => 'daisy@usefulmusic.com',
   :password => 'asdfghjk',
-  :country => 'GB'
+  :country => Country.new('GB')
 )
 
 Bundler.require :test
