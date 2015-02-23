@@ -2,7 +2,7 @@ class Customer
   class Record < Sequel::Model(:customers)
     def initialize(*args, &block)
       super
-      self.id ||= SecureRandom.uuid()
+      self.id ||= SecureRandom.urlsafe_base64
     end
 
     one_to_many :order_records, :class => :'Order::Record', :key => :customer_id
