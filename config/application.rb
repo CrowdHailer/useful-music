@@ -37,8 +37,7 @@ Dir[File.expand_path('app/mailers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
   middleware << proc do
-    # TODO secure session
-    use Rack::Session::Cookie, secret: 'blah'
+    use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     # TODO secure csrf
     # use Rack::Csrf, :raise => true
     use Rack::MethodOverride
