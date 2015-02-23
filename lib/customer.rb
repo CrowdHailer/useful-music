@@ -6,6 +6,9 @@ class Customer < BaseEntity
                   :email,
                   :password,
                   :country,
+                  :question_1,
+                  :question_2,
+                  :question_3,
                   :last_login_at
 
   def correct_password?(candidate_password)

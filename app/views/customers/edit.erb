@@ -57,18 +57,57 @@
                         <% Country.all.sort_by!{ |c| c.first.downcase }.each do |name, code| %>
                             <option
                                 value="<%= code %>"
-                                <%= 'selected' if code == @customer.country %>>
+                                <%= 'selected' if code == @customer.country.alpha2 %>>
                                 <%= name %>
                             </option>
                         <% end %>
                     </select>
                 </div>
 
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+            <h2>Tell us about your music?</h2>
 
-                <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            <fieldset>
+
+                <div class="pure-control-group">
+                    <label for="customer_question_1">Question 1</label>
+                    <input
+                        id="customer_question_1"
+                        name="customer[question_1]"
+                        type="text"
+                        value="<%= @customer.question_1 %>"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_question_2">Question 2</label>
+                    <input
+                        id="customer_question_2"
+                        name="customer[question_2]"
+                        type="text"
+                        value="<%= @customer.question_2 %>"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_question_3">Question 3</label>
+                    <input
+                        id="customer_question_3"
+                        name="customer[question_3]"
+                        type="text"
+                        value="<%= @customer.question_3 %>"
+                        required
+                        placeholder="">
                 </div>
             </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
         </form>
     </article>
 </main>
