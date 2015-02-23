@@ -5,6 +5,19 @@ module UsefulMusic
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
     render_defaults[:layout] = File.expand_path('app/views/application', APP_ROOT).to_sym
     config[:static_dir] = 'public'
+    def csrf_tag
+      Rack::Csrf.csrf_tag(env)
+    end
+
+    # Return the anti-CSRF token
+    def csrf_token
+      Rack::Csrf.csrf_token(env)
+    end
+
+    # Return the field name which will be looked for in the requests.
+    def csrf_field
+      Rack::Csrf.csrf_field
+    end
     def warden_handler
       env['warden']
     end
@@ -36,10 +49,11 @@ Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require fi
 Dir[File.expand_path('app/mailers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
-  middleware << proc do
+  # belongs in top setting
+  config[:protect_from_csrf] = !(RACK_ENV == 'test')
+  middleware << proc do |app|
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
-    # TODO secure csrf
-    # use Rack::Csrf, :raise => true
+    use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
     use Warden::Manager do |manager|
       manager.default_strategies :password

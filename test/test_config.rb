@@ -43,7 +43,7 @@ end
 
 module ControllerTesting
   def self.included(klass)
-   klass.include Rack::Test::Methods
+    klass.include Rack::Test::Methods
   end
 
   # NOTE http test methods return response
