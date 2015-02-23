@@ -37,6 +37,10 @@ class Customer
         password == password_confirmation
       end
 
+      def country
+        Country.new(super)
+      end
+
       def terms_agreed?
         terms_agreement == 'on'
       end
