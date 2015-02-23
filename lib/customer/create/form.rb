@@ -9,6 +9,7 @@ class Customer
       attribute :password, String
       attribute :password_confirmation, String, :reader => :private
       attribute :country, String
+      attribute :terms_agreement, String, :reader => :private
 
       delegate :each, :to => :to_hash
 
@@ -34,6 +35,10 @@ class Customer
 
       def password_confirmed?
         password == password_confirmation
+      end
+
+      def terms_agreed?
+        terms_agreement == 'on'
       end
     end
   end

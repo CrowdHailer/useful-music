@@ -92,6 +92,16 @@ class Customer
         form = Form.new
         assert_equal '', form.password_confirmation
       end
+
+      def test_obtains_agreement_when_checked
+        form = Form.new :terms_agreement => 'on'
+        assert form.terms_agreed?
+      end
+
+      def test_does_not_obtain_agreement_when_unchecked_checked
+        form = Form.new :terms_agreement => 'other'
+        refute form.terms_agreed?
+      end
     end
   end
 end
