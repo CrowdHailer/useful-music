@@ -9,7 +9,7 @@
           :quarter,
           :larger_ensembles].each do |category| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[category][]" value="<%= category %>">
+                  <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if search.checked?(category) %>>
                   <%= category.capitalize %>
               </label>
           <% end %>
@@ -19,7 +19,7 @@
             :advanced,
             :professional].each do |level| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[level][]" value="<%= level %>">
+                  <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if search.checked?(level) %>>
                   <%= level.capitalize %>
               </label>
           <% end %>
@@ -36,12 +36,13 @@
           :violin,
           :viola,
           :percussion].each do |instrument| %>
-              <label class="pure-radio">
-                  <input type="radio" name="instrument" value="<%= instrument %>">
+              <label class="pure-checkbox">
+                  <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if search.checked?(instrument) %>>
                   <%= instrument.capitalize %>
               </label>
           <% end %>
           <button type="submit" class="pure-button right">Search</button>
+          <a href="/pieces" class="right">clear search</a>
       </form>
     </aside>
     <article class="col col-4-5">
