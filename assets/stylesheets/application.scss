@@ -2,6 +2,7 @@
 @import 'base';
 @import 'header';
 @import 'footer';
+@import 'admin';
 @import 'search';
 .right {
   float: right;
@@ -27,11 +28,10 @@
   overflow: hidden;
 }
 
+
 /*################## Main ###########################*/
 
 main.content {
-  margin-bottom: 15px;
-  margin-top: 15px;
   background-color: aliceblue;
 }
 

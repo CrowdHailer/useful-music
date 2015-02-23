@@ -1,18 +1,19 @@
+<section class="admin content">
+    <form id="form_id" action="/pieces/<%= @piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= @piece.id %> and <%= @piece.items.count %> associated items?')">
+        <input type="hidden" name="_method" value="DELETE">
+        <button class="pure-button button-error right"><i class="fa fa-trash-o"></i> Destroy</button>
+    </form>
+    <a href="/pieces/<%= @piece.id %>/edit" class="pure-button button-warning right">
+        <i class="fa fa-cog"></i>
+        Edit
+    </a>
+</section>
 <main class="content">
-    <aside>
+    <aside class="col col-1-5">
         <ul>
-            <li>
-                <a href="/pieces/<%= @piece.catalogue_number %>/edit">Edit</a>
-            </li>
-            <li>
-                <a href="/pieces">Back</a>
-            </li>
-            <li>
-                <a href="/">Home</a>
-            </li>
         </ul>
     </aside>
-    <article>
+    <article class="col col-4-5">
         <h2><%= "#{@piece.catalogue_number}: " %><%= @piece.title %></h2>
         <h3><%= @piece.sub_heading %></h3>
         <div class="clearfix">
