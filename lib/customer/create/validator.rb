@@ -11,6 +11,12 @@ class Customer
           errors.add(:password_confirmation, 'does not match')
           confirmed = false
         end
+        if form.terms_agreed?
+          agreed = true
+        else
+          errors.add(:terms_agreement, 'is not checked')
+          agreed = false
+        end
         details && confirmed
       end
 

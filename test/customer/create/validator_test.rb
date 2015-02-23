@@ -81,6 +81,11 @@ class Customer
         refute validator.valid? OpenStruct.new
         assert_includes validator.errors.on(:country), 'is not present'
       end
+
+      def test_is_invalid_without_terms_agreed
+        refute validator.valid? OpenStruct.new
+        assert_includes validator.errors.on(:terms_agreement), 'is not checked'
+      end
     end
   end
 end
