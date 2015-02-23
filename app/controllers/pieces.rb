@@ -5,8 +5,11 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
-    pieces = Piece::Record.all
-    render :index, :locals => {:pieces => pieces}
+
+    # ap request.GET['catalogue_search']
+    search = Catalogue::Search.new request.GET.fetch('catalogue_search', {})
+    pieces = Catalogue.all search
+    render :index, :locals => {:pieces => pieces, :search => search}
   end
 
   def new
