@@ -30,4 +30,10 @@ class SessionsControllerTest < MyRecordTest
     assert_equal customer_record.id, last_request.env['rack.session'][:user_id]
     assert_equal "Welcome back #{customer_record.first_name} #{customer_record.last_name}", flash['success']
   end
+
+  def test_can_log_out
+    customer_record = create :customer_record
+    delete '/', {}, {'rack.session' => { :user_id => customer_record.id }}
+    assert_nil last_request.env['rack.session'][:user_id]
+  end
 end

@@ -18,9 +18,6 @@ module UsefulMusic
     def csrf_field
       Rack::Csrf.csrf_field
     end
-    def warden_handler
-      env['warden']
-    end
 
     def current_customer
       Customers.find(session[:user_id]) || Guest.new
