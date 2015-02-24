@@ -5,6 +5,16 @@ module UsefulMusic
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
     render_defaults[:layout] = File.expand_path('app/views/application', APP_ROOT).to_sym
     config[:static_dir] = 'public'
+    
+    def log_in(customer)
+      session[:user_id] = customer.id
+    end
+
+    def log_out
+      session.delete(:user_id)
+      @current_user = nil
+    end
+
     def csrf_tag
       Rack::Csrf.csrf_tag(env)
     end

@@ -30,12 +30,4 @@ class SessionsController < UsefulMusic::App
     log_out
   end
 
-  def log_in(customer)
-    session[:user_id] = customer.id
-  end
-
-  def log_out
-    session.delete(:user_id)
-    @current_user = nil
-  end
 end
