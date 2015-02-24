@@ -8,6 +8,10 @@ class Guest
     false
   end
 
+  def admin?
+    false
+  end
+
   def id
     nil
   end

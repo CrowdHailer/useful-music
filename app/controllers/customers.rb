@@ -44,7 +44,7 @@ class CustomersController < UsefulMusic::App
       render :show
     else
       flash['error'] = 'Access denied'
-      redirect '/customers'
+      redirect '/'
     end
   end
 
