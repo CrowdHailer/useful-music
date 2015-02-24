@@ -15,4 +15,9 @@ class SessionsControllerTest < MyRecordTest
   def test_redirect_to_account_if_logged_in
     skip
   end
+
+  def test_render_login_form_when_credentials_invalid
+    post '/'
+    assert_equal 'Invalid login details', flash['error']
+  end
 end

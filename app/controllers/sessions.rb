@@ -7,4 +7,8 @@ class SessionsController < UsefulMusic::App
   def new
     render :new
   end
+
+  def create
+    flash['error'] = 'Invalid login details'
+  end
 end
