@@ -6,6 +6,9 @@ class Customer < BaseEntity
                   :email,
                   :password,
                   :country,
+                  :question_1,
+                  :question_2,
+                  :question_3,
                   :last_login_at
 
   def correct_password?(candidate_password)
@@ -34,6 +37,12 @@ class Customer < BaseEntity
 
   def orders
     record.order_records.map{ |r| Order.new r }
+  end
+
+  def survey_unanswered?
+    (question_1.nil? || question_1.empty?) &&
+    (question_2.nil? || question_2.empty?) &&
+    (question_3.nil? || question_3.empty?)
   end
 
   private

@@ -78,9 +78,14 @@ class Customer
         assert_equal '', form.password
       end
 
-      def test_obtains_country
-        form = Form.new :country => 'uk'
-        assert_equal 'uk', form.country
+      def test_obtains_country_when_known
+        form = Form.new :country => 'GB'
+        assert_equal Country.new('gb'), form.country
+      end
+
+      def test_nil_country_when_unknown
+        form = Form.new :country => 'ZZ'
+        assert_nil form.country
       end
 
       def test_strips_whitespace_from_password_confirmation
@@ -91,6 +96,16 @@ class Customer
       def test_silent_if_password_confirmation_not_supplied
         form = Form.new
         assert_equal '', form.password_confirmation
+      end
+
+      def test_obtains_agreement_when_checked
+        form = Form.new :terms_agreement => 'on'
+        assert form.terms_agreed?
+      end
+
+      def test_does_not_obtain_agreement_when_unchecked_checked
+        form = Form.new :terms_agreement => 'other'
+        refute form.terms_agreed?
       end
     end
   end

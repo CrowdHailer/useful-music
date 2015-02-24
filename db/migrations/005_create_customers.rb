@@ -7,6 +7,13 @@ Sequel.migration do
       String :email, :null => false, :unique => true
       String :password, :null => false
       String :country, :null => false
+      TrueClass :admin, :default => false
+      String :remember
+      String :reset
+      DateTime :reset_sent_at
+      String :question_1
+      String :question_2
+      String :question_3
 
       DateTime :created_at
       DateTime :updated_at

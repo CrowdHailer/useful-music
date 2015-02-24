@@ -1,17 +1,35 @@
 <main class="content">
-    <aside>
+    <aside class="col col-1-5">
         <ul>
             <li>
                 <a href="/">Home</a>
             </li>
             <li>
-                <a href="/customers/<%= @customer.id %>/edit">Edit</a>
+                <a href="/customers/<%= @customer.id %>">My Account</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Change Password</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Orders</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Downloads</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Logout</a>
             </li>
         </ul>
     </aside>
-    <article>
+    <article class="col col-4-5">
         <h2><%= @customer.name %></h2>
         <h3><%= @customer.email %></h3>
+        <div class="bold">
+          <a href="/customers/<%= @customer.id %>/edit#customer-questions">Tell us more</a>
+        </div>
         <ul>
             <li>
                 <b>name </b><%= @customer.name %>

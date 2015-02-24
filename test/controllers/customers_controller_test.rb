@@ -24,7 +24,11 @@ class CustomersControllerTest < MyRecordTest
 
   def test_can_create_customer
     clear_mail
-    post '/', :customer => attributes_for(:customer_record).merge(:password_confirmation => 'password')
+    post '/', :customer => attributes_for(:customer_record).merge(
+      :password_confirmation => 'password',
+      :terms_agreement => 'on',
+      :country => 'GB')
+
     assert_match(/#{last_customer.id}/, last_response.location)
     assert_includes last_message.to, last_customer.email
     assert_includes last_message.body, last_customer.id
@@ -43,9 +47,9 @@ class CustomersControllerTest < MyRecordTest
 
   def test_can_update_a_customer
     record = create :customer_record
-    put "/#{record.id}", :customer => record.values.merge(:first_name => 'enrique')
+    put "/#{record.id}", :customer => record.values.merge(:first_name => 'Enrique')
     assert_match(/#{record.id}/, last_response.location)
-    assert_equal 'enrique', Customers.last.first_name
+    assert_equal 'Enrique', Customers.last.first_name
   end
 
   def test_can_destroy_a_customer

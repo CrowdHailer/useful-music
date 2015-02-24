@@ -4,8 +4,10 @@ FactoryGirl.define do
   factory :customer_record, :class => Customer::Record do
     first_name 'Mike'
     last_name 'Wasozki'
-    email 'test@example.com'
+    sequence :email do |n|
+			"test#{n}@example.com"
+		end
     password 'password'
-    country 'uk'
+    country Country.new('GB')
   end
 end

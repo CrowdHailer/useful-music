@@ -67,6 +67,45 @@ class Customer
       assert_match(/country/, err.message)
     end
 
+    def test_can_have_a_country
+      record = create :customer_record
+      assert_equal Country.new('GB'), record.country
+    end
+
+    def test_crypts_remember
+      record = create :customer_record, :remember => 'remember'
+      record.reload
+      assert_equal record.remember, 'remember'
+      refute_equal 'remember', record.remember
+    end
+
+    def test_crypts_reset
+      record = create :customer_record, :reset => 'reset'
+      record.reload
+      assert_equal record.reset, 'reset'
+      refute_equal 'reset', record.reset
+    end
+
+    def test_can_have_question_1
+      record = create :customer_record, :question_1 => 'really'
+      assert_equal 'really', record.question_1
+    end
+
+    def test_can_have_question_2
+      record = create :customer_record, :question_2 => 'really'
+      assert_equal 'really', record.question_2
+    end
+
+    def test_can_have_question_3
+      record = create :customer_record, :question_3 => 'really'
+      assert_equal 'really', record.question_3
+    end
+
+    def test_can_have_admin_status
+      record = create :customer_record, :admin => true
+      assert_equal true, record.admin
+    end
+
     def test_it_saves_time_of_creation
       Time.stub :now, Time.at(0) do
         record = create :customer_record

@@ -5,7 +5,7 @@ class CustomersController < UsefulMusic::App
   render_defaults[:dir] += '/customers'
 
   def index
-    @customers = Customers.all
+    @customers = Customers.all request.GET
     render :index
   end
 
