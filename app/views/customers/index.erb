@@ -1,5 +1,5 @@
 <main class="content">
-    <aside>
+    <aside class="col col-1-5">
       <ul>
         <li>
           <a href="/customers/new">New Customer</a>
@@ -9,11 +9,20 @@
         </li>
       </ul>
     </aside>
-    <article>
+    <article class="col col-4-5">
         <h2>Customers</h2>
-        <p>
-          Add Pagination
-        </p>
+        <form class="" action="/customers" method="get">
+          <button name="page" value="1">First Page</button>
+          <button name="page" value="<%= @customers.prev_page %>" <%= 'disabled' unless @customers.prev_page %>>Previous</button>
+          <select name="page_size">
+              <option <%= 'selected' if @customers.page_size == 10 %>>10</option>
+              <option <%= 'selected' if @customers.page_size == 15 %>>15</option>
+              <option <%= 'selected' if @customers.page_size == 20 %>>20</option>
+          </select>
+          <button name="page" value="1">Refresh</button>
+          <button name="page" value="<%= @customers.next_page %>" <%= 'disabled' unless @customers.next_page %>>Next</button>
+          <button name="page" value="<%= @customers.page_count %>">Last Page</button>
+        </form>
         <table class="pure-table">
             <thead>
                 <tr>
