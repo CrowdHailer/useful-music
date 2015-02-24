@@ -5,8 +5,13 @@ class CustomersController < UsefulMusic::App
   render_defaults[:dir] += '/customers'
 
   def index
-    @customers = Customers.all request.GET
-    render :index
+    if current_customer.admin?
+      @customers = Customers.all request.GET
+      render :index
+    else
+      flash['error'] = 'Access denied'
+      redirect '/'
+    end
   end
 
   def new
