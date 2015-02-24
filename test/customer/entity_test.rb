@@ -60,8 +60,18 @@ class Customer
       refute customer.admin?
     end
 
+    def test_can_be_an_admin
+      record.admin = true
+      assert customer.admin?
+    end
+
     def test_is_a_customer
       assert customer.customer?
+    end
+
+    def test_survey_unanswered
+      record.question_1 = ''
+      assert customer.survey_unanswered?
     end
 
     ################# Associations #####################
@@ -153,11 +163,6 @@ class Customer
     def test_can_set_question_3
       customer.question_3 = :uk
       assert_equal :uk, record.question_3
-    end
-
-    def test_survey_unanswered
-      record.question_1 = ''
-      assert customer.survey_unanswered?
     end
 
     def test_can_access_last_login_at

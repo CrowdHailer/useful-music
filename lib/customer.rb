@@ -32,7 +32,7 @@ class Customer < BaseEntity
   end
 
   def admin?
-    false
+    record.admin
   end
 
   def orders
