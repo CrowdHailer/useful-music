@@ -19,7 +19,8 @@
         </li>
         <hr>
         <form class="pure-form pure-form-aligned" action="/items/<%= @item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-          <input type="hidden" name="_method" value="PUT">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="PUT">
             <fieldset>
 
                 <select name="piece[item][][type]" style="display:none">

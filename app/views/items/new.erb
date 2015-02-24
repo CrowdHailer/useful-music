@@ -19,6 +19,7 @@
         </li>
         <hr>
         <form class="pure-form pure-form-aligned" action="/items/" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
             <input type="hidden" name="item[piece]" value="<%= @piece.id %>">
             <fieldset>
 

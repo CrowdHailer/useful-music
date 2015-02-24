@@ -22,7 +22,8 @@
         <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
 
         <form class="pure-form pure-form-aligned" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-          <input type="hidden" name="_method" value="PUT">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="PUT">
             <fieldset>
                 <div class="pure-control-group">
                     <label for="piece_id">Catalog <em>UD</em></label>
@@ -345,6 +346,7 @@
                         </th>
                         <th>
                             <form id="form_id" action="/items/<%= item.id %>" method="post">
+                                <%= csrf_tag %>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="submit" value="Destroy">
                             </form>

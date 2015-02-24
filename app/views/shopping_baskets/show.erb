@@ -34,6 +34,7 @@
                       </th>
                       <th>
                           <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                              <%= csrf_tag %>
                               <input type="hidden" name="_method" value="PUT">
                               <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:2em;">
                               <input type="submit" value="Update">
@@ -50,6 +51,7 @@
                       </th>
                       <th>
                           <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                              <%= csrf_tag %>
                               <input type="hidden" name="_method" value="DELETE">
                               <input type="submit" value="Destroy">
                           </form>
@@ -73,6 +75,7 @@
       </table>
       <% if current_customer.customer? %>
           <form id="form_id" action="/orders" method="post">
+              <%= csrf_tag %>
               <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
               <input type="text" name="order[discount_code]" value="" placeholder="discount code">
               <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" />
