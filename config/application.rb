@@ -57,6 +57,7 @@ class UsefulMusic::App
     use Rack::MethodOverride
   end
   controller '/customers', CustomersController
+  controller '/sessions', SessionsController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
   controller '/purchases', PurchasesController
