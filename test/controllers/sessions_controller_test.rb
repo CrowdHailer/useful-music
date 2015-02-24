@@ -13,7 +13,9 @@ class SessionsControllerTest < MyRecordTest
   end
 
   def test_redirect_to_account_if_logged_in
-    skip
+    customer_record = create :customer_record
+    get '/new', {}, {'rack.session' => { :user_id => customer_record.id }}
+    assert_includes last_response.location, customer_record.id
   end
 
   def test_render_login_form_when_credentials_invalid

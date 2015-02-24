@@ -23,7 +23,7 @@ module UsefulMusic
     end
 
     def current_customer
-      Guest.new
+      Customers.find(session[:user_id]) || Guest.new
     end
 
     def live_shopping_basket_id

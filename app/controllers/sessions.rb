@@ -5,7 +5,11 @@ class SessionsController < UsefulMusic::App
   render_defaults[:dir] += '/sessions'
 
   def new
-    render :new
+    if current_customer.id
+      redirect "/customers/#{current_customer.id}"
+    else
+      render :new
+    end
   end
 
   def create

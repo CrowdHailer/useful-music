@@ -7,4 +7,8 @@ class Guest
   def customer?
     false
   end
+
+  def id
+    nil
+  end
 end
