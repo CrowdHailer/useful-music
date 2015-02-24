@@ -9,7 +9,20 @@ class SessionsController < UsefulMusic::App
   end
 
   def create
-    flash['error'] = 'Invalid login details'
-    redirect '/sessions/new'
+    form = Session::Create::Form.new request.POST['session']
+    validator = Session::Create::Validator.new
+    customer = validator.valid?(form) && Customers.authenticate(form.email, form.password)
+    if customer
+      log_in customer
+      flash['success'] = "Welcome back #{customer.name}"
+      redirect "/customers/#{customer.id}"
+    else
+      flash['error'] = 'Invalid login details'
+      redirect '/sessions/new'
+    end
+  end
+
+  def log_in(customer)
+    session[:user_id] = customer.id
   end
 end
