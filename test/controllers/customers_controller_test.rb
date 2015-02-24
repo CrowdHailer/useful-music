@@ -12,15 +12,37 @@ class CustomersControllerTest < MyRecordTest
     Customers.last
   end
 
+  def customer_email
+    'customer@example.com'
+  end
+
+  def customer
+    @customer ||= Customer.new(create :customer_record, :email => customer_email)
+  end
+
+  def admin_email
+    'admin@example.com'
+  end
+
+  def admin
+    @admin ||= Customer.new(create :customer_record, :admin, :email => admin_email)
+  end
+
+  def interloper_email
+    'interloper@example.com'
+  end
+
+  def interloper
+    @interloper ||= Customer.new(create :customer_record, :email => interloper_email)
+  end
+
   def test_index_page_is_available_to_admin
-    customer_record = create :customer_record, :admin, :email => 'test@example.com'
-    assert_ok get '/', {}, {'rack.session' => { :user_id => customer_record.id }}
-    assert_includes last_response.body, 'test@example.com'
+    assert_ok get '/', {}, {'rack.session' => { :user_id => admin.id }}
+    assert_includes last_response.body, admin_email
   end
 
   def test_index_page_is_not_available_to_non_admin
-    customer_record = create :customer_record, :email => 'test@example.com'
-    get '/', {}, {'rack.session' => { :user_id => customer_record.id }}
+    get '/', {}, {'rack.session' => { :user_id => interloper.id }}
     assert_equal 'Access denied', flash['error']
     assert last_response.redirect?
   end
@@ -49,16 +71,19 @@ class CustomersControllerTest < MyRecordTest
   end
 
   def test_show_page_is_unavailable_when_not_logged_in
-    customer_record = create :customer_record, :email => 'test@example.com'
-    get "/#{customer_record.id}"
+    get "/#{customer.id}"
     assert_equal 'Access denied', flash['error']
     assert last_response.redirect?
   end
 
   def test_show_page_is_available_to_that_customer
-    customer_record = create :customer_record, :email => 'test@example.com'
-    assert_ok get "/#{customer_record.id}", {}, {'rack.session' => { :user_id => customer_record.id }}
-    assert_includes last_response.body, 'test@example.com'
+    assert_ok get "/#{customer.id}", {}, {'rack.session' => {:user_id => customer.id}}
+    assert_includes last_response.body, customer_email
+  end
+
+  def test_show_page_is_available_to_admin
+    assert_ok get "/#{customer.id}", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_includes last_response.body, customer_email
   end
 
   def test_edit_page_is_available

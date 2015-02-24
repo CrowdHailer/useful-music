@@ -39,7 +39,7 @@ class CustomersController < UsefulMusic::App
 
   def show(id)
     customer = Customers.find(id)
-    if customer && current_customer.id == customer.id
+    if current_customer.admin? || customer && current_customer.id == customer.id
       @customer = customer
       render :show
     else
