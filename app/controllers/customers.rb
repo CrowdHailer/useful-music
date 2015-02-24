@@ -23,6 +23,7 @@ class CustomersController < UsefulMusic::App
       customer = Customer.create form
       log_in customer
       customer_mailer.account_created
+      flash['success'] = 'Welcome to Useful Music'
       redirect "/customers/#{customer.id}"
     rescue Veto::InvalidEntity => err
       @form = form
@@ -32,8 +33,14 @@ class CustomersController < UsefulMusic::App
   end
 
   def show(id)
-    @customer = Customers.find(id)
-    render :show
+    customer = Customers.find(id)
+    if customer && current_customer.id == customer.id
+      @customer = customer
+      render :show
+    else
+      flash['error'] = 'Access denied'
+      redirect '/customers'
+    end
   end
 
   def edit(id)

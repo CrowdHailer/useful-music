@@ -32,29 +32,43 @@ class CustomersControllerTest < MyRecordTest
     assert_match(/#{last_customer.id}/, last_response.location)
     assert_includes last_message.to, last_customer.email
     assert_includes last_message.body, last_customer.id
+    assert_equal 'Welcome to Useful Music', flash['success']
   end
 
-  def test_show_page_is_available
-    record = create :customer_record, :email => 'test@example.com'
-    assert_ok get "/#{record.id}"
+  def test_show_page_is_unavailable_when_no_customer
+    get "/1"
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_show_page_is_unavailable_when_not_logged_in
+    customer_record = create :customer_record, :email => 'test@example.com'
+    get "/#{customer_record.id}"
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_show_page_is_available_to_that_customer
+    customer_record = create :customer_record, :email => 'test@example.com'
+    assert_ok get "/#{customer_record.id}", {}, {'rack.session' => { :user_id => customer_record.id }}
     assert_includes last_response.body, 'test@example.com'
   end
 
   def test_edit_page_is_available
-    record = create :customer_record
-    assert_ok get "/#{record.id}/edit"
+    customer_record = create :customer_record
+    assert_ok get "/#{customer_record.id}/edit"
   end
 
   def test_can_update_a_customer
-    record = create :customer_record
-    put "/#{record.id}", :customer => record.values.merge(:first_name => 'Enrique')
-    assert_match(/#{record.id}/, last_response.location)
+    customer_record = create :customer_record
+    put "/#{customer_record.id}", :customer => customer_record.values.merge(:first_name => 'Enrique')
+    assert_match(/#{customer_record.id}/, last_response.location)
     assert_equal 'Enrique', Customers.last.first_name
   end
 
   def test_can_destroy_a_customer
-    record = create :customer_record
-    delete "/#{record.id}"
+    customer_record = create :customer_record
+    delete "/#{customer_record.id}"
     assert_empty Customers
     assert_match(/customers/, last_response.location)
   end
