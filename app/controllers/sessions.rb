@@ -10,5 +10,6 @@ class SessionsController < UsefulMusic::App
 
   def create
     flash['error'] = 'Invalid login details'
+    redirect '/sessions/new'
   end
 end
