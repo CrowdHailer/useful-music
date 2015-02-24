@@ -23,7 +23,7 @@ module UsefulMusic
     end
 
     def current_customer
-      warden_handler.user || Guest.new
+      Guest.new
     end
 
     def live_shopping_basket_id
@@ -55,14 +55,7 @@ class UsefulMusic::App
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
-    use Warden::Manager do |manager|
-      manager.default_strategies :password
-      manager.failure_app = AuthenticationController
-      manager.serialize_into_session { |customer| customer.id }
-      manager.serialize_from_session { |id| Customers.find(id) }
-    end
   end
-  controller '/authentication', AuthenticationController
   controller '/customers', CustomersController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
