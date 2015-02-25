@@ -184,4 +184,9 @@ class CustomersControllerTest < MyRecordTest
     assert_match(/customers/, last_response.location)
   end
 
+  def test_edit_password_page_is_available_to_customer
+    assert_ok get "/#{customer.id}/change_password", {}, {'rack.session' => {:user_id => customer.id}}
+    assert_includes last_response.body, customer.name
+  end
+
 end

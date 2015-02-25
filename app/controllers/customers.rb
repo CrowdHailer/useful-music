@@ -1,5 +1,6 @@
 class CustomersController < UsefulMusic::App
   include Scorched::Rest
+  get('/:id/change_password') { |id| send :edit_password, id }
 
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/customers'
@@ -79,6 +80,12 @@ class CustomersController < UsefulMusic::App
       @validator = validator
       render :edit
     end
+  end
+
+  def edit_password(id)
+    @customer = check_access!(id)
+    @validator = Customer::Create::Validator.new
+    render :edit_password
   end
 
   def destroy(id)
