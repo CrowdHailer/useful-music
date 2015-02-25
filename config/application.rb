@@ -5,6 +5,16 @@ module UsefulMusic
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
     render_defaults[:layout] = File.expand_path('app/views/application', APP_ROOT).to_sym
     config[:static_dir] = 'public'
+    
+    def log_in(customer)
+      session[:user_id] = customer.id
+    end
+
+    def log_out
+      session.delete(:user_id)
+      @current_user = nil
+    end
+
     def csrf_tag
       Rack::Csrf.csrf_tag(env)
     end
@@ -18,12 +28,9 @@ module UsefulMusic
     def csrf_field
       Rack::Csrf.csrf_field
     end
-    def warden_handler
-      env['warden']
-    end
 
     def current_customer
-      warden_handler.user || Guest.new
+      Customers.find(session[:user_id]) || Guest.new
     end
 
     def live_shopping_basket_id
@@ -55,15 +62,9 @@ class UsefulMusic::App
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
-    use Warden::Manager do |manager|
-      manager.default_strategies :password
-      manager.failure_app = AuthenticationController
-      manager.serialize_into_session { |customer| customer.id }
-      manager.serialize_from_session { |id| Customers.find(id) }
-    end
   end
-  controller '/authentication', AuthenticationController
   controller '/customers', CustomersController
+  controller '/sessions', SessionsController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
   controller '/purchases', PurchasesController

@@ -55,6 +55,10 @@ module ControllerTesting
     assert response.ok?, "Response was #{last_response.status} not OK"
   end
 
+  def flash
+    last_request.env['scorched.flash'][:flash]
+  end
+
 end
 
 CarrierWave.configure do |config|

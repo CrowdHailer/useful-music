@@ -57,7 +57,6 @@ class Customer
       end
 
       def test_is_invalid_without_password
-        # TODO confirmation
         refute validator.valid? OpenStruct.new
         assert_includes validator.errors.on(:password), 'is not present'
       end
