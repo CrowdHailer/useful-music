@@ -56,7 +56,7 @@ class CustomersController < UsefulMusic::App
       customer.public_send "#{attr}=", value
     end
     customer.record.save
-    flash[:success] = "Update successful"
+    flash['success'] = "Update successful"
     redirect "/customers/#{customer.id}"
   end
 
