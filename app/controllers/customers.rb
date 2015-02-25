@@ -91,7 +91,7 @@ class CustomersController < UsefulMusic::App
       validator.validate! form
       customer.password = form.password
       customer.record.save
-      flash['success'] = "Password Changed"
+      flash['success'] = "Password changed"
       redirect "/customers/#{customer.id}"
     rescue Veto::InvalidEntity => err
       @customer = customer
