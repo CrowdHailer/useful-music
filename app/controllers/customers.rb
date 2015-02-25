@@ -30,8 +30,14 @@ class CustomersController < UsefulMusic::App
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
       redirect "/customers/#{customer.id}"
+      # TODO untested failure cases, usecase or leave in entity layer
     rescue Veto::InvalidEntity => err
       @form = form
+      @validator = validator
+      render :new
+    rescue Sequel::UniqueConstraintViolation => err
+      @form = form
+      validator.errors.add(:email, 'is already taken')
       @validator = validator
       render :new
     end
@@ -44,20 +50,35 @@ class CustomersController < UsefulMusic::App
 
   def edit(id)
     @customer = check_access!(id)
+    @validator = Customer::Create::Validator.new
     render :edit
   end
 
   def update(id)
-    customer = check_access!(id)
-    form = Customer::Update::Form.new request.POST['customer']
-    validator = Customer::Update::Validator.new
-    validator.validate! form
-    form.each do |attr, value|
-      customer.public_send "#{attr}=", value
+    begin
+      customer = check_access!(id)
+      form = Customer::Update::Form.new request.POST['customer']
+      validator = Customer::Update::Validator.new
+      validator.validate! form
+      form.each do |attr, value|
+        customer.public_send "#{attr}=", value
+      end
+      customer.record.save
+      flash['success'] = "Update successful"
+      redirect "/customers/#{customer.id}"
+      # TODO untested failure cases, usecase or leave in entity layer
+    rescue Veto::InvalidEntity => err
+      @customer = customer
+      @form = form
+      @validator = validator
+      render :edit
+    rescue Sequel::UniqueConstraintViolation => err
+      @customer = customer
+      @form = form
+      validator.errors.add(:email, 'is already taken')
+      @validator = validator
+      render :edit
     end
-    customer.record.save
-    flash['success'] = "Update successful"
-    redirect "/customers/#{customer.id}"
   end
 
   def destroy(id)

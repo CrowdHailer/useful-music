@@ -30,12 +30,16 @@
     </aside>
     <article class="col col-4-5">
         <h2><%= @customer.name %>: Edit Account</h2>
-        <!-- TODO remove no validate -->
-        <form novalidate class="pure-form pure-form-aligned" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form class="pure-form pure-form-aligned" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
-
+                <% @validator.errors.full_messages.each do |message| %>
+                    <div class="pure-control-group">
+                        <label></label>
+                        <span class="errors"><%= message.gsub('_', ' ').capitalize %></span>
+                    </div>
+                <% end %>
                 <div class="pure-control-group">
                     <label for="customer_first_name">first name</label>
                     <input
