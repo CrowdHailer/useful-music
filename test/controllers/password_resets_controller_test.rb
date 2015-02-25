@@ -35,4 +35,15 @@ class PasswordResetsControllerTest < MyRecordTest
     customer.record.save
     assert_ok get "/#{token}/edit", {:email => email}
   end
+
+  def test_can_reset_password
+    email = customer.email
+    token = customer.create_password_reset
+    customer.record.save
+    put "/#{token}", {:email => email, :customer => {
+      :password => 'new',
+      :password_confirmation => 'new'
+    }}
+    
+  end
 end

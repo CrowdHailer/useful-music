@@ -26,8 +26,19 @@ class PasswordResetsController < UsefulMusic::App
   end
 
   def edit(id)
+    @validator = PasswordReset::Update::Validator.new
     email = request.GET['email']
+    @id = id
     @customer = Customers.find_by_email(email)
     render :edit
+  end
+
+  def update(id)
+    email = request.POST['email']
+    customer = Customers.find_by_email(email)
+    if customer && customer.password_reset_token == id
+    else
+    end
+    ''
   end
 end
