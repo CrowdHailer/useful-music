@@ -8,37 +8,9 @@ class CustomersControllerTest < MyRecordTest
     CustomersController
   end
 
-  def last_customer
-    Customers.last
-  end
-
-  def customer_email
-    'customer@example.com'
-  end
-
-  def customer
-    @customer ||= Customer.new(create :customer_record, :email => customer_email)
-  end
-
-  def admin_email
-    'admin@example.com'
-  end
-
-  def admin
-    @admin ||= Customer.new(create :customer_record, :admin, :email => admin_email)
-  end
-
-  def interloper_email
-    'interloper@example.com'
-  end
-
-  def interloper
-    @interloper ||= Customer.new(create :customer_record, :email => interloper_email)
-  end
-
   def test_index_page_is_available_to_admin
     assert_ok get '/', {}, {'rack.session' => { :user_id => admin.id }}
-    assert_includes last_response.body, admin_email
+    assert_includes last_response.body, admin.email
   end
 
   def test_index_page_is_not_available_to_non_admin
@@ -84,12 +56,12 @@ class CustomersControllerTest < MyRecordTest
 
   def test_show_page_is_available_to_that_customer
     assert_ok get "/#{customer.id}", {}, {'rack.session' => {:user_id => customer.id}}
-    assert_includes last_response.body, customer_email
+    assert_includes last_response.body, customer.email
   end
 
   def test_show_page_is_available_to_admin
     assert_ok get "/#{customer.id}", {}, {'rack.session' => {:user_id => admin.id}}
-    assert_includes last_response.body, customer_email
+    assert_includes last_response.body, customer.email
   end
 
   def test_edit_page_is_unavailable_when_no_customer
@@ -112,12 +84,12 @@ class CustomersControllerTest < MyRecordTest
 
   def test_edit_page_is_available_to_that_customer
     assert_ok get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => customer.id}}
-    assert_includes last_response.body, customer_email
+    assert_includes last_response.body, customer.email
   end
 
   def test_edit_page_is_available_to_admin
     assert_ok get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => admin.id}}
-    assert_includes last_response.body, customer_email
+    assert_includes last_response.body, customer.email
   end
 
   def test_update_is_unavailable_when_no_customer
