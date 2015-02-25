@@ -74,6 +74,11 @@ class Customer
       assert customer.survey_unanswered?
     end
 
+    def test_generates_reset_token
+      skip
+      customer.create_password_rest
+    end
+
     ################# Associations #####################
 
     def test_has_orders

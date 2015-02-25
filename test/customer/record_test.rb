@@ -72,18 +72,18 @@ class Customer
       assert_equal Country.new('GB'), record.country
     end
 
-    def test_crypts_remember
-      record = create :customer_record, :remember => 'remember'
+    def test_crypts_remember_token
+      record = create :customer_record, :remember_token => 'remember'
       record.reload
-      assert_equal record.remember, 'remember'
-      refute_equal 'remember', record.remember
+      assert_equal record.remember_token, 'remember'
+      refute_equal 'remember', record.remember_token
     end
 
     def test_crypts_reset
-      record = create :customer_record, :reset => 'reset'
+      record = create :customer_record, :password_reset_token => 'password_reset_token'
       record.reload
-      assert_equal record.reset, 'reset'
-      refute_equal 'reset', record.reset
+      assert_equal record.password_reset_token, 'password_reset_token'
+      refute_equal 'password_reset_token', record.password_reset_token
     end
 
     def test_can_have_question_1
