@@ -88,6 +88,11 @@ module Customers
       Customer.new(record) if record
     end
 
+    def find_by_email(email)
+      record = Customer::Record.find(:email => email)
+      record.nil? ? nil : Customer.new(record)
+    end
+
     def authenticate(email, password)
       record = Customer::Record.find(:email => email)
       customer = record.nil? ? nil : Customer.new(record)

@@ -11,9 +11,10 @@ class PasswordResetsController < UsefulMusic::App
 
   def create
     form = OpenStruct.new(:email => request.POST['customer']['email'])
-    customer = Customer.new(Customer::Record.find(:email => form.email)) if Customer::Record.find(:email => form.email)
+    customer = Customers.find_by_email(form.email)
     if customer
       customer.create_password_reset
+      customer.record.save
       # Set customer on mailer after creation?
       CustomerMailer.new(customer, :application_url => url).password_reset_created
       flash['success'] = 'A password reset as been sent to your email'
@@ -22,5 +23,11 @@ class PasswordResetsController < UsefulMusic::App
       @customer_email_unknown = true
       render :new
     end
+  end
+
+  def edit(id)
+    email = request.GET['email']
+    @customer = Customers.find_by_email(email)
+    render :edit
   end
 end
