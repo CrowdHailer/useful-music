@@ -11,16 +11,20 @@
                 <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
             </li>
             <li>
-                <a href="/customers/<%= @customer.id %>/edit">Change Password</a>
+                <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
             </li>
             <li>
-                <a href="/customers/<%= @customer.id %>/edit">Orders</a>
+                <a href="/customers/<%= @customer.id %>/orders">Orders</a>
             </li>
             <li>
-                <a href="/customers/<%= @customer.id %>/edit">Downloads</a>
+                <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
             </li>
             <li>
-                <a href="/customers/<%= @customer.id %>/edit">Logout</a>
+                <form id="form_id" action="/sessions" method="post">
+                    <%= csrf_tag %>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="logout">
+                </form>
             </li>
         </ul>
     </aside>

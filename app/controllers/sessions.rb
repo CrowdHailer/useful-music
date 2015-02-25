@@ -28,6 +28,7 @@ class SessionsController < UsefulMusic::App
 
   delete '/' do
     log_out
+    redirect '/'
   end
 
 end
