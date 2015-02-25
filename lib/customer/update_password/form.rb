@@ -19,6 +19,11 @@ class Customer
         (super || '').strip
       end
 
+      def password_confirmed?
+        # TODO check tests
+        password == password_confirmation
+      end
+
     end
   end
 end

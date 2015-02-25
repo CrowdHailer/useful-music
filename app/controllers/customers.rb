@@ -1,6 +1,7 @@
 class CustomersController < UsefulMusic::App
   include Scorched::Rest
   get('/:id/change_password') { |id| send :edit_password, id }
+  put('/:id/change_password') { |id| send :update_password, id }
 
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/customers'
@@ -79,6 +80,24 @@ class CustomersController < UsefulMusic::App
       validator.errors.add(:email, 'is already taken')
       @validator = validator
       render :edit
+    end
+  end
+
+  def update_password(id)
+    begin
+      customer = check_access!(id)
+      form = Customer::UpdatePassword::Form.new request.POST['customer']
+      validator = Customer::UpdatePassword::Validator.new customer.password
+      validator.validate! form
+      customer.password = form.password
+      customer.record.save
+      flash['success'] = "Password Changed"
+      redirect "/customers/#{customer.id}"
+    rescue Veto::InvalidEntity => err
+      @customer = customer
+      @form = form
+      @validator = validator
+      render :edit_password
     end
   end
 
