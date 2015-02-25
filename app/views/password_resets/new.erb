@@ -11,12 +11,12 @@
         <form class="pure-form pure-form-aligned" action="/password_resets" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <fieldset>
-                 @validator.errors.full_messages.each do |message|
+                    <% if @customer_email_unknown %>
                     <div class="pure-control-group">
                         <label></label>
-                        <span class="errors">< message.gsub('_', ' ').capitalize %></span>
+                        <span class="errors">Email not found</span>
                     </div>
-                 end
+                     <% end %>
                  <div class="pure-control-group">
                      <label for="customer_email">email</label>
                      <input

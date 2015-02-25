@@ -13,6 +13,11 @@ class PasswordResetsControllerTest < MyRecordTest
 
   def test_create_reset
     post '/', :customer => {:email => 'a@b.com'}
+    skip
+  end
 
+  def test_rerenders_when_email_not_found
+    assert_ok post '/', :customer => {:email => 'a@b.com'}
+    assert_includes last_response.body, 'Email not found'
   end
 end
