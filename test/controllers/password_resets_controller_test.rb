@@ -44,6 +44,7 @@ class PasswordResetsControllerTest < MyRecordTest
       :password => 'new',
       :password_confirmation => 'new'
     }}
-    
+    customer.record.reload
+    assert_equal customer.password, 'new'
   end
 end
