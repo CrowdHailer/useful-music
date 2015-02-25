@@ -74,36 +74,50 @@
             <fieldset>
 
                 <div class="pure-control-group">
-                    <label for="customer_question_1">Question 1</label>
+                    <label for="customer_question_1">Which instrument do you play?</label>
                     <input
                         id="customer_question_1"
                         name="customer[question_1]"
                         type="text"
                         value="<%= @customer.question_1 %>"
-                        required
                         placeholder="">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="customer_question_2">Question 2</label>
-                    <input
-                        id="customer_question_2"
-                        name="customer[question_2]"
-                        type="text"
-                        value="<%= @customer.question_2 %>"
-                        required
-                        placeholder="">
+                    <select id="customer_question_2" name="customer[question_2]">
+                        <option value>Please Select</option>
+            						<% ['Yes - mostly in schools',
+            						'Yes - mostly in music centres',
+            						'Yes - mostly private tuition',
+            						'Yes - mostly ensembles',
+            						'I have taught in the past',
+            						'No'].each do |answer| %>
+                            <option <%= 'selected' if answer == @customer.question_2 %> ><%= answer %></option>
+                        <% end %>
+          					</select>
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="customer_question_3">Question 3</label>
-                    <input
-                        id="customer_question_3"
-                        name="customer[question_3]"
-                        type="text"
-                        value="<%= @customer.question_3 %>"
-                        required
-                        placeholder="">
+                    <label for="customer_question_3">How did you hear about us?</label>
+                    <select id="customer_question_3" name="customer[question_3]">
+                        <option value>Please Select</option>
+            						<% ['Google search',
+                        'In a magazine or other printed publication',
+                        'Facebook page',
+                        'Twitter',
+                        'YouTube video',
+                        'Purchased a Nuvo Instrument',
+                        'Friend/colleague recommendation',
+                        'Teacher recommendation',
+                        'Through a music exam board',
+                        'Through a music shop',
+                        'Through a music society',
+                        'On another website',
+                        'Other'].each do |answer| %>
+                            <option <%= 'selected' if answer == @customer.question_3 %> ><%= answer %></option>
+                        <% end %>
+          					</select>
                 </div>
             </fieldset>
             <div class="pure-controls">
