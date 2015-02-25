@@ -48,8 +48,8 @@ class Customer < BaseEntity
   end
 
   def create_password_reset
-    self.password_reset_token = SecureRandom.urlsafe_base64
     self.password_reset_created_at = Time.now
+    self.password_reset_token = SecureRandom.urlsafe_base64
   end
 
   private
