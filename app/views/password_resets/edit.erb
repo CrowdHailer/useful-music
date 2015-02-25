@@ -4,35 +4,14 @@
           <li>
               <a href="/">Home</a>
           </li>
-          <li>
-              <a href="/customers/<%= @customer.id %>">My Account</a>
-          </li>
-          <li>
-              <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
-          </li>
-          <li>
-              <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
-          </li>
-          <li>
-              <a href="/customers/<%= @customer.id %>/orders">Orders</a>
-          </li>
-          <li>
-              <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
-          </li>
-          <li>
-              <form id="form_id" action="/sessions" method="post">
-                  <%= csrf_tag %>
-                  <input type="hidden" name="_method" value="DELETE">
-                  <input type="submit" value="logout">
-              </form>
-          </li>
       </ul>
     </aside>
     <article class="col col-4-5">
-        <h2><%= @customer.name %>: Edit Account</h2>
-        <form class="pure-form pure-form-aligned" action="/customers/<%= @customer.id %>/change_password" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <h2>Reset password</h2>
+        <form class="pure-form pure-form-aligned" action="/password_resets/<%= @id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="email" value="<%= @customer.email %>">
             <fieldset>
                 <% @validator.errors.full_messages.each do |message| %>
                     <div class="pure-control-group">
@@ -55,18 +34,6 @@
                     <input
                         id="customer_password_confirmation"
                         name="customer[password_confirmation]"
-                        type="password"
-                        required
-                        placeholder="">
-                </div>
-
-                <hr>
-
-                <div class="pure-control-group">
-                    <label for="customer_current_password">current password</label>
-                    <input
-                        id="customer_current_password"
-                        name="customer[current_password]"
                         type="password"
                         required
                         placeholder="">
