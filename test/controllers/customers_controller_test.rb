@@ -65,7 +65,7 @@ class CustomersControllerTest < MyRecordTest
   end
 
   def test_show_page_is_unavailable_when_no_customer
-    get "/1"
+    get "/1", {}, {'rack.session' => {:user_id => admin.id}}
     assert_equal 'Access denied', flash['error']
     assert last_response.redirect?
   end
@@ -92,22 +92,96 @@ class CustomersControllerTest < MyRecordTest
     assert_includes last_response.body, customer_email
   end
 
-  def test_edit_page_is_available
-    customer_record = create :customer_record
-    assert_ok get "/#{customer_record.id}/edit"
+  def test_edit_page_is_unavailable_when_no_customer
+    get "/1/edit", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
   end
 
-  def test_can_update_a_customer
-    customer_record = create :customer_record
-    put "/#{customer_record.id}", :customer => customer_record.values.merge(:first_name => 'Enrique')
-    assert_match(/#{customer_record.id}/, last_response.location)
+  def test_edit_page_is_unavailable_to_inerloper
+    get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => interloper.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_edit_page_is_unavailable_when_not_logged_in
+    get "/#{customer.id}/edit"
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_edit_page_is_available_to_that_customer
+    assert_ok get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => customer.id}}
+    assert_includes last_response.body, customer_email
+  end
+
+  def test_edit_page_is_available_to_admin
+    assert_ok get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_includes last_response.body, customer_email
+  end
+
+  def test_update_is_unavailable_when_no_customer
+    put "/1", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_update_is_unavailable_to_inerloper
+    put "/#{customer.id}", {}, {'rack.session' => {:user_id => interloper.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_update_is_unavailable_when_not_logged_in
+    put "/#{customer.id}"
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_update_is_available_to_that_customer
+    put "/#{customer.id}",
+      {:customer => customer.record.values.merge(:first_name => 'Enrique')},
+      {'rack.session' => {:user_id => customer.id}}
+    assert_match(/#{customer.id}/, last_response.location)
     assert_equal 'Enrique', Customers.last.first_name
   end
 
-  def test_can_destroy_a_customer
-    customer_record = create :customer_record
-    delete "/#{customer_record.id}"
-    assert_empty Customers
+  def test_update_is_available_to_admin
+    put "/#{customer.id}",
+      {:customer => customer.record.values.merge(:first_name => 'Enrique')},
+      {'rack.session' => {:user_id => admin.id}}
+    assert_match(/#{customer.id}/, last_response.location)
+    assert_equal 'Enrique', customer.record.reload.first_name
+  end
+
+  def test_destroy_is_unavailable_when_no_customer
+    delete "/1", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_destroy_is_unavailable_to_inerloper
+    delete "/#{customer.id}", {}, {'rack.session' => {:user_id => interloper.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_destroy_is_unavailable_when_not_logged_in
+    delete "/#{customer.id}"
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_destroy_is_available_to_that_customer
+    delete "/#{customer.id}", {}, {'rack.session' => {:user_id => customer.id}}
+    assert_nil Customers.find customer.id
     assert_match(/customers/, last_response.location)
   end
+
+  def test_destroy_is_available_to_admin
+    delete "/#{customer.id}", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_nil Customers.find customer.id
+    assert_match(/customers/, last_response.location)
+  end
+
 end

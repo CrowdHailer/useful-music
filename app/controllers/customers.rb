@@ -38,23 +38,17 @@ class CustomersController < UsefulMusic::App
   end
 
   def show(id)
-    customer = Customers.find(id)
-    if current_customer.admin? || customer && current_customer.id == customer.id
-      @customer = customer
-      render :show
-    else
-      flash['error'] = 'Access denied'
-      redirect '/'
-    end
+    @customer = check_access!(id)
+    render :show
   end
 
   def edit(id)
-    @customer = Customers.find(id)
+    @customer = check_access!(id)
     render :edit
   end
 
   def update(id)
-    customer = Customers.find(id)
+    customer = check_access!(id)
     form = Customer::Update::Form.new request.POST['customer']
     validator = Customer::Update::Validator.new
     validator.validate! form
@@ -62,13 +56,23 @@ class CustomersController < UsefulMusic::App
       customer.public_send "#{attr}=", value
     end
     customer.record.save
-    flash[:success] = "#{customer.name} Your Useful Music account is created"
+    flash[:success] = "Update successful"
     redirect "/customers/#{customer.id}"
   end
 
   def destroy(id)
-    customer = Customers.find(id)
+    customer = check_access!(id)
     customer.record.destroy
     redirect "/customers/"
+  end
+
+  def check_access!(id)
+    customer = Customers.find(id)
+    if customer && (current_customer.admin? || current_customer.id == customer.id)
+      customer
+    else
+      flash['error'] = 'Access denied'
+      redirect '/'
+    end
   end
 end
