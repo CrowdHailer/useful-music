@@ -75,8 +75,13 @@ class Customer
     end
 
     def test_generates_reset_token
-      skip
-      customer.create_password_rest
+      SecureRandom.stub :urlsafe_base64, 'random_token' do
+        Time.stub :now, Time.new(200) do
+          customer.create_password_reset
+        end
+      end
+      assert_equal 'random_token', record.password_reset_token
+      assert_equal Time.new(200), record.password_reset_created_at
     end
 
     ################# Associations #####################
