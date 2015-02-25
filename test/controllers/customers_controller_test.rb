@@ -70,6 +70,12 @@ class CustomersControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_show_page_is_unavailable_to_inerloper
+    get "/#{customer.id}", {}, {'rack.session' => {:user_id => interloper.id}}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
   def test_show_page_is_unavailable_when_not_logged_in
     get "/#{customer.id}"
     assert_equal 'Access denied', flash['error']
