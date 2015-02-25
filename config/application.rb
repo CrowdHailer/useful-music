@@ -5,7 +5,7 @@ module UsefulMusic
     render_defaults[:dir] = File.expand_path('app/views', APP_ROOT).freeze
     render_defaults[:layout] = File.expand_path('app/views/application', APP_ROOT).to_sym
     config[:static_dir] = 'public'
-    
+
     def log_in(customer)
       session[:user_id] = customer.id
     end
@@ -65,6 +65,7 @@ class UsefulMusic::App
   end
   controller '/customers', CustomersController
   controller '/sessions', SessionsController
+  controller '/password_resets', PasswordResetsController
   controller '/pieces', PiecesController
   controller '/items', ItemsController
   controller '/purchases', PurchasesController

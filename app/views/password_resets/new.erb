@@ -1,0 +1,37 @@
+<main class="content">
+    <aside id="" class="col col-1-5">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+      </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2>Reset Password</h2>
+        <form class="pure-form pure-form-aligned" action="/password_resets" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <fieldset>
+                 @validator.errors.full_messages.each do |message|
+                    <div class="pure-control-group">
+                        <label></label>
+                        <span class="errors">< message.gsub('_', ' ').capitalize %></span>
+                    </div>
+                 end
+                 <div class="pure-control-group">
+                     <label for="customer_email">email</label>
+                     <input
+                         id="customer_email"
+                         name="customer[email]"
+                         type="email"
+                         required
+                         placeholder="">
+                 </div>
+
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+
+        </form>
+    </article>
+</main>
