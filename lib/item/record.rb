@@ -8,6 +8,13 @@ class Item
     end
     many_to_one :piece_record, :class => :'Piece::Record', :key => :piece_id
 
+    plugin :serialization
+
+    serialize_attributes [
+      lambda{ |money| money.fractional },
+      lambda{ |fractional| Money.new(fractional) }
+    ], :initial_price, :discounted_price
+
     mount_uploader :asset, AssetUploader
   end
 end

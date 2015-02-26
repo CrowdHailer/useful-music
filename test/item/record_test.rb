@@ -2,7 +2,15 @@ require_relative '../test_config'
 
 class Item
   class RecordTest < MyRecordTest
-    # TODO test piece
+    # def test_requires_piece_record
+    #   err = assert_raises Sequel::NotNullConstraintViolation do
+    #     record = build :item_record
+    #     record.piece_id = nil
+    #     record.save
+    #   end
+    #   assert_match(/piece_record/, err.message)
+    # end
+
     def test_requires_name
       err = assert_raises Sequel::NotNullConstraintViolation do
         create :item_record, :name => nil
@@ -15,6 +23,21 @@ class Item
         create :item_record, :initial_price => nil
       end
       assert_match(/initial_price/, err.message)
+    end
+
+    def test_initial_price_money_objects
+      record = create :item_record, :initial_price => Money.new(200, 'gbp')
+      assert_equal Money.new(200, 'gbp'), record.initial_price
+    end
+
+    def test_discounted_price_money_objects
+      record = create :item_record, :discounted_price => Money.new(200, 'gbp')
+      assert_equal Money.new(200, 'gbp'), record.discounted_price
+    end
+
+    def test_can_have_nil_discounted_price
+      record = create :item_record, :discounted_price => nil
+      assert_equal nil, record.discounted_price
     end
 
     def test_does_not_require_discounted_price
