@@ -17,8 +17,7 @@ class ItemsController < UsefulMusic::App
 
   def create
     form = Item::Create::Form.new request.POST['item']
-    piece = Piece.new(Piece::Record[form.piece])
-    item = Item.create form.to_hash.merge(:piece => piece)
+    item = Item.create form
     redirect "/pieces/UD#{item.piece.id}/edit"
   end
 

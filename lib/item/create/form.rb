@@ -9,6 +9,8 @@ class Item
       attribute :discounted_price, Float
       attribute :asset, Hash
 
+      delegate :each, :to => :to_hash
+
       def name
         (super || '').strip
       end
