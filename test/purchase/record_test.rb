@@ -50,5 +50,21 @@ class Purchase
       end
       assert_match(/shopping_basket_item_groups/, err.message)
     end
+
+    def test_it_saves_time_of_creation
+      # TODO generalise test
+      Time.stub :now, ->(){ Time.at(0) } do
+        record = create :purchase_record
+        assert_equal Time.at(0), record.created_at
+        assert_equal Time.at(0), record.updated_at
+      end
+    end
+
+    def test_it_save_update_time
+      Time.stub :now, Time.at(0) do create :purchase_record end
+      record = Record.last
+      record.update :quantity => 8
+      refute_equal Time.at(0), record.updated_at
+    end
   end
 end
