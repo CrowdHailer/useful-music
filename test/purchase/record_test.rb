@@ -14,6 +14,12 @@ class Purchase
       assert_match(/quantity/, err.message)
     end
 
+    def test_cant_have_quantity_less_than_1
+      err = assert_raises Sequel::CheckConstraintViolation do
+        purchase_record = create :purchase_record, :quantity => 0
+      end
+    end
+
     def test_can_have_item_record
       purchase_record = create :purchase_record
       assert purchase_record.item_record
