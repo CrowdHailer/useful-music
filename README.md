@@ -36,6 +36,9 @@ Note Factorygirl lint checks be database creation and does not clean up. lint wi
 
 Note CarrierWave needs root set for url generation when saving to file. Gem could use better error currently unable to coerce nil to string. In app url handled by aws but root needed for testing
 
+NOTE sequel constraints require new table. [link](http://sequel.jeremyevans.net/rdoc-plugins/files/lib/sequel/extensions/constraint_validations_rb.html). Unsure why greater than is missing
+
+[List of EU countries](http://www23.statcan.gc.ca/imdb/p3VD.pl?Function=getVD&TVD=141329)
 
 ### Scorched Comments
 

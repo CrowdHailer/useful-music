@@ -14,6 +14,12 @@ class Purchase
       assert_match(/quantity/, err.message)
     end
 
+    def test_cant_have_quantity_less_than_1
+      err = assert_raises Sequel::CheckConstraintViolation do
+        purchase_record = create :purchase_record, :quantity => 0
+      end
+    end
+
     def test_can_have_item_record
       purchase_record = create :purchase_record
       assert purchase_record.item_record
@@ -49,6 +55,22 @@ class Purchase
         end
       end
       assert_match(/shopping_basket_item_groups/, err.message)
+    end
+
+    def test_it_saves_time_of_creation
+      # TODO generalise test
+      Time.stub :now, ->(){ Time.at(0) } do
+        record = create :purchase_record
+        assert_equal Time.at(0), record.created_at
+        assert_equal Time.at(0), record.updated_at
+      end
+    end
+
+    def test_it_save_update_time
+      Time.stub :now, Time.at(0) do create :purchase_record end
+      record = Record.last
+      record.update :quantity => 8
+      refute_equal Time.at(0), record.updated_at
     end
   end
 end

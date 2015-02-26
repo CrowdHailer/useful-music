@@ -52,6 +52,10 @@ class Customer < BaseEntity
     self.password_reset_token = SecureRandom.urlsafe_base64
   end
 
+  def vat_rate
+    country.eu? ? 0.2 : 0
+  end
+
   private
 
   def record_login

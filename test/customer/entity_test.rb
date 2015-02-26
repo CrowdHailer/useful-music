@@ -84,6 +84,16 @@ class Customer
       assert_equal Time.new(200), record.password_reset_created_at
     end
 
+    def test_has_20_vat_rate_in_eu
+      record.country = Country.new('GB')
+      assert_equal 0.20, customer.vat_rate
+    end
+
+    def test_has_0_vat_rate_outside_eu
+      record.country = Country.new('AF')
+      assert_equal 0, customer.vat_rate
+    end
+
     ################# Associations #####################
 
     def test_has_orders

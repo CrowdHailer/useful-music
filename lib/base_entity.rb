@@ -32,6 +32,7 @@ class BaseEntity
   end
 
   def self.entry_accessor(*entries)
+    # To preserve statless dont use instance variables here. Allowed at model level
     delegate(*entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record)
   end
 
