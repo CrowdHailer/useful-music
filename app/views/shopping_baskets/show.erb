@@ -10,6 +10,9 @@
         </ul>
     </aside>
     <article class="col col-4-5">
+      <div class="">
+          <span class="right">Last updated: <%= @basket.last_revision_at.strftime('%d-%m-%Y') if @basket.last_revision_at %></span>
+      </div>
       <table class="pure-table">
           <thead>
               <tr>

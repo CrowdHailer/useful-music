@@ -1,7 +1,9 @@
 require_relative './base_entity'
 
 class Purchase < BaseEntity
-  entry_accessor  :quantity
+  entry_accessor  :quantity,
+                  :created_at,
+                  :updated_at
 
   def price
     item.price_for(quantity)

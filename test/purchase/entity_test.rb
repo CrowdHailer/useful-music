@@ -72,4 +72,14 @@ class PurchaseTest < MyRecordTest
     assert_equal 5, record.quantity
   end
 
+  def test_can_access_created_at
+    record.created_at = 5
+    assert_equal 5, purchase.created_at
+  end
+
+  def test_can_access_updated_at
+    record.updated_at = 5
+    assert_equal 5, purchase.updated_at
+  end
+
 end
