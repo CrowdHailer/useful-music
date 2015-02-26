@@ -41,6 +41,12 @@ class ShoppingBasket
       end
     end
 
+    def test_has_price_is_zero_for_no_purchases
+      shopping_basket.stub :purchases, [] do
+        assert_equal Money.new(0), shopping_basket.price
+      end
+    end
+
     def test_has_number_of_purchases
       shopping_basket.stub :purchases, [
         OpenStruct.new,
@@ -56,6 +62,12 @@ class ShoppingBasket
         OpenStruct.new(:quantity => 2)
       ] do
         assert_equal 4, shopping_basket.number_of_licenses
+      end
+    end
+
+    def test_number_of_licenses_is_zero_when_empty
+      shopping_basket.stub :purchases, [] do
+        assert_equal 0, shopping_basket.number_of_licenses
       end
     end
 

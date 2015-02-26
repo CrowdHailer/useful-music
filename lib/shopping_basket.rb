@@ -11,11 +11,11 @@ class ShoppingBasket < BaseEntity
   end
 
   def price
-    purchases.map(&:price).reduce(&:+)
+    purchases.map(&:price).reduce(Money.new(0), &:+)
   end
 
   def number_of_licenses
-    purchases.map(&:quantity).reduce(&:+)
+    purchases.map(&:quantity).reduce(0, &:+)
   end
 
   def number_of_purchases
