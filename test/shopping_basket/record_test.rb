@@ -10,14 +10,13 @@ class ShoppingBasket
       end
     end
 
-    def test_it_save_update_time
-      skip
-      # TODO last purchase added will be last time item added
-      Time.stub :now, Time.at(0) do create :shopping_basket_record end
-      record = Record.last
-      record.add_purchase_record create(:purchase_record)
-      refute_equal Time.at(0), record.updated_at
-    end
+    # def test_it_save_update_time
+    #   # TODO Use with discount code
+    #   Time.stub :now, ->(){ Time.at(0) } do create :shopping_basket_record end
+    #   record = Record.last
+    #   record.add_purchase_record create(:purchase_record)
+    #   refute_equal Time.at(0), record.updated_at
+    # end
 
     def test_can_have_purchase_records
       record = create :shopping_basket_record
