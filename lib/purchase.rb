@@ -12,8 +12,11 @@ class Purchase < BaseEntity
   end
 
   def item=(item)
-    # TODO set setting nill
-    record.item_record = item.record if item
+    if item.nil?
+      record.item_record = nil
+    else
+      record.item_record = item.record
+    end
   end
 
   def shopping_basket
@@ -21,7 +24,11 @@ class Purchase < BaseEntity
   end
 
   def shopping_basket=(shopping_basket)
-    record.shopping_basket_record = shopping_basket.record if shopping_basket
+    if shopping_basket.nil?
+      record.shopping_basket_record = nil
+    else
+      record.shopping_basket_record = shopping_basket.record
+    end
   end
 
 end
