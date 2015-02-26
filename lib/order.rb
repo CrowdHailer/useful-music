@@ -1,30 +1,63 @@
 require_relative './base_entity'
 
-class Order < BaseEntity
-  entry_accessor :created_at
+class Transaction < BaseEntity
+  entry_accessor  :state,
+                  :basket_amount,
+                  :tax_amount,
+                  :token,
+                  :payer_email,
+                  :payer_first_name,
+                  :payer_last_name,
+                  :payer_company,
+                  :payer_status,
+                  :payer_identifier,
+                  :transaction_id
 
   PAYPAL_OPTIONS = {
     no_shipping: true, # if you want to disable shipping information
     allow_note: false, # if you want to disable notes
     pay_on_paypal: true # if you don't plan on showing your own confirmation step
   }
-  # TODO test
-  entry_accessor  :state
 
   def initialize(*args)
     super
     self.state = 'pending'
   end
 
+  def setup(url_base)
+    tmp = express_response(url_base)
+    self.token = tmp.token
+    self.state = 'processing'
+    record.save
+    tmp
+  end
+
+  def success_path
+    "orders/#{id}/success"
+  end
+
+  def cancel_path
+    "orders/#{id}/cancel"
+  end
+
+  def express_response(url_base)
+    express_request.setup(
+      payment_request,
+      File.join(url_base, success_path),
+      File.join(url_base, cancel_path),
+      PAYPAL_OPTIONS
+    )
+  end
+
   def payment_request
     Paypal::Payment::Request.new(
       :currency_code => :GBP,
       :quantity      => 1,
-      :amount => total + 1.50,
-      :tax_amount => 1.50,
+      :amount => basket_amount + tax_amount,
+      :tax_amount => tax_amount,
       :items => [{
         :name => 'Order Total',
-        :amount => total,
+        :amount => basket_amount,
         :category => :Digital
       }],
       :custom_fields => {
@@ -34,6 +67,18 @@ class Order < BaseEntity
     )
   end
 
+  def fetch_details(token)
+    express_response = express_request.details token
+    payer = express_response.payer
+    self.payer_email = payer.email
+    self.payer_first_name = payer.first_name
+    self.payer_last_name = payer.last_name
+    self.payer_company = payer.company
+    self.payer_status = payer.status
+    self.payer_identifier = payer.identifier
+    record.save
+  end
+
   def express_request
     Paypal::Express::Request.new(
       :username   => ENV.fetch('PAYPAL_USERNAME'),
@@ -41,36 +86,35 @@ class Order < BaseEntity
       :signature  => ENV.fetch('PAYPAL_SIGNATURE')
     )
   end
-
-  def setup
-    express_response = express_request.setup(
-      payment_request,
-      "http://wks14007-staging.herokuapp.com/orders/#{id}/success",
-      "http://wks14007-staging.herokuapp.com/orders/#{id}/cancel",
-      PAYPAL_OPTIONS
-    )
-  end
-
-  def fetch_details(token)
-    express_response = express_request.details token
-    payer = express_response.payer
-    ap payer.email
-    ap payer.first_name
-    ap payer.last_name
-    ap payer.company
-    ap payer.status
-    ap payer.identifier
-  end
-
   def checkout(token, payer_id)
     express_response = express_request.checkout! token, payer_id, payment_request
-    ap express_response.payment_info[0].transaction_id
-    ap express_response.payment_info[0].payment_status
+    self.transaction_id = express_response.payment_info[0].transaction_id
+    if 'Completed' == express_response.payment_info[0].payment_status
+      self.state = 'succeded'
+    end
+    record.save
+  end
+end
+
+class Order < BaseEntity
+
+  def transaction
+    Transaction.new(record)
   end
 
-  def total
-    shopping_basket.price
+  entry_accessor  :created_at,
+                  :basket_amount,
+                  :tax_amount,
+                  :discount_amount
+
+  def calculate_prices
+    self.basket_amount = shopping_basket.price
+    self.tax_amount = basket_amount * customer.vat_rate
+    self.discount_amount ||= Money.new(0)
   end
+
+  delegate :setup, :fetch_details, :checkout, :to => :transaction
+
 
   def shopping_basket
     ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
