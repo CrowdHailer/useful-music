@@ -21,4 +21,8 @@ class ShoppingBasket < BaseEntity
   def number_of_purchases
     purchases.count
   end
+
+  def last_revision_at
+    purchases.map(&:updated_at).max
+  end
 end

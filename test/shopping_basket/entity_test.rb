@@ -58,5 +58,14 @@ class ShoppingBasket
         assert_equal 4, shopping_basket.number_of_licenses
       end
     end
+
+    def test_has_last_purchase_change_at
+      shopping_basket.stub :purchases, [
+        OpenStruct.new(:updated_at => Time.new(200)),
+        OpenStruct.new(:updated_at => Time.new(4000))
+      ] do
+        assert_equal Time.new(4000), shopping_basket.last_revision_at
+      end
+    end
   end
 end
