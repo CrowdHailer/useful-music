@@ -1,5 +1,5 @@
 <main class="content">
-    <aside>
+    <aside class="col col-1-5">
         <ul>
             <li>
                 <a href="/">Home</a>
@@ -9,25 +9,31 @@
             </li>
         </ul>
     </aside>
-    <article>
+    <article class="col col-4-5">
       <table class="pure-table">
           <thead>
               <tr>
                   <th>Catalogue number</th>
+                  <th>Product name</th>
                   <th>Item</th>
                   <th>Quantity</th>
                   <th>Initial Price</th>
-                  <th>Subsequent Price</th>
+                  <th>Discounted Price</th>
                   <th>Total</th>
                   <th>Destroy</th>
               </tr>
           </thead>
 
           <tbody>
-              <% @basket.purchase_records.map{|r| Purchase.new r}.each do |purchase| %>
+              <% @basket.purchases.each do |purchase| %>
                   <tr>
                       <th>
                           UD<%= purchase.item.piece.id %>
+                      </th>
+                      <th>
+                          <a href="/pieces/<%= purchase.item.piece.id %>">
+                              <%= purchase.item.piece.product_name %>
+                          </a>
                       </th>
                       <th>
                           <%= purchase.item.name %>
@@ -41,37 +47,44 @@
                           </form>
                       </th>
                       <th>
-                          <%= purchase.item.initial_price %>
+                          <%= purchase.item.initial_price.format %>
                       </th>
                       <th>
-                          <%= purchase.item.subsequent_price %>
+                          <%= purchase.item.subsequent_price.format %>
                       </th>
                       <th>
-                          <%= purchase.price %>
+                          <%= purchase.price.format %>
                       </th>
                       <th>
                           <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
                               <%= csrf_tag %>
                               <input type="hidden" name="_method" value="DELETE">
-                              <input type="submit" value="Destroy">
+                              <input type="submit" value="Remove">
                           </form>
                       </th>
                   </tr>
               <% end %>
+          </tbody>
+          <thead>
               <tr>
-                <th colspan="4">
+                <th colspan="5">
                 </th>
                 <th>
                   Total
                 </th>
                 <th>
-                  <%= Money.new(@basket.purchase_records.map{|r| Purchase.new r}.reduce(0){|t, i| t + i.price}).format %>
+                  <%= @basket.price.format %>
                 </th>
                 <th>
-
+                    <form id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+                        <%= csrf_tag %>
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Clear Basket">
+                    </form>
                 </th>
               </tr>
-          </tbody>
+          </thead>
+
       </table>
       <% if current_customer.customer? %>
           <form id="form_id" action="/orders" method="post">
