@@ -15,4 +15,8 @@ class Guest
   def id
     nil
   end
+
+  def vat_rate
+    nil
+  end
 end
