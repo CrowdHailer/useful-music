@@ -45,7 +45,7 @@
                           <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
                               <%= csrf_tag %>
                               <input type="hidden" name="_method" value="PUT">
-                              <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:2em;">
+                              <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
                               <input type="submit" value="Update">
                           </form>
                       </th>
@@ -120,18 +120,23 @@
           </thead>
 
       </table>
-      <% if current_customer.customer? %>
-          <form id="form_id" action="/orders" method="post">
-              <%= csrf_tag %>
-              <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
-              <input type="text" name="order[discount_code]" value="" placeholder="discount code">
-              <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" />
-          </form>
-      <% else %>
-          <p>
-            Please <a href="/sessions/new">login</a> or <a href="/customers/new">create account</a>
-          </p>
-          <p title="Downloads can be large files and will be available in your account for 4 days from purchase">Why?</p>
-      <% end %>
+      <div style="overflow:hidden">
+          <% if current_customer.customer? %>
+              <form id="form_id" action="/orders" method="post" class="right">
+                  <%= csrf_tag %>
+                  <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
+                  <input type="text" name="order[discount_code]" value="" placeholder="discount code"><br>
+                  <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
+              </form>
+          <% else %>
+              <p>
+                Please <a href="/sessions/new">login</a> or <a href="/customers/new">create account</a>
+              </p>
+              <p title="Downloads can be large files and will be available in your account for 4 days from purchase">Why?</p>
+          <% end %>
+      </div>
+      <div class="">
+        <button class="pure-button button-success">Continue Shopping</button>
+      </div>
     </article>
 </main>
