@@ -5,10 +5,11 @@ class ItemsController < UsefulMusic::App
   render_defaults[:dir] += '/items'
 
   def new
+    check_access!
     piece_id = request.GET.fetch('piece_id')
-    piece_record = Piece::Record[piece_id]
-    if piece_record
-      @piece = Piece.new piece_record
+    piece = Catalogue[piece_id]
+    if piece
+      @piece = Piece.new piece
       render :new
     else
       redirect '/pieces'
@@ -16,6 +17,7 @@ class ItemsController < UsefulMusic::App
   end
 
   def create
+    check_access!
     form = Item::Create::Form.new request.POST['item']
     item = Item.create form
     redirect "/pieces/UD#{item.piece.id}/edit"
@@ -36,5 +38,14 @@ class ItemsController < UsefulMusic::App
     item = Item::Record[id]
     item.destroy
     redirect "/pieces/UD#{item.piece_record.id}/edit"
+  end
+
+  def check_access!
+    if current_customer.admin?
+      true
+    else
+      flash['error'] = 'Access denied'
+      redirect '/'
+    end
   end
 end
