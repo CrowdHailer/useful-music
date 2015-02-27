@@ -8,7 +8,13 @@ class Piece
       attribute :title, String
       attribute :sub_heading, String
       attribute :description, String
-      attribute :category, String
+      attribute :solo, String
+      attribute :solo_with_accompaniment, String
+      attribute :duet, String
+      attribute :trio, String
+      attribute :quartet, String
+      attribute :larger_ensembles, String
+      attribute :collection, String
       attribute :beginner, Boolean
       attribute :intermediate, Boolean
       attribute :advanced, Boolean
