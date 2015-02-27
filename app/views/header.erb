@@ -1,0 +1,96 @@
+<header>
+  <div class="ribbon inverted">
+    <section class="content">
+      <ul class="social-list">
+        <li>
+          <i class="fa fa-facebook fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-youtube fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-twitter fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-soundcloud fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-google-plus fa-fw"></i>
+        </li>
+      </ul>
+      <ul class="currency-list">
+        <li>
+          <i class="fa fa-eur fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-jpy fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-gbp fa-fw"></i>
+        </li>
+        <li>
+          <i class="fa fa-usd fa-fw"></i>
+        </li>
+      </ul>
+      <ul class="credentials">
+        <li>
+          <a href="#" onclick="alert('coming soon');"><i class="fa fa-envelope"></i> <span>Newsletter</span></a>
+        </li>
+        <li>
+          |
+        </li>
+        <% if current_customer.guest? %>
+          <li>
+            <b>
+              <a href="/sessions/new">Login</a>
+            </b>
+          </li>
+          <li>
+            <b>
+              <a href="/customers/new">Create Account</a>
+            </b>
+          </li>
+        <% else %>
+          <li>
+            <b>
+              <a href="/customers/<%= current_customer.id %>"><%= current_customer.name %></a>
+            </b>
+          </li>
+          <li>
+              <form id="form_id" action="/sessions" method="post">
+                  <%= csrf_tag %>
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="submit" value="logout">
+              </form>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  </div>
+  <section class="content" id="top-bar">
+    <img src="https://www.usefulmusic.com/image/data/logored.png" alt="" />
+    <span class="scut-inner search">
+      <input type="text" name="name" value="" class="Search term" placeholder="Know the title or UD code? Enter here">
+    </span>
+  </section>
+  <nav class="ribbon inverted">
+    <section class="content">
+      <ul class="main-navigation">
+        <li><a href="/">Home</a></li>
+        <li>Piano</li>
+        <li>Woodwind</li>
+        <li>Other Instruments</li>
+        <li>Ensembles</li>
+        <li>
+          <a href="/about">About Useful Music</a>
+        </li>
+      </ul>
+
+      <ul class="main-navigation right bold">
+        <li>
+          <a href="/my-shopping-basket"><i class="fa fa-shopping-cart"></i> Shopping Cart <%= shopping_basket.number_of_purchases %>:<%= shopping_basket.number_of_licenses %></a>
+        </li>
+      </ul>
+    </section>
+  </nav>
+</header>

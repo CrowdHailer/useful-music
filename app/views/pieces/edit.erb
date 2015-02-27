@@ -1,0 +1,359 @@
+<main class="content">
+    <aside id="">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+          <li>
+              <a href="/pieces/<%= @piece.catalogue_number %>">Show</a>
+          </li>
+          <hr>
+          <% @piece.items.each do |item| %>
+              <li>
+                  <a href="/items/<%= item.id %>"><%= item.name %></a>
+              </li>
+          <% end %>
+          <li>
+              <a href="/items/new?piece_id=<%= @piece.id %>">Add Item</a>
+          </li>
+      </ul>
+    </aside>
+    <article id="">
+        <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
+
+        <form class="pure-form pure-form-aligned" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="PUT">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="piece_id">Catalog <em>UD</em></label>
+                    <input
+                        id="piece_id"
+                        name="piece[id]"
+                        type="number"
+                        autofocus
+                        required
+                        value="<%= @piece.id %>"
+                        disabled
+                        placeholder="XXX">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_title">Title</label>
+                    <input
+                        id="piece_title"
+                        name="piece[title]"
+                        type="text"
+                        required
+                        value="<%= @piece.title %>"
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_sub_heading">Sub heading</label>
+                    <input
+                        id="piece_sub_heading"
+                        name="piece[sub_heading]"
+                        type="text"
+                        required
+                        value="<%= @piece.sub_heading %>"
+                        placeholder="e.g. Flute and keyboard">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_product_name">Product name</label>
+                    <input
+                        id="piece_product_name"
+                        type="text"
+                        disabled
+                        placeholder="generated from title and subheading">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_description">Description</label>
+                    <textarea
+                        id="piece_description"
+                        name="piece[description]"
+                        required
+                        placeholder="product description"><%= @piece.description %></textarea>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_category">Category</label>
+                    <select
+                        id="piece_category"
+                        name="piece[category]"
+                        value="<%= @piece.category %>"
+                        required>
+                        <option value>-- category --</option>
+                        <option value="solo" <%= 'selected' if 'solo' == @piece.category %>>Solo</option>
+                        <option value="solo_with_accompaniment" <%= 'selected' if 'solo_with_accompaniment' == @piece.category %>>Solo with accompaniment</option>
+                        <option value="duet" <%= 'selected' if 'duet' == @piece.category %>>Duet</option>
+                        <option value="trio" <%= 'selected' if 'trio' == @piece.category %>>Trio</option>
+                        <option value="quartet" <%= 'selected' if 'quartet' == @piece.category %>>Quartet</option>
+                        <option value="larger_ensembles" <%= 'selected' if 'larger_ensembles' == @piece.category %>>Larger ensembles</option>
+                    </select>
+                </div>
+
+                <hr>
+
+                <div class="pure-control-group">
+                    <label for="piece_beginner">Beginner (level 1-3)</label>
+                    <input
+                        id="piece_beginner"
+                        name="piece[beginner]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.beginner? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_intermediate">Intermediate (level 4-6)</label>
+                    <input
+                        id="piece_intermediate"
+                        name="piece[intermediate]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.intermediate? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_advanced">Advanced (level 7&amp;8)</label>
+                    <input
+                        id="piece_advanced"
+                        name="piece[advanced]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.advanced? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_professional">Profesional</label>
+                    <input
+                        id="piece_professional"
+                        name="piece[professional]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.professional? %>>
+                </div>
+
+                <hr>
+
+                <div class="pure-control-group">
+                    <label for="piece_piano">Piano</label>
+                    <input
+                        id="piece_piano"
+                        name="piece[piano]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.piano? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_recorder">Recorder</label>
+                    <input
+                        id="piece_recorder"
+                        name="piece[recorder]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.recorder? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_flute">Flute</label>
+                    <input
+                        id="piece_flute"
+                        name="piece[flute]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.flute? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_oboe">Oboe</label>
+                    <input
+                        id="piece_oboe"
+                        name="piece[oboe]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.oboe? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_clarineo">Clarineo</label>
+                    <input
+                        id="piece_clarineo"
+                        name="piece[clarineo]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.clarineo? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_clarinet">Clarinet</label>
+                    <input
+                        id="piece_clarinet"
+                        name="piece[clarinet]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.clarinet? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_basson">Basson</label>
+                    <input
+                        id="piece_basson"
+                        name="piece[basson]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.basson? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_saxophone">Saxophone</label>
+                    <input
+                        id="piece_saxophone"
+                        name="piece[saxophone]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.saxophone? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_trumpet">Trumpet</label>
+                    <input
+                        id="piece_trumpet"
+                        name="piece[trumpet]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.trumpet? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_violin">Violin</label>
+                    <input
+                        id="piece_violin"
+                        name="piece[violin]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.violin? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_viola">Viola</label>
+                    <input
+                        id="piece_viola"
+                        name="piece[viola]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.viola? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_percussion">Percussion</label>
+                    <input
+                        id="piece_percussion"
+                        name="piece[percussion]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.percussion? %>>
+                </div>
+
+                <hr>
+
+                <div class="pure-control-group">
+                    <label for="piece_notation_preview">Notation Preview</label>
+                    <input
+                        id="piece_notation_preview"
+                        name="piece[notation_preview]"
+                        type="file">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_audio_preview">Audio Preview</label>
+                    <input
+                        id="piece_audio_preview"
+                        name="piece[audio_preview]"
+                        type="file">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_cover_image">Cover Image</label>
+                    <input
+                        id="piece_cover_image"
+                        name="piece[cover_image]"
+                        type="file">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_print_version">Print version</label>
+                    <input
+                        id="piece_print_version"
+                        name="piece[print_version]"
+                        type="text"
+                        value="<%= @piece.print_version %>"
+                        placeholder="Add link">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_weezic_version">Weezic version</label>
+                    <input
+                        id="piece_weezic_version"
+                        name="piece[weezic_version]"
+                        type="text"
+                        value="<%= @piece.weezic_version %>"
+                        placeholder="Add link">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_meta_description">Meta description</label>
+                    <input
+                        id="piece_meta_description"
+                        name="piece[meta_description]"
+                        type="text"
+                        value="<%= @piece.meta_description %>"
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_meta_keywords">Meta keywords</label>
+                    <input
+                        id="piece_meta_keywords"
+                        name="piece[meta_keywords]"
+                        type="text"
+                        value="<%= @piece.meta_keywords %>"
+                        placeholder="">
+                </div>
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+        <h2>Items</h2>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Initial Price</th>
+                    <th>Subsequent Price</th>
+                    <th>asset</th>
+                    <th colspan=2>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% @piece.items.each do |item| %>
+                    <tr>
+                        <th>
+                            <%= item.name %>
+                        </th>
+                        <th>
+                            <%= item.initial_price %>
+                        </th>
+                        <th>
+                            <%= item.subsequent_price %>
+                        </th>
+                        <th>
+                            <a href="<%= item.asset.url %>"><%= item.asset.path.split('/').last %></a>
+                        </th>
+                        <th>
+                            <a href="/items/<%= item.id %>/edit">Edit</a>
+                        </th>
+                        <th>
+                            <form id="form_id" action="/items/<%= item.id %>" method="post">
+                                <%= csrf_tag %>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="submit" value="Destroy">
+                            </form>
+                        </th>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </article>
+</main>

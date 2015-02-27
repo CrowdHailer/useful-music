@@ -1,0 +1,104 @@
+<section class="admin content">
+    <a href="/pieces/new" class="pure-button button-success right">
+        <i class="fa fa-cog"></i>
+        New
+    </a>
+</section>
+<main class="content">
+    <aside id="search" class="col col-1-5">
+      <form class="pure-form" action="/pieces" method="get" id="search-form">
+          <%= csrf_tag %>
+          <h4>Category</h4>
+          <% [:solo,
+          :solo_with_accompaniment,
+          :duet,
+          :trio,
+          :quarter,
+          :larger_ensembles].each do |category| %>
+              <label class="pure-checkbox">
+                  <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if search.checked?(category) %>>
+                  <%= category.capitalize %>
+              </label>
+          <% end %>
+          <h4>Level</h4>
+          <% [:beginner,
+            :intermediate,
+            :advanced,
+            :professional].each do |level| %>
+              <label class="pure-checkbox">
+                  <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if search.checked?(level) %>>
+                  <%= level.capitalize %>
+              </label>
+          <% end %>
+          <h4>Instrument</h4>
+          <% [:piano,
+          :recorder,
+          :flute,
+          :oboe,
+          :clarineo,
+          :clarinet,
+          :basson,
+          :saxophone,
+          :trumpet,
+          :violin,
+          :viola,
+          :percussion].each do |instrument| %>
+              <label class="pure-checkbox">
+                  <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if search.checked?(instrument) %>>
+                  <%= instrument.capitalize %>
+              </label>
+          <% end %>
+          <button type="submit" class="pure-button right">Search</button>
+          <a href="/pieces" class="right">clear search</a>
+      </form>
+    </aside>
+    <article class="col col-4-5">
+        <a href="#">previous</a>
+        <a href="/pieces?<%= @next_query %>">next</a>
+            <button name="catalogue_search[page]" value="<%= pieces.next_page %>" type="submit" form="search-form">Next</button>
+            <button name="catalogue_search[page]" value="<%= pieces.prev_page %>" type="submit" form="search-form">Previous</button>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Catalogue number</th>
+                    <th>Title</th>
+                    <th>Sub heading</th>
+                    <th>Category</th>
+                    <th colspan=3>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% pieces.map{ |r| Piece.new r }.each do |piece| %>
+                    <tr>
+                        <th>
+                            <%= piece.catalogue_number %>
+                        </th>
+                        <th>
+                            <%= piece.title %>
+                        </th>
+                        <th>
+                            <%= piece.sub_heading %>
+                        </th>
+                        <th>
+                            <%= piece.category %>
+                        </th>
+                        <th>
+                            <a href="/pieces/<%= piece.id %>">show</a>
+                        </th>
+                        <th>
+                            <a href="/pieces/UD<%= piece.id %>/edit">edit</a>
+                        </th>
+                        <th>
+                            <form id="form_id" action="/pieces/<%= piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= piece.id %> and <%= piece.items.count %> associated items?')">
+                                <%= csrf_tag %>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="submit" name="some_name" value="Destroy">
+                            </form>
+                        </th>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </article>
+</main>

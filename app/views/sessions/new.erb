@@ -1,0 +1,24 @@
+<main class="content">
+    <aside id="" class="col col-1-5">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+      </ul>
+    </aside>
+    <article class="col col-4-5">
+        <form class="pure-form pure-form-aligned" action="/sessions" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <fieldset>
+
+                <input name="session[email]" type="email" placeholder="email" required>
+                <input name="session[password]" type="password" placeholder="password" required>
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+        </form>
+        <hr>
+        <a href="/password_resets/new">Forgotten password?</a>
+  </article>
+</main>

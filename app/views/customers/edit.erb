@@ -1,0 +1,154 @@
+<main class="content">
+    <aside id="" class="col col-1-5">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+          <li>
+              <a href="/customers/<%= @customer.id %>">My Account</a>
+          </li>
+          <li>
+              <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
+          </li>
+          <li>
+              <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
+          </li>
+          <li>
+              <a href="/customers/<%= @customer.id %>/orders">Orders</a>
+          </li>
+          <li>
+              <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
+          </li>
+          <li>
+              <form id="form_id" action="/sessions" method="post">
+                  <%= csrf_tag %>
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="submit" value="logout">
+              </form>
+          </li>
+      </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2><%= @customer.name %>: Edit Account</h2>
+        <form class="pure-form pure-form-aligned" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="PUT">
+            <fieldset>
+                <% @validator.errors.full_messages.each do |message| %>
+                    <div class="pure-control-group">
+                        <label></label>
+                        <span class="errors"><%= message.gsub('_', ' ').capitalize %></span>
+                    </div>
+                <% end %>
+                <div class="pure-control-group">
+                    <label for="customer_first_name">first name</label>
+                    <input
+                        id="customer_first_name"
+                        name="customer[first_name]"
+                        type="text"
+                        value="<%= @customer.first_name %>"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_last_name">last name</label>
+                    <input
+                        id="customer_last_name"
+                        name="customer[last_name]"
+                        type="text"
+                        value="<%= @customer.last_name %>"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_email">email</label>
+                    <input
+                        id="customer_email"
+                        name="customer[email]"
+                        value="<%= @customer.email %>"
+                        type="email"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_country">Country</label>
+                    <select
+                        id="customer_country"
+                        name="customer[country]"
+                        value="<%= @customer.country %>"
+                        required>
+                        <option value>-- country --</option>
+                        <% Country.all.sort_by!{ |c| c.first.downcase }.each do |name, code| %>
+                            <option
+                                value="<%= code %>"
+                                <%= 'selected' if code == @customer.country.alpha2 %>>
+                                <%= name %>
+                            </option>
+                        <% end %>
+                    </select>
+                </div>
+
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+            <h2 id="customer-questions">Tell us about your music?</h2>
+
+            <fieldset>
+
+                <div class="pure-control-group">
+                    <label for="customer_question_1">Which instrument do you play?</label>
+                    <input
+                        id="customer_question_1"
+                        name="customer[question_1]"
+                        type="text"
+                        value="<%= @customer.question_1 %>"
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_question_2">Question 2</label>
+                    <select id="customer_question_2" name="customer[question_2]">
+                        <option value>Please Select</option>
+            						<% ['Yes - mostly in schools',
+            						'Yes - mostly in music centres',
+            						'Yes - mostly private tuition',
+            						'Yes - mostly ensembles',
+            						'I have taught in the past',
+            						'No'].each do |answer| %>
+                            <option <%= 'selected' if answer == @customer.question_2 %> ><%= answer %></option>
+                        <% end %>
+          					</select>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_question_3">How did you hear about us?</label>
+                    <select id="customer_question_3" name="customer[question_3]">
+                        <option value>Please Select</option>
+            						<% ['Google search',
+                        'In a magazine or other printed publication',
+                        'Facebook page',
+                        'Twitter',
+                        'YouTube video',
+                        'Purchased a Nuvo Instrument',
+                        'Friend/colleague recommendation',
+                        'Teacher recommendation',
+                        'Through a music exam board',
+                        'Through a music shop',
+                        'Through a music society',
+                        'On another website',
+                        'Other'].each do |answer| %>
+                            <option <%= 'selected' if answer == @customer.question_3 %> ><%= answer %></option>
+                        <% end %>
+          					</select>
+                </div>
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+        </form>
+    </article>
+</main>

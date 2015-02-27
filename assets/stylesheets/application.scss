@@ -1,0 +1,151 @@
+@import 'scut';
+@import 'base';
+@import 'header';
+@import 'footer';
+@import 'admin';
+@import 'search';
+.right {
+  float: right;
+}
+.bold {
+  background-color: $emphasise;
+}
+.inverted {
+  color: white;
+  background-color: $primary-color;
+}
+.bold a, .inverted a {
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+  max-width: 1260px;
+  overflow: hidden;
+}
+
+
+/*################## Main ###########################*/
+
+main.content {
+  background-color: aliceblue;
+}
+
+.flash {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-size: 1.4em;
+  padding: 0.2em 1em;
+  max-height: 2em;
+  transition: max-height 1s, padding 1s, margin 1s, border 2s;
+}
+
+.success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  // border: 2px solid #DFF2BF;
+  border-radius: 4px;
+}
+
+.error {
+  color: #FF3800;
+  // border: 2px solid #FFCDBF;
+  background-color: #FFCDBF;
+  border-radius: 4px;
+}
+
+.flash.read {
+  max-height: 0em;
+  padding: 0 1em;
+  margin-top: 0;
+  margin-bottom: 0;
+  // border: 2px solid #FFF;
+}
+
+
+h2 {
+  width: 100%;
+  text-align: center;
+  color: #01344c;
+  font-weight: 100;
+  margin: 0;
+  font-size: 2em;
+  padding: 0.2em 1em;
+  border-bottom: 2px solid #01344c;
+}
+
+h3 {
+  margin: 0;
+  padding: 0.2em 1em;
+  color: grey;
+  font-weigth: 100;
+  font-size: 1.5em;
+}
+
+aside li {
+  display: block;
+}
+
+aside ul {
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #01344c;
+}
+
+aside li a {
+  color: grey;
+  font-size: 1.5em;
+}
+
+aside li a:hover {
+  color: #01344c;
+}
+
+article table {
+  width: 100%;
+}
+
+article th {
+  text-align: center;
+}
+
+article tbody tr {
+  background-color: white;
+}
+.clearfix {
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+}
+
+audio {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  aside {
+    width: 100%;
+  }
+  article {
+    width: 100%;
+  }
+}
+
+
+/*############## Form #############*/
+.pure-form .errors {
+  padding: .5em .6em;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  /* -webkit-box-sizing: border-box; */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: red;
+}

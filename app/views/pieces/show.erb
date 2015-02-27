@@ -1,0 +1,54 @@
+<section class="admin content">
+    <form id="form_id" action="/pieces/<%= @piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= @piece.id %> and <%= @piece.items.count %> associated items?')">
+        <%= csrf_tag %>
+        <input type="hidden" name="_method" value="DELETE">
+        <button class="pure-button button-error right"><i class="fa fa-trash-o"></i> Destroy</button>
+    </form>
+    <a href="/pieces/<%= @piece.id %>/edit" class="pure-button button-warning right">
+        <i class="fa fa-cog"></i>
+        Edit
+    </a>
+</section>
+<main class="content">
+    <aside class="col col-1-5">
+        <ul>
+        </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2><%= "#{@piece.catalogue_number}: " %><%= @piece.title %></h2>
+        <h3><%= @piece.sub_heading %></h3>
+        <div class="clearfix">
+          <section class="col-2">
+              <img src="<%= @piece.cover_image.url %>" alt="" />
+              <audio preload="auto" controls>
+                  <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
+              </audio>
+
+          </section>
+          <section class="col-2">
+              <p>
+                  Category: <%= @piece.category %>
+              </p>
+              <p>
+                  <a href="<%= @piece.notation_preview.url %>" target="_blank">pdf preview</a>
+              </p>
+              <p>
+                  Description: <%= @piece.description %>
+              </p>
+
+          </section>
+        </div>
+        <h2>Available Downloads</h2>
+        <form class="pure-form pure-form-aligned" id="form_id" action="/purchases" method="post">
+            <%= csrf_tag %>
+            <% @piece.items.each do |item| %>
+                <input type="hidden" name="purchases[][shopping_basket]" value="<%= live_shopping_basket_id %>">
+                <input type="hidden" name="purchases[][item]" value="<%= item.record.id %>">
+                <input type="number" min="0" name="purchases[][quantity]" value="">
+                <%= item.name %>
+            <% end %>
+            <input type="submit" value="Add To basket">
+        </form>
+
+    </article>
+</main>
