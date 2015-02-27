@@ -5,23 +5,20 @@ class PiecesController < UsefulMusic::App
   render_defaults[:dir] += '/pieces'
 
   def index
-
-    # ap request.GET['catalogue_search']
     search = Catalogue::Search.new request.GET.fetch('catalogue_search', {})
     pieces = Catalogue.all search
     render :index, :locals => {:pieces => pieces, :search => search}
   end
 
   def new
+    check_access!
     render :new
   end
 
   def create
-    form = create_form.to_hash
-    validator = Piece::Create::Validator.new
-
-    record = Piece::Record.create form
-    piece = Piece.new record
+    # unvalidated on backend
+    check_access!
+    piece = Piece.create create_form
     redirect show_path(piece)
   end
 
@@ -73,5 +70,14 @@ class PiecesController < UsefulMusic::App
 
   def create_form
     Piece::Create::Form.new request.POST['piece']
+  end
+
+  def check_access!
+    if current_customer.admin?
+      true
+    else
+      flash['error'] = 'Access denied'
+      redirect '/'
+    end
   end
 end

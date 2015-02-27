@@ -1,7 +1,8 @@
 require_relative './base_entity'
 
 class Piece < BaseEntity
-  entry_accessor  :title,
+  entry_accessor  :id,
+                  :title,
                   :sub_heading,
                   :description,
                   :category,
