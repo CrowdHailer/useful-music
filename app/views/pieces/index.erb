@@ -61,10 +61,8 @@
             <thead>
                 <tr>
                     <th>Catalogue number</th>
-                    <th>Title</th>
-                    <th>Sub heading</th>
+                    <th>Product name</th>
                     <th>Category</th>
-                    <th colspan=3>Action</th>
                 </tr>
             </thead>
 
@@ -72,29 +70,14 @@
                 <% pieces.map{ |r| Piece.new r }.each do |piece| %>
                     <tr>
                         <th>
-                            <%= piece.catalogue_number %>
+
+                            <a href="/pieces/<%= piece.id %>"><%= piece.catalogue_number %></a>
                         </th>
                         <th>
-                            <%= piece.title %>
-                        </th>
-                        <th>
-                            <%= piece.sub_heading %>
+                            <%= piece.product_name %>
                         </th>
                         <th>
                             <%= piece.category %>
-                        </th>
-                        <th>
-                            <a href="/pieces/<%= piece.id %>">show</a>
-                        </th>
-                        <th>
-                            <a href="/pieces/UD<%= piece.id %>/edit">edit</a>
-                        </th>
-                        <th>
-                            <form id="form_id" action="/pieces/<%= piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= piece.id %> and <%= piece.items.count %> associated items?')">
-                                <%= csrf_tag %>
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="submit" name="some_name" value="Destroy">
-                            </form>
                         </th>
                     </tr>
                 <% end %>
