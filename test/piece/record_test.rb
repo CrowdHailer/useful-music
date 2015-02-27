@@ -47,11 +47,39 @@ class Piece
       assert_match(/description/, err.message)
     end
 
-    def test_requires_category
-      err = assert_raises Sequel::NotNullConstraintViolation do
-        create :piece_record, :category => nil
-      end
-      assert_match(/category/, err.message)
+    def test_can_be_for_solo
+      record = create :piece_record, :solo => true
+      assert record.solo
+    end
+
+    def test_can_be_for_solo_with_accompaniment
+      record = create :piece_record, :solo_with_accompaniment => true
+      assert record.solo_with_accompaniment
+    end
+
+    def test_can_be_for_duet
+      record = create :piece_record, :duet => true
+      assert record.duet
+    end
+
+    def test_can_be_for_trio
+      record = create :piece_record, :trio => true
+      assert record.trio
+    end
+
+    def test_can_be_for_quartet
+      record = create :piece_record, :quartet => true
+      assert record.quartet
+    end
+
+    def test_can_be_for_larger_ensembles
+      record = create :piece_record, :larger_ensembles => true
+      assert record.larger_ensembles
+    end
+
+    def test_can_be_a_collection
+      record = create :piece_record, :collection => true
+      assert record.collection
     end
 
     def test_can_be_beginner
@@ -178,14 +206,19 @@ class Piece
       assert_match(/cover_image/, err.message)
     end
 
-    def test_can_have_print_version
-      record = create :piece_record, :print_version => 'sdb'
-      assert record.print_version
+    def test_can_have_print_link
+      record = create :piece_record, :print_link => 'sdb'
+      assert record.print_link
     end
 
-    def test_can_have_weezic_version
-      record = create :piece_record, :weezic_version => 'dfsd'
-      assert record.weezic_version
+    def test_can_have_print_title
+      record = create :piece_record, :print_title => 'sdb'
+      assert record.print_title
+    end
+
+    def test_can_have_weezic_link
+      record = create :piece_record, :weezic_link => 'dfsd'
+      assert record.weezic_link
     end
 
     def test_can_have_meta_description

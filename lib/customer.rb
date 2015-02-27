@@ -6,6 +6,7 @@ class Customer < BaseEntity
                   :email,
                   :password,
                   :country,
+                  :admin, # TODO untested
                   :question_1,
                   :question_2,
                   :question_3,

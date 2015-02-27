@@ -2,6 +2,8 @@ class CustomersController < UsefulMusic::App
   include Scorched::Rest
   get('/:id/change_password') { |id| send :edit_password, id }
   put('/:id/change_password') { |id| send :update_password, id }
+  get('/:id/orders') { |id| send :order_history, id }
+  get('/:id/purchases') { |id| send :purchase_history, id }
 
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/customers'
@@ -48,6 +50,16 @@ class CustomersController < UsefulMusic::App
   def show(id)
     @customer = check_access!(id)
     render :show
+  end
+
+  def order_history(id)
+    @customer = check_access!(id)
+    render :order_history
+  end
+
+  def purchase_history(id)
+    @customer = check_access!(id)
+    render :purchase_history
   end
 
   def edit(id)

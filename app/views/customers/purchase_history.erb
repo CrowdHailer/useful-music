@@ -29,23 +29,12 @@
         </ul>
     </aside>
     <article class="col col-4-5">
-        <h2><%= @customer.name %></h2>
-        <h3><%= @customer.email %></h3>
-        <% if @customer.survey_unanswered? %>
-            <div class="bold">
-              <a href="/customers/<%= @customer.id %>/edit#customer-questions">Tell us more</a>
-            </div>
-        <% end %>
+        <h2>Available Downloads</h2>
         <ul>
-            <li>
-                <b>name </b><%= @customer.name %>
-            </li>
-            <li>
-                <b>name </b><%= @customer.email %>
-            </li>
-            <li>
-                <b>name </b><%= @customer.country %>
-            </li>
+            <% @customer.orders.map(&:shopping_basket).flat_map(&:purchases).each do |purchase| %>
+                <a target="_blank" download href="<%= purchase.item.asset.url %>"><%= purchase.item.piece.product_name %>:<%= purchase.item.name %></a> order id: <%= purchase.shopping_basket.order.id[0..4] %>..<br>
+            <% end %>
         </ul>
+        <h2>Expired Downloads</h2>
     </article>
 </main>

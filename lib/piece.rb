@@ -1,15 +1,16 @@
 require_relative './base_entity'
 
 class Piece < BaseEntity
-  entry_accessor  :title,
+  entry_accessor  :id,
+                  :title,
                   :sub_heading,
                   :description,
-                  :category,
                   :notation_preview,
                   :audio_preview,
                   :cover_image,
-                  :print_version,
-                  :weezic_version,
+                  :print_link,
+                  :print_title,
+                  :weezic_link,
                   :meta_description,
                   :meta_keywords
 
@@ -17,6 +18,13 @@ class Piece < BaseEntity
                     :intermediate,
                     :advanced,
                     :professional,
+                    :solo,
+                    :solo_with_accompaniment,
+                    :duet,
+                    :trio,
+                    :quartet,
+                    :larger_ensembles,
+                    :collection,
                     :piano,
                     :recorder,
                     :flute,
@@ -40,6 +48,43 @@ class Piece < BaseEntity
 
   def product_name
     "#{title} - #{sub_heading}"
+  end
+
+  def categories
+    [:solo,
+    :solo_with_accompaniment,
+    :duet,
+    :trio,
+    :quartet,
+    :larger_ensembles].select do |category|
+      public_send "#{category}?"
+    end
+  end
+
+  def instruments
+    [:piano,
+    :recorder,
+    :flute,
+    :oboe,
+    :clarineo,
+    :clarinet,
+    :basson,
+    :saxophone,
+    :trumpet,
+    :violin,
+    :viola,
+    :percussion].select do |instrument|
+      public_send "#{instrument}?"
+    end
+  end
+
+  def levels
+    [:beginner,
+    :intermediate,
+    :advanced,
+    :professional].select do |level|
+      public_send "#{level}?"
+    end
   end
 
 end

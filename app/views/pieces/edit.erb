@@ -1,5 +1,5 @@
 <main class="content">
-    <aside id="">
+    <aside class="col col-1-5">
       <ul>
           <li>
               <a href="/">Home</a>
@@ -8,17 +8,12 @@
               <a href="/pieces/<%= @piece.catalogue_number %>">Show</a>
           </li>
           <hr>
-          <% @piece.items.each do |item| %>
-              <li>
-                  <a href="/items/<%= item.id %>"><%= item.name %></a>
-              </li>
-          <% end %>
           <li>
               <a href="/items/new?piece_id=<%= @piece.id %>">Add Item</a>
           </li>
       </ul>
     </aside>
-    <article id="">
+    <article class="col col-4-5">
         <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
 
         <form class="pure-form pure-form-aligned" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
@@ -78,21 +73,69 @@
                         placeholder="product description"><%= @piece.description %></textarea>
                 </div>
 
+                <hr>
+
                 <div class="pure-control-group">
-                    <label for="piece_category">Category</label>
-                    <select
-                        id="piece_category"
-                        name="piece[category]"
-                        value="<%= @piece.category %>"
-                        required>
-                        <option value>-- category --</option>
-                        <option value="solo" <%= 'selected' if 'solo' == @piece.category %>>Solo</option>
-                        <option value="solo_with_accompaniment" <%= 'selected' if 'solo_with_accompaniment' == @piece.category %>>Solo with accompaniment</option>
-                        <option value="duet" <%= 'selected' if 'duet' == @piece.category %>>Duet</option>
-                        <option value="trio" <%= 'selected' if 'trio' == @piece.category %>>Trio</option>
-                        <option value="quartet" <%= 'selected' if 'quartet' == @piece.category %>>Quartet</option>
-                        <option value="larger_ensembles" <%= 'selected' if 'larger_ensembles' == @piece.category %>>Larger ensembles</option>
-                    </select>
+                    <label for="piece_solo">Solo</label>
+                    <input
+                        id="piece_solo"
+                        name="piece[solo]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.solo? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_solo_with_accompaniment">Solo With Accompaniment</label>
+                    <input
+                        id="piece_solo_with_accompaniment"
+                        name="piece[solo_with_accompaniment]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.solo_with_accompaniment? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_duet">Duet</label>
+                    <input
+                        id="piece_duet"
+                        name="piece[duet]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.duet? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_trio">Trio</label>
+                    <input
+                        id="piece_trio"
+                        name="piece[trio]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.trio? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_quartet">Quartet</label>
+                    <input
+                        id="piece_quartet"
+                        name="piece[quartet]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.quartet? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_larger_ensembles">Larger Emsembles</label>
+                    <input
+                        id="piece_larger_ensembles"
+                        name="piece[larger_ensembles]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.larger_ensembles? %>>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_collection">Collection</label>
+                    <input
+                        id="piece_collection"
+                        name="piece[collection]"
+                        type="checkbox"
+                        <%= 'checked' if @piece.collection? %>>
                 </div>
 
                 <hr>
@@ -270,22 +313,29 @@
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="piece_print_version">Print version</label>
+                    <label for="piece_print_link">Print link</label>
                     <input
-                        id="piece_print_version"
-                        name="piece[print_version]"
+                        id="piece_print_link"
+                        name="piece[print_link]"
                         type="text"
-                        value="<%= @piece.print_version %>"
                         placeholder="Add link">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="piece_weezic_version">Weezic version</label>
+                    <label for="piece_print_title">Print title</label>
                     <input
-                        id="piece_weezic_version"
-                        name="piece[weezic_version]"
+                        id="piece_print_title"
+                        name="piece[print_title]"
                         type="text"
-                        value="<%= @piece.weezic_version %>"
+                        placeholder="Add title">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="piece_weezic_link">Weezic link</label>
+                    <input
+                        id="piece_weezic_link"
+                        name="piece[weezic_link]"
+                        type="text"
                         placeholder="Add link">
                 </div>
 
@@ -315,6 +365,7 @@
             </fieldset>
         </form>
         <h2>Items</h2>
+        <a href="/items/new?piece_id=<%= @piece.id %>">Add Item</a>
         <table class="pure-table">
             <thead>
                 <tr>

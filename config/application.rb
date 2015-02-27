@@ -15,6 +15,15 @@ module UsefulMusic
       @current_user = nil
     end
 
+    def show_admin
+      current_customer.admin? && request.GET['incognito'] != 'on'
+    end
+
+    def incognito_uri
+      current_uri = request.env['REQUEST_URI']
+      current_uri.include?('?') ? current_uri + '&incognito=on' : current_uri + '?incognito=on'
+    end
+
     def csrf_tag
       Rack::Csrf.csrf_tag(env)
     end
