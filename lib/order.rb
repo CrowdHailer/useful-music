@@ -21,7 +21,7 @@ class Transaction < BaseEntity
 
   def initialize(*args)
     super
-    self.state = 'pending'
+    self.state ||= 'pending'
   end
 
   def setup(url_base)
@@ -103,6 +103,7 @@ class Order < BaseEntity
   end
 
   entry_accessor  :created_at,
+                  :updated_at,
                   :basket_amount,
                   :tax_amount,
                   :discount_amount
