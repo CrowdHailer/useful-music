@@ -9,7 +9,14 @@ Sequel.migration do
       String :title, :null => false
       String :sub_heading, :null => false
       String :description, :null => false
-      String :category, :null => false
+      # String :category, :null => false
+      TrueClass :solo
+      TrueClass :solo_with_accompaniment
+      TrueClass :duet
+      TrueClass :trio
+      TrueClass :quartet
+      TrueClass :larger_ensembles
+      TrueClass :collection
       TrueClass :beginner
       TrueClass :intermediate
       TrueClass :advanced

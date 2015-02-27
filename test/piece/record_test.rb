@@ -47,11 +47,39 @@ class Piece
       assert_match(/description/, err.message)
     end
 
-    def test_requires_category
-      err = assert_raises Sequel::NotNullConstraintViolation do
-        create :piece_record, :category => nil
-      end
-      assert_match(/category/, err.message)
+    def test_can_be_for_solo
+      record = create :piece_record, :solo => true
+      assert record.solo
+    end
+
+    def test_can_be_for_solo_with_accompaniment
+      record = create :piece_record, :solo_with_accompaniment => true
+      assert record.solo_with_accompaniment
+    end
+
+    def test_can_be_for_duet
+      record = create :piece_record, :duet => true
+      assert record.duet
+    end
+
+    def test_can_be_for_trio
+      record = create :piece_record, :trio => true
+      assert record.trio
+    end
+
+    def test_can_be_for_quartet
+      record = create :piece_record, :quartet => true
+      assert record.quartet
+    end
+
+    def test_can_be_for_larger_ensembles
+      record = create :piece_record, :larger_ensembles => true
+      assert record.larger_ensembles
+    end
+
+    def test_can_be_a_collection
+      record = create :piece_record, :collection => true
+      assert record.collection
     end
 
     def test_can_be_beginner
