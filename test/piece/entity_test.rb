@@ -69,16 +69,6 @@ class Piece
       assert_equal 'Lots of interesting information', record.description
     end
 
-    def test_can_access_category
-      record.category = 'Duet'
-      assert_equal 'Duet', piece.category
-    end
-
-    def test_can_set_category
-      piece.category = 'Duet'
-      assert_equal 'Duet', record.category
-    end
-
     def test_can_access_notation_preview
       record.notation_preview = :file
       assert_equal :file, piece.notation_preview
@@ -122,6 +112,18 @@ class Piece
     end
 
     [:piano, :recorder, :flute, :oboe, :clarineo, :clarinet, :basson, :saxophone, :trumpet, :violin, :viola, :percussion].each do |bool_entry|
+      define_method "test_can_access_#{bool_entry}" do
+        record.public_send "#{bool_entry}=", true
+        assert piece.public_send "#{bool_entry}?"
+      end
+
+      define_method "test_can_set_#{bool_entry}" do
+        piece.public_send "#{bool_entry}=", true
+        assert_equal true, record.public_send("#{bool_entry}")
+      end
+    end
+
+    [:solo, :solo_with_accompaniment, :duet, :trio, :quartet, :larger_ensembles, :collection].each do |bool_entry|
       define_method "test_can_access_#{bool_entry}" do
         record.public_send "#{bool_entry}=", true
         assert piece.public_send "#{bool_entry}?"
