@@ -3,18 +3,28 @@ Customer.create(
   :last_name => 'Saxton',
   :email => 'peterhsaxton@gmail.com',
   :password => 'asdfghjk',
-  :country => Country.new('GB')
+  :country => Country.new('GB'),
+  :admin => true
 )
 
 Customer.create(
   :first_name => 'Daisy',
   :last_name => 'Hill',
   :email => 'daisy@usefulmusic.com',
-  :password => 'asdfghjk',
-  :country => Country.new('GB')
+  :password => 'password',
+  :country => Country.new('GB'),
+  :admin => true
 )
 
-100.times { |i| Customer.create(:first_name => 'dave', :last_name => 'smith', :email => "p#{i}@q.com", :password => 'password', :country => Country.new('GB')) }
+100.times do |i|
+  Customer.create(
+    :first_name => ['dave', 'clare', 'steve', 'amy', 'Jasmin', 'Dan', 'Lewis', 'Jess'].sample,
+    :last_name => ['smith', 'jones', 'davis', 'edwards'].sample,
+    :email => "my_account_#{i}@example.com",
+    :password => 'password',
+    :country => Country.new('GB')
+  )
+end
 
 
 Bundler.require :test
@@ -22,9 +32,35 @@ require 'factory_girl'
 FactoryGirl.find_definitions
 FactoryGirl.to_create { |i| i.save }
 
-5.times{ FactoryGirl.create :piece_record }
-5.times{ FactoryGirl.create :piece_record, :intermediate, :advanced}
+piece_record = FactoryGirl.create :piece_record, :beginner,
+  :solo => true,
+  :piano => true,
+  :flute => true
 
-piece_record = Piece::Record.first
+FactoryGirl.create :item_record,
+  :name => 'flute part',
+  :piece_record => piece_record,
+  :initial_price => Money.new(80),
+  :discounted_price => nil,
+  :asset => Rack::Test::UploadedFile.new('test/fixtures/UD477fl.pdf', 'application/pdf')
 
-2.times{ FactoryGirl.create :item_record, :piece_record => piece_record }
+FactoryGirl.create :item_record,
+  :name => 'audio',
+  :piece_record => piece_record,
+  :initial_price => Money.new(100),
+  :discounted_price => Money.new(80),
+  :asset => Rack::Test::UploadedFile.new('test/fixtures/Ud477.mp3', 'audio/mp3')
+
+FactoryGirl.create :item_record,
+  :name => 'all parts',
+  :piece_record => piece_record,
+  :initial_price => Money.new(350),
+  :discounted_price => Money.new(250),
+  :asset => Rack::Test::UploadedFile.new('test/fixtures/UD477all.pdf', 'application/pdf')
+
+FactoryGirl.create :item_record,
+  :name => 'keyboard',
+  :piece_record => piece_record,
+  :initial_price => Money.new(100),
+  :discounted_price => Money.new(80),
+  :asset => Rack::Test::UploadedFile.new('test/fixtures/UD477kbd.pdf', 'application/pdf')
