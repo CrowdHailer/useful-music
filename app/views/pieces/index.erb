@@ -1,9 +1,9 @@
-<section class="admin content">
-    <a href="/pieces/new" class="pure-button button-success right">
-        <i class="fa fa-cog"></i>
-        New
-    </a>
-</section>
+<% if show_admin %>
+    <section class="admin content">
+        <a href="<%= incognito_uri %>" class="pure-button button-primary right"><i class="fa fa-eye-slash"></i> Incognito</a>
+        <a href="/pieces/new" class="pure-button button-success right"><i class="fa fa-cog"></i> New</a>
+    </section>
+<% end %>
 <main class="content">
     <aside id="search" class="col col-1-5">
       <form class="pure-form" action="/pieces" method="get" id="search-form">
