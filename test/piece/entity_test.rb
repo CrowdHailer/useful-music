@@ -69,16 +69,6 @@ class Piece
       assert_equal 'Lots of interesting information', record.description
     end
 
-    def test_can_access_category
-      record.category = 'Duet'
-      assert_equal 'Duet', piece.category
-    end
-
-    def test_can_set_category
-      piece.category = 'Duet'
-      assert_equal 'Duet', record.category
-    end
-
     def test_can_access_notation_preview
       record.notation_preview = :file
       assert_equal :file, piece.notation_preview
@@ -133,24 +123,46 @@ class Piece
       end
     end
 
-    def test_can_access_print_version
-      record.print_version = 'Description'
-      assert_equal 'Description', piece.print_version
+    [:solo, :solo_with_accompaniment, :duet, :trio, :quartet, :larger_ensembles, :collection].each do |bool_entry|
+      define_method "test_can_access_#{bool_entry}" do
+        record.public_send "#{bool_entry}=", true
+        assert piece.public_send "#{bool_entry}?"
+      end
+
+      define_method "test_can_set_#{bool_entry}" do
+        piece.public_send "#{bool_entry}=", true
+        assert_equal true, record.public_send("#{bool_entry}")
+      end
     end
 
-    def test_can_set_print_version
-      piece.print_version = 'Description'
-      assert_equal 'Description', record.print_version
+    def test_can_access_print_link
+      record.print_link = 'Description'
+      assert_equal 'Description', piece.print_link
     end
 
-    def test_can_access_weezic_version
-      record.weezic_version = 'Description'
-      assert_equal 'Description', piece.weezic_version
+    def test_can_set_print_link
+      piece.print_link = 'Description'
+      assert_equal 'Description', record.print_link
     end
 
-    def test_can_set_weezic_version
-      piece.weezic_version = 'Description'
-      assert_equal 'Description', record.weezic_version
+    def test_can_access_print_title
+      record.print_title = 'Description'
+      assert_equal 'Description', piece.print_title
+    end
+
+    def test_can_set_print_title
+      piece.print_title = 'Description'
+      assert_equal 'Description', record.print_title
+    end
+
+    def test_can_access_weezic_link
+      record.weezic_link = 'Description'
+      assert_equal 'Description', piece.weezic_link
+    end
+
+    def test_can_set_weezic_link
+      piece.weezic_link = 'Description'
+      assert_equal 'Description', record.weezic_link
     end
 
     def test_can_access_meta_description

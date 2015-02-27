@@ -8,7 +8,13 @@ class Piece
       attribute :title, String
       attribute :sub_heading, String
       attribute :description, String
-      attribute :category, String
+      attribute :solo, String
+      attribute :solo_with_accompaniment, String
+      attribute :duet, String
+      attribute :trio, String
+      attribute :quartet, String
+      attribute :larger_ensembles, String
+      attribute :collection, String
       attribute :beginner, Boolean
       attribute :intermediate, Boolean
       attribute :advanced, Boolean
@@ -28,8 +34,9 @@ class Piece
       attribute :notation_preview, Hash
       attribute :audio_preview, Hash
       attribute :cover_image, Hash
-      attribute :print_version, String
-      attribute :weezic_version, String
+      attribute :print_link, String
+      attribute :print_title, String
+      attribute :weezic_link, String
       attribute :meta_description, String
       attribute :meta_keywords, String
 

@@ -1,7 +1,5 @@
 Sequel.migration do
   up do
-    extension(:constraint_validations)
-    DB.create_constraint_validations_table
     create_table(:purchases) do
       primary_key :id, :type => :varchar, :auto_increment => false, :unique => true
       Integer :quantity, :null => false
@@ -18,8 +16,6 @@ Sequel.migration do
   end
 
   down do
-    extension(:constraint_validations)
-    DB.drop_constraint_validations_table
     drop_table(:purchases)
   end
 end

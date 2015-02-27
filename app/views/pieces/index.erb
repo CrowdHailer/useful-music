@@ -63,6 +63,8 @@
                     <th>Catalogue number</th>
                     <th>Product name</th>
                     <th>Category</th>
+                    <th>Instruments</th>
+                    <th>Levels</th>
                 </tr>
             </thead>
 
@@ -77,7 +79,13 @@
                             <%= piece.product_name %>
                         </th>
                         <th>
-                            <%= piece.category %>
+                            <%= piece.categories.join('<br>') %>
+                        </th>
+                        <th>
+                            <%= piece.instruments.join('<br>') %>
+                        </th>
+                        <th>
+                            <%= piece.levels.join('<br>') %>
                         </th>
                     </tr>
                 <% end %>
