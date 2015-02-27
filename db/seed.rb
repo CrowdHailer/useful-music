@@ -14,6 +14,9 @@ Customer.create(
   :country => Country.new('GB')
 )
 
+100.times { |i| Customer.create(:first_name => 'dave', :last_name => 'smith', :email => "p#{i}@q.com", :password => 'password', :country => Country.new('GB')) }
+
+
 Bundler.require :test
 require 'factory_girl'
 FactoryGirl.find_definitions
