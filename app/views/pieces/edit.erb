@@ -1,5 +1,5 @@
 <main class="content">
-    <aside id="">
+    <aside class="col col-1-5">
       <ul>
           <li>
               <a href="/">Home</a>
@@ -8,17 +8,12 @@
               <a href="/pieces/<%= @piece.catalogue_number %>">Show</a>
           </li>
           <hr>
-          <% @piece.items.each do |item| %>
-              <li>
-                  <a href="/items/<%= item.id %>"><%= item.name %></a>
-              </li>
-          <% end %>
           <li>
               <a href="/items/new?piece_id=<%= @piece.id %>">Add Item</a>
           </li>
       </ul>
     </aside>
-    <article id="">
+    <article class="col col-4-5">
         <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
 
         <form class="pure-form pure-form-aligned" action="/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
@@ -315,6 +310,7 @@
             </fieldset>
         </form>
         <h2>Items</h2>
+        <a href="/items/new?piece_id=<%= @piece.id %>">Add Item</a>
         <table class="pure-table">
             <thead>
                 <tr>

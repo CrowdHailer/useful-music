@@ -17,7 +17,7 @@ class Customer
           errors.add(:terms_agreement, 'is not checked')
           agreed = false
         end
-        details && confirmed
+        details && confirmed && agreed
       end
 
       validates :first_name,

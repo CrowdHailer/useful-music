@@ -25,6 +25,22 @@ class MyRecordTest < MiniTest::Test
     result
   end
 
+  def last_customer
+    Customers.last
+  end
+
+  def customer
+    @customer ||= Customer.new(create :customer_record, :email => 'customer@example.com')
+  end
+
+  def admin
+    @admin ||= Customer.new(create :customer_record, :admin, :email => 'admin@example.com')
+  end
+
+  def interloper
+    @interloper ||= Customer.new(create :customer_record, :email => 'interloper@example.com')
+  end
+
 end
 
 module MailerTesting
@@ -53,6 +69,10 @@ module ControllerTesting
   #
   def assert_ok(response=last_response)
     assert response.ok?, "Response was #{last_response.status} not OK"
+  end
+
+  def flash
+    last_request.env['scorched.flash'][:flash]
   end
 
 end

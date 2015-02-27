@@ -14,7 +14,7 @@ class Customer
     serialize_attributes [
       lambda{ |password| BCrypt::Password.create(password) },
       lambda{ |crypted| BCrypt::Password.new(crypted) }
-    ], :password, :remember, :reset
+    ], :password, :remember_token, :password_reset_token
 
     serialize_attributes [
       lambda{ |country| country.alpha2 },

@@ -42,7 +42,7 @@
         <% if current_customer.guest? %>
           <li>
             <b>
-              <a href="/authentication/login">Login</a>
+              <a href="/sessions/new">Login</a>
             </b>
           </li>
           <li>
@@ -57,9 +57,11 @@
             </b>
           </li>
           <li>
-            <b>
-              <a href="/authentication/logout">Logout</a>
-            </b>
+              <form id="form_id" action="/sessions" method="post">
+                  <%= csrf_tag %>
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="submit" value="logout">
+              </form>
           </li>
         <% end %>
       </ul>
@@ -86,7 +88,7 @@
 
       <ul class="main-navigation right bold">
         <li>
-          <a href="/my-shopping-basket"><i class="fa fa-shopping-cart"></i> Shopping Cart <%= shopping_basket.number_of_items %>:<%= shopping_basket.number_of_licenses %></a>
+          <a href="/my-shopping-basket"><i class="fa fa-shopping-cart"></i> Shopping Cart <%= shopping_basket.number_of_purchases %>:<%= shopping_basket.number_of_licenses %></a>
         </li>
       </ul>
     </section>

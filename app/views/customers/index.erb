@@ -12,7 +12,6 @@
     <article class="col col-4-5">
         <h2>Customers</h2>
         <form class="" action="/customers" method="get">
-            <%= csrf_tag %>
             <button name="page" value="1">First Page</button>
             <button name="page" value="<%= @customers.prev_page %>" <%= 'disabled' unless @customers.prev_page %>>Previous</button>
             <select name="page_size">

@@ -1,6 +1,6 @@
 require_relative '../test_config'
 
-class HomeControllerTest < MiniTest::Test
+class HomeControllerTest < MyRecordTest
   include ControllerTesting
 
   def app

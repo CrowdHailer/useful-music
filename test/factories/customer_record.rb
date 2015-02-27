@@ -9,5 +9,8 @@ FactoryGirl.define do
 		end
     password 'password'
     country Country.new('GB')
+    trait :admin do
+      admin true
+    end
   end
 end

@@ -1,12 +1,12 @@
 <main class="content">
-    <aside id="">
+    <aside class="col col-1-5">
       <ul>
           <li>
               <a href="/">Home</a>
           </li>
       </ul>
     </aside>
-    <article>
+    <article class="col col-4-5">
         <h2>Items</h2>
         <p>
           Add a new item to the following piece
@@ -23,11 +23,11 @@
             <input type="hidden" name="item[piece]" value="<%= @piece.id %>">
             <fieldset>
 
-                <select name="piece[item][][type]">
+                <!-- <select name="piece[item][][type]">
                     <option value=></option>
                     <option value="audio">Audio</option>
                     <option value="part">Part</option>
-                </select>
+                </select> -->
 
                 <input name="[item][name]" type="text" placeholder="Name" required>
                 <input id="item_initial_price" name="[item][initial_price]" type="number" min="0" step="0.01" placeholder="initial price" required>

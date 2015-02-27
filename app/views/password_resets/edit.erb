@@ -1,0 +1,49 @@
+<main class="content">
+    <aside id="" class="col col-1-5">
+      <ul>
+          <li>
+              <a href="/">Home</a>
+          </li>
+      </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2>Reset password</h2>
+        <form class="pure-form pure-form-aligned" action="/password_resets/<%= @id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="email" value="<%= @customer.email %>">
+            <fieldset>
+                <% @validator.errors.full_messages.each do |message| %>
+                    <div class="pure-control-group">
+                        <label></label>
+                        <span class="errors"><%= message.gsub('_', ' ').capitalize %></span>
+                    </div>
+                <% end %>
+                <div class="pure-control-group">
+                    <label for="customer_password">New password</label>
+                    <input
+                        id="customer_password"
+                        name="customer[password]"
+                        type="password"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="customer_password_confirmation">New password confirmation</label>
+                    <input
+                        id="customer_password_confirmation"
+                        name="customer[password_confirmation]"
+                        type="password"
+                        required
+                        placeholder="">
+                </div>
+
+            </fieldset>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+
+        </form>
+    </article>
+</main>

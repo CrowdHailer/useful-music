@@ -73,6 +73,51 @@ class Customer
         assert_nil form.country
       end
 
+      def test_obtains_question_1
+        form = Form.new :question_1 => 'Yes'
+        assert_equal 'Yes', form.question_1
+      end
+
+      def test_strips_whitespace_from_question_1
+        form = Form.new :question_1 => '   For sure  '
+        assert_equal 'For sure', form.question_1
+      end
+
+      def test_silent_if_question_1_not_supplied
+        form = Form.new
+        assert_equal '', form.question_1
+      end
+
+      def test_obtains_question_2
+        form = Form.new :question_2 => 'Yes'
+        assert_equal 'Yes', form.question_2
+      end
+
+      def test_strips_whitespace_from_question_2
+        form = Form.new :question_2 => '   For sure  '
+        assert_equal 'For sure', form.question_2
+      end
+
+      def test_silent_if_question_2_not_supplied
+        form = Form.new
+        assert_equal '', form.question_2
+      end
+
+      def test_obtains_question_3
+        form = Form.new :question_3 => 'Yes'
+        assert_equal 'Yes', form.question_3
+      end
+
+      def test_strips_whitespace_from_question_3
+        form = Form.new :question_3 => '   For sure  '
+        assert_equal 'For sure', form.question_3
+      end
+
+      def test_silent_if_question_3_not_supplied
+        form = Form.new
+        assert_equal '', form.question_3
+      end
+
     end
   end
 end

@@ -32,6 +32,7 @@ class BaseEntity
   end
 
   def self.entry_accessor(*entries)
+    # To preserve statless dont use instance variables here. Allowed at model level
     delegate(*entries.flat_map{|entry| [entry, "#{entry}="]}, :to => :record)
   end
 
@@ -52,4 +53,21 @@ class BaseEntity
   def id
     record.id
   end
+
+  def save
+    record.save
+    self
+  end
+
+  def set(attributes)
+    attributes.each do |attribute, value|
+      self.public_send "#{attribute}=", value
+    end
+    self
+  end
+
+  def set!(*args)
+    set(*args).save
+  end
+  # TODO active record mixin, !bang_methods, delegate save, destroy, reload
 end

@@ -5,7 +5,12 @@
 
   .pure-button {
     margin-left: 1em;
+    color: white;
   }
+}
+
+.button-primary {
+    background: $primary-color; /* this is a green */
 }
 
 .button-success {

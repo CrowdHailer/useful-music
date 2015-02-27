@@ -60,8 +60,38 @@ class Customer
       refute customer.admin?
     end
 
+    def test_can_be_an_admin
+      record.admin = true
+      assert customer.admin?
+    end
+
     def test_is_a_customer
       assert customer.customer?
+    end
+
+    def test_survey_unanswered
+      record.question_1 = ''
+      assert customer.survey_unanswered?
+    end
+
+    def test_generates_reset_token
+      SecureRandom.stub :urlsafe_base64, 'random_token' do
+        Time.stub :now, Time.new(200) do
+          customer.create_password_reset
+        end
+      end
+      assert_equal 'random_token', record.password_reset_token
+      assert_equal Time.new(200), record.password_reset_created_at
+    end
+
+    def test_has_20_vat_rate_in_eu
+      record.country = Country.new('GB')
+      assert_equal 0.20, customer.vat_rate
+    end
+
+    def test_has_0_vat_rate_outside_eu
+      record.country = Country.new('AF')
+      assert_equal 0, customer.vat_rate
     end
 
     ################# Associations #####################
@@ -153,11 +183,6 @@ class Customer
     def test_can_set_question_3
       customer.question_3 = :uk
       assert_equal :uk, record.question_3
-    end
-
-    def test_survey_unanswered
-      record.question_1 = ''
-      assert customer.survey_unanswered?
     end
 
     def test_can_access_last_login_at

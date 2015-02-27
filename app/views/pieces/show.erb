@@ -1,14 +1,17 @@
-<section class="admin content">
-    <form id="form_id" action="/pieces/<%= @piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= @piece.id %> and <%= @piece.items.count %> associated items?')">
-        <%= csrf_tag %>
-        <input type="hidden" name="_method" value="DELETE">
-        <button class="pure-button button-error right"><i class="fa fa-trash-o"></i> Destroy</button>
-    </form>
-    <a href="/pieces/<%= @piece.id %>/edit" class="pure-button button-warning right">
-        <i class="fa fa-cog"></i>
-        Edit
-    </a>
-</section>
+<% if show_admin %>
+    <section class="admin content">
+      <a href="<%= incognito_uri %>" class="pure-button button-primary right"><i class="fa fa-eye-slash"></i> Incognito</a>
+        <form id="form_id" action="/pieces/<%= @piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= @piece.id %> and <%= @piece.items.count %> associated items?')">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="pure-button button-error right"><i class="fa fa-trash-o"></i> Destroy</button>
+        </form>
+        <a href="/pieces/<%= @piece.id %>/edit" class="pure-button button-warning right">
+            <i class="fa fa-cog"></i>
+            Edit
+        </a>
+    </section>
+<% end %>
 <main class="content">
     <aside class="col col-1-5">
         <ul>

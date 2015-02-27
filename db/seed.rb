@@ -24,3 +24,7 @@ FactoryGirl.to_create { |i| i.save }
 
 5.times{ FactoryGirl.create :piece_record }
 5.times{ FactoryGirl.create :piece_record, :intermediate, :advanced}
+
+piece_record = Piece::Record.first
+
+2.times{ FactoryGirl.create :item_record, :piece_record => piece_record }

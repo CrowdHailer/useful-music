@@ -8,9 +8,9 @@ Sequel.migration do
       String :password, :null => false
       String :country, :null => false
       TrueClass :admin, :default => false
-      String :remember
-      String :reset
-      DateTime :reset_sent_at
+      String :remember_token
+      String :password_reset_token
+      DateTime :password_reset_created_at
       String :question_1
       String :question_2
       String :question_3

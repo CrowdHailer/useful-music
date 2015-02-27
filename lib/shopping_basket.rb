@@ -6,21 +6,23 @@ class ShoppingBasket < BaseEntity
   end
 
   def order
-    Order.new(record.order_record)
+    order_record = record.order_record
+    Order.new(order_record) if order_record
   end
 
   def price
-    # TODO test
-    purchases.reduce(0){ |t, p| t + p.price}/100.0
+    purchases.map(&:price).reduce(Money.new(0), &:+)
   end
 
   def number_of_licenses
-    # TODO test
-    purchases.reduce(0){ |sum, purchase| sum + purchase.quantity}
+    purchases.map(&:quantity).reduce(0, &:+)
   end
 
-  def number_of_items
-    # TODO test
+  def number_of_purchases
     purchases.count
+  end
+
+  def last_revision_at
+    purchases.map(&:updated_at).max
   end
 end
