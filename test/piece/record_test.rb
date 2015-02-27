@@ -178,14 +178,19 @@ class Piece
       assert_match(/cover_image/, err.message)
     end
 
-    def test_can_have_print_version
-      record = create :piece_record, :print_version => 'sdb'
-      assert record.print_version
+    def test_can_have_print_link
+      record = create :piece_record, :print_link => 'sdb'
+      assert record.print_link
     end
 
-    def test_can_have_weezic_version
-      record = create :piece_record, :weezic_version => 'dfsd'
-      assert record.weezic_version
+    def test_can_have_print_title
+      record = create :piece_record, :print_title => 'sdb'
+      assert record.print_title
+    end
+
+    def test_can_have_weezic_link
+      record = create :piece_record, :weezic_link => 'dfsd'
+      assert record.weezic_link
     end
 
     def test_can_have_meta_description

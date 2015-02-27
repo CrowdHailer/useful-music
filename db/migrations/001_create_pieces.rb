@@ -29,8 +29,9 @@ Sequel.migration do
       String :notation_preview, :null => false
       String :audio_preview
       String :cover_image, :null => false
-      String :print_version
-      String :weezic_version
+      String :print_link
+      String :print_title
+      String :weezic_link
       String :meta_description
       String :meta_keywords
     end
