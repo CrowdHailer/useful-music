@@ -1,15 +1,15 @@
 <main class="content">
-    <aside id="">
+    <aside class="col col-1-5">
       <ul>
           <li>
               <a href="/">Home</a>
           </li>
       </ul>
     </aside>
-    <article>
+    <article class="col col-4-5">
         <h2>Edit Item</h2>
         <p>
-          Edit item <%= @item.id %> Which belongs to piece <%= @item.piece.catalogue_number %>
+          Edit item '<%= @item.name %>'' Which belongs to piece <%= @item.piece.catalogue_number %>
         </p>
         <li>
           <em>Catalogue Number:</em> <%= @item.piece.catalogue_number %>
@@ -47,3 +47,21 @@
         </form>
     </article>
 </main>
+<script charset="utf-8">
+var numInput = document.getElementById('item_initial_price');
+numInput.addEventListener('blur', function () {
+  if (this.value === '') {
+      return;
+  }
+  this.setAttribute('type', 'text');
+  if (this.value.indexOf('.') === -1) {
+      this.value = this.value + '.00';
+  }
+  while (this.value.indexOf('.') > this.value.length - 3) {
+      this.value = this.value + '0';
+  }
+});
+numInput.addEventListener('focus', function () {
+  this.setAttribute('type', 'number');
+});
+</script>
