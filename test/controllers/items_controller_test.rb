@@ -33,22 +33,43 @@ class ItemsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
-  def test_edit_page_is_available
+  def test_edit_page_is_availableto_admin
     record = create :item_record
-    assert_ok get "/#{record.id}/edit"
+    assert_ok get "/#{record.id}/edit", {}, {'rack.session' => { :user_id => admin.id }}
   end
 
-  def test_can_update_item
+  def test_edit_page_is_unavailableto_admin
+    record = create :item_record
+    get "/#{record.id}/edit", {}, {'rack.session' => { :user_id => customer.id }}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_can_update_item_as_admin
     record = create :item_record, :name => 'test'
-    put "/#{record.id}", :item => {:name => 'test2'}
+    put "/#{record.id}", {:item => {:name => 'test2'}}, {'rack.session' => { :user_id => admin.id }}
     assert_match /pieces\/UD\d{3}/, last_response.location
     assert_equal 'test2', Item::Record.last.name
   end
 
-  def test_can_delete_an_item
+  def test_cant_update_item_as_customer
+    record = create :item_record, :name => 'test'
+    put "/#{record.id}", {:item => {:name => 'test2'}}, {'rack.session' => { :user_id => customer.id }}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_can_delete_an_item_as_admin
     record = create :item_record
-    delete "/#{record.id}"
+    delete "/#{record.id}", {}, {'rack.session' => { :user_id => admin.id }}
     assert_empty Item::Record
     assert_match /pieces\/UD\d{3}/, last_response.location
+  end
+
+  def test_can_delete_an_item_as_customer
+    record = create :item_record
+    delete "/#{record.id}", {}, {'rack.session' => { :user_id => customer.id }}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
   end
 end

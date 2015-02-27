@@ -24,17 +24,20 @@ class ItemsController < UsefulMusic::App
   end
 
   def edit(id)
+    check_access!
     @item = Item.new(Item::Record[id])
     render :edit
   end
 
   def update(id)
+    check_access!
     item_record = Item::Record[id]
     item_record.update request.POST['item']
     redirect "/pieces/UD#{item_record.piece_record.id}/edit"
   end
 
   def destroy(id)
+    check_access!
     item = Item::Record[id]
     item.destroy
     redirect "/pieces/UD#{item.piece_record.id}/edit"
