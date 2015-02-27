@@ -53,4 +53,21 @@ class BaseEntity
   def id
     record.id
   end
+
+  def save
+    record.save
+    self
+  end
+
+  def set(attributes)
+    attributes.each do |attribute, value|
+      self.public_send "#{attribute}=", value
+    end
+    self
+  end
+
+  def set!(*args)
+    set(*args).save
+  end
+  # TODO active record mixin, !bang_methods, delegate save, destroy, reload
 end

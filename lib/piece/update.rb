@@ -31,6 +31,8 @@ class Piece
       attribute :weezic_version, String
       attribute :meta_description, String
       attribute :meta_keywords, String
+
+      delegate :each, :to => :to_hash
     end
   end
 end
