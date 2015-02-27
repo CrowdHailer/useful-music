@@ -1,0 +1,66 @@
+<main class="content">
+    <aside class="col col-1-5">
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>">My Account</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/orders">Orders</a>
+            </li>
+            <li>
+                <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
+            </li>
+            <li>
+                <form id="form_id" action="/sessions" method="post">
+                    <%= csrf_tag %>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="logout">
+                </form>
+            </li>
+        </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2><%= @customer.name %>: your orders</h2>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>State</th>
+                    <th>Basket Amount</th>
+                    <th>Tax Amount</th>
+                    <th>Payer Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @customer.orders.each do |order| %>
+                    <tr>
+                        <th>
+                            <%= order.id[0..4] %>...
+                        </th>
+                        <th>
+                            <%= order.transaction.state %>
+                        </th>
+                        <th>
+                            <%= order.basket_amount.format %>
+                        </th>
+                        <th>
+                            <%= order.tax_amount.format %>
+                        </th>
+                        <th>
+                            <%= "#{order.transaction.payer_first_name} #{order.transaction.payer_last_name}" %>
+                        </th>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </article>
+</main>
