@@ -20,27 +20,43 @@ class ItemsController < UsefulMusic::App
     check_access!
     form = Item::Create::Form.new request.POST['item']
     item = Item.create form
+    flash['success'] = 'Item created'
     redirect "/pieces/UD#{item.piece.id}/edit"
   end
 
   def edit(id)
     check_access!
-    @item = Item.new(Item::Record[id])
-    render :edit
+    record = Item::Record[id]
+    if @item = record && Item.new(record)
+      render :edit
+    else
+      flash['error'] = 'Item not found'
+      redirect '/'
+    end
   end
 
   def update(id)
     check_access!
     item_record = Item::Record[id]
-    item_record.update request.POST['item']
-    redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+    if @item = item_record
+      item_record.update request.POST['item']
+      redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+    else
+      flash['error'] = 'Item not found'
+      redirect '/'
+    end
   end
 
   def destroy(id)
     check_access!
-    item = Item::Record[id]
-    item.destroy
-    redirect "/pieces/UD#{item.piece_record.id}/edit"
+    item_record = Item::Record[id]
+    if @item = item_record
+      item_record.destroy
+      redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+    else
+      flash['error'] = 'Item not found'
+      redirect '/'
+    end
   end
 
   def check_access!
