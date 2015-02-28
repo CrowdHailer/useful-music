@@ -53,6 +53,11 @@ class CatalogueTest < MyRecordTest
 
   def test_find_by_id
     piece = Piece.new(create :piece_record, :id => 120)
+    assert_equal piece, Catalogue['120']
+  end
+
+  def test_find_by_catalogue_number
+    piece = Piece.new(create :piece_record, :id => 120)
     assert_equal piece, Catalogue['UD120']
   end
 
