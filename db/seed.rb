@@ -26,8 +26,7 @@ Customer.create(
   )
 end
 
-
-Bundler.require :test
+# Bundler.require :test
 require 'factory_girl'
 FactoryGirl.find_definitions
 FactoryGirl.to_create { |i| i.save }

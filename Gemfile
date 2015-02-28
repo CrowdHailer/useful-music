@@ -31,11 +31,11 @@ gem 'money'
 gem 'countries'
 gem 'paypal-express'
 
+gem 'factory_girl'
+gem 'rack-test', :require => 'rack/test'
 group :test do
   gem 'minitest', :require => 'minitest/autorun'
   gem 'minitest-reporters'
-  gem 'rack-test', :require => 'rack/test'
-  gem 'factory_girl'
 end
 
 group :development do
