@@ -23,7 +23,7 @@ class Catalogue
     end
 
     def order
-      options.fetch('page_size', :id).to_sym
+      options.fetch(:order, :id).to_sym
     end
 
     def title
@@ -34,31 +34,22 @@ class Catalogue
   class << self
     def empty?(query_params={})
       new(query_params).empty?
-      # Piece::Record.empty?
     end
 
     def count(query_params={})
-      query = Query.new query_params
-      dataset = Piece::Record
-      dataset = dataset.where(:title => query.title) if query.title
-      dataset.count
+      new(query_params).count
     end
 
     def all(query_params={})
-      query = Query.new query_params
-      dataset = Piece::Record
-      dataset = dataset.where(:title => query.title) if query.title
-      dataset.all.map{ |record| Piece.new record }
+      new(query_params).all
     end
 
-    def first
-      record = Piece::Record.order(:id).first
-      Piece.new(record) if record
+    def first(query_params={})
+      new(query_params).first
     end
 
-    def last
-      record = Piece::Record.order(:id).last
-      Piece.new(record) if record
+    def last(query_params={})
+      new(query_params).last
     end
 
     def [](catalogue_number)
@@ -75,12 +66,31 @@ class Catalogue
   def initialize(query_params={})
     query = Query.new query_params
     dataset = Piece::Record
+    dataset = dataset.order(query.order)
     dataset = dataset.where(:title => query.title) if query.title
     @dataset = dataset
   end
 
   def empty?
     @dataset.empty?
+  end
+
+  def count
+    @dataset.count
+  end
+
+  def all
+    @dataset.map(&Piece.method(:new))
+  end
+
+  def first
+    record = @dataset.first
+    Piece.new(record) if record
+  end
+
+  def last
+    record = @dataset.last
+    Piece.new(record) if record
   end
 
 end

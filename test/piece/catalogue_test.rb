@@ -33,6 +33,13 @@ class CatalogueTest < MyRecordTest
     assert_nil Catalogue.first
   end
 
+  def test_get_first_ordered_by_title
+    a = Piece.new(create :piece_record, :id => 100, :title => 'b')
+    c = Piece.new(create :piece_record, :id => 120, :title => 'c')
+    b = Piece.new(create :piece_record, :id => 140, :title => 'a')
+    assert_equal b.id, Catalogue.first(:order => 'title').id
+  end
+
   def test_get_last_default_by_id
     a = Piece.new(create :piece_record, :id => 120)
     c = Piece.new(create :piece_record, :id => 140)
