@@ -70,33 +70,34 @@ module Errol
     end
 
     def empty?
-      @dataset.empty?
+      dataset.empty?
     end
 
     def count
-      @dataset.count
+      dataset.count
     end
 
     def all
       # TODO interface wrap method to through error
-      @dataset.map &method(:wrap)
+      dataset.map &method(:wrap)
     end
 
     def [](id)
       # TODO Use primary key
-      record = @dataset.first(:id => id)
+      record = dataset.first(:id => id)
       wrap(record) if record
     end
 
     def first
-      record = @dataset.first
+      record = dataset.first
       wrap(record) if record
     end
 
     def last
-      record = @dataset.last
+      record = dataset.last
       wrap(record) if record
     end
 
+    attr_reader :dataset
   end
 end
