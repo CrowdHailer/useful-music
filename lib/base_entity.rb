@@ -70,4 +70,9 @@ class BaseEntity
     set(*args).save
   end
   # TODO active record mixin, !bang_methods, delegate save, destroy, reload
+  # TODO has one has many from sailp
+  def ==(other)
+    other.class == self.class && other.record == record
+  end
+  alias_method :eql?, :==
 end

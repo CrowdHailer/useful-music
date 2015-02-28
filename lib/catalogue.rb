@@ -36,7 +36,7 @@ module Catalogue
       Piece.new(record) if record
     end
 
-    def all(query)
+    def all(query=OpenStruct.new)
       # levels = query_params[:levels]
       # query = Piece::Record.where(levels.pop => true)
       #
@@ -52,7 +52,8 @@ module Catalogue
       # ap page.page_range
       # ap page.map(&:class)
 
-      Piece::Record.dataset.paginate(query.page,query.page_size)
+      # Piece::Record.dataset.paginate(query.page,query.page_size)
+      Piece::Record.all.map{ |record| Piece.new record }
     end
 
   end
