@@ -29,12 +29,15 @@ class Catalogue < Errol::Repository
 
   def dataset
     val = super
+
+    # val = levels_filter(val) if levels.count > 0
     levels = query.levels
     if levels.count > 0
       levels.each_with_index do |level, i|
         val = i == 0 ? val.where(level) : val.or(level)
       end
     end
+
     val = val.where(:title => query.title) if query.title
     val
   end
