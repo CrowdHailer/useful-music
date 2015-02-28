@@ -1,4 +1,6 @@
-class Catalogue
+require_relative './repository'
+
+class Catalogue < Errol::Repository
   class Page
     def initialize(paginated_dataset)
 
@@ -37,13 +39,6 @@ class Catalogue
   end
 
   class << self
-    def empty?(query_params={})
-      new(query_params).empty?
-    end
-
-    def count(query_params={})
-      new(query_params).count
-    end
 
     def all(query_params={})
       new(query_params).all
@@ -80,14 +75,6 @@ class Catalogue
     end
     dataset = dataset.where(:title => query.title) if query.title
     @dataset = dataset
-  end
-
-  def empty?
-    @dataset.empty?
-  end
-
-  def count
-    @dataset.count
   end
 
   def all
