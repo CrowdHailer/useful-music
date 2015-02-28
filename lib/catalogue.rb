@@ -41,9 +41,7 @@ class Catalogue < Errol::Repository
   class << self
 
     def [](catalogue_number)
-      id = catalogue_number[/\d+/]
-      record = Piece::Record[id]
-      Piece.new(record) if record
+      super catalogue_number[/\d+/]
     end
 
     def level(*level, options)

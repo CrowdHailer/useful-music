@@ -14,6 +14,10 @@ module Errol
         new(query_params).all
       end
 
+      def [](id, query_params={})
+        new(query_params)[id]
+      end
+
       def first(query_params={})
         new(query_params).first
       end
@@ -35,6 +39,12 @@ module Errol
     def all
       # TODO interface wrap method to through error
       @dataset.map &method(:wrap)
+    end
+
+    def [](id)
+      # TODO Use primary key
+      record = @dataset.first(:id => id)
+      wrap(record) if record
     end
 
     def first
