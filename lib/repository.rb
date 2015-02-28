@@ -1,5 +1,7 @@
 module Errol
   class Repository
+    # TODO make repository have create and build methods
+    # Allow repository to be swapped out only by changing Repository
     class Query
       def initialize(options={})
         @options = options

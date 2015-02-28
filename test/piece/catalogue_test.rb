@@ -77,6 +77,16 @@ class CatalogueTest < MyRecordTest
     # ap Catalogue.level(:beginner, :intermediate, :page => 1)
   end
 
+  def test_level_method
+    beginner = Piece.new(create :piece_record, :beginner)
+    intermediate = Piece.new(create :piece_record, :intermediate)
+    advanced = Piece.new(create :piece_record, :advanced)
+    assert_includes Catalogue.levels(:beginner), beginner
+    assert_includes Catalogue.levels(:beginner, :intermediate), intermediate
+    refute_includes Catalogue.levels(:beginner, :intermediate), advanced
+    refute_includes Catalogue.levels(:beginner), advanced
+  end
+
   def test_returns_all_with_givern_title
     a = Piece.new(create :piece_record, :title => 'A Good tune')
     a = Piece.new(create :piece_record, :title => 'A Good tune')

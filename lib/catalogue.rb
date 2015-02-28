@@ -9,14 +9,21 @@ class Catalogue < Errol::Repository
     # this wraps to an array to surround in entity objects
   end
 
+
+
+  # default :title, nil
+  # default :levels, []
+  # default :page, 1
+  # default :page_size, 20
+
   class << self
 
     def [](catalogue_number)
       super catalogue_number[/\d+/]
     end
 
-    def level(*level, options)
-
+    def levels(*levels, **options)
+      all options.merge(:levels => levels)
     end
   end
 

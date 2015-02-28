@@ -1,4 +1,5 @@
 class BaseEntity
+  # TODO if repository handles building then adding build convenience methods wil be by declaring repo class
   def initialize(record=self.class.record_klass.new)
     # TODO raise error for nil
     @record = record
