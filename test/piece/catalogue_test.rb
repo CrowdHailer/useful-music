@@ -52,4 +52,20 @@ class CatalogueTest < MyRecordTest
   def test_find_returns_nil_if_no_items
     assert_nil Catalogue['UD101']
   end
+
+  # def test_returns_all_begginer_records
+  #   beginner = Piece.new(create :piece_record, :beginner)
+  #   intermediate = Piece.new(create :piece_record, :intermediate)
+  #   intermediate = Piece.new(create :piece_record, :advanced)
+  #   assert_includes Catalogue.all(:level => [:beginner]), beginner
+  #   # ap Catalogue.level(:beginner, :intermediate, :page => 4)
+  #   # ap Catalogue.level(:beginner, :intermediate, :page => 1)
+  # end
+
+  def test_returns_all_with_givern_title
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    b = Piece.new(create :piece_record, :title => 'A Bad tune')
+    assert_equal 2, Catalogue.all(:title => 'A Good tune').count
+  end
 end
