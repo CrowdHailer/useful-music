@@ -1,4 +1,4 @@
-module Catalogue
+class Catalogue
   class Page
     def initialize(paginated_dataset)
 
@@ -32,12 +32,16 @@ module Catalogue
 
   end
   class << self
-    def empty?
-      Piece::Record.empty?
+    def empty?(query_params={})
+      new(query_params).empty?
+      # Piece::Record.empty?
     end
 
-    def count
-      Piece::Record.count
+    def count(query_params={})
+      query = Query.new query_params
+      dataset = Piece::Record
+      dataset = dataset.where(:title => query.title) if query.title
+      dataset.count
     end
 
     def all(query_params={})
@@ -68,8 +72,15 @@ module Catalogue
     end
   end
 
-  def initialize()
+  def initialize(query_params={})
+    query = Query.new query_params
+    dataset = Piece::Record
+    dataset = dataset.where(:title => query.title) if query.title
+    @dataset = dataset
+  end
 
+  def empty?
+    @dataset.empty?
   end
 
 end

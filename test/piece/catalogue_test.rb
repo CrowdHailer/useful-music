@@ -68,4 +68,16 @@ class CatalogueTest < MyRecordTest
     b = Piece.new(create :piece_record, :title => 'A Bad tune')
     assert_equal 2, Catalogue.all(:title => 'A Good tune').count
   end
+
+  def test_counts_those_with_title
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    b = Piece.new(create :piece_record, :title => 'A Bad tune')
+    assert_equal 2, Catalogue.count(:title => 'A Good tune')
+  end
+
+  def test_empty_if_matches_no_title
+    b = Piece.new(create :piece_record, :title => 'A Bad tune')
+    assert Catalogue.empty?(:title => 'A Good tune')
+  end
 end
