@@ -56,17 +56,7 @@ module Errol
     end
 
     def initialize(query_params={})
-      query = Query.new query_params
-      dataset = Piece::Record
-      dataset = dataset.order(query.order)
-      levels = query.levels
-      if levels.count > 0
-        levels.each_with_index do |level, i|
-          dataset = i == 0 ? dataset.where(level) : dataset.or(level)
-        end
-      end
-      dataset = dataset.where(:title => query.title) if query.title
-      @dataset = dataset
+      @query = Query.new query_params
     end
 
     def empty?
@@ -98,6 +88,12 @@ module Errol
       wrap(record) if record
     end
 
-    attr_reader :dataset
+    attr_reader :query
+
+    def dataset
+      Piece::Record.order(@query.order)
+      # TODO biz specific logic
+      # possible Piece::Repository < Errol::Repository(Piece::Record)
+    end
   end
 end
