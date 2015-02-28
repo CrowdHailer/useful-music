@@ -30,7 +30,12 @@ class Catalogue
       options[:title]
     end
 
+    def levels
+      options.fetch(:levels, [])
+    end
+
   end
+
   class << self
     def empty?(query_params={})
       new(query_params).empty?
@@ -58,7 +63,7 @@ class Catalogue
       Piece.new(record) if record
     end
 
-    def level(*levels, options)
+    def level(*level, options)
 
     end
   end
@@ -67,6 +72,12 @@ class Catalogue
     query = Query.new query_params
     dataset = Piece::Record
     dataset = dataset.order(query.order)
+    levels = query.levels
+    if levels.count > 0
+      levels.each_with_index do |level, i|
+        dataset = i == 0 ? dataset.where(level) : dataset.or(level)
+      end
+    end
     dataset = dataset.where(:title => query.title) if query.title
     @dataset = dataset
   end

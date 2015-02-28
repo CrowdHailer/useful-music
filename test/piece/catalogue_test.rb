@@ -60,14 +60,17 @@ class CatalogueTest < MyRecordTest
     assert_nil Catalogue['UD101']
   end
 
-  # def test_returns_all_begginer_records
-  #   beginner = Piece.new(create :piece_record, :beginner)
-  #   intermediate = Piece.new(create :piece_record, :intermediate)
-  #   intermediate = Piece.new(create :piece_record, :advanced)
-  #   assert_includes Catalogue.all(:level => [:beginner]), beginner
-  #   # ap Catalogue.level(:beginner, :intermediate, :page => 4)
-  #   # ap Catalogue.level(:beginner, :intermediate, :page => 1)
-  # end
+  def test_returns_all_beginner_records
+    beginner = Piece.new(create :piece_record, :beginner)
+    intermediate = Piece.new(create :piece_record, :intermediate)
+    advanced = Piece.new(create :piece_record, :advanced)
+    assert_includes Catalogue.all(:levels => [:beginner]), beginner
+    assert_includes Catalogue.all(:levels => [:beginner, :intermediate]), intermediate
+    refute_includes Catalogue.all(:levels => [:beginner, :intermediate]), advanced
+    refute_includes Catalogue.all(:levels => [:beginner]), advanced
+    # ap Catalogue.level(:beginner, :intermediate, :page => 4)
+    # ap Catalogue.level(:beginner, :intermediate, :page => 1)
+  end
 
   def test_returns_all_with_givern_title
     a = Piece.new(create :piece_record, :title => 'A Good tune')
