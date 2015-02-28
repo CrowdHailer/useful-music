@@ -40,18 +40,6 @@ class Catalogue < Errol::Repository
 
   class << self
 
-    def all(query_params={})
-      new(query_params).all
-    end
-
-    def first(query_params={})
-      new(query_params).first
-    end
-
-    def last(query_params={})
-      new(query_params).last
-    end
-
     def [](catalogue_number)
       id = catalogue_number[/\d+/]
       record = Piece::Record[id]
@@ -77,18 +65,8 @@ class Catalogue < Errol::Repository
     @dataset = dataset
   end
 
-  def all
-    @dataset.map(&Piece.method(:new))
-  end
-
-  def first
-    record = @dataset.first
-    Piece.new(record) if record
-  end
-
-  def last
-    record = @dataset.last
-    Piece.new(record) if record
+  def wrap(record)
+    Piece.new(record)
   end
 
 end

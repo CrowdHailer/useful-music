@@ -9,6 +9,19 @@ module Errol
       def count(query_params={})
         new(query_params).count
       end
+
+      def all(query_params={})
+        new(query_params).all
+      end
+
+      def first(query_params={})
+        new(query_params).first
+      end
+
+      def last(query_params={})
+        new(query_params).last
+      end
+
     end
 
     def empty?
@@ -17,6 +30,21 @@ module Errol
 
     def count
       @dataset.count
+    end
+
+    def all
+      # TODO interface wrap method to through error
+      @dataset.map &method(:wrap)
+    end
+
+    def first
+      record = @dataset.first
+      wrap(record) if record
+    end
+
+    def last
+      record = @dataset.last
+      wrap(record) if record
     end
 
   end
