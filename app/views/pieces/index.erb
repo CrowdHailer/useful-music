@@ -6,7 +6,7 @@
 <% end %>
 <main class="content">
     <aside id="search" class="col col-1-5">
-      <form class="pure-form" action="/pieces" method="get" id="search-form">
+      <form id="search-form" class="pure-form" action="/pieces" method="get" id="search-form">
           <h4>Category</h4>
           <% [:solo,
           :solo_with_accompaniment,
@@ -52,11 +52,19 @@
       </form>
     </aside>
     <article class="col col-4-5">
-        <a href="#">previous</a>
-        <a href="/pieces?<%= @next_query %>">next</a>
-            <button name="catalogue_search[page]" value="<%= pieces.next_page %>" type="submit" form="search-form">Next</button>
-            <button name="catalogue_search[page]" value="<%= pieces.prev_page %>" type="submit" form="search-form">Previous</button>
-        <table class="pure-table">
+        <h2>Pieces</h2>
+        <button form="search-form" name="catalogue_search[page]" value="1" <%= 'disabled' unless pieces.prev_page %>>First Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= pieces.prev_page %>" <%= 'disabled' unless pieces.prev_page %>>Previous</button>
+        <select form="search-form" name="catalogue_search[page_size]">
+            <option <%= 'selected' if pieces.page_size == 10 %>>10</option>
+            <option <%= 'selected' if pieces.page_size == 15 %>>15</option>
+            <option <%= 'selected' if pieces.page_size == 20 %>>20</option>
+        </select>
+        <button form="search-form" name="catalogue_search[page]" value="1">Refresh</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= pieces.next_page %>" <%= 'disabled' unless pieces.next_page %>>Next</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= pieces.page_count %>" <%= 'disabled' unless pieces.next_page %>>Last Page</button>
+        <%= pieces.page_count %>
+        <table>
             <thead>
                 <tr>
                     <th>Catalogue number</th>

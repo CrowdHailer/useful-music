@@ -4,6 +4,8 @@ class Catalogue < Errol::Repository
   class Search
     include Virtus.model
 
+    attribute :page, Integer
+    attribute :page_size, Integer
     attribute :solo, Boolean
     attribute :solo_with_accompaniment, Boolean
     attribute :duet, Boolean
@@ -70,11 +72,21 @@ class Catalogue < Errol::Repository
       result
     end
 
+    def page
+      super || 1
+    end
+
+    def page_size
+      super || 10
+    end
+
     def to_hash
       {
         :categories => categories,
         :levels => levels,
-        :instruments => instruments
+        :instruments => instruments,
+        :page => page,
+        :page_size => page_size
       }
     end
   end

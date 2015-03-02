@@ -10,11 +10,11 @@ module Errol
       attr_accessor :options
 
       def page
-        options.fetch('page', 1).to_i
+        options.fetch(:page, 1).to_i
       end
 
       def page_size
-        options.fetch('page_size', 3).to_i
+        options.fetch(:page_size, 3).to_i
       end
 
       def order
@@ -40,6 +40,7 @@ module Errol
     end
 
     class Page
+      include Enumerable
       def initialize(record_set, query, &wrap)
         @record_set = record_set
         @query = query

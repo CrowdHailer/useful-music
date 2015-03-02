@@ -63,3 +63,18 @@ FactoryGirl.create :item_record,
   :initial_price => Money.new(100),
   :discounted_price => Money.new(80),
   :asset => Rack::Test::UploadedFile.new('test/fixtures/UD477kbd.pdf', 'application/pdf')
+
+100.times do
+  FactoryGirl.create :piece_record,
+    :beginner => [true, false].sample,
+    :intermediate => [true, false].sample,
+    :advanced => [true, false].sample,
+    :solo => [true, false, false].sample,
+    :duet => [true, false, false].sample,
+    :trio => [true, false, false].sample,
+    :larger_ensembles => [true, false, false].sample,
+    :piano => [true, false, false].sample,
+    :recorder => [true, false, false].sample,
+    :flute => [true, false, false].sample,
+    :oboe => [true, false, false].sample
+end

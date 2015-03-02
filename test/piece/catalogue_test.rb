@@ -128,10 +128,10 @@ class CatalogueTest < MyRecordTest
     10.times do |i|
       create :piece_record, :id => (100 + i)
     end
-    page = Catalogue.page('page_size' => 2, 'page' => 3)
-    page.each{|item| puts item.id}
-    ap page.page_size
-    ap page.page_count
-    ap page.current_page
+    page = Catalogue.page('page_size' => 3, 'page' => 2)
+    assert_equal 103, page.first.id
+    assert_equal 3, page.page_size
+    assert_equal 4, page.page_count
+    assert_equal 2, page.current_page
   end
 end
