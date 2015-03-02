@@ -22,7 +22,15 @@ class HomeController < UsefulMusic::App
   end
 
   get '/trouble' do
-    ap config
-    raise RuntimeError, 'oh no'
+    raise RuntimeError, 'jazzt'
+  end
+
+  error RuntimeError do
+    ap Bugsnag.notify($!)
+    ap 'x'
+  end
+
+  after status: 500 do
+    ap 'ey'
   end
 end
