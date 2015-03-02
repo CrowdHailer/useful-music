@@ -38,6 +38,20 @@ class Catalogue < Errol::Repository
       end
     end
 
+    categories = query.categories
+    if categories.count > 0
+      categories.each_with_index do |category, i|
+        val = i == 0 ? val.where(category) : val.or(category)
+      end
+    end
+
+    instruments = query.instruments
+    if instruments.count > 0
+      instruments.each_with_index do |instrument, i|
+        val = i == 0 ? val.where(instrument) : val.or(instrument)
+      end
+    end
+
     val = val.where(:title => query.title) if query.title
     val
   end

@@ -65,7 +65,7 @@ class CatalogueTest < MyRecordTest
     assert_nil Catalogue['UD101']
   end
 
-  def test_returns_all_beginner_records
+  def test_returns_all_beginner_pieces
     beginner = Piece.new(create :piece_record, :beginner)
     intermediate = Piece.new(create :piece_record, :intermediate)
     advanced = Piece.new(create :piece_record, :advanced)
@@ -73,8 +73,6 @@ class CatalogueTest < MyRecordTest
     assert_includes Catalogue.all(:levels => [:beginner, :intermediate]), intermediate
     refute_includes Catalogue.all(:levels => [:beginner, :intermediate]), advanced
     refute_includes Catalogue.all(:levels => [:beginner]), advanced
-    # ap Catalogue.level(:beginner, :intermediate, :page => 4)
-    # ap Catalogue.level(:beginner, :intermediate, :page => 1)
   end
 
   def test_level_method
@@ -85,6 +83,26 @@ class CatalogueTest < MyRecordTest
     assert_includes Catalogue.levels(:beginner, :intermediate), intermediate
     refute_includes Catalogue.levels(:beginner, :intermediate), advanced
     refute_includes Catalogue.levels(:beginner), advanced
+  end
+
+  def test_returns_all_solo_pieces
+    solo = Piece.new(create :piece_record, :solo)
+    duet = Piece.new(create :piece_record, :duet)
+    trio = Piece.new(create :piece_record, :trio)
+    assert_includes Catalogue.all(:categories => [:solo]), solo
+    assert_includes Catalogue.all(:categories => [:solo, :duet]), duet
+    refute_includes Catalogue.all(:categories => [:solo, :duet]), trio
+    refute_includes Catalogue.all(:categories => [:solo]), trio
+  end
+
+  def test_returns_all_piano_pieces
+    piano = Piece.new(create :piece_record, :piano)
+    recorder = Piece.new(create :piece_record, :recorder)
+    flute = Piece.new(create :piece_record, :flute)
+    assert_includes Catalogue.all(:instruments => [:piano]), piano
+    assert_includes Catalogue.all(:instruments => [:piano, :recorder]), recorder
+    refute_includes Catalogue.all(:instruments => [:piano, :recorder]), flute
+    refute_includes Catalogue.all(:instruments => [:piano]), flute
   end
 
   def test_returns_all_with_givern_title

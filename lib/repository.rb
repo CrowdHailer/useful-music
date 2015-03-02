@@ -29,6 +29,14 @@ module Errol
         options.fetch(:levels, [])
       end
 
+      def categories
+        options.fetch(:categories, [])
+      end
+
+      def instruments
+        options.fetch(:instruments, [])
+      end
+
     end
 
     class << self
