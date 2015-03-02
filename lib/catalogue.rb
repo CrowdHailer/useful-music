@@ -1,15 +1,83 @@
 require_relative './repository'
 
 class Catalogue < Errol::Repository
-  class Page
-    def initialize(paginated_dataset)
+  class Search
+    include Virtus.model
 
+    attribute :solo, Boolean
+    attribute :solo_with_accompaniment, Boolean
+    attribute :duet, Boolean
+    attribute :trio, Boolean
+    attribute :quarter, Boolean
+    attribute :larger_ensembles, Boolean
+    attribute :beginner, Boolean
+    attribute :intermediate, Boolean
+    attribute :advanced, Boolean
+    attribute :professional, Boolean
+    attribute :piano, Boolean
+    attribute :recorder, Boolean
+    attribute :flute, Boolean
+    attribute :oboe, Boolean
+    attribute :clarineo, Boolean
+    attribute :clarinet, Boolean
+    attribute :basson, Boolean
+    attribute :saxophone, Boolean
+    attribute :trumpet, Boolean
+    attribute :violin, Boolean
+    attribute :viola, Boolean
+    attribute :percussion, Boolean
+
+    def categories
+      result = []
+      [:solo,
+      :solo_with_accompaniment,
+      :duet,
+      :trio,
+      :quarter,
+      :larger_ensembles].each do |category|
+        result = result << category if public_send category
+      end
+      result
     end
 
-    # this wraps to an array to surround in entity objects
+    def levels
+      result = []
+      [:beginner,
+      :intermediate,
+      :advanced,
+      :professional].each do |level|
+        result = result << level if public_send level
+      end
+      result
+    end
+
+    def instruments
+      result = []
+      [:piano,
+      :recorder,
+      :flute,
+      :oboe,
+      :clarineo,
+      :clarinet,
+      :basson,
+      :saxophone,
+      :trumpet,
+      :violin,
+      :viola,
+      :percussion].each do |instrument|
+        result = result << instrument if public_send instrument
+      end
+      result
+    end
+
+    def to_hash
+      {
+        :categories => categories,
+        :levels => levels,
+        :instruments => instruments
+      }
+    end
   end
-
-
 
   # default :title, nil
   # default :levels, []

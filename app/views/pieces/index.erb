@@ -7,7 +7,6 @@
 <main class="content">
     <aside id="search" class="col col-1-5">
       <form class="pure-form" action="/pieces" method="get" id="search-form">
-          <%= csrf_tag %>
           <h4>Category</h4>
           <% [:solo,
           :solo_with_accompaniment,
@@ -16,17 +15,17 @@
           :quarter,
           :larger_ensembles].each do |category| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if search.checked?(category) %>>
+                  <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if search.public_send category %>>
                   <%= category.capitalize %>
               </label>
           <% end %>
           <h4>Level</h4>
           <% [:beginner,
-            :intermediate,
-            :advanced,
-            :professional].each do |level| %>
+          :intermediate,
+          :advanced,
+          :professional].each do |level| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if search.checked?(level) %>>
+                  <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if search.public_send level %>>
                   <%= level.capitalize %>
               </label>
           <% end %>
@@ -44,7 +43,7 @@
           :viola,
           :percussion].each do |instrument| %>
               <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if search.checked?(instrument) %>>
+                  <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if search.public_send instrument %>>
                   <%= instrument.capitalize %>
               </label>
           <% end %>
@@ -69,7 +68,7 @@
             </thead>
 
             <tbody>
-                <% pieces.map{ |r| Piece.new r }.each do |piece| %>
+                <% pieces.each do |piece| %>
                     <tr>
                         <th>
 
