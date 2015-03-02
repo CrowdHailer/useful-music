@@ -3,6 +3,13 @@ class Guest
   def id
     'GUEST'
   end
+  def email
+    ''
+  end
+
+  def name
+    'GUEST'
+  end
 
   def guest?
     true
