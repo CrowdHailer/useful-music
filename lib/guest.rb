@@ -4,6 +4,10 @@ class Guest
     'GUEST'
   end
 
+  def email
+    'guest'
+  end
+
   def guest?
     true
   end

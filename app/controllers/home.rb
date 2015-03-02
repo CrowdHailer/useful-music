@@ -25,8 +25,9 @@ class HomeController < UsefulMusic::App
     raise RuntimeError, 'jazzt'
   end
 
-  error RuntimeError do
-    ap Bugsnag.notify($!, :user => {:email => current_customer.email}, :severity => 'warning')
+  error RuntimeError do |error|
+    ap $!
+    ap Bugsnag.notify(error, :user => {:email => current_customer.email}, :severity => 'warning')
     false
   end
 
