@@ -1,5 +1,9 @@
 class Guest
   # TODO untested
+  def id
+    'GUEST'
+  end
+
   def guest?
     true
   end
