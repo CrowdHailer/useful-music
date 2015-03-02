@@ -128,7 +128,7 @@ class CatalogueTest < MyRecordTest
     10.times do |i|
       create :piece_record, :id => (100 + i)
     end
-    page = Catalogue.page('page_size' => 3, 'page' => 2)
+    page = Catalogue.page(:page_size => 3, :page => 2)
     assert_equal 103, page.first.id
     assert_equal 3, page.page_size
     assert_equal 4, page.page_count
