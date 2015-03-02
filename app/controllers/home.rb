@@ -20,4 +20,9 @@ class HomeController < UsefulMusic::App
     # TODO test
     redirect 'http://localhost:9393/pieces?catalogue_search%5Brecorder%5D=on&catalogue_search%5Bflute%5D=on&catalogue_search%5Boboe%5D=on&catalogue_search%5Bclarineo%5D=on&catalogue_search%5Bclarinet%5D=on&catalogue_search%5Bbasson%5D=on&catalogue_search%5Bsaxophone%5D=on&catalogue_search%5Bpage_size%5D=10'
   end
+
+  get '/trouble' do
+    ap config
+    raise RuntimeError, 'oh no'
+  end
 end
