@@ -16,7 +16,7 @@ class MyMiddleware
       session = env["rack.session"]
       customer = Customers.find(session[:user_id]) || Guest.new
       ap custom
-      notification.user = {:email => customer.email, :customer.id}
+      notification.user = {:email => customer.email, :id => customer.id}
 
     end
     # Your custom "after notify" code
