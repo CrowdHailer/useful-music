@@ -26,8 +26,8 @@ class HomeController < UsefulMusic::App
   end
 
   error RuntimeError do
-    ap Bugsnag.notify($!)
-    ap 'x'
+    ap Bugsnag.notify($!, :user => {:email => current_customer.email}, :severity => 'warning')
+    false
   end
 
   after status: 500 do
