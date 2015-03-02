@@ -70,7 +70,7 @@ class UsefulMusic::App
   # config[:show_exceptions] = false
   middleware << proc do |app|
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
-    # use Bugsnag::Rack
+    use Bugsnag::Rack
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
   end
