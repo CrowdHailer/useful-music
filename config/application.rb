@@ -67,11 +67,10 @@ Dir[File.expand_path('app/mailers/*.rb', APP_ROOT)].each { |file| require file}
 class UsefulMusic::App
   # belongs in top setting
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
-  config[:show_exceptions] = false
-  config[:show_http_error_pages] = false
-  # config[:raise_errors] = true
+  # config[:show_exceptions] = false
   middleware << proc do |app|
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
+    use Bugsnag::Rack
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
   end
