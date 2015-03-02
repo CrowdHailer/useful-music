@@ -1,4 +1,5 @@
 class PiecesController < UsefulMusic::App
+  get('/search') { send :search }
   include Scorched::Rest
 
   # NOTE: need to create new string to assign in config dir
@@ -6,8 +7,13 @@ class PiecesController < UsefulMusic::App
 
   def index
     search = Catalogue::Search.new request.GET.fetch('catalogue_search', {})
-    pieces = Catalogue.all search
+    pieces = Catalogue.page search.to_hash
     render :index, :locals => {:pieces => pieces, :search => search}
+  end
+
+  def search
+    id = request.GET['search'][/\d+/]
+    redirect "/pieces/UD#{id}"
   end
 
   def new

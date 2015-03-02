@@ -1,4 +1,5 @@
 class BaseEntity
+  # TODO if repository handles building then adding build convenience methods wil be by declaring repo class
   def initialize(record=self.class.record_klass.new)
     # TODO raise error for nil
     @record = record
@@ -70,4 +71,9 @@ class BaseEntity
     set(*args).save
   end
   # TODO active record mixin, !bang_methods, delegate save, destroy, reload
+  # TODO has one has many from sailp
+  def ==(other)
+    other.class == self.class && other.record == record
+  end
+  alias_method :eql?, :==
 end
