@@ -49,7 +49,6 @@ class PiecesController < UsefulMusic::App
   end
 
   def update(catalogue_number)
-    ap request.POST['piece']
     check_access!
     if piece = Catalogue[catalogue_number]
       form = Piece::Update::Form.new request.POST['piece']
