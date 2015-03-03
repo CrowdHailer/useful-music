@@ -22,7 +22,7 @@ class HomeController < UsefulMusic::App
   end
 
   get '/trouble' do
-    raise RuntimeError, 'jazzt'
+    raise RuntimeError, 'newt'
   end
 
   # error RuntimeError do |error|

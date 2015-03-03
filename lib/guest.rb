@@ -5,7 +5,11 @@ class Guest
   end
 
   def email
-    'guest'
+    'unknown@example.com'
+  end
+
+  def name
+    'Guest user'
   end
 
   def guest?
