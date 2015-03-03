@@ -69,12 +69,11 @@ class UsefulMusic::App
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
 
   middleware << proc do |app|
-    use Bugsnag::Rack
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
   end
-  
+
   controller '/customers', CustomersController
   controller '/sessions', SessionsController
   controller '/password_resets', PasswordResetsController
