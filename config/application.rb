@@ -88,9 +88,9 @@ class UsefulMusic::App
   controller '/', HomeController
 
   after :status => 404 do
-    error = NotFoundError.new "Attempted Path: #{absolute.clone}"
+    path = 'g'
+    error = NotFoundError.new "Attempted Path: #{path}"
     Bugsnag.notify(error, :severity => "error")
-    false
   end
 
   error do
