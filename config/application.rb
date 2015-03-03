@@ -65,13 +65,17 @@ Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require fi
 Dir[File.expand_path('app/mailers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
+  NotFoundError = Class.new(StandardError)
   # belongs in top setting
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
+
   middleware << proc do |app|
+    use Bugsnag::Rack
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
   end
+
   controller '/customers', CustomersController
   controller '/sessions', SessionsController
   controller '/password_resets', PasswordResetsController
@@ -82,4 +86,14 @@ class UsefulMusic::App
   controller '/orders', OrdersController
   controller '/about', AboutController
   controller '/', HomeController
+
+  after :status => 404 do
+    error = NotFoundError.new "Attempted Path: #{request.path}"
+    Bugsnag.notify(error, :severity => "info")
+  end
+
+  error do
+    env["rack.exception"] = $!
+    false
+  end
 end

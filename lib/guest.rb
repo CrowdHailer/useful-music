@@ -1,5 +1,17 @@
 class Guest
   # TODO untested
+  def id
+    'GUEST'
+  end
+
+  def email
+    'unknown@example.com'
+  end
+
+  def name
+    'Guest user'
+  end
+
   def guest?
     true
   end
