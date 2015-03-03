@@ -297,6 +297,11 @@
                 </div>
 
                 <div class="pure-control-group">
+                    <label></label>
+                    <span><a href="<%= @piece.notation_preview.url %>">existing asset</a></span>
+                </div>
+
+                <div class="pure-control-group">
                     <label for="piece_audio_preview">Audio Preview</label>
                     <input
                         id="piece_audio_preview"
@@ -305,11 +310,33 @@
                 </div>
 
                 <div class="pure-control-group">
+                    <label></label>
+                    <span>
+                        <% if @piece.audio_preview.url %>
+                            <a href="<%= @piece.audio_preview.url %>">existing asset</a>
+                        <% else %>
+                            No Audio Preview
+                        <% end %>
+                    </span>
+                </div>
+
+                <div class="pure-control-group">
                     <label for="piece_cover_image">Cover Image</label>
                     <input
                         id="piece_cover_image"
                         name="piece[cover_image]"
                         type="file">
+                </div>
+
+                <div class="pure-control-group">
+                    <label></label>
+                    <span>
+                        <% if @piece.cover_image.url %>
+                            <a href="<%= @piece.cover_image.url %>">existing asset</a>
+                        <% else %>
+                            No Audio Preview
+                        <% end %>
+                    </span>
                 </div>
 
                 <div class="pure-control-group">
