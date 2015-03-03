@@ -34,7 +34,7 @@ Sequel.migration do
       TrueClass :percussion
       String :notation_preview, :null => false
       String :audio_preview
-      String :cover_image, :null => false
+      String :cover_image
       String :print_link
       String :print_title
       String :weezic_link
