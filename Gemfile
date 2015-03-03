@@ -33,6 +33,7 @@ gem 'countries'
 gem 'paypal-express'
 
 gem 'pdfkit'
+gem 'wkhtmltopdf-heroku-edge', '~> 0.12.2.1b'
 
 gem 'factory_girl'
 gem 'rack-test', :require => 'rack/test'

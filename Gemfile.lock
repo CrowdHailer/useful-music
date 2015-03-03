@@ -124,6 +124,7 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.3)
       rack (>= 1.0)
+    wkhtmltopdf-heroku-edge (0.12.2.1)
 
 PLATFORMS
   ruby
@@ -158,3 +159,4 @@ DEPENDENCIES
   veto
   virtus
   warden
+  wkhtmltopdf-heroku-edge (~> 0.12.2.1b)
