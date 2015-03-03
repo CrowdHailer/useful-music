@@ -18,19 +18,30 @@ module Errol
       @klass
     end
 
+    def test_query
+      ap klass.query.new.a
+      klass.query.default :b, 5
+      ap klass.query.new.b
+      ap klass.query.new.class
+    end
+
     # def test_case_name
     #   puts klass.record
     #   ap klass::Query
     # end
 
-    def test_build_single_hash
-      res = klass.build({:a => 1}) do |entity|
-        ap entity
-      end
-      ap res
-      ap klass.build({:a => 1})
-      klass.build({:a => 1}, &:save)
-    end
+    # def test_build_single_hash
+    #   res = klass.build({:a => 1}) do |entity|
+    #     ap entity
+    #   end
+    #   ap res
+    #   ap klass.build({:a => 1})
+    #   klass.build({:a => 1}, &:save)
+    # end
+
+    # def test_q
+    #   klass.empty?({})
+    # end
     #
     # def test_single_named
     #   res = klass.build(:a => 1, :b => 2) do |entity|
