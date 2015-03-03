@@ -88,8 +88,8 @@ class UsefulMusic::App
   controller '/', HomeController
 
   after :status => 404 do
-    error = NotFoundError.new
-    Bugsnag.notify(error)
+    error = NotFoundError.new absolute
+    Bugsnag.notify(error, :severity => "error")
     false
   end
 
