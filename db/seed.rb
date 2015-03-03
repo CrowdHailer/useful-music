@@ -16,6 +16,15 @@ Customer.create(
   :admin => true
 )
 
+Customer.create(
+  :first_name => 'Richard',
+  :last_name => 'Shepherd',
+  :email => 'richard@richardesigns.co.uk',
+  :password => 'password',
+  :country => Country.new('GB'),
+  :admin => true
+)
+
 100.times do |i|
   Customer.create(
     :first_name => ['dave', 'clare', 'steve', 'amy', 'Jasmin', 'Dan', 'Lewis', 'Jess'].sample,

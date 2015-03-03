@@ -41,6 +41,12 @@ class PiecesControllerTest < MyRecordTest
     assert_includes last_response.body, 'UD123'
   end
 
+  def test_show_page_is_without_cover_image_or_audio_preview
+    record = create :piece_record, :id => 123, :cover_image => nil, :audio_preview => nil
+    assert_ok get "/UD#{record.id}"
+    assert_includes last_response.body, 'UD123'
+  end
+
   def test_redirected_if_no_piece
     get "/UD000"
     assert last_response.redirect?
