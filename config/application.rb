@@ -87,6 +87,7 @@ class UsefulMusic::App
 
   error do
     env["rack.exception"] = $!
+    ap error
     false
   end
 end
