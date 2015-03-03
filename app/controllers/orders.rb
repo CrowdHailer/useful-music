@@ -1,5 +1,6 @@
 class OrdersController < UsefulMusic::App
   include Scorched::Rest
+  # get('/:id/download_license') { |id| send :download, id }
 
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/orders'
@@ -12,6 +13,21 @@ class OrdersController < UsefulMusic::App
       order.transaction
     end
     redirect order.setup(url).redirect_uri
+  end
+
+  def show(id)
+    # TODO check access
+    @order = Order.new(Order::Record[id])
+    html = render :show, :layout => nil
+    kit = PDFKit.new(html)
+    pdf = kit.to_pdf#
+    file = Tempfile.new('foo')
+    ap file.path
+    file.write(pdf)
+    @order.record.update(:license => {:type => 'application/pdf', :tempfile => file})
+    @order.record.save
+    redirect @order.record.license.url
+    # render :show
   end
 
   get '/:id/success' do |id|

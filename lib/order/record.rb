@@ -1,3 +1,19 @@
+class LicenseUploader < CarrierWave::Uploader::Base
+  # include CarrierWave::MiniMagick
+
+  # def extension_white_list
+  #   %w(mp3)
+  # end
+
+  def store_dir
+    super + "/licenses"
+  end
+
+  def filename
+    "#{model.id}.pdf" if file
+  end
+
+end
 class Order
   class Record < Sequel::Model(:orders)
     def initialize(*args, &block)
@@ -16,5 +32,7 @@ class Order
       lambda{ |money| money.fractional },
       lambda{ |fractional| Money.new(fractional) }
     ], :basket_amount, :tax_amount, :discount_amount
+
+    mount_uploader :license, LicenseUploader
   end
 end
