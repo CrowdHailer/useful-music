@@ -20,7 +20,7 @@ class UserTracking
 end
 
 Bugsnag.configure do |config|
-  config.api_key = ENV.fetch('BUGSNAG_API_KEY')
+  config.api_key = ENV['BUGSNAG_API_KEY']
   config.project_root = File.expand_path('../..', __FILE__)
   config.middleware.use UserTracking
 end
