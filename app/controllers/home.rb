@@ -25,6 +25,10 @@ class HomeController < UsefulMusic::App
     raise RuntimeError, 'newt'
   end
 
+  get '/other' do
+    Bugsnag.notify('Thing')
+  end
+
   # error RuntimeError do |error|
   #   Bugsnag.notify(error, :user => {:email => current_customer.email}, :severity => 'warning')
   #   redirect '/'
