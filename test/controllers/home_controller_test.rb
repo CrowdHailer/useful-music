@@ -11,7 +11,4 @@ class HomeControllerTest < MyRecordTest
     assert_ok get '/'
   end
 
-  def test_auth
-    get '/secure'
-  end
 end

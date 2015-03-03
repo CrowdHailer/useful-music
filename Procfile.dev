@@ -1,2 +1,0 @@
-web: bundle exec shotgun -p $PORT
-sass: bundle exec sass --watch assets/stylesheets:public/stylesheets --style compressed

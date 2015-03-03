@@ -199,12 +199,12 @@ class Piece
       assert_match /pieces\/UD101\/UD101_cover_image\.jpg$/, record.cover_image.path
     end
 
-    def test_requires_cover_image
-      err = assert_raises Sequel::NotNullConstraintViolation do
-        r = create :piece_record, :cover_image => nil
-      end
-      assert_match(/cover_image/, err.message)
-    end
+    # def test_requires_cover_image
+    #   err = assert_raises Sequel::NotNullConstraintViolation do
+    #     r = create :piece_record, :cover_image => nil
+    #   end
+    #   assert_match(/cover_image/, err.message)
+    # end
 
     def test_can_have_print_link
       record = create :piece_record, :print_link => 'sdb'
