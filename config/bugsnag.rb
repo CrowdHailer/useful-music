@@ -7,9 +7,11 @@ class UserTracking
     env = notification.request_data[:rack_env]
     if env
       session = env["rack.session"] || {}
-      Customers.find(session[:user_id]) || Guest.new
+      user = Customers.find(session[:user_id]) || Guest.new
       notification.user = {
-
+        :id => user.id,
+        :email => user.email,
+        :name => user.name
       }
     end
 
