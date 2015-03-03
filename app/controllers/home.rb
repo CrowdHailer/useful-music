@@ -27,7 +27,7 @@ class HomeController < UsefulMusic::App
 
   get '/other' do
     Bugsnag.notify('Thing')
-    Bugsnag.war('item')
+    Bugsnag.warn('item')
   end
 
   # error RuntimeError do |error|
