@@ -7,6 +7,7 @@ Sequel.migration do
       Integer :basket_amount, :null => false
       Integer :tax_amount, :null => false
       Integer :discount_amount, :null => false
+      String :license
       String :payer_email
       String :payer_first_name
       String :payer_last_name

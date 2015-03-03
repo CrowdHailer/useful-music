@@ -87,6 +87,7 @@ GEM
       activesupport (>= 2.3)
       attr_required (>= 0.0.5)
       rest-client
+    pdfkit (0.6.2)
     pg (0.18.1)
     rack (1.6.0)
     rack-accept (0.4.5)
@@ -144,6 +145,7 @@ DEPENDENCIES
   minitest-reporters
   money
   paypal-express
+  pdfkit
   pg
   rack-test
   rack_csrf

@@ -32,6 +32,8 @@ gem 'money'
 gem 'countries'
 gem 'paypal-express'
 
+gem 'pdfkit'
+
 gem 'factory_girl'
 gem 'rack-test', :require => 'rack/test'
 group :test do
