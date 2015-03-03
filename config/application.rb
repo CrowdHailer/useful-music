@@ -88,8 +88,7 @@ class UsefulMusic::App
   controller '/', HomeController
 
   after :status => 404 do
-    path = 'g'
-    error = NotFoundError.new "Attempted Path: #{path}"
+    error = NotFoundError.new "Attempted Path: #{request.path}"
     Bugsnag.notify(error, :severity => "error")
   end
 
