@@ -24,7 +24,7 @@ class DiscountsController < UsefulMusic::App
   end
 
   def edit(id)
-    # discount = Discounts[id]
+    @discount = Discounts[id]
     render :edit
   end
 

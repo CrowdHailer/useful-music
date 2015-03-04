@@ -11,7 +11,7 @@
     </aside>
     <article class="col col-4-5">
         <h2>Discounts</h2>
-        <form class="" action="/customers" method="get">
+        <form class="" action="/discounts" method="get">
             <button name="page" value="1">First Page</button>
             <button name="page" value="<%= @discounts.prev_page %>" <%= 'disabled' unless @discounts.prev_page %>>Previous</button>
             <select name="page_size">
@@ -50,13 +50,13 @@
                             <%= discount.customer_allocation %>
                         </th>
                         <th>
-                            <a href="/customers/<%= discount.id %>">show</a>
+                            <a href="/discounts/<%= discount.id %>">show</a>
                         </th>
                         <th>
-                            <a href="/customers/<%= discount.id %>/edit">edit</a>
+                            <a href="/discounts/<%= discount.id %>/edit">edit</a>
                         </th>
                         <th>
-                            <form id="form_id" action="/customers/<%= discount.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= discount.code %> ')">
+                            <form id="form_id" action="/discounts/<%= discount.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= discount.code %> ')">
                                 <%= csrf_tag %>
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="submit" name="some_name" value="Destroy">
