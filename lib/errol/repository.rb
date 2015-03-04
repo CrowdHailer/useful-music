@@ -1,5 +1,5 @@
 module Errol
-  class Repo
+  class Repository
     require_relative './repository/query'
 
     class << self
