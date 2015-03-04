@@ -28,6 +28,8 @@ module Errol
     end
 
     # boolean_writer is entry writer
+    # query uses !!
+    # reader adds ? but does not use !!
 
     def self.entry_accessor(*entries)
       entry_reader *entries
