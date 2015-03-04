@@ -16,9 +16,8 @@ class DiscountsController < UsefulMusic::App
   end
 
   def create
-    form = request.POST['discount']
-    ap form
-    Discount::Record.create form
+    form = Discount::Create::Form.new request.POST['discount']
+    Discount::Record.create form.to_hash
     flash['success'] = 'Discount Created'
     redirect '/discounts'
   end
