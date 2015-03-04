@@ -70,6 +70,15 @@ module Errol
     end
 
     attr_reader :query
+    delegate :page_size,
+             :page_count,
+             :current_page,
+             :first_page?,
+             :last_page?,
+             :next_page,
+             :prev_page,
+             :page_range,
+             :to => :records_page
 
     def initialize(query_params={})
       @query = self.class.query_class.new query_params
