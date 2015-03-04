@@ -1,28 +1,7 @@
 module Errol
+  # use wrap collection pass in paginated dataset
   class Repo
-    class Query
-      def initialize(options={})
-        options.each do |key, value|
-          defaults[key.to_sym] = value
-        end
-      end
-
-      def defaults
-        @defaults ||= self.class.defaults.clone
-      end
-
-      def self.default(property, value)
-        defaults[property.to_sym] = value
-      end
-
-      def self.defaults
-        @defaults ||= {:a => 'something'}
-      end
-
-      def method_missing(method)
-        defaults.fetch(method)
-      end
-    end
+    
     class << self
 
       attr_accessor :record_class, :entity_class, :query

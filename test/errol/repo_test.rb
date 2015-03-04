@@ -18,12 +18,12 @@ module Errol
       @klass
     end
 
-    def test_query
-      ap klass.query.new.a
-      klass.query.default :b, 5
-      ap klass.query.new.b
-      ap klass.query.new.class
-    end
+    # def test_query
+    #   ap klass.query.new.a
+    #   klass.query.default :b, 5
+    #   ap klass.query.new.b
+    #   ap klass.query.new.class
+    # end
 
     # def test_case_name
     #   puts klass.record
