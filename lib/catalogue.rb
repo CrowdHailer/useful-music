@@ -1,7 +1,5 @@
-require_relative './errol/repo'
-require_relative './errol/repository/query'
+require_relative './errol/repository'
 require_relative './piece'
-require_relative './piece/record'
 
 class Catalogue < Errol::Repo
   require_relative './catalogue/query'

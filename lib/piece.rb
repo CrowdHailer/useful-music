@@ -1,6 +1,8 @@
 require_relative './base_entity'
 
 class Piece < BaseEntity
+  require_relative './piece/record'
+
   entry_accessor  :id,
                   :title,
                   :sub_heading,

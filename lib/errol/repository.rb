@@ -1,10 +1,8 @@
 module Errol
-  # use implant collection pass in paginated dataset
   class Repo
+    require_relative './repository/query'
 
     class << self
-
-      # attr_accessor :record_class, :entity_class, :query_class
 
       def query_class(query_class=nil)
         if query_class
