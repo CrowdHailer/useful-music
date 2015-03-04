@@ -10,4 +10,9 @@ class Discounts < Errol::Repository
   def implant(record)
     Discount.new(record)
   end
+
+  # dataset ::Discount::Record.dataset
+  # query   Query
+  # implant { |record| Discount.new record }
+  # extract { |entity| entity.record }
 end
