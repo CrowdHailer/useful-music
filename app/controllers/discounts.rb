@@ -15,6 +15,14 @@ class DiscountsController < UsefulMusic::App
     render :new
   end
 
+  def create
+    form = request.POST['discount']
+    ap form
+    Discount::Record.create form
+    flash['success'] = 'Discount Created'
+    redirect '/discounts'
+  end
+
   def check_access
     if current_customer.admin?
       true

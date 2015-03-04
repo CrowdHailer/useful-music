@@ -29,4 +29,18 @@ class DiscountsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_can_create_discount_if_admin
+    post '/', {:discount => attributes_for(:discount_record)}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal 'Discount Created', flash['success']
+    assert last_response.redirect?
+  end
+
+  def test_cant_create_discount_if_not_admin
+    post '/', {:discount => attributes_for(:discount_record)}, {'rack.session' => { :user_id => interloper.id }}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+    # TODO change to repository
+    refute_empty Discount::Record
+  end
+
 end
