@@ -10,31 +10,31 @@ module Errol
       attr_accessor :options
 
       def page
-        options.fetch(:page, 1).to_i
+        defaults.fetch(:page, 1).to_i
       end
 
       def page_size
-        options.fetch(:page_size, 3).to_i
+        defaults.fetch(:page_size, 3).to_i
       end
 
       def order
-        options.fetch(:order, :id).to_sym
+        defaults.fetch(:order, :id).to_sym
       end
 
       def title
-        options[:title]
+        defaults[:title]
       end
 
       def levels
-        options.fetch(:levels, [])
+        defaults.fetch(:levels, [])
       end
 
       def categories
-        options.fetch(:categories, [])
+        defaults.fetch(:categories, [])
       end
 
       def instruments
-        options.fetch(:instruments, [])
+        defaults.fetch(:instruments, [])
       end
 
     end
