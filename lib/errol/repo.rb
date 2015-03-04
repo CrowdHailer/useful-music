@@ -50,7 +50,11 @@ module Errol
         new(query_params).count
       end
 
-      # []
+      # find uses paginate
+      # [](id) => find(id, paginate => false)
+      def [](id, query_params={})
+        new(query_params)[id]
+      end
 
       def first(query_params={})
         new(query_params).first
@@ -75,7 +79,11 @@ module Errol
       dataset.count
     end
 
-    # []
+    def [](id)
+      # TODO Use primary key
+      record = dataset.first(:id => id)
+      wrap(record) if record
+    end
 
     def first
       record = dataset.first

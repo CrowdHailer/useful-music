@@ -58,20 +58,20 @@ class CatalogueTest < MyRecordTest
     b = Piece.new(create :piece_record, :id => 140, :title => 'a')
     assert_equal c, Catalogue.last(:order => 'title')
   end
-  #
-  # def test_find_by_id
-  #   piece = Piece.new(create :piece_record, :id => 120)
-  #   assert_equal piece, Catalogue['120']
-  # end
-  #
-  # def test_find_by_catalogue_number
-  #   piece = Piece.new(create :piece_record, :id => 120)
-  #   assert_equal piece, Catalogue['UD120']
-  # end
-  #
-  # def test_find_returns_nil_if_no_items
-  #   assert_nil Catalogue['UD101']
-  # end
+  
+  def test_find_by_id
+    piece = Piece.new(create :piece_record, :id => 120)
+    assert_equal piece, Catalogue['120']
+  end
+
+  def test_find_by_catalogue_number
+    piece = Piece.new(create :piece_record, :id => 120)
+    assert_equal piece, Catalogue['UD120']
+  end
+
+  def test_find_returns_nil_if_no_items
+    assert_nil Catalogue['UD101']
+  end
   #
   # def test_returns_all_beginner_pieces
   #   beginner = Piece.new(create :piece_record, :beginner)
