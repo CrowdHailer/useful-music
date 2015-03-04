@@ -23,6 +23,15 @@ class DiscountsController < UsefulMusic::App
     redirect '/discounts'
   end
 
+  def update(id)
+    form = Discount::Create::Form.new request.POST['discount']
+    discount = Discounts[id]
+    discount.set form.to_hash
+    Discounts.save discount
+    flash['success'] = 'Discount Updated'
+    redirect '/discounts'
+  end
+
   def edit(id)
     @discount = Discounts[id]
     render :edit

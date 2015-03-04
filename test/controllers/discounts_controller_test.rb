@@ -49,4 +49,10 @@ class DiscountsControllerTest < MyRecordTest
     # assert_includes last_response.body, admin.email
   end
 
+  def test_can_update_as_admin
+    discount_record = create :discount_record
+    put "/#{discount_record.id}", {:discount => attributes_for(:discount_record).merge({:code => 'NEW21'})}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal 'NEW21', discount_record.reload.code
+  end
+
 end

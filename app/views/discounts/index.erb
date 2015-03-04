@@ -30,7 +30,9 @@
                     <th>Value</th>
                     <th>Allocation</th>
                     <th>Per Customer</th>
-                    <th colspan=3>Action</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -38,7 +40,7 @@
                 <% @discounts.each do |discount| %>
                     <tr>
                         <th>
-                            <%= discount.code %>
+                            <a href="/discounts/<%= discount.id %>/edit"><%= discount.code %></a>
                         </th>
                         <th>
                             <%= discount.value.format %>
@@ -50,10 +52,10 @@
                             <%= discount.customer_allocation %>
                         </th>
                         <th>
-                            <a href="/discounts/<%= discount.id %>">show</a>
+                            <%= discount.start_datetime.strftime('%Y-%m-%d') %>
                         </th>
                         <th>
-                            <a href="/discounts/<%= discount.id %>/edit">edit</a>
+                            <%= discount.end_datetime.strftime('%Y-%m-%d') %>
                         </th>
                         <th>
                             <form id="form_id" action="/discounts/<%= discount.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= discount.code %> ')">
