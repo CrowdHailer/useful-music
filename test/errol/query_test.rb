@@ -26,6 +26,33 @@ module Errol
         assert_match(/random/, err.message)
       end
 
+      def test_can_set_arbitrary_number_of_defaults
+        query_klass.default :filter_a, []
+        query_klass.default :filter_b, :ballon
+        assert_equal [], query_klass.new.filter_a
+        assert_equal :ballon, query_klass.new.filter_b
+      end
+
+      def test_can_set_with_string
+        query_klass.default 'filter', :ballon
+        assert_equal :ballon, query_klass.new.filter
+      end
+
+      def test_can_check_if_value_set
+        query_klass.default :filter, :ballon
+        assert_equal true, query_klass.new.filter?
+      end
+
+      def test_can_over_write_on_initialize
+        query_klass.default :filter, :ballon
+        assert_equal :smidge, query_klass.new(:filter => :smidge).filter
+      end
+
+      def test_can_over_write_on_initialize_with_string
+        query_klass.default :filter, :ballon
+        assert_equal :smidge, query_klass.new('filter' => :smidge).filter
+      end
+
     end
   end
 end
