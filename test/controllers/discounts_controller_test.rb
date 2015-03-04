@@ -55,4 +55,10 @@ class DiscountsControllerTest < MyRecordTest
     assert_equal 'NEW21', discount_record.reload.code
   end
 
+  def test_can_destroy_as_admin
+    discount_record = create :discount_record
+    delete "/#{discount_record.id}", {}, {'rack.session' => { :user_id => admin.id }}
+    assert_empty Discounts
+  end
+
 end

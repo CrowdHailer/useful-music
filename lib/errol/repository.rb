@@ -44,6 +44,11 @@ module Errol
         self
       end
 
+      def destroy(item)
+        item.record.destroy
+        self
+      end
+
       def create(attributes, &block)
         build(attributes, &block).tap(&method(:save))
       end

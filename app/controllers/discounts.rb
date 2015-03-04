@@ -23,6 +23,11 @@ class DiscountsController < UsefulMusic::App
     redirect '/discounts'
   end
 
+  def edit(id)
+    @discount = Discounts[id]
+    render :edit
+  end
+
   def update(id)
     form = Discount::Create::Form.new request.POST['discount']
     discount = Discounts[id]
@@ -32,9 +37,11 @@ class DiscountsController < UsefulMusic::App
     redirect '/discounts'
   end
 
-  def edit(id)
-    @discount = Discounts[id]
-    render :edit
+  def destroy(id)
+    discount = Discounts[id]
+    Discounts.destroy(discount)
+    flash['success'] = 'Discount Deleted'
+    redirect '/discounts'
   end
 
   def check_access
