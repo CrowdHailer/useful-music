@@ -22,7 +22,7 @@ class CatalogueTest < MyRecordTest
     create :piece_record
     assert_equal 1, Catalogue.count
   end
-  
+
   def test_counts_those_with_title
     a = Piece.new(create :piece_record, :title => 'A Good tune')
     a = Piece.new(create :piece_record, :title => 'A Good tune')
@@ -87,56 +87,56 @@ class CatalogueTest < MyRecordTest
     assert_includes Catalogue.all, beginner
   end
 
-  #
-  # def test_returns_all_beginner_pieces
-  #   beginner = Piece.new(create :piece_record, :beginner)
-  #   intermediate = Piece.new(create :piece_record, :intermediate)
-  #   advanced = Piece.new(create :piece_record, :advanced)
-  #   assert_includes Catalogue.all(:levels => [:beginner]), beginner
-  #   assert_includes Catalogue.all(:levels => [:beginner, :intermediate]), intermediate
-  #   refute_includes Catalogue.all(:levels => [:beginner, :intermediate]), advanced
-  #   refute_includes Catalogue.all(:levels => [:beginner]), advanced
-  # end
-  #
-  # def test_level_method
-  #   beginner = Piece.new(create :piece_record, :beginner)
-  #   intermediate = Piece.new(create :piece_record, :intermediate)
-  #   advanced = Piece.new(create :piece_record, :advanced)
-  #   assert_includes Catalogue.levels(:beginner), beginner
-  #   assert_includes Catalogue.levels(:beginner, :intermediate), intermediate
-  #   refute_includes Catalogue.levels(:beginner, :intermediate), advanced
-  #   refute_includes Catalogue.levels(:beginner), advanced
-  # end
-  #
-  # def test_returns_all_solo_pieces
-  #   solo = Piece.new(create :piece_record, :solo)
-  #   duet = Piece.new(create :piece_record, :duet)
-  #   trio = Piece.new(create :piece_record, :trio)
-  #   assert_includes Catalogue.all(:categories => [:solo]), solo
-  #   assert_includes Catalogue.all(:categories => [:solo, :duet]), duet
-  #   refute_includes Catalogue.all(:categories => [:solo, :duet]), trio
-  #   refute_includes Catalogue.all(:categories => [:solo]), trio
-  # end
-  #
-  # def test_returns_all_piano_pieces
-  #   piano = Piece.new(create :piece_record, :piano)
-  #   recorder = Piece.new(create :piece_record, :recorder)
-  #   flute = Piece.new(create :piece_record, :flute)
-  #   assert_includes Catalogue.all(:instruments => [:piano]), piano
-  #   assert_includes Catalogue.all(:instruments => [:piano, :recorder]), recorder
-  #   refute_includes Catalogue.all(:instruments => [:piano, :recorder]), flute
-  #   refute_includes Catalogue.all(:instruments => [:piano]), flute
-  # end
-  #
-  # def test_returns_all_with_givern_title
-  #   a = Piece.new(create :piece_record, :title => 'A Good tune')
-  #   a = Piece.new(create :piece_record, :title => 'A Good tune')
-  #   b = Piece.new(create :piece_record, :title => 'A Bad tune')
-  #   assert_equal 2, Catalogue.all(:title => 'A Good tune').count
-  # end
-  #
 
-  #
+  def test_returns_all_beginner_pieces
+    beginner = Piece.new(create :piece_record, :beginner)
+    intermediate = Piece.new(create :piece_record, :intermediate)
+    advanced = Piece.new(create :piece_record, :advanced)
+    assert_includes Catalogue.all(:levels => [:beginner]), beginner
+    assert_includes Catalogue.all(:levels => [:beginner, :intermediate]), intermediate
+    refute_includes Catalogue.all(:levels => [:beginner, :intermediate]), advanced
+    refute_includes Catalogue.all(:levels => [:beginner]), advanced
+  end
+
+  def test_level_method
+    beginner = Piece.new(create :piece_record, :beginner)
+    intermediate = Piece.new(create :piece_record, :intermediate)
+    advanced = Piece.new(create :piece_record, :advanced)
+    assert_includes Catalogue.levels(:beginner), beginner
+    assert_includes Catalogue.levels(:beginner, :intermediate), intermediate
+    refute_includes Catalogue.levels(:beginner, :intermediate), advanced
+    refute_includes Catalogue.levels(:beginner), advanced
+  end
+
+  def test_returns_all_solo_pieces
+    solo = Piece.new(create :piece_record, :solo)
+    duet = Piece.new(create :piece_record, :duet)
+    trio = Piece.new(create :piece_record, :trio)
+    assert_includes Catalogue.all(:categories => [:solo]), solo
+    assert_includes Catalogue.all(:categories => [:solo, :duet]), duet
+    refute_includes Catalogue.all(:categories => [:solo, :duet]), trio
+    refute_includes Catalogue.all(:categories => [:solo]), trio
+  end
+
+  def test_returns_all_piano_pieces
+    piano = Piece.new(create :piece_record, :piano)
+    recorder = Piece.new(create :piece_record, :recorder)
+    flute = Piece.new(create :piece_record, :flute)
+    assert_includes Catalogue.all(:instruments => [:piano]), piano
+    assert_includes Catalogue.all(:instruments => [:piano, :recorder]), recorder
+    refute_includes Catalogue.all(:instruments => [:piano, :recorder]), flute
+    refute_includes Catalogue.all(:instruments => [:piano]), flute
+  end
+
+  def test_returns_all_with_givern_title
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    b = Piece.new(create :piece_record, :title => 'A Bad tune')
+    assert_equal 2, Catalogue.all(:title => 'A Good tune').count
+  end
+
+
+
   # def test_page_shows_first_results
   #   10.times do |i|
   #     create :piece_record, :id => (100 + i)
