@@ -99,5 +99,20 @@ class Discount
       end
       assert_match(/end_datetime/, err.message)
     end
+
+    def test_it_saves_time_of_creation
+      Time.stub :now, Time.at(0) do
+        assert_equal Time.at(0), record.created_at
+        assert_equal Time.at(0), record.updated_at
+      end
+    end
+
+    def test_it_save_update_time
+      Time.stub :now, Time.at(0) do create :discount_record end
+      record = Record.last
+      record.update :code => 'AEWS'
+      refute_nil record.updated_at
+      refute_equal Time.at(0), record.updated_at
+    end
   end
 end

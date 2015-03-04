@@ -5,6 +5,8 @@ class Discount
       self.id ||= SecureRandom.urlsafe_base64
     end
 
+    plugin :timestamps, :update_on_create=>true
+
     plugin :serialization
 
     serialize_attributes [
