@@ -8,6 +8,7 @@ class DiscountsController < UsefulMusic::App
   end
 
   def index
+    @discounts = Discounts.new
     render :index
   end
 

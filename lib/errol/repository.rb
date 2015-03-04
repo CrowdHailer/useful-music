@@ -120,6 +120,14 @@ module Errol
       records_page.map &method(:implant)
     end
 
+    def each
+      # TODO test
+      # TODO uses page unless pagination false
+      records_page.each do |record|
+        yield implant(record)
+      end
+    end
+
     def dataset
       self.class.record_class.dataset
     end
