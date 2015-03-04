@@ -1,6 +1,10 @@
-require_relative './repository'
+require_relative './errol/repo'
+require_relative './errol/repository/query'
+require_relative './piece'
+require_relative './piece/record'
 
-class Catalogue < Errol::Repository
+class Catalogue < Errol::Repo
+
   class Search
     include Virtus.model
 
@@ -90,11 +94,11 @@ class Catalogue < Errol::Repository
       }
     end
   end
+  class Query < Errol::Repository::Query
 
-  # default :title, nil
-  # default :levels, []
-  # default :page, 1
-  # default :page_size, 20
+  end
+  query_class Query
+  record_class ::Piece::Record
 
   class << self
 
@@ -106,6 +110,7 @@ class Catalogue < Errol::Repository
       all options.merge(:levels => levels)
     end
   end
+
 
   def dataset
     val = super
