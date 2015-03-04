@@ -17,7 +17,13 @@ module Errol
 
       def test_can_set_paginate_false
         query_klass.default :paginate, false
+      end
 
+      def test_throws_error_for_undefined_value
+        err = assert_raises Query::DefaultValueUndefined do
+          query_klass.new.random
+        end
+        assert_match(/random/, err.message)
       end
 
     end

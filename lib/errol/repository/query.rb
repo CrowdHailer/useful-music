@@ -1,6 +1,7 @@
 module Errol
   class Repository
     class Query
+      DefaultValueUndefined = Class.new(StandardError)
       def initialize(options={})
         options.each do |key, value|
           defaults[key.to_sym] = value
@@ -23,7 +24,9 @@ module Errol
         if method_name.to_s =~ /^(.+)(?:\?)$/
           !!self.public_send($1, *args, &block)
         else
-          defaults.fetch(method_name)
+          defaults.fetch(method_name) do |query_default|
+            raise DefaultValueUndefined.new "Query default for \"#{query_default}\" has not been set"
+          end
         end
       end
     end
