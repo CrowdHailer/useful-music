@@ -63,6 +63,10 @@ module Errol
       def last(query_params={})
         new(query_params).last
       end
+
+      def all(query_params={})
+        new(query_params).all
+      end
     end
 
     attr_reader :query
@@ -95,9 +99,17 @@ module Errol
       wrap(record) if record
     end
 
+    def all
+      # TODO interface wrap method to through error
+      records_page.map &method(:wrap)
+    end
 
     def dataset
       self.class.record_class.dataset
+    end
+
+    def records_page
+      dataset.paginate(query.page, query.page_size)
     end
 
 

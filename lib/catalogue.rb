@@ -96,6 +96,9 @@ class Catalogue < Errol::Repo
   end
   class Query < Errol::Repository::Query
     default :order, :id
+    default :page, 1
+    default :page_size, 15
+    default :title, nil
   end
   query_class Query
   record_class ::Piece::Record
@@ -138,7 +141,7 @@ class Catalogue < Errol::Repo
     #   end
     # end
     #
-    # val = val.where(:title => query.title) if query.title
+    val = val.where(:title => query.title) if query.title
     val
   end
 
