@@ -6,6 +6,7 @@ class Catalogue < Errol::Repository
   require_relative './catalogue/search'
 
   query_class Query
+  # TODO Use dataset
   record_class ::Piece::Record
 
   class << self

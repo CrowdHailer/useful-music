@@ -20,26 +20,35 @@ module Errol
         end
       end
 
-      # def build(attributes={})
-      #   entity = entity_class.new(record_class.new)
-      #   entity = entity.set attributes
-      #   yeild entity if block_given?
-      #   entity
-      # end
+      def entity_class(entity_class=nil)
+        if entity_class
+          @entity_class = entity_class
+        else
+          @entity_class || raise(ArgumentError)
+        end
+      end
+
+      def build(attributes={})
+        entity = entity_class.new(record_class.new)
+        entity = entity.set attributes
+        yeild entity if block_given?
+        entity
+      end
       #
       # def build_many(collection, &block)
       #   collection.map{|i| build i, &:block}
       # end
-      #
-      # def save(item)
-      #   item.record.save
-      #   self
-      # end
-      #
-      # def create(attributes, &block)
-      #   build(attributes, &block).tap(&method(:save))
-      # end
 
+      def save(item)
+        item.record.save
+        self
+      end
+
+      def create(attributes, &block)
+        build(attributes, &block).tap(&method(:save))
+      end
+
+      # TODO nice error for missing query
       def empty?(query_params={})
         new(query_params).empty?
       end
