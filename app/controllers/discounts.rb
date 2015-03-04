@@ -22,6 +22,11 @@ class DiscountsController < UsefulMusic::App
     redirect '/discounts'
   end
 
+  def edit(id)
+    # discount = Discounts[id]
+    render :edit
+  end
+
   def check_access
     if current_customer.admin?
       true

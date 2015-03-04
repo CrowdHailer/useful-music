@@ -43,5 +43,10 @@ class DiscountsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_edit_page_is_available_to_admin
+    discount_record = create :discount_record
+    assert_ok get "/#{discount_record.id}/edit", {}, {'rack.session' => { :user_id => admin.id }}
+    # assert_includes last_response.body, admin.email
+  end
 
 end
