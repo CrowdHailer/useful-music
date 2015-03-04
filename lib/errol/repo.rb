@@ -1,5 +1,5 @@
 module Errol
-  # use wrap collection pass in paginated dataset
+  # use implant collection pass in paginated dataset
   class Repo
 
     class << self
@@ -86,22 +86,22 @@ module Errol
     def [](id)
       # TODO Use primary key
       record = dataset.first(:id => id)
-      wrap(record) if record
+      implant(record) if record
     end
 
     def first
       record = dataset.first
-      wrap(record) if record
+      implant(record) if record
     end
 
     def last
       record = dataset.last
-      wrap(record) if record
+      implant(record) if record
     end
 
     def all
-      # TODO interface wrap method to through error
-      records_page.map &method(:wrap)
+      # TODO interface implant method to through error
+      records_page.map &method(:implant)
     end
 
     def dataset

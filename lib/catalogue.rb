@@ -103,6 +103,7 @@ class Catalogue < Errol::Repo
     default :instruments, []
     default :categories, []
   end
+
   query_class Query
   record_class ::Piece::Record
 
@@ -148,8 +149,12 @@ class Catalogue < Errol::Repo
     val
   end
 
-  def wrap(record)
+  def implant(record)
     Piece.new(record)
+  end
+
+  def extract
+
   end
 
 end
