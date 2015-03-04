@@ -3,9 +3,16 @@ class DiscountsController < UsefulMusic::App
 
   render_defaults[:dir] += '/discounts'
 
-  def index
+  before do
     check_access
+  end
+
+  def index
     render :index
+  end
+
+  def new
+    render :new
   end
 
   def check_access

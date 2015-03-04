@@ -18,4 +18,15 @@ class DiscountsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_new_page_is_available_to_admin
+    assert_ok get '/new', {}, {'rack.session' => { :user_id => admin.id }}
+    # assert_includes last_response.body, admin.email
+  end
+
+  def test_new_page_is_not_available_to_non_admin
+    get '/new', {}, {'rack.session' => { :user_id => interloper.id }}
+    assert_equal 'Access denied', flash['error']
+    assert last_response.redirect?
+  end
+
 end
