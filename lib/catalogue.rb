@@ -95,7 +95,7 @@ class Catalogue < Errol::Repo
     end
   end
   class Query < Errol::Repository::Query
-
+    default :order, :id
   end
   query_class Query
   record_class ::Piece::Record
@@ -114,30 +114,31 @@ class Catalogue < Errol::Repo
 
   def dataset
     val = super
-
-    # val = levels_filter(val) if levels.count > 0
-    levels = query.levels
-    if levels.count > 0
-      levels.each_with_index do |level, i|
-        val = i == 0 ? val.where(level) : val.or(level)
-      end
-    end
-
-    categories = query.categories
-    if categories.count > 0
-      categories.each_with_index do |category, i|
-        val = i == 0 ? val.where(category) : val.or(category)
-      end
-    end
-
-    instruments = query.instruments
-    if instruments.count > 0
-      instruments.each_with_index do |instrument, i|
-        val = i == 0 ? val.where(instrument) : val.or(instrument)
-      end
-    end
-
-    val = val.where(:title => query.title) if query.title
+    val = val.order(query.order.to_sym)
+    #
+    # # val = levels_filter(val) if levels.count > 0
+    # levels = query.levels
+    # if levels.count > 0
+    #   levels.each_with_index do |level, i|
+    #     val = i == 0 ? val.where(level) : val.or(level)
+    #   end
+    # end
+    #
+    # categories = query.categories
+    # if categories.count > 0
+    #   categories.each_with_index do |category, i|
+    #     val = i == 0 ? val.where(category) : val.or(category)
+    #   end
+    # end
+    #
+    # instruments = query.instruments
+    # if instruments.count > 0
+    #   instruments.each_with_index do |instrument, i|
+    #     val = i == 0 ? val.where(instrument) : val.or(instrument)
+    #   end
+    # end
+    #
+    # val = val.where(:title => query.title) if query.title
     val
   end
 

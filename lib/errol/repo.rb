@@ -22,28 +22,42 @@ module Errol
         end
       end
 
-      def build(attributes={})
-        entity = entity_class.new(record_class.new)
-        entity = entity.set attributes
-        yeild entity if block_given?
-        entity
-      end
-
-      def build_many(collection, &block)
-        collection.map{|i| build i, &:block}
-      end
-
-      def save(item)
-        item.record.save
-        self
-      end
-
-      def create(attributes, &block)
-        build(attributes, &block).tap(&method(:save))
-      end
+      # def build(attributes={})
+      #   entity = entity_class.new(record_class.new)
+      #   entity = entity.set attributes
+      #   yeild entity if block_given?
+      #   entity
+      # end
+      #
+      # def build_many(collection, &block)
+      #   collection.map{|i| build i, &:block}
+      # end
+      #
+      # def save(item)
+      #   item.record.save
+      #   self
+      # end
+      #
+      # def create(attributes, &block)
+      #   build(attributes, &block).tap(&method(:save))
+      # end
 
       def empty?(query_params={})
         new(query_params).empty?
+      end
+
+      def count(query_params={})
+        new(query_params).count
+      end
+
+      # []
+
+      def first(query_params={})
+        new(query_params).first
+      end
+
+      def last(query_params={})
+        new(query_params).last
       end
     end
 
@@ -56,6 +70,23 @@ module Errol
     def empty?
       dataset.empty?
     end
+
+    def count
+      dataset.count
+    end
+
+    # []
+
+    def first
+      record = dataset.first
+      wrap(record) if record
+    end
+
+    def last
+      record = dataset.last
+      wrap(record) if record
+    end
+
 
     def dataset
       self.class.record_class.dataset

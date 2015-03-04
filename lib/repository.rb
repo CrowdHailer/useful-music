@@ -2,42 +2,42 @@ module Errol
   class Repository
     # TODO make repository have create and build methods
     # Allow repository to be swapped out only by changing Repository
-    class Query
-      def initialize(options={})
-        @options = options
-      end
-
-      attr_accessor :options
-
-      def page
-        defaults.fetch(:page, 1).to_i
-      end
-
-      def page_size
-        defaults.fetch(:page_size, 3).to_i
-      end
-
-      def order
-        defaults.fetch(:order, :id).to_sym
-      end
-
-      def title
-        defaults[:title]
-      end
-
-      def levels
-        defaults.fetch(:levels, [])
-      end
-
-      def categories
-        defaults.fetch(:categories, [])
-      end
-
-      def instruments
-        defaults.fetch(:instruments, [])
-      end
-
-    end
+    # class Query
+    #   def initialize(options={})
+    #     @options = options
+    #   end
+    #
+    #   attr_accessor :options
+    #
+    #   def page
+    #     defaults.fetch(:page, 1).to_i
+    #   end
+    #
+    #   def page_size
+    #     defaults.fetch(:page_size, 3).to_i
+    #   end
+    #
+    #   def order
+    #     defaults.fetch(:order, :id).to_sym
+    #   end
+    #
+    #   def title
+    #     defaults[:title]
+    #   end
+    #
+    #   def levels
+    #     defaults.fetch(:levels, [])
+    #   end
+    #
+    #   def categories
+    #     defaults.fetch(:categories, [])
+    #   end
+    #
+    #   def instruments
+    #     defaults.fetch(:instruments, [])
+    #   end
+    #
+    # end
 
     class Page
       include Enumerable
