@@ -8,7 +8,6 @@
     color: white;
     overflow: hidden;
     padding: 0 1rem;
-    margin: 1rem 0;
   }
 
   h2 {
@@ -20,6 +19,9 @@
     @extend .pure-table;
     width: 100%;
     text-align: left;
-
+    .odd {
+      background-color: aliceblue;
+    }
+    margin: 1rem 0;
   }
 }
