@@ -88,8 +88,4 @@ class PiecesController < UsefulMusic::App
     current_customer.admin? || deny_access
   end
 
-  def deny_access
-    flash['error'] = 'Access denied'
-    redirect '/'
-  end
 end

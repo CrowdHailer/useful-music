@@ -53,11 +53,6 @@ class ItemsController < UsefulMusic::App
   end
 
   def check_access!
-    if current_customer.admin?
-      true
-    else
-      flash['error'] = 'Access denied'
-      redirect '/'
-    end
+    admin_logged_in? or deny_access
   end
 end
