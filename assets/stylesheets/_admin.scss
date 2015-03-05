@@ -6,7 +6,7 @@
     @include scut-vcenter-lh(50px);
     background-color: $primary-color;
     color: white;
-    overflow: hidden;
+    // overflow: hidden;
     padding: 0 1rem;
   }
 
@@ -63,4 +63,27 @@
   &:hover {
     border: 1px solid white;
   }
+}
+
+h2 .dropdown {
+  color: white;
+  background-color: $primary-color;
+  display: none;
+
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-top: -0.6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: absolute;
+  width: 12em;
+  font-size: 0.6em;
+
+  a {
+    line-height: normal;
+  }
+}
+
+h2:hover .dropdown {
+  display: block
 }
