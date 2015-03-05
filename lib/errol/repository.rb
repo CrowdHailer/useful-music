@@ -68,6 +68,14 @@ module Errol
         new(query_params)[id]
       end
 
+      def fetch(id)
+        item = self.[](id)
+        unless item
+          return yield id
+        end
+        item
+      end
+
       def first(query_params={})
         new(query_params).first
       end

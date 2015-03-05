@@ -43,12 +43,8 @@ class PiecesController < UsefulMusic::App
   end
 
   def show(catalogue_number)
-    if @piece = Catalogue[catalogue_number]
-      render :show
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    render :show
   end
 
   def edit(catalogue_number)
@@ -84,6 +80,11 @@ class PiecesController < UsefulMusic::App
       flash['error'] = 'Piece not found'
       redirect index_path
     end
+  end
+
+  def piece_not_found(id)
+    flash['error'] = 'Piece not found'
+    redirect index_path
   end
 
   def show_path(piece)
