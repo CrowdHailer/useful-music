@@ -1,0 +1,20 @@
+/*########### Buttons #################*/
+
+.action {
+  @extend .pure-button;
+}
+
+.edit {
+  @extend .action;
+  background: $orange;
+}
+
+.destroy {
+  @extend .action;
+  background: $red;
+}
+
+.approve {
+  @extend .action;
+  background: $green;
+}

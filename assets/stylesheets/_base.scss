@@ -1,5 +1,9 @@
 $regal-blue: #01344c;
 $soft-blue: #006F8A;
+$charcol: #191818;
+$red: #ca3c3c;
+$orange: #df7514;
+$green: #1cb841;
 
 $primary-color: $regal-blue;
 $secondary-color: $soft-blue;
@@ -17,6 +21,10 @@ html, body {
 
 .right {
   float: right;
+}
+
+.left {
+  float: left;
 }
 
 .bold {
