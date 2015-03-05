@@ -101,6 +101,7 @@ class PiecesControllerTest < MyRecordTest
   def test_admin_can_update_a_piece
     record = create :piece_record, :id => 123
     put '/UD123', {:piece => attributes_for(:piece_record, :id => record.id, :title => 'All change')}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal 'Piece updated', flash['success']
     assert_equal 'All change', Piece::Record[123].title
     assert_equal '/UD123', last_response.location
   end

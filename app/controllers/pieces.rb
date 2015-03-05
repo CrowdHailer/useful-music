@@ -49,25 +49,17 @@ class PiecesController < UsefulMusic::App
 
   def edit(catalogue_number)
     check_admin!
-    if @piece = Catalogue[catalogue_number]
-      render :edit
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    render :edit
   end
 
   def update(catalogue_number)
     check_admin!
-    if piece = Catalogue[catalogue_number]
-      form = Piece::Update::Form.new request.POST['piece']
-      piece.set! form
-      flash['success'] = 'Piece updated'
-      redirect show_path(piece)
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    form = Piece::Update::Form.new request.POST['piece']
+    piece.set! form
+    flash['success'] = 'Piece updated'
+    redirect show_path(piece)
   end
 
   def destroy(catalogue_number)
