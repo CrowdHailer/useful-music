@@ -1,4 +1,5 @@
 require_relative './discount/record'
+require_relative './errol/repository'
 
 class Discounts < Errol::Repository
   require_relative './discounts/query'
