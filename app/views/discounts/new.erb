@@ -1,0 +1,90 @@
+<main class="content">
+    <aside class="col col-1-5">
+
+    </aside>
+    <article class="col col-4-5">
+
+        <h2>New Discount</h2>
+        <form class="pure-form pure-form-aligned" action="/discounts" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="discount_code">Code</label>
+                    <input
+                        id="discount_code"
+                        name="discount[code]"
+                        autofocus
+                        required
+                        placeholder="EXAMPLE001">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="discount_value">Value £</label>
+                    <input
+                        id="discount_value"
+                        name="discount[value]"
+                        type="number"
+                        step="0.01"
+                        min="1"
+                        required
+                        placeholder="10.00">
+                </div>
+
+                <hr>
+
+                <div class="pure-control-group">
+                    <label for="discount_allocation">Allocation</label>
+                    <input
+                        id="discount_allocation"
+                        name="discount[allocation]"
+                        type="number"
+                        step="1"
+                        min="1"
+                        max="999999"
+                        required
+                        placeholder="total maximum number of redemptions">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="discount_customer_allocation">Customer Allocation</label>
+                    <input
+                        id="discount_customer_allocation"
+                        name="discount[customer_allocation]"
+                        type="number"
+                        step="1"
+                        min="1"
+                        max="9"
+                        placeholder="total maximum number of redemptions per customer">
+                </div>
+
+                <hr>
+
+                <div class="pure-control-group">
+                    <label for="discount_start_datetime">Start Date</label>
+                    <input
+                        id="discount_start_datetime"
+                        name="discount[start_datetime]"
+                        type="date"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="discount_end_datetime">Start Date</label>
+                    <input
+                        id="discount_end_datetime"
+                        name="discount[end_datetime]"
+                        type="date"
+                        required
+                        placeholder="">
+                </div>
+
+                <hr>
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </article>
+</main>

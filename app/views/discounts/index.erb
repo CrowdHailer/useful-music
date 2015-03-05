@@ -1,0 +1,72 @@
+<main class="content">
+    <aside class="col col-1-5">
+      <ul>
+        <li>
+          <a href="/discounts/new">New Discount</a>
+        </li>
+        <li>
+          <a href="/">Home</a>
+        </li>
+      </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2>Discounts</h2>
+        <form class="" action="/discounts" method="get">
+            <button name="page" value="1">First Page</button>
+            <button name="page" value="<%= @discounts.prev_page %>" <%= 'disabled' unless @discounts.prev_page %>>Previous</button>
+            <select name="page_size">
+                <option <%= 'selected' if @discounts.page_size == 10 %>>10</option>
+                <option <%= 'selected' if @discounts.page_size == 15 %>>15</option>
+                <option <%= 'selected' if @discounts.page_size == 20 %>>20</option>
+            </select>
+            <button name="page" value="1">Refresh</button>
+            <button name="page" value="<%= @discounts.next_page %>" <%= 'disabled' unless @discounts.next_page %>>Next</button>
+            <button name="page" value="<%= @discounts.page_count %>">Last Page</button>
+        </form>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Value</th>
+                    <th>Allocation</th>
+                    <th>Per Customer</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% @discounts.each do |discount| %>
+                    <tr>
+                        <th>
+                            <a href="/discounts/<%= discount.id %>/edit"><%= discount.code %></a>
+                        </th>
+                        <th>
+                            <%= discount.value.format %>
+                        </th>
+                        <th>
+                            <%= discount.allocation %>
+                        </th>
+                        <th>
+                            <%= discount.customer_allocation %>
+                        </th>
+                        <th>
+                            <%= discount.start_datetime.strftime('%Y-%m-%d') %>
+                        </th>
+                        <th>
+                            <%= discount.end_datetime.strftime('%Y-%m-%d') %>
+                        </th>
+                        <th>
+                            <form id="form_id" action="/discounts/<%= discount.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= discount.code %> ')">
+                                <%= csrf_tag %>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="submit" name="some_name" value="Destroy">
+                            </form>
+                        </th>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </article>
+</main>
