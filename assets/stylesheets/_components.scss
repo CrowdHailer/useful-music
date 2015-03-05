@@ -18,3 +18,9 @@
   @extend .action;
   background: $green;
 }
+
+.submit {
+  @extend .action;
+  background: $primary-color;
+  color: white;
+}

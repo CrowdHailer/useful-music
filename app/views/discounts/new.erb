@@ -1,10 +1,11 @@
-<main class="content">
+<main class="archive">
     <aside class="col col-1-5">
 
     </aside>
     <article class="col col-4-5">
 
-        <h2>New Discount</h2>
+        <h2 id="item-type">New Discount</h2>
+        <hr>
         <form class="pure-form pure-form-aligned" action="/discounts" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <fieldset>
@@ -82,7 +83,7 @@
                 <hr>
 
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                    <button type="submit" class="submit">Submit</button>
                 </div>
             </fieldset>
         </form>
