@@ -1,5 +1,6 @@
 module Errol
   class Repository
+    RecordMissing = Class.new(StandardError)
     require_relative './repository/query'
 
     class << self
@@ -71,7 +72,8 @@ module Errol
       def fetch(id)
         item = self.[](id)
         unless item
-          return yield id
+          return yield id if block_given?
+          raise RecordMissing, "#{self} contains no record for id #{id}"
         end
         item
       end

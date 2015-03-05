@@ -20,6 +20,12 @@ class ItemsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_no_new_page_for_missing_piece_to_admin
+    assert_raises Errol::Repository::RecordMissing do
+      get "/new?piece_id=100", {}, {'rack.session' => { :user_id => admin.id }}
+    end
+  end
+
   def test_can_create_item_as_admin
     piece_record = create :piece_record
     post '/', {:item => attributes_for(:item_record).merge(:piece => piece_record.id)}, {'rack.session' => { :user_id => admin.id }}
