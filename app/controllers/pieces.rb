@@ -2,75 +2,77 @@ class PiecesController < UsefulMusic::App
   get('/search') { send :search }
   include Scorched::Rest
 
-  # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/pieces'
 
   def index
-    search = Catalogue::Search.new request.GET.fetch('catalogue_search', {})
-    pieces = Catalogue.page search.to_hash
-    render :index, :locals => {:pieces => pieces, :search => search}
+    @search = Catalogue::Search.new request.GET.fetch('catalogue_search', {})
+    @pieces = Catalogue.new @search
+    render :index
   end
 
   def search
-    id = request.GET['search'][/\d+/]
-    redirect "/pieces/UD#{id}"
+    piece = Catalogue[request.GET.fetch('search') { '' }]
+    if piece
+      redirect "/pieces/#{piece.catalogue_number}"
+    else
+      flash['error'] = 'Could not find piece requested'
+      redirect(request.referer || '/pieces')
+    end
   end
 
   def new
-    check_access!
+    check_admin!
     render :new
   end
 
   def create
-    # unvalidated on backend
-    check_access!
-    piece = Piece.create create_form
-    flash['success'] = 'Piece created'
-    redirect show_path(piece)
+    begin
+      check_admin!
+      form = Piece::Create::Form.new request.POST['piece']
+      piece = Piece.create form
+      flash['success'] = 'Piece created'
+      redirect show_path(piece)
+    rescue Sequel::UniqueConstraintViolation => err
+      flash['error'] = "Piece UD#{form.id} already exists and may be edited"
+      redirect "/pieces/UD#{form.id}/edit"
+    rescue Sequel::NotNullConstraintViolation => err
+      Bugsnag.notify(err)
+      flash['error'] = 'Could not create invalid piece'
+      redirect '/pieces/new'
+    end
   end
 
   def show(catalogue_number)
-    if @piece = Catalogue[catalogue_number]
-      render :show
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    render :show
   end
 
   def edit(catalogue_number)
-    check_access!
-    if @piece = Catalogue[catalogue_number]
-      render :edit
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    check_admin!
+    @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    render :edit
   end
 
   def update(catalogue_number)
-    check_access!
-    if piece = Catalogue[catalogue_number]
-      form = Piece::Update::Form.new request.POST['piece']
-      piece.set! form
-      flash['success'] = 'Piece updated'
-      redirect show_path(piece)
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    check_admin!
+    piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    form = Piece::Update::Form.new request.POST['piece']
+    piece.set! form
+    flash['success'] = 'Piece updated'
+    redirect show_path(piece)
   end
 
   def destroy(catalogue_number)
-    check_access!
-    if piece = Catalogue[catalogue_number]
-      piece.record.destroy
-      flash['success'] = 'Piece deleted'
-      redirect index_path
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    check_admin!
+    piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    piece.record.destroy
+    flash['success'] = 'Piece deleted'
+    redirect index_path
+  end
+
+  def piece_not_found(id)
+    flash['error'] = 'Piece not found'
+    redirect index_path
   end
 
   def show_path(piece)
@@ -82,16 +84,12 @@ class PiecesController < UsefulMusic::App
     File.join *request.breadcrumb[0...-1].map(&:path)
   end
 
-  def create_form
-    Piece::Create::Form.new request.POST['piece']
+  def check_admin!
+    current_customer.admin? || deny_access
   end
 
-  def check_access!
-    if current_customer.admin?
-      true
-    else
-      flash['error'] = 'Access denied'
-      redirect '/'
-    end
+  def deny_access
+    flash['error'] = 'Access denied'
+    redirect '/'
   end
 end

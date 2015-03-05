@@ -87,6 +87,8 @@ class Catalogue
         :page_size => page_size
       }
     end
+
+    delegate :each, :to => :to_hash
   end
 
 end
