@@ -56,7 +56,7 @@ class ItemsControllerTest < MyRecordTest
     assert_ok get "/#{record.id}/edit", {}, {'rack.session' => { :user_id => admin.id }}
   end
 
-  def test_edit_page_is_unavailableto_admin
+  def test_edit_page_is_unavailable_to_customer
     record = create :item_record
     get "/#{record.id}/edit", {}, {'rack.session' => { :user_id => customer.id }}
     assert_equal 'Access denied', flash['error']

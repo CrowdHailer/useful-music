@@ -1,3 +1,7 @@
+# Add to the following if errors occur in admin usage
+# Does not check redirection when item missing - create repository use fetch
+# Does not return details of failed params - create form validator
+
 class ItemsController < UsefulMusic::App
   include Scorched::Rest
 
@@ -36,13 +40,19 @@ class ItemsController < UsefulMusic::App
 
   def update(id)
     check_access!
-    item_record = Item::Record[id]
-    if @item = item_record
-      item_record.update request.POST['item']
-      redirect "/pieces/UD#{item_record.piece_record.id}/edit"
-    else
-      flash['error'] = 'Item not found'
-      redirect '/'
+    begin
+      item_record = Item::Record[id]
+      if @item = item_record
+        item_record.update request.POST['item']
+        redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+      else
+        flash['error'] = 'Item not found'
+        redirect '/'
+      end
+    rescue Sequel::ConstraintViolation => err
+      Bugsnag.notify(err)
+      flash['error'] = 'Could not update - invalid parameters'
+      redirect(request.referer || '/pieces')
     end
   end
 
