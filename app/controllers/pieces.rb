@@ -33,7 +33,7 @@ class PiecesController < UsefulMusic::App
       flash['success'] = 'Piece created'
       redirect show_path(piece)
     rescue Sequel::UniqueConstraintViolation => err
-      flash['error'] = 'Piece UD#{form.id} already exists and may be edited'
+      flash['error'] = "Piece UD#{form.id} already exists and may be edited"
       redirect "/pieces/UD#{form.id}/edit"
     rescue Sequel::NotNullConstraintViolation => err
       Bugsnag.notify(err)
