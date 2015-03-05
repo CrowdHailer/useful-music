@@ -21,13 +21,13 @@ class PiecesController < UsefulMusic::App
   end
 
   def new
-    check_access!
+    check_admin!
     render :new
   end
 
   def create
     begin
-      check_access!
+      check_admin!
       form = Piece::Create::Form.new request.POST['piece']
       piece = Piece.create form
       flash['success'] = 'Piece created'
@@ -48,7 +48,7 @@ class PiecesController < UsefulMusic::App
   end
 
   def edit(catalogue_number)
-    check_access!
+    check_admin!
     if @piece = Catalogue[catalogue_number]
       render :edit
     else
@@ -58,7 +58,7 @@ class PiecesController < UsefulMusic::App
   end
 
   def update(catalogue_number)
-    check_access!
+    check_admin!
     if piece = Catalogue[catalogue_number]
       form = Piece::Update::Form.new request.POST['piece']
       piece.set! form
@@ -71,7 +71,7 @@ class PiecesController < UsefulMusic::App
   end
 
   def destroy(catalogue_number)
-    check_access!
+    check_admin!
     if piece = Catalogue[catalogue_number]
       piece.record.destroy
       flash['success'] = 'Piece deleted'
@@ -96,12 +96,12 @@ class PiecesController < UsefulMusic::App
     File.join *request.breadcrumb[0...-1].map(&:path)
   end
 
-  def check_access!
-    if current_customer.admin?
-      true
-    else
-      flash['error'] = 'Access denied'
-      redirect '/'
-    end
+  def check_admin!
+    current_customer.admin? || deny_access
+  end
+
+  def deny_access
+    flash['error'] = 'Access denied'
+    redirect '/'
   end
 end
