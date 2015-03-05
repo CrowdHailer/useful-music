@@ -1,27 +1,30 @@
+# Add to the following if errors occur in admin usage
+# Does not check redirection when item missing - create repository use fetch
+# Does not return details of failed params - create form validator
+
 class ItemsController < UsefulMusic::App
   include Scorched::Rest
 
-  # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/items'
 
   def new
     check_access!
-    piece_id = request.GET.fetch('piece_id')
-    piece = Catalogue[piece_id]
-    if piece
-      @piece = Piece.new piece
-      render :new
-    else
-      redirect '/pieces'
-    end
+    @piece = Catalogue.fetch(request.GET.fetch('piece_id') { '' })
+    render :new
   end
 
   def create
     check_access!
-    form = Item::Create::Form.new request.POST['item']
-    item = Item.create form
-    flash['success'] = 'Item created'
-    redirect "/pieces/UD#{item.piece.id}/edit"
+    begin
+      form = Item::Create::Form.new request.POST['item']
+      item = Item.create form
+      flash['success'] = 'Item created'
+      redirect "/pieces/UD#{item.piece.id}/edit"
+    rescue Sequel::ConstraintViolation => err
+      Bugsnag.notify(err)
+      flash['error'] = 'Could not create invalid item'
+      redirect(request.referer || '/pieces')
+    end
   end
 
   def edit(id)
@@ -37,13 +40,19 @@ class ItemsController < UsefulMusic::App
 
   def update(id)
     check_access!
-    item_record = Item::Record[id]
-    if @item = item_record
-      item_record.update request.POST['item']
-      redirect "/pieces/UD#{item_record.piece_record.id}/edit"
-    else
-      flash['error'] = 'Item not found'
-      redirect '/'
+    begin
+      item_record = Item::Record[id]
+      if @item = item_record
+        item_record.update request.POST['item']
+        redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+      else
+        flash['error'] = 'Item not found'
+        redirect '/'
+      end
+    rescue Sequel::ConstraintViolation => err
+      Bugsnag.notify(err)
+      flash['error'] = 'Could not update - invalid parameters'
+      redirect(request.referer || '/pieces')
     end
   end
 
@@ -60,11 +69,6 @@ class ItemsController < UsefulMusic::App
   end
 
   def check_access!
-    if current_customer.admin?
-      true
-    else
-      flash['error'] = 'Access denied'
-      redirect '/'
-    end
+    admin_logged_in? or deny_access
   end
 end

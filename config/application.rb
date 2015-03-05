@@ -42,6 +42,15 @@ module UsefulMusic
       Customers.find(session[:user_id]) || Guest.new
     end
 
+    def admin_logged_in?
+      current_customer.admin?
+    end
+
+    def deny_access
+      flash['error'] = 'Access denied'
+      redirect '/'
+    end
+
     def live_shopping_basket_id
       if session['useful_music.basket_id'] && ShoppingBasket::Record[session['useful_music.basket_id']]
         session['useful_music.basket_id']
