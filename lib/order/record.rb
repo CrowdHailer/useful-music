@@ -1,3 +1,5 @@
+Dir[File.expand_path('../**/*.rb', __FILE__)].each { |file| require file }
+
 class LicenseUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 

@@ -1,6 +1,7 @@
 require_relative './base_entity'
 
 class Item < BaseEntity
+  require_relative './item/record'
   entry_accessor  :name,
                   :initial_price,
                   :discounted_price,

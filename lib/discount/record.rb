@@ -1,3 +1,5 @@
+Dir[File.expand_path('../**/*.rb', __FILE__)].each { |file| require file }
+
 class Discount
   class Record < Sequel::Model(:discounts)
     def initialize(*args, &block)
