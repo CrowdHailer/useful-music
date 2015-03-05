@@ -8,7 +8,6 @@ class PiecesControllerTest < MyRecordTest
   end
 
   def test_index_page_is_available
-    skip
     create :piece_record, :id => 100
     assert_ok get '/'
     assert_includes last_response.body, 'UD100'
