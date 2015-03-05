@@ -16,10 +16,10 @@ class ItemsController < UsefulMusic::App
       item = Item.create form
       flash['success'] = 'Item created'
       redirect "/pieces/UD#{item.piece.id}/edit"
-    rescue Sequel::NotNullConstraintViolation => err
+    rescue Sequel::ConstraintViolation => err
       Bugsnag.notify(err)
       flash['error'] = 'Could not create invalid item'
-      redirect '/pieces'
+      redirect(request.referer || '/pieces')
     end
   end
 

@@ -45,6 +45,12 @@ class ItemsControllerTest < MyRecordTest
     assert_equal '/pieces', last_response.location
   end
 
+  def test_create_item_with_invalid_data_as_admin
+    piece_record = create :piece_record
+    post '/', {:item => attributes_for(:item_record).merge(:piece => piece_record.id, :initial_price => -1)}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal '/pieces', last_response.location
+  end
+
   def test_edit_page_is_availableto_admin
     record = create :item_record
     assert_ok get "/#{record.id}/edit", {}, {'rack.session' => { :user_id => admin.id }}

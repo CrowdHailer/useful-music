@@ -11,7 +11,7 @@ Sequel.migration do
       foreign_key :piece_id, :pieces, :null => false
       validate do
         includes 0...100000, :initial_price, :name => 'initial_price_limit'
-        includes 0...100000, :initial_price, :name => 'discounted_price_limit'
+        includes 0...100000, :discounted_price, :name => 'discounted_price_limit'
       end
     end
   end
