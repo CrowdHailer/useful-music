@@ -1,4 +1,5 @@
-@import 'scut';
+@import 'vendor/scut';
+@import 'vendor/pure';
 @import 'base';
 @import 'header';
 @import 'footer';
@@ -28,9 +29,9 @@
   overflow: hidden;
 }
 
-
-/*################## Main ###########################*/
-
+//
+// /*################## Main ###########################*/
+//
 main.content {
   background-color: aliceblue;
 }
