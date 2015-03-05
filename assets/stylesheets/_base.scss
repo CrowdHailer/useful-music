@@ -5,15 +5,33 @@ $primary-color: $regal-blue;
 $secondary-color: $soft-blue;
 $emphasise: red;
 
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   padding: 0;
   margin: 0;
   color: $primary-color;
 }
 
-* {
-  box-sizing: border-box;
+.right {
+  float: right;
 }
+
+.bold {
+  background-color: $emphasise;
+}
+
+.content {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+  max-width: 1260px;
+  overflow: hidden;
+}
+
 
 .col {
   padding: 15px;
