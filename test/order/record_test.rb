@@ -25,7 +25,7 @@ class Order
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :state => 'no_state'
       end
-      assert_match(/orders_state_check/, err.message)
+      assert_match(/allowed_states/, err.message)
     end
 
     def zero_pounds
@@ -46,14 +46,14 @@ class Order
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :basket_amount => Money.new(-1)
       end
-      assert_match(/basket_limit/, err.message)
+      assert_match(/basket_amount_limit/, err.message)
     end
 
     def test_basket_amount_cannot_be_1000_pounds
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :basket_amount => Money.new(100000)
       end
-      assert_match(/basket_limit/, err.message)
+      assert_match(/basket_amount_limit/, err.message)
     end
 
     def test_can_have_zero_tax_amount
@@ -70,14 +70,14 @@ class Order
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :tax_amount => Money.new(-1)
       end
-      assert_match(/tax_limit/, err.message)
+      assert_match(/tax_amount_limit/, err.message)
     end
 
     def test_tax_amount_cannot_be_1000_pounds
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :tax_amount => Money.new(100000)
       end
-      assert_match(/tax_limit/, err.message)
+      assert_match(/tax_amount_limit/, err.message)
     end
 
     def test_can_have_zero_discount_amount
@@ -94,14 +94,14 @@ class Order
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :discount_amount => Money.new(-1)
       end
-      assert_match(/discount_limit/, err.message)
+      assert_match(/discount_amount_limit/, err.message)
     end
 
     def test_discount_amount_cannot_be_1000_pounds
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :discount_amount => Money.new(100000)
       end
-      assert_match(/discount_limit/, err.message)
+      assert_match(/discount_amount_limit/, err.message)
     end
 
     def test_can_have_payer_email

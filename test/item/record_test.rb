@@ -40,9 +40,9 @@ class Item
       assert_equal nil, record.discounted_price
     end
 
-    def test_does_not_require_discounted_price
-      assert_silent do
-        create :item_record, :discounted_price => nil
+    def test_cant_have_negative_discounted_price
+      assert_raises Sequel::CheckConstraintViolation do
+        record = create :item_record, :discounted_price => Money.new(-200, 'gbp')
       end
     end
 
