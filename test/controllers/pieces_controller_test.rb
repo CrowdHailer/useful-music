@@ -13,6 +13,20 @@ class PiecesControllerTest < MyRecordTest
     assert_includes last_response.body, 'UD100'
   end
 
+  def test_search_redirects_to_show_page
+    create :piece_record, :id => 100
+    get '/search', {:search => '100'}
+    assert last_response.redirect?
+    assert_equal '/pieces/UD100', last_response.location
+  end
+
+  def test_search_redirects_to_show_page
+    get '/search', {:search => '100'}
+    assert_equal 'Could not find piece requested', flash['error']
+    assert last_response.redirect?
+    assert_equal '/pieces', last_response.location
+  end
+
   def test_new_page_is_available_to_admin
     assert_ok get '/new', {}, {'rack.session' => { :user_id => admin.id }}
   end

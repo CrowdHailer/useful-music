@@ -10,10 +10,15 @@ class PiecesController < UsefulMusic::App
     render :index
   end
 
-  # def search
-  #   id = request.GET['search'][/\d+/]
-  #   redirect "/pieces/UD#{id}"
-  # end
+  def search
+    piece = Catalogue[request.GET.fetch('search') { '' }]
+    if piece
+      redirect "/pieces/#{piece.catalogue_number}"
+    else
+      flash['error'] = 'Could not find piece requested'
+      redirect(request.referer || '/pieces')
+    end
+  end
 
   def new
     check_access!
