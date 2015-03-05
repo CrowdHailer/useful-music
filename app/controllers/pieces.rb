@@ -64,14 +64,10 @@ class PiecesController < UsefulMusic::App
 
   def destroy(catalogue_number)
     check_admin!
-    if piece = Catalogue[catalogue_number]
-      piece.record.destroy
-      flash['success'] = 'Piece deleted'
-      redirect index_path
-    else
-      flash['error'] = 'Piece not found'
-      redirect index_path
-    end
+    piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    piece.record.destroy
+    flash['success'] = 'Piece deleted'
+    redirect index_path
   end
 
   def piece_not_found(id)
