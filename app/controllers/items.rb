@@ -11,10 +11,16 @@ class ItemsController < UsefulMusic::App
 
   def create
     check_access!
-    form = Item::Create::Form.new request.POST['item']
-    item = Item.create form
-    flash['success'] = 'Item created'
-    redirect "/pieces/UD#{item.piece.id}/edit"
+    begin
+      form = Item::Create::Form.new request.POST['item']
+      item = Item.create form
+      flash['success'] = 'Item created'
+      redirect "/pieces/UD#{item.piece.id}/edit"
+    rescue Sequel::NotNullConstraintViolation => err
+      Bugsnag.notify(err)
+      flash['error'] = 'Could not create invalid item'
+      redirect '/pieces'
+    end
   end
 
   def edit(id)

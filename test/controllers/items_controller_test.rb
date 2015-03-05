@@ -39,6 +39,12 @@ class ItemsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_create_item_with_missing_data_as_admin
+    piece_record = create :piece_record
+    post '/', {:item => {}.merge(:piece => piece_record.id)}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal '/pieces', last_response.location
+  end
+
   def test_edit_page_is_availableto_admin
     record = create :item_record
     assert_ok get "/#{record.id}/edit", {}, {'rack.session' => { :user_id => admin.id }}
