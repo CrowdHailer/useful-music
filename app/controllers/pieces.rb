@@ -26,11 +26,20 @@ class PiecesController < UsefulMusic::App
   end
 
   def create
-    # unvalidated on backend
-    check_access!
-    piece = Piece.create create_form
-    flash['success'] = 'Piece created'
-    redirect show_path(piece)
+    begin
+      check_access!
+      form = Piece::Create::Form.new request.POST['piece']
+      piece = Piece.create form
+      flash['success'] = 'Piece created'
+      redirect show_path(piece)
+    rescue Sequel::UniqueConstraintViolation => err
+      flash['error'] = 'Piece UD#{form.id} already exists and may be edited'
+      redirect "/pieces/UD#{form.id}/edit"
+    rescue Sequel::NotNullConstraintViolation => err
+      Bugsnag.notify(err)
+      flash['error'] = 'Could not create invalid piece'
+      redirect '/pieces/new'
+    end
   end
 
   def show(catalogue_number)
@@ -84,10 +93,6 @@ class PiecesController < UsefulMusic::App
   def index_path
     # TODO generalise this to scorched rest
     File.join *request.breadcrumb[0...-1].map(&:path)
-  end
-
-  def create_form
-    Piece::Create::Form.new request.POST['piece']
   end
 
   def check_access!

@@ -49,6 +49,19 @@ class PiecesControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_redirects_when_piece_exists_as_admin
+    create :piece_record, :id => 212
+    post '/', {:piece => attributes_for(:piece_record, :id => 212)}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal 212, Piece::Record.last.id
+    assert_equal '/pieces/UD212/edit', last_response.location
+  end
+
+  def test_warns_when_data_incorrect_as_admin
+    post '/', {:piece => {}}, {'rack.session' => { :user_id => admin.id }}
+    assert_equal 'Could not create invalid piece', flash['error']
+    assert_equal '/pieces/new', last_response.location
+  end
+
   def test_show_page_is_available
     record = create :piece_record, :id => 123
     assert_ok get "/UD#{record.id}"
