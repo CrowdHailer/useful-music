@@ -4,7 +4,7 @@
 
   .admin {
     @include scut-vcenter-lh(50px);
-    background-color: $charcol;
+    background-color: $primary-color;
     color: white;
     overflow: hidden;
     padding: 0 1rem;
@@ -30,7 +30,37 @@
     margin: 0;
   }
 
-  input {
-    width: 16em;
+  .sidebar {
+    @extend .col, .col-1-5;
+    background-color: $primary-color;
+    border: 1.2em solid #f8f7f7;
+  }
+
+  // input {
+  //   width: 16em;
+  // }
+
+
+}
+
+.menu-option {
+  display: block;
+}
+
+.menu-container {
+  margin: 0;
+  padding: 5px;
+}
+
+.menu-link {
+  font-size: 1.2em;
+  color: white;
+  text-decoration: none;
+  border: 1px solid $primary-color;
+  transition : border 500ms ease-out;
+  display: block;
+  padding: 0.2rem;
+  &:hover {
+    border: 1px solid white;
   }
 }
