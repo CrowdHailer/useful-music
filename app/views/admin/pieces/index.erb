@@ -39,15 +39,16 @@
                 <th>Product Name</th>
                 <th>Description</th>
                 <th>Categories</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Instruments</th>
+                <th>Levels</th>
+                <th>Items</th>
                 <th>Action</th>
             </tr>
         </thead>
 
         <tbody>
-            <% @pieces.each do |piece| %>
-                <tr>
+            <% @pieces.each_with_index do |piece, i| %>
+                <tr class="<%= i % 2 == 0 ? 'odd' : 'even' %>">
                     <th>
                         <a href="/admin/pieces/<%= piece.id %>/edit"><%= piece.catalogue_number %></a>
                     </th>
@@ -55,16 +56,19 @@
                         <%= piece.product_name %>
                     </th>
                     <th>
-                        <%= piece.description[0..20] %>...
+                        <%= piece.description[0..12] %>...
                     </th>
                     <th>
-                        <%= piece.categories.join(', ') %>
+                        <%= piece.categories.join('<br>') %>
                     </th>
                     <th>
-                        <%= piece.instruments.join(', ') %>
+                        <%= piece.instruments.join('<br>') %>
                     </th>
                     <th>
-                        <%= piece.levels.join(', ') %>
+                        <%= piece.levels.join('<br>') %>
+                    </th>
+                    <th>
+                        <%= piece.items.map(&:name).join('<br>') %>
                     </th>
                     <th>
                         <a class="edit" href="/admin/pieces/<%= piece.id %>/edit">edit</a>

@@ -1,5 +1,6 @@
 module Errol
   class Repository
+    include Enumerable
     RecordMissing = Class.new(StandardError)
     require_relative './repository/query'
 
