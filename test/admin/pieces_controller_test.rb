@@ -60,6 +60,19 @@ module UsefulMusic
         assert_equal 'All change', Piece::Record[123].title
         assert_equal '/admin/pieces', last_response.location
       end
+
+      def test_destroy_action_redirects_to_index
+        record = create :piece_record
+        delete "/UD#{record.id}"
+        assert_empty Catalogue
+        assert_equal '/admin/pieces', last_response.location
+      end
+
+      def test_destroys_associated_items
+        item_record = create :item_record
+        delete "/UD#{item_record.piece_record.id}"
+        assert_empty Item::Record
+      end
     end
   end
 end

@@ -45,23 +45,4 @@ class PiecesControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
-  def test_destroy_action_redirects_to_index
-    record = create :piece_record
-    delete "/UD#{record.id}", {}, {'rack.session' => { :user_id => admin.id }}
-    assert_empty Piece::Record
-    assert_equal '/', last_response.location
-  end
-
-  def test_destroys_associated_items
-    item_record = create :item_record
-    delete "/UD#{item_record.piece_record.id}", {}, {'rack.session' => { :user_id => admin.id }}
-    assert_empty Item::Record
-  end
-
-  def test_customer_cant_delete_a_piece
-    record = create :piece_record, :id => 123
-    delete "/UD#{record.id}", {'rack.session' => { :user_id => customer.id }}
-    assert_equal 'Access denied', flash['error']
-    assert last_response.redirect?
-  end
 end
