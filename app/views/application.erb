@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
+  <%= render :'../header' %>
 
   <% if flash['success'] %>
       <div class="content flash success">
@@ -20,6 +21,7 @@
       </div>
   <% end %>
   <%= yield %>
+  <%= render :'../footer' %>
   <script charset="utf-8">
     var $$ = document.querySelectorAll
 
