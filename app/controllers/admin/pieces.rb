@@ -23,12 +23,30 @@ module UsefulMusic
           redirect "/admin/pieces"
         rescue Sequel::UniqueConstraintViolation => err
           flash['error'] = "Piece UD#{form.id} already exists and may be edited"
-          redirect "/pieces/UD#{form.id}/edit"
+          redirect "/admin/pieces/UD#{form.id}/edit"
         rescue Sequel::NotNullConstraintViolation => err
           Bugsnag.notify(err)
           flash['error'] = 'Could not create invalid piece'
-          redirect '/pieces/new'
+          redirect '/admin/pieces/new'
         end
+      end
+
+      def edit(catalogue_number)
+        @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+        render :edit
+      end
+
+      def update(catalogue_number)
+        piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+        form = Piece::Update::Form.new request.POST['piece']
+        piece.set! form
+        flash['success'] = 'Piece updated'
+        redirect "/admin/pieces"
+      end
+
+      def piece_not_found(id)
+        flash['error'] = 'Piece not found'
+        redirect "/admin/pieces"
       end
     end
   end

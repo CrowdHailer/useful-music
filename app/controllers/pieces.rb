@@ -25,20 +25,7 @@ class PiecesController < UsefulMusic::App
     render :show
   end
 
-  def edit(catalogue_number)
-    check_admin!
-    @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
-    render :edit
-  end
-
-  def update(catalogue_number)
-    check_admin!
-    piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
-    form = Piece::Update::Form.new request.POST['piece']
-    piece.set! form
-    flash['success'] = 'Piece updated'
-    redirect show_path(piece)
-  end
+  
 
   def destroy(catalogue_number)
     check_admin!
