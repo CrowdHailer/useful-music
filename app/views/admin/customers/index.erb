@@ -32,9 +32,8 @@
     <table class="index">
         <thead>
             <tr>
-                <th>Customer</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Id</th>
+                <th>Name</th>
                 <th>email</th>
                 <th colspan=2>Action</th>
             </tr>
@@ -47,10 +46,7 @@
                         <a href="/customers/<%= customer.id %>"><%= customer.id %></a>
                     </th>
                     <th>
-                        <%= customer.first_name %>
-                    </th>
-                    <th>
-                        <%= customer.last_name %>
+                        <%= customer.name %>
                     </th>
                     <th>
                         <%= customer.email %>

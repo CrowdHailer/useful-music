@@ -9,6 +9,7 @@
 .archive {
   @extend .content;
   background-color: #f8f7f7;
+  max-width: none;
 
   .admin {
     @include scut-vcenter-lh(50px);
