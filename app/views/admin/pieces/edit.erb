@@ -4,6 +4,15 @@
             <li class="menu-option">
                 <a class="menu-link" href="/admin/discounts">Back to discounts</a>
             </li>
+            <li class="menu-option">
+                <a class="menu-link" href="/admin/items/new?piece_id=<%= @piece.id %>">Add Item</a>
+            </li>
+            <hr>
+            <% @piece.items.each do |item| %>
+                <li class="menu-option">
+                    <a class="menu-link" href="/admin/items/<%= item.id %>/edit"><%= item.name %></a>
+                </li>
+            <% end %>
         </ul>
     </aside>
     <article class="col col-4-5">
@@ -414,10 +423,10 @@
                           <a href="<%= item.asset.url %>"><%= item.asset.path.split('/').last %></a>
                       </th>
                       <th>
-                          <a href="/items/<%= item.id %>/edit">Edit</a>
+                          <a href="/admin/items/<%= item.id %>/edit">Edit</a>
                       </th>
                       <th>
-                          <form id="form_id" action="/items/<%= item.id %>" method="post">
+                          <form id="form_id" action="/admin/items/<%= item.id %>" method="post">
                               <%= csrf_tag %>
                               <input type="hidden" name="_method" value="DELETE">
                               <input type="submit" value="Destroy">
