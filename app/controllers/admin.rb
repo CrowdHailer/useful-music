@@ -10,6 +10,7 @@ module UsefulMusic
 
     controller '/customers', Admin::CustomersController
     controller '/discounts', Admin::DiscountsController
+    controller '/pieces', Admin::PiecesController
 
     get '/' do
       'c'
