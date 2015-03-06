@@ -11,7 +11,7 @@ module UsefulMusic
     controller '/customers', Admin::CustomersController
 
     get '/' do
-      ap 'c'
+      'c'
     end
   end
 end
