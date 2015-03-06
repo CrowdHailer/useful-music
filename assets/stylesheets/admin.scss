@@ -1,3 +1,11 @@
+@import 'vendor/scut';
+@import 'vendor/pure';
+@import 'base';
+@import 'components';
+@import 'header';
+@import 'footer';
+@import 'search';
+
 .archive {
   @extend .content;
   background-color: #f8f7f7;
