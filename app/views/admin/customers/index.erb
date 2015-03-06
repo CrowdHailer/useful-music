@@ -35,7 +35,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>email</th>
-                <th colspan=2>Action</th>
+                <!-- <th colspan=2>Action</th> -->
             </tr>
         </thead>
 
@@ -51,7 +51,7 @@
                     <th>
                         <%= customer.email %>
                     </th>
-                    <th>
+                    <!-- <th>
                         <a class="edit" href="/customers/<%= customer.id %>/edit">edit</a>
                     </th>
                     <th>
@@ -60,7 +60,7 @@
                             <input type="hidden" name="_method" value="DELETE">
                             <input class="destroy" type="submit" name="some_name" value="Destroy">
                         </form>
-                    </th>
+                    </th> -->
                 </tr>
             <% end %>
         </tbody>
