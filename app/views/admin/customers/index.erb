@@ -3,7 +3,7 @@
         <h2 class="left">Customers</h2>
     </header>
     <header class="admin">
-        <form class="right" action="/customers" method="get">
+        <form class="right" action="/admin/customers" method="get">
             <button class="action" name="page" value="1" <%= 'disabled' unless @customers.prev_page %>>First Page</button>
             <button class="action" name="page" value="<%= @customers.prev_page %>" <%= 'disabled' unless @customers.prev_page %>>Previous</button>
             <select class="action" name="page_size">
