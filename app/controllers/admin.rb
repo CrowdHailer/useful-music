@@ -4,6 +4,8 @@ end
 
 module UsefulMusic
   class AdminController < App
+    render_defaults[:dir] += '/admin'
+    render_defaults[:layout] = File.expand_path('app/views/admin/application', APP_ROOT).to_sym
     before do
       admin_logged_in? or deny_access
     end
@@ -14,7 +16,7 @@ module UsefulMusic
     controller '/items', Admin::ItemsController
 
     get '/' do
-      'c'
+      render :index
     end
   end
 end
