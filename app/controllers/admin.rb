@@ -9,6 +9,7 @@ module UsefulMusic
     end
 
     controller '/customers', Admin::CustomersController
+    controller '/discounts', Admin::DiscountsController
 
     get '/' do
       'c'
