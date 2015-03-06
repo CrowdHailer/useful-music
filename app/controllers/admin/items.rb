@@ -19,7 +19,7 @@ module UsefulMusic
           form = Item::Create::Form.new request.POST['item']
           item = Item.create form
           flash['success'] = 'Item created'
-          redirect "/pieces/UD#{item.piece.id}/edit"
+          redirect "/admin/pieces/UD#{item.piece.id}/edit"
         rescue Sequel::ConstraintViolation => err
           Bugsnag.notify(err)
           flash['error'] = 'Could not create invalid item'
@@ -33,7 +33,7 @@ module UsefulMusic
           render :edit
         else
           flash['error'] = 'Item not found'
-          redirect '/'
+          redirect '/admin/pieces'
         end
       end
 
@@ -41,8 +41,11 @@ module UsefulMusic
         begin
           item_record = Item::Record[id]
           if @item = item_record
-            item_record.update request.POST['item']
-            redirect "/pieces/UD#{item_record.piece_record.id}/edit"
+            form = Item::Create::Form.new request.POST['item']
+            hash =  form.to_hash
+            hash.delete(:piece)
+            item_record.update hash
+            redirect "/admin/pieces/UD#{item_record.piece_record.id}/edit"
           else
             flash['error'] = 'Item not found'
             redirect '/'
@@ -50,7 +53,7 @@ module UsefulMusic
         rescue Sequel::ConstraintViolation => err
           Bugsnag.notify(err)
           flash['error'] = 'Could not update - invalid parameters'
-          redirect(request.referer || '/pieces')
+          redirect(request.referer || '/admin/pieces')
         end
       end
 

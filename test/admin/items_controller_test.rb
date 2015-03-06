@@ -46,7 +46,7 @@ module UsefulMusic
 
       def test_can_update_item_as_admin
         record = create :item_record, :name => 'test'
-        put "/#{record.id}", {:item => {:name => 'test2'}}, {'rack.session' => { :user_id => admin.id }}
+        put "/#{record.id}", {:item => attributes_for(:item_record, :name => 'test').merge({:name => 'test2'})}
         assert_match /pieces\/UD\d{3}/, last_response.location
         assert_equal 'test2', Item::Record.last.name
       end
