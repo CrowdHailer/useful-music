@@ -41,6 +41,7 @@ module Customers
   end
 
   class Page
+    include Enumerable
     def initialize(record_set, options={})
       @record_set = record_set
       @options = Query.new(options)

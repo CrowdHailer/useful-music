@@ -1,0 +1,73 @@
+<header>
+    <h2>Date <%= @order.updated_at %></h2>
+    <h1>Reciept/License #<%= @order.id %></h1>
+    <p>
+        <em>Please print and keep this page.</em> It is your proof of purchase and your license to print the number of copies listed below
+    </p>
+</header>
+<table>
+    <thead>
+        <tr>
+            <th colspan=2>
+                Order Details
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                <em>Order ID</em> <%= @order.id %><br>
+                <em>Date Added</em> <%= @order.updated_at %>
+            </th>
+            <th>
+                <em>Name</em> <%= @order.customer.name %><br>
+                <em>Email</em> <%= @order.customer.email %><br>
+            </th>
+        </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Piece
+            </th>
+            <th>
+                Part
+            </th>
+            <th>
+                File
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Cost
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @order.shopping_basket.purchases.each do |purchase| %>
+            <tr>
+                <th>
+                    <%= purchase.item.piece.title %>
+                </th>
+                <th>
+                    <%= purchase.item.name %>
+                </th>
+                <th>
+                    <%= purchase.item.asset.filename %>
+                </th>
+                <th>
+                    <%= purchase.quantity %>
+                </th>
+                <th>
+                    <%= purchase.price.format %>
+                </th>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<footer>
+    <span>www.usefulmusic.com</span>
+</footer>

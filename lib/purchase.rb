@@ -1,6 +1,8 @@
 require_relative './base_entity'
 
 class Purchase < BaseEntity
+  require_relative './purchase/record'
+
   entry_accessor  :quantity,
                   :created_at,
                   :updated_at

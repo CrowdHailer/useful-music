@@ -1,6 +1,7 @@
 require_relative './base_entity'
 
 class Customer < BaseEntity
+  require_relative './customer/record'
   entry_accessor  :first_name,
                   :last_name,
                   :email,

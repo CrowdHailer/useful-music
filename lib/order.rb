@@ -97,6 +97,7 @@ class Transaction < BaseEntity
 end
 
 class Order < BaseEntity
+  require_relative './order/record'
 
   def transaction
     Transaction.new(record)

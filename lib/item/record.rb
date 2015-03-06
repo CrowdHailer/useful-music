@@ -1,4 +1,4 @@
-require_relative './uploader/asset_uploader'
+Dir[File.expand_path('../**/*.rb', __FILE__)].each { |file| require file }
 
 class Item
   class Record < Sequel::Model(:items)

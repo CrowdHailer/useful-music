@@ -1,12 +1,16 @@
 Sequel.migration do
   up do
-    extension(:constraint_validations)
     create_table(:orders) do
       primary_key :id, :type => :varchar, :auto_increment => false, :unique => true
       String :state, :null => false
+      constraint(:allowed_states, :state => ['pending', 'processing', 'succeded', 'failed'])
       Integer :basket_amount, :null => false
+      constraint(:basket_amount_limit, :basket_amount => 0...100000)
       Integer :tax_amount, :null => false
+      constraint(:tax_amount_limit, :tax_amount => 0...100000)
       Integer :discount_amount, :null => false
+      constraint(:discount_amount_limit, :discount_amount => 0...100000)
+      String :license
       String :payer_email
       String :payer_first_name
       String :payer_last_name
@@ -20,17 +24,10 @@ Sequel.migration do
       DateTime :updated_at
       foreign_key :shopping_basket_id, :shopping_baskets, :type => :varchar, :unique => true, :null => false
       foreign_key :customer_id, :customers, :type => :varchar, :null => false
-      validate do
-        includes 0...100000, :basket_amount, :name => 'basket_limit'
-        includes 0...100000, :tax_amount, :name => 'tax_limit'
-        includes 0...100000, :discount_amount, :name => 'discount_limit'
-        includes ['pending', 'processing', 'succeded', 'failed'], :state
-      end
     end
   end
 
   down do
-    extension(:constraint_validations)
     drop_table(:orders)
   end
 end

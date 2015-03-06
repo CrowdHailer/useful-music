@@ -44,7 +44,8 @@
                 <% @customer.orders.each do |order| %>
                     <tr>
                         <th>
-                            <%= order.id[0..4] %>...
+                            <a href="/orders/<%= order.id %>"><%= order.id[0..4] %>...</a>
+
                         </th>
                         <th>
                             <%= order.transaction.state %>

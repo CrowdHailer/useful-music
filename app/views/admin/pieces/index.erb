@@ -1,0 +1,85 @@
+<main class="archive">
+    <header class="admin">
+        <h2 class="left" id="menu-title">
+            Pieces
+            <ul class="dropdown menu-container">
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/customers">Customers</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/pieces">Pieces</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/discounts">Discounts</a>
+                </li>
+            </ul>
+        </h2>
+        <span class="right">
+            <a class="approve" href="/admin/pieces/new">New Piece</a>
+        </span>
+    </header>
+    <header class="admin">
+        <form class="right" action="/admin/pieces" method="get">
+            <button class="action" name="page" value="1" <%= 'disabled' unless @pieces.prev_page %>>First Page</button>
+            <button class="action" name="page" value="<%= @pieces.prev_page %>" <%= 'disabled' unless @pieces.prev_page %>>Previous</button>
+            <select class="action" name="page_size">
+                <option <%= 'selected' if @pieces.page_size == 10 %>>10</option>
+                <option <%= 'selected' if @pieces.page_size == 15 %>>15</option>
+                <option <%= 'selected' if @pieces.page_size == 20 %>>20</option>
+            </select>
+            <button class="action" name="page" value="1">Refresh</button>
+            <button class="action" name="page" value="<%= @pieces.next_page %>" <%= 'disabled' unless @pieces.next_page %>>Next</button>
+            <button class="action" name="page" value="<%= @pieces.page_count %>" <%= 'disabled' unless @pieces.next_page %>>Last Page</button>
+        </form>
+    </header>
+    <table class="index">
+        <thead>
+            <tr>
+                <th>Catalogue number</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Categories</th>
+                <th>Instruments</th>
+                <th>Levels</th>
+                <th>Items</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @pieces.each_with_index do |piece, i| %>
+                <tr class="<%= i % 2 == 0 ? 'odd' : 'even' %>">
+                    <th>
+                        <a href="/admin/pieces/<%= piece.id %>/edit"><%= piece.catalogue_number %></a>
+                    </th>
+                    <th>
+                        <%= piece.product_name %>
+                    </th>
+                    <th>
+                        <%= piece.description[0..12] %>...
+                    </th>
+                    <th>
+                        <%= piece.categories.join('<br>') %>
+                    </th>
+                    <th>
+                        <%= piece.instruments.join('<br>') %>
+                    </th>
+                    <th>
+                        <%= piece.levels.join('<br>') %>
+                    </th>
+                    <th>
+                        <%= piece.items.map(&:name).join('<br>') %>
+                    </th>
+                    <th>
+                        <a class="edit" href="/admin/pieces/<%= piece.id %>/edit">edit</a>
+                        <form class="button" id="form_id" action="/admin/pieces/<%= piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= piece.catalogue_number %> ')">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input class="destroy" type="submit" name="some_name" value="Destroy">
+                        </form>
+                    </th>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</main>

@@ -1,6 +1,8 @@
 require_relative './base_entity'
 
 class ShoppingBasket < BaseEntity
+  require_relative './shopping_basket/record'
+
   def purchases
     record.purchase_records.map{ |r| Purchase.new r }
   end

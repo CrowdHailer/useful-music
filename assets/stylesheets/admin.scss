@@ -1,0 +1,133 @@
+@import 'vendor/scut';
+@import 'vendor/pure';
+@import 'base';
+@import 'components';
+@import 'header';
+@import 'footer';
+@import 'search';
+
+.archive {
+  @extend .content;
+  background-color: #f8f7f7;
+  max-width: none;
+
+  .admin {
+    @include scut-vcenter-lh(50px);
+    background-color: $primary-color;
+    color: white;
+    // overflow: hidden;
+    padding: 0 1rem;
+  }
+
+  #menu-title {
+    color: white;
+    margin: 0;
+  }
+
+
+  .index {
+    @extend .pure-table;
+    width: 100%;
+    text-align: left;
+    .odd {
+      background-color: aliceblue;
+    }
+    margin: 1rem 0;
+  }
+
+  #item-type {
+    margin: 0;
+  }
+
+  .sidebar {
+    @extend .col, .col-1-5;
+    background-color: $primary-color;
+    border: 1.2em solid #f8f7f7;
+  }
+
+  // input {
+  //   width: 16em;
+  // }
+
+
+}
+
+.menu-option {
+  display: block;
+}
+
+.menu-container {
+  margin: 0;
+  padding: 5px;
+}
+
+.menu-link {
+  font-size: 1.2em;
+  color: white;
+  text-decoration: none;
+  border: 1px solid $primary-color;
+  transition : border 500ms ease-out;
+  display: block;
+  padding: 0.2rem;
+  &:hover {
+    border: 1px solid white;
+  }
+}
+
+h2 .dropdown {
+  color: white;
+  background-color: $primary-color;
+  display: none;
+
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-top: -0.6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: absolute;
+  width: 12em;
+  font-size: 0.6em;
+
+  a {
+    line-height: normal;
+  }
+}
+
+h2:hover .dropdown {
+  display: block
+}
+
+form.button {
+  display: inline-block;
+}
+
+.flash {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-size: 1.4em;
+  padding: 0.2em 1em;
+  max-height: 2em;
+  transition: max-height 1s, padding 1s, margin 1s, border 2s;
+}
+
+.success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  // border: 2px solid #DFF2BF;
+  border-radius: 4px;
+}
+
+.error {
+  color: #FF3800;
+  // border: 2px solid #FFCDBF;
+  background-color: #FFCDBF;
+  border-radius: 4px;
+}
+
+.flash.read {
+  max-height: 0em;
+  padding: 0 1em;
+  margin-top: 0;
+  margin-bottom: 0;
+  // border: 2px solid #FFF;
+}
