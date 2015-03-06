@@ -62,8 +62,8 @@ class Customer
       end
 
       def test_is_invalid_with_short_password
-        refute validator.valid? OpenStruct.new :password => 'a'
-        assert_includes validator.errors.on(:password), 'is shorter than 2 characters'
+        refute validator.valid? OpenStruct.new :password => 'a' * 7
+        assert_includes validator.errors.on(:password), 'is shorter than 8 characters'
       end
 
       def test_is_invalid_with_long_password
