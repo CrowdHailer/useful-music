@@ -19,7 +19,7 @@
         </span>
     </header>
     <header class="admin">
-        <form class="right" action="/admin/discounts" method="get">
+        <form class="right" action="/admin/pieces" method="get">
             <button class="action" name="page" value="1" <%= 'disabled' unless @pieces.prev_page %>>First Page</button>
             <button class="action" name="page" value="<%= @pieces.prev_page %>" <%= 'disabled' unless @pieces.prev_page %>>Previous</button>
             <select class="action" name="page_size">
@@ -59,7 +59,7 @@
                         <%= piece.sub_heading %>
                     </th>
                     <th>
-                        <%= piece.description[0..100] %>...
+                        <%= piece.description[0..20] %>...
                     </th>
                     <th>
                         <%= piece.categories.join(', ') %>
