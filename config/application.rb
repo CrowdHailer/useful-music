@@ -95,6 +95,7 @@ class UsefulMusic::App
   controller '/discounts', DiscountsController
   controller '/orders', OrdersController
   controller '/about', AboutController
+  controller '/admin', UsefulMusic::AdminController
   controller '/', HomeController
 
   after :status => 404 do
