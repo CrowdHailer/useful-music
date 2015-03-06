@@ -33,7 +33,7 @@ class Customer
         :format => /^[^@]+@[^@]+$/
       validates :password,
         :presence => true,
-        :min_length => 2,
+        :min_length => 8,
         :max_length => 55
       validates :country,
         :presence => true

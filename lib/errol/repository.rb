@@ -1,5 +1,6 @@
 module Errol
   class Repository
+    include Enumerable
     RecordMissing = Class.new(StandardError)
     require_relative './repository/query'
 
@@ -148,7 +149,7 @@ module Errol
     end
 
     def records_page
-      dataset.paginate(query.page, query.page_size)
+      dataset.paginate(query.page.to_i, query.page_size.to_i)
     end
 
 

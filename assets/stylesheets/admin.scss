@@ -1,6 +1,15 @@
+@import 'vendor/scut';
+@import 'vendor/pure';
+@import 'base';
+@import 'components';
+@import 'header';
+@import 'footer';
+@import 'search';
+
 .archive {
   @extend .content;
   background-color: #f8f7f7;
+  max-width: none;
 
   .admin {
     @include scut-vcenter-lh(50px);
@@ -86,4 +95,8 @@ h2 .dropdown {
 
 h2:hover .dropdown {
   display: block
+}
+
+form.button {
+  display: inline-block;
 }

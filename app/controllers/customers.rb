@@ -8,16 +8,6 @@ class CustomersController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/customers'
 
-  def index
-    if current_customer.admin?
-      @customers = Customers.all request.GET
-      render :index
-    else
-      flash['error'] = 'Access denied'
-      redirect '/'
-    end
-  end
-
   def new
     @form = Customer::Create::Form.new
     @validator = Customer::Create::Validator.new

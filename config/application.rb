@@ -89,12 +89,11 @@ class UsefulMusic::App
   controller '/sessions', SessionsController
   controller '/password_resets', PasswordResetsController
   controller '/pieces', PiecesController
-  controller '/items', ItemsController
   controller '/purchases', PurchasesController
   controller '/shopping_baskets', ShoppingBasketsController
-  controller '/discounts', DiscountsController
   controller '/orders', OrdersController
   controller '/about', AboutController
+  controller '/admin', UsefulMusic::AdminController
   controller '/', HomeController
 
   after :status => 404 do

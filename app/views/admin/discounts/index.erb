@@ -1,21 +1,25 @@
 <main class="archive">
     <header class="admin">
-        <h2 class="left" id="menu-title">Discounts
+        <h2 class="left" id="menu-title">
+            Discounts
             <ul class="dropdown menu-container">
                 <li class="menu-option">
-                  <a class="menu-link" href="/customers">Customers</a>
+                  <a class="menu-link" href="/admin/customers">Customers</a>
                 </li>
                 <li class="menu-option">
-                  <a class="menu-link" href="/pieces">Pieces</a>
+                  <a class="menu-link" href="/admin/pieces">Pieces</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/discounts">Discounts</a>
                 </li>
             </ul>
         </h2>
         <span class="right">
-            <a class="approve" href="/discounts/new">New Discount</a>
+            <a class="approve" href="/admin/discounts/new">New Discount</a>
         </span>
     </header>
     <header class="admin">
-        <form class="right" action="/discounts" method="get">
+        <form class="right" action="/admin/discounts" method="get">
             <button class="action" name="page" value="1" <%= 'disabled' unless @discounts.prev_page %>>First Page</button>
             <button class="action" name="page" value="<%= @discounts.prev_page %>" <%= 'disabled' unless @discounts.prev_page %>>Previous</button>
             <select class="action" name="page_size">
@@ -45,7 +49,7 @@
             <% @discounts.each do |discount| %>
                 <tr>
                     <th>
-                        <a href="/discounts/<%= discount.id %>/edit"><%= discount.code %></a>
+                        <a href="/admin/discounts/<%= discount.id %>/edit"><%= discount.code %></a>
                     </th>
                     <th>
                         <%= discount.value.format %>
@@ -63,7 +67,8 @@
                         <%= discount.end_datetime.strftime('%Y-%m-%d') %>
                     </th>
                     <th>
-                        <form id="form_id" action="/discounts/<%= discount.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= discount.code %> ')">
+                        <a class="edit" href="/admin/discounts/<%= discount.id %>/edit">edit</a>
+                        <form class="button" id="form_id" action="/admin/discounts/<%= discount.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= discount.code %> ')">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
                             <input class="destroy" type="submit" name="some_name" value="Destroy">

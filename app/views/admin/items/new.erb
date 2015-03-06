@@ -1,0 +1,88 @@
+<main class="archive">
+    <aside class="sidebar">
+      <ul class="menu-container">
+          <li class="menu-option">
+              <a class="menu-link" href="/">Home</a>
+          </li>
+          <li class="menu-option">
+              <a class="menu-link" href="/admin/pieces">Back to Pieces</a>
+          </li>
+          <li class="menu-option">
+              <a class="menu-link" href="/admin/pieces/<%= @piece.catalogue_number %>/edit">Back to <%= @piece.catalogue_number %></a>
+          </li>
+          <hr>
+      </ul>
+    </aside>
+    <article class="col col-4-5">
+        <h2>Add Item</h2>
+        <p>
+          Add item to piece <em>'<%= @piece.product_name %>'</em>, Catalogue number '<%= @piece.catalogue_number %>'
+        </p>
+        <hr>
+        <form class="pure-form pure-form-aligned" action="/admin/items/" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="item[piece]" value="<%= @piece.id %>">
+            <fieldset>
+
+                <div class="pure-control-group">
+                    <label for="item_name">Name</label>
+                    <input
+                        id="item_name"
+                        name="item[name]"
+                        type="text"
+                        required
+                        placeholder="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="item_initial_price">Initial Price (£)</label>
+                    <input
+                        id="item_initial_price"
+                        name="item[initial_price]"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        required
+                        placeholder="initial price">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="item_discounted_price">Discounted Price (£)</label>
+                    <input
+                        id="item_discounted_price"
+                        name="item[discounted_price]"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="discounted price">
+                </div>
+
+                <hr>
+
+                <input type="file" name="[item][asset]" placeholder="asset" required>
+            </fieldset>
+            <hr>
+            <div class="pure-controls">
+                <button type="submit" class="submit">Submit</button>
+            </div>
+        </form>
+    </article>
+</main>
+<script charset="utf-8">
+var numInput = document.getElementById('item_initial_price');
+numInput.addEventListener('blur', function () {
+  if (this.value === '') {
+      return;
+  }
+  this.setAttribute('type', 'text');
+  if (this.value.indexOf('.') === -1) {
+      this.value = this.value + '.00';
+  }
+  while (this.value.indexOf('.') > this.value.length - 3) {
+      this.value = this.value + '0';
+  }
+});
+numInput.addEventListener('focus', function () {
+  this.setAttribute('type', 'number');
+});
+</script>
