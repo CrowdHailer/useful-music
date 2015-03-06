@@ -11,6 +11,7 @@ module UsefulMusic
     controller '/customers', Admin::CustomersController
     controller '/discounts', Admin::DiscountsController
     controller '/pieces', Admin::PiecesController
+    controller '/items', Admin::ItemsController
 
     get '/' do
       'c'
