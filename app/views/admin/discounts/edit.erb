@@ -1,11 +1,15 @@
-<main class="content">
-    <aside class="col col-1-5">
-
+<main class="archive">
+    <aside class="sidebar">
+        <ul class="menu-container">
+            <li class="menu-option">
+                <a class="menu-link" href="/admin/discounts">Back to discounts</a>
+            </li>
+        </ul>
     </aside>
     <article class="col col-4-5">
 
-        <h2>New Discount</h2>
-        <form class="pure-form pure-form-aligned" action="/discounts/<%= @discount.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <h2>Edit Discount '<%= @discount.code %>'</h2>
+        <form class="pure-form pure-form-aligned" action="/admin/discounts/<%= @discount.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
@@ -89,7 +93,7 @@
                 <hr>
 
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                    <button type="submit" class="submit">Submit</button>
                 </div>
             </fieldset>
         </form>
