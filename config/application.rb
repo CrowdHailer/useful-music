@@ -60,7 +60,9 @@ module UsefulMusic
     end
 
     def shopping_basket
-      ShoppingBasket.new(ShoppingBasket::Record[live_shopping_basket_id])
+      # TODO not good
+      # ShoppingBasket.new(ShoppingBasket::Record[live_shopping_basket_id])
+      ShoppingBasket.new(ShoppingBasket::Record.new)
     end
 
     def customer_mailer
