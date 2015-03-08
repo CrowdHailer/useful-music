@@ -38,7 +38,7 @@ module UsefulMusic
 
       def destroy(id)
         discount = Discounts[id]
-        Discounts.destroy(discount)
+        Discounts.remove(discount)
         flash['success'] = 'Discount Deleted'
         redirect '/admin/discounts'
       end

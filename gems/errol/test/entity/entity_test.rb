@@ -134,6 +134,12 @@ module Errol
       mock_repo.verify
     end
 
+    def test_destroys_self_with_repository
+      mock_repo.expect :remove, true, [instance]
+      instance.destroy
+      mock_repo.verify
+    end
+
     def test_save_after_set
       mock_repo.expect :save, mock_repo, [instance]
       instance.stub :set, instance do

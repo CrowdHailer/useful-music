@@ -79,10 +79,10 @@ module Errol
     def save
       repository.save self
     end
-    #
-    # def destory
-    #   repository.delete self
-    # end
+
+    def destroy
+      repository.remove self
+    end
     #
     # def reload
     #   repository.reload self
