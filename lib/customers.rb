@@ -18,9 +18,15 @@ class Customers < Errol::Repository
     def receive(entity)
       entity.record
     end
+
+    def authenticate(email, password)
+      customer = new(:email => email).first
+      return false unless customer && customer.authenticate(password)
+      customer
+    end
   end
 
   def dataset
-    raw_dataset
+    inquiry.email? ? raw_dataset.where(:email => inquiry.email) : raw_dataset
   end
 end
