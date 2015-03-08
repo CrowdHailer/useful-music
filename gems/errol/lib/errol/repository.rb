@@ -104,7 +104,7 @@ module Errol
     end
 
     def previous_page
-      paginated_dataset.previous_page
+      paginated_dataset.prev_page
     end
 
     attr_reader :inquiry

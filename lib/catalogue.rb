@@ -21,13 +21,13 @@ class Catalogue < Errol::Repository
       entity.record
     end
 
-    def [](catalogue_number)
-      super catalogue_number[/\d+/]
-    end
-
     def levels(*levels, **options)
       all options.merge(:levels => levels)
     end
+  end
+
+  def [](catalogue_number)
+    super catalogue_number[/\d+/]
   end
 
   def dataset

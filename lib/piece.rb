@@ -1,6 +1,9 @@
 
 class Piece < Errol::Entity
   require_relative './piece/record'
+  def self.repository
+    Catalogue
+  end
 
   entry_accessor  :id,
                   :title,
