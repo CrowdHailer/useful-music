@@ -19,7 +19,7 @@ module UsefulMusic
           form = Item::Create::Form.new request.POST['item']
           item = Items.create form
           flash['success'] = 'Item created'
-          redirect "/admin/pieces/UD#{item.piece.id}/edit"
+          redirect "/admin/pieces/#{item.piece.catalogue_number}/edit"
         rescue Sequel::ConstraintViolation => err
           Bugsnag.notify(err)
           flash['error'] = 'Could not create invalid item'
@@ -66,6 +66,11 @@ module UsefulMusic
           flash['error'] = 'Item not found'
           redirect '/'
         end
+      end
+
+      def item_not_found(id)
+        flash['error'] = 'Item not found'
+        redirect index_path
       end
 
     end
