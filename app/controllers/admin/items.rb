@@ -34,17 +34,12 @@ module UsefulMusic
 
       def update(id)
         begin
-          item_record = Item::Record[id]
-          if @item = item_record
-            form = Item::Create::Form.new request.POST['item']
-            hash =  form.to_hash
-            hash.delete(:piece)
-            item_record.update hash
-            redirect "/admin/pieces/UD#{item_record.piece_record.id}/edit"
-          else
-            flash['error'] = 'Item not found'
-            redirect '/'
-          end
+          item = Items.fetch(id, &method(:item_not_found))
+          form = Item::Create::Form.new request.POST['item']
+          hash =  form.to_hash
+          hash.delete(:piece)
+          item.set! hash
+          redirect "/admin/pieces/#{item.piece.catalogue_number}/edit"
         rescue Sequel::ConstraintViolation => err
           Bugsnag.notify(err)
           flash['error'] = 'Could not update - invalid parameters'
@@ -53,14 +48,9 @@ module UsefulMusic
       end
 
       def destroy(id)
-        item_record = Item::Record[id]
-        if @item = item_record
-          item_record.destroy
-          redirect "/pieces/UD#{item_record.piece_record.id}/edit"
-        else
-          flash['error'] = 'Item not found'
-          redirect '/'
-        end
+        item = Items.fetch(id, &method(:item_not_found))
+        item.destroy
+        redirect "/pieces/#{item.piece.catalogue_number}/edit"
       end
 
       def item_not_found(id)

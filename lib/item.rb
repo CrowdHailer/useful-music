@@ -2,6 +2,10 @@
 
 class Item < Errol::Entity
   require_relative './item/record'
+  def self.repository
+    Items
+  end
+  
   entry_accessor  :name,
                   :initial_price,
                   :discounted_price,
