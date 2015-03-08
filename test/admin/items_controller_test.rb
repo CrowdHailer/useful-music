@@ -21,7 +21,7 @@ module UsefulMusic
         end
       end
 
-      def test_can_create_item_as_admin
+      def test_can_create_item
         piece_record = create :piece_record
         post '/', {:item => attributes_for(:item_record).merge(:piece => piece_record.id)}
         assert_match(/pieces\/UD#{piece_record.id}/, last_response.location)
@@ -42,6 +42,12 @@ module UsefulMusic
       def test_edit_page_is_available
         record = create :item_record
         assert_ok get "/#{record.id}/edit"
+      end
+
+      def test_redirected_from_edit_if_no_item
+        get "/0/edit"
+        assert_equal 'Item not found', flash['error']
+        assert last_response.redirect?
       end
 
       def test_can_update_item_as_admin

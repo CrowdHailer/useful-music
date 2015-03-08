@@ -28,13 +28,8 @@ module UsefulMusic
       end
 
       def edit(id)
-        record = Item::Record[id]
-        if @item = record && Item.new(record)
-          render :edit
-        else
-          flash['error'] = 'Item not found'
-          redirect '/admin/pieces'
-        end
+        @item = Items.fetch(id, &method(:item_not_found))
+        render :edit
       end
 
       def update(id)
@@ -70,7 +65,7 @@ module UsefulMusic
 
       def item_not_found(id)
         flash['error'] = 'Item not found'
-        redirect index_path
+        redirect '/pieces'
       end
 
     end
