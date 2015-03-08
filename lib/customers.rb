@@ -20,9 +20,13 @@ class Customers < Errol::Repository
     end
 
     def authenticate(email, password)
-      customer = new(:email => email).first
+      customer = find_by_email(email)
       return false unless customer && customer.authenticate(password)
       customer
+    end
+
+    def find_by_email(email)
+      customer = new(:email => email).first
     end
   end
 
