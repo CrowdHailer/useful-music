@@ -76,9 +76,9 @@ module Errol
     # #
     # ##################################
     #
-    # def save
-    #   repository.save self
-    # end
+    def save
+      repository.save self
+    end
     #
     # def destory
     #   repository.delete self
@@ -90,6 +90,11 @@ module Errol
 
     ############ End ########################
     #
+
+    def set!(*args)
+      set(*args)
+      save
+    end
     # def method_missing(method_name, *args, &block)
     #   if method_name.to_s =~ /^(.+)!$/
     #     self.public_send($1, *args, &block)

@@ -128,14 +128,19 @@ module Errol
       refute_equal klass1.new(:a), klass2.new(:a)
     end
 
+    def test_saves_self_to_repository
+      mock_repo.expect :save, true, [instance]
+      instance.save
+      mock_repo.verify
+    end
 
-    # def test_bang
-    #   mock_repo.expect :save, mock_repo, [instance]
-    #   instance.stub :set, instance do
-    #     instance.set!
-    #   end
-    #   mock_repo.verify
-    # end
+    def test_save_after_set
+      mock_repo.expect :save, mock_repo, [instance]
+      instance.stub :set, instance do
+        instance.set!
+      end
+      mock_repo.verify
+    end
 
     def test_undefined_bang
       assert_raises NoMethodError do

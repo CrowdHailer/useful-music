@@ -1,6 +1,4 @@
-require_relative './base_entity'
-
-class ShoppingBasket < BaseEntity
+class ShoppingBasket < Errol::Entity
   require_relative './shopping_basket/record'
 
   def purchases

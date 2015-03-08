@@ -1,6 +1,5 @@
-require_relative './base_entity'
 
-class Piece < BaseEntity
+class Piece < Errol::Entity
   require_relative './piece/record'
 
   entry_accessor  :id,

@@ -1,6 +1,4 @@
-require_relative './base_entity'
-
-class Customer < BaseEntity
+class Customer < Errol::Entity
   require_relative './customer/record'
   entry_accessor  :first_name,
                   :last_name,

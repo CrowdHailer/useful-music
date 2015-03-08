@@ -19,6 +19,7 @@ gem 'mail'
 
 gem 'pg'
 gem 'sequel'
+gem 'errol', :path => './gems/errol', :branch => 'master'
 
 gem 'virtus'
 gem 'veto'

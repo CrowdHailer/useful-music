@@ -1,19 +1,26 @@
-  require_relative './discount'
-require_relative './errol/repository'
+require_relative './discount'
 
 class Discounts < Errol::Repository
-  require_relative './discounts/query'
+  require_relative './discounts/inquiry'
+  class << self
+    def record_class
+      Discount::Record
+    end
 
-  record_class ::Discount::Record
-  entity_class ::Discount
-  query_class Query
+    def inquiry(requirements)
+      Inquiry.new(requirements)
+    end
 
-  def implant(record)
-    Discount.new(record)
+    def dispatch(record)
+      Discount.new(record)
+    end
+
+    def receive(entity)
+      entity.record
+    end
   end
 
-  # dataset ::Discount::Record.dataset
-  # query   Query
-  # implant { |record| Discount.new record }
-  # extract { |entity| entity.record }
+  def dataset
+    raw_dataset
+  end
 end
