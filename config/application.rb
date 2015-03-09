@@ -80,6 +80,13 @@ class UsefulMusic::App
   # belongs in top setting
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
 
+  before do
+    if !!request.path[/(^\/$|^\/admin|^\/sessions)/] && RACK_ENV == 'production'
+      flash['error'] = 'Section unavailable'
+      redirect '/'
+    end
+  end
+
   middleware << proc do |app|
     use Bugsnag::Rack
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
