@@ -19,7 +19,7 @@ class PurchasesControllerTest < MyRecordTest
     post '/', :purchases => [:quantity => 1, :item => 1, :shopping_basket => shopping_basket_record.id]
     assert_equal 'Add items to shopping basket failed', flash['error']
   end
-
+  
   def test_can_create_purchases
     item_record = create :item_record
     shopping_basket_record = create :shopping_basket_record
