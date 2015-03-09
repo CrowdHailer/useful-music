@@ -1,99 +1,108 @@
-<header>
-  <div class="ribbon inverted">
-    <section class="content">
-      <!-- <ul class="social-list">
-        <li>
-          <i class="fa fa-facebook fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-youtube fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-twitter fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-soundcloud fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-google-plus fa-fw"></i>
-        </li>
-      </ul>
-      <ul class="currency-list">
-        <li>
-          <i class="fa fa-eur fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-jpy fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-gbp fa-fw"></i>
-        </li>
-        <li>
-          <i class="fa fa-usd fa-fw"></i>
-        </li>
-      </ul> -->
-      <ul class="credentials">
-        <li>
-          <a href="#" onclick="alert('coming soon');"><i class="fa fa-envelope"></i> <span>Newsletter</span></a>
-        </li>
-        <li>
-          |
-        </li>
-        <% if current_customer.guest? %>
-          <li>
-            <b>
-              <a href="/sessions/new">Login</a>
-            </b>
-          </li>
-          <li>
-            <b>
-              <a href="/customers/new">Create Account</a>
-            </b>
-          </li>
-        <% else %>
-          <li>
-            <b>
-              <a href="/customers/<%= current_customer.id %>"><%= current_customer.name %></a>
-            </b>
-          </li>
-          <li>
-              <form id="form_id" action="/sessions" method="post">
-                  <%= csrf_tag %>
-                  <input type="hidden" name="_method" value="DELETE">
-                  <input type="submit" value="logout">
-              </form>
-          </li>
-        <% end %>
-      </ul>
-    </section>
-  </div>
-  <section class="content" id="top-bar">
-    <!-- <img src="https://www.usefulmusic.com/image/data/logored.png" alt="" />
-    <span class="scut-inner search">
-      <form class="" action="/pieces/search" method="get">
+<div class="row collapse">
+    <div class="head-bg">
+        <div class="large-2 columns" style="padding-left: 0em;">
+            <a href="/">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png" class="logo-wrap">
+            </a>
+        </div>
+        <div class="large-5 columns header-text">
+            <h1>
+                Original Sheet Music Downloads
+            </h1>
+            <h2>
+                For Musicians, Professionals, Ensembles and Groups<br>By Graham Lyons
+            </h2>
+        </div>
+        <div class="large-5 columns" style="padding-right: 0em;">
+            <a href="/">
+                <div class="ud-search-submit">
+                    <i class="fa fa-search search-icon"></i>
+                </div>
+            </a>
+            <div class="ud-search-wrap">
+                <label>Search Title or UD Code...</label>
+                <div class="search-field">
+                    <p>e.g Dancing in the Rain</p> <!-- TO BE USED AS A PLACEHOLDER IN THE SEARCH FIELD -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-          <input type="text" name="search" class="Search term" placeholder="Know the title or UD code? Enter here">
-          <button>Find</button>
-      </form>
-    </span>
-  </section>
-  <nav class="ribbon inverted">
-    <section class="content">
-      <ul class="main-navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/piano">Piano</a></li>
-        <li><a href="/woodwind">Woodwind</a></li>
-        <li>Other Instruments</li>
-        <li>Ensembles</li>
-        <li>
-          <a href="/about">About Useful Music</a>
-        </li>
-      </ul>
+<div class="sticky" data-options="sticky_on: large">
+    <div class="row sticky">
+        <div class="nav-bg show-for-large-up">
+            <div class="large-10 columns nav-border" style="padding-left: 0em;">
 
-      <ul class="main-navigation right bold">
-        <li>
-        </li>
-      </ul>
-    </section>
-  </nav> -->
-</header>
+                <nav class="top-bar" data-topbar role="navigation">
+                    <section class="top-bar-section">
+                        <ul class="left">
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>
+                                <a href="/piano">Piano</a>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Woodwind</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Recorder</a></li>
+                                    <li><a href="#">Flute</a></li>
+                                    <li><a href="#">Oboe</a></li>
+                                    <li><a href="#">Clarinet</a></li>
+                                    <li><a href="#">Clarineo</a></li>
+                                    <li><a href="#">Bassoon</a></li>
+                                    <li><a href="#">Saxophones</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Strings & Bass</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Violin</a></li>
+                                    <li><a href="#">Viola</a></li>
+                                    <li><a href="#">Percussion</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown">
+                                <a href="#">Ensembles</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Duet</a></li>
+                                    <li><a href="#">Solo with accompaniment</a></li>
+                                    <li><a href="#">Trios</a></li>
+                                    <li><a href="#">Quartets</a></li>
+                                    <li><a href="#">Larger Ensembles</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/about">About Useful Music</a>
+                            </li>
+                            <% if current_customer.guest? %>
+                            <li>
+                                <a href="/sessions/new">Login</a>
+                            </li>
+                            <li>
+                                <a href="/customers/new">Create Account</a>
+                            </li>
+                            <% else %>
+                            <li>
+                                <a href="/customers/<%= current_customer.id %>"><%= current_customer.name %></a>
+                            </li>
+                            <li>
+                                <form id="form_id" action="/sessions" method="post">
+                                    <%= csrf_tag %>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="submit" value="logout">
+                                </form>
+                            </li>
+                            <% end %>
+                        </ul>
+                    </section>
+                </nav>
+            </div>
+            <div class="large-2 columns basket-nav">
+                <label>BASKET</label>
+                <label>0 ITEM(S) |  £0.00 <i class="fa fa-shopping-cart"></i></label>
+            </div>
+        </div>
+    </div>
+</div>
