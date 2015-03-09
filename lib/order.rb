@@ -113,6 +113,10 @@ class Order < Errol::Entity
     self.discount_amount ||= Money.new(0)
   end
 
+  def to_pay
+    basket_amount + tax_amount - discount_amount
+  end
+
   delegate :setup, :fetch_details, :checkout, :to => :transaction
 
 
