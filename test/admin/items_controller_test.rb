@@ -16,12 +16,12 @@ module UsefulMusic
       end
 
       def test_no_new_page_for_missing_piece_to_admin
-        assert_raises Errol::Repository::RecordMissing do
+        assert_raises Errol::Repository::RecordAbsent do
           get "/new?piece_id=100"
         end
       end
 
-      def test_can_create_item_as_admin
+      def test_can_create_item
         piece_record = create :piece_record
         post '/', {:item => attributes_for(:item_record).merge(:piece => piece_record.id)}
         assert_match(/pieces\/UD#{piece_record.id}/, last_response.location)
@@ -44,11 +44,23 @@ module UsefulMusic
         assert_ok get "/#{record.id}/edit"
       end
 
-      def test_can_update_item_as_admin
+      def test_redirected_from_edit_if_no_item
+        get "/0/edit"
+        assert_equal 'Item not found', flash['error']
+        assert last_response.redirect?
+      end
+
+      def test_can_update_item
         record = create :item_record, :name => 'test'
         put "/#{record.id}", {:item => attributes_for(:item_record, :name => 'test').merge({:name => 'test2'})}
         assert_match /pieces\/UD\d{3}/, last_response.location
         assert_equal 'test2', Item::Record.last.name
+      end
+
+      def test_redirected_from_update_if_no_item
+        put "/0"
+        assert_equal 'Item not found', flash['error']
+        assert last_response.redirect?
       end
 
       def test_can_delete_an_item
@@ -56,6 +68,12 @@ module UsefulMusic
         delete "/#{record.id}"
         assert_empty Item::Record
         assert_match /pieces\/UD\d{3}/, last_response.location
+      end
+
+      def test_redirected_from_delete_if_no_item
+        delete "/0"
+        assert_equal 'Item not found', flash['error']
+        assert last_response.redirect?
       end
 
     end

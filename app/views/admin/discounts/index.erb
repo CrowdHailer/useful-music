@@ -20,8 +20,8 @@
     </header>
     <header class="admin">
         <form class="right" action="/admin/discounts" method="get">
-            <button class="action" name="page" value="1" <%= 'disabled' unless @discounts.prev_page %>>First Page</button>
-            <button class="action" name="page" value="<%= @discounts.prev_page %>" <%= 'disabled' unless @discounts.prev_page %>>Previous</button>
+            <button class="action" name="page" value="1" <%= 'disabled' unless @discounts.previous_page %>>First Page</button>
+            <button class="action" name="page" value="<%= @discounts.previous_page %>" <%= 'disabled' unless @discounts.previous_page %>>Previous</button>
             <select class="action" name="page_size">
                 <option <%= 'selected' if @discounts.page_size == 10 %>>10</option>
                 <option <%= 'selected' if @discounts.page_size == 15 %>>15</option>

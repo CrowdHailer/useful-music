@@ -135,13 +135,13 @@ class CustomersControllerTest < MyRecordTest
 
   def test_destroy_is_available_to_that_customer
     delete "/#{customer.id}", {}, {'rack.session' => {:user_id => customer.id}}
-    assert_nil Customers.find customer.id
+    assert_nil Customers[customer.id]
     assert_match(/customers/, last_response.location)
   end
 
   def test_destroy_is_available_to_admin
     delete "/#{customer.id}", {}, {'rack.session' => {:user_id => admin.id}}
-    assert_nil Customers.find customer.id
+    assert_nil Customers[customer.id]
     assert_match(/customers/, last_response.location)
   end
 

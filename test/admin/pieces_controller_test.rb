@@ -13,7 +13,7 @@ module UsefulMusic
         assert_ok get '/'
       end
 
-      def test_index_page_shows_discount
+      def test_index_page_shows_piece
         create :piece_record, :id => '123'
         get '/'
         assert_includes last_response.body, 'UD123'

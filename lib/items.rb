@@ -1,10 +1,10 @@
-require_relative './discount'
+require_relative './item'
 
-class Discounts < Errol::Repository
-  require_relative './discounts/inquiry'
+class Items < Errol::Repository
+  # require_relative './items/inquiry'
   class << self
     def record_class
-      Discount::Record
+      Item::Record
     end
 
     def inquiry(requirements)
@@ -12,7 +12,7 @@ class Discounts < Errol::Repository
     end
 
     def dispatch(record)
-      Discount.new(record)
+      Item.new(record)
     end
 
     def receive(entity)

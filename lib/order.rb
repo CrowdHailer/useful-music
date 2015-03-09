@@ -1,6 +1,4 @@
-require_relative './base_entity'
-
-class Transaction < BaseEntity
+class Transaction < Errol::Entity
   entry_accessor  :state,
                   :basket_amount,
                   :tax_amount,
@@ -96,7 +94,7 @@ class Transaction < BaseEntity
   end
 end
 
-class Order < BaseEntity
+class Order < Errol::Entity
   require_relative './order/record'
 
   def transaction

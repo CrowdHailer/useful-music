@@ -1,18 +1,24 @@
-require_relative './errol/repository'
 require_relative './piece'
 
 class Catalogue < Errol::Repository
-  require_relative './catalogue/query'
+  require_relative './catalogue/inquiry'
   require_relative './catalogue/search'
 
-  query_class Query
-  # TODO Use dataset
-  record_class ::Piece::Record
-
   class << self
+    def record_class
+      Piece::Record
+    end
 
-    def [](catalogue_number)
-      super catalogue_number[/\d+/]
+    def inquiry(requirements)
+      Inquiry.new(requirements)
+    end
+
+    def dispatch(record)
+      Piece.new(record)
+    end
+
+    def receive(entity)
+      entity.record
     end
 
     def levels(*levels, **options)
@@ -20,43 +26,38 @@ class Catalogue < Errol::Repository
     end
   end
 
+  def [](catalogue_number)
+    super catalogue_number[/\d+/]
+  end
 
   def dataset
-    val = super
-    val = val.order(query.order.to_sym)
+    val = raw_dataset
+    val = val.order(inquiry.order.to_sym)
 
     # val = levels_filter(val) if levels.count > 0
-    levels = query.levels
+    levels = inquiry.levels
     if levels.count > 0
       levels.each_with_index do |level, i|
         val = i == 0 ? val.where(level) : val.or(level)
       end
     end
 
-    categories = query.categories
+    categories = inquiry.categories
     if categories.count > 0
       categories.each_with_index do |category, i|
         val = i == 0 ? val.where(category) : val.or(category)
       end
     end
 
-    instruments = query.instruments
+    instruments = inquiry.instruments
     if instruments.count > 0
       instruments.each_with_index do |instrument, i|
         val = i == 0 ? val.where(instrument) : val.or(instrument)
       end
     end
 
-    val = val.where(:title => query.title) if query.title
+    val = val.where(:title => inquiry.title) if inquiry.title
     val
-  end
-
-  def implant(record)
-    Piece.new(record)
-  end
-
-  def extract
-
   end
 
 end

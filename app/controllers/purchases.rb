@@ -14,7 +14,7 @@ class PurchasesController < UsefulMusic::App
     # TODO consider separate error object, do we want to assume same shopping cart
     batch.each do |form|
       begin
-        Purchase.create form
+        Purchases.create form
       rescue Sequel::UniqueConstraintViolation => e
         purchase_record = Purchase::Record
           .where(:shopping_basket_id => form.shopping_basket.id)
@@ -37,11 +37,14 @@ class PurchasesController < UsefulMusic::App
   end
 
   def update(id)
-    purchase = Purchase.new(Purchase::Record[id]) if Purchase::Record[id]
+    purchase = Purchases.fetch(id) do
+      flash['error'] = 'Could not update basket'
+      redirect (request.referer || '/')
+    end
     quantity = request.POST['purchase']['quantity'].to_i
-    if quantity > 0 && purchase
+    if quantity > 0
       purchase.quantity = quantity
-      purchase.record.save
+      Purchases.save purchase
       flash['success'] = 'Shopping basket updated'
       redirect (request.referer || '/')
     else
@@ -51,14 +54,12 @@ class PurchasesController < UsefulMusic::App
   end
 
   def destroy(id)
-    purchase = Purchase.new(Purchase::Record[id]) if Purchase::Record[id]
-    if purchase
-      purchase.record.destroy
-      flash[:success] = 'Item removed from basket'
-      redirect request.referer
-    else
+    purchase = Purchases.fetch(id) do
       flash['error'] = 'Could not update basket'
       redirect (request.referer || '/')
     end
+    Purchases.remove purchase
+    flash[:success] = 'Item removed from basket'
+    redirect request.referer
   end
 end

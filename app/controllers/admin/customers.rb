@@ -6,7 +6,7 @@ module UsefulMusic
       render_defaults[:layout] = File.expand_path('app/views/admin/application', APP_ROOT).to_sym
 
       def index
-        @customers = Customers.all request.GET
+        @customers = Customers.new request.GET
         render :index
       end
     end

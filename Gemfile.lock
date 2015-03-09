@@ -1,4 +1,10 @@
 PATH
+  remote: ./gems/errol
+  specs:
+    errol (0.0.1)
+      sequel (~> 4.19.0)
+
+PATH
   remote: ./gems/scorched-rest
   specs:
     scorched-rest (0.0.2)
@@ -140,6 +146,7 @@ DEPENDENCIES
   carrierwave-sequel
   countries
   dotenv
+  errol!
   factory_girl
   mail
   minitest
