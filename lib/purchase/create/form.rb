@@ -3,12 +3,20 @@ class Purchase
     class Form
       include Virtus.model
       attribute :quantity, Integer
-    #   attribute :item, String
-    #   attribute :shopping_basket, String
+      attribute :item, String
+      attribute :shopping_basket, String
 
     def quantity
       coerced = super
       coerced.is_a?(Integer) ? coerced : 0
+    end
+
+    def item
+      Items[super]
+    end
+
+    def shopping_basket
+      ShoppingBaskets[super]
     end
 
     #   delegate :each, :to => :to_hash
