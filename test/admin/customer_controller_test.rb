@@ -19,6 +19,34 @@ module UsefulMusic
         get '/'
         assert_includes last_response.body, 'Issac'
       end
+
+      def test_can_make_admin
+        customer_record = create :customer_record
+        post "/#{customer_record.id}/admin"
+        assert customer_record.reload.admin
+        assert flash['success']
+        assert last_response.redirect?
+      end
+
+      def test_redirects_if_customer_not_found
+        post "/1/admin"
+        assert 'Customer not found', flash['error']
+        assert last_response.redirect?
+      end
+
+      def test_can_remove_admin
+        customer_record = create :customer_record, :admin => true
+        delete "/#{customer_record.id}/admin"
+        refute customer_record.reload.admin
+        assert flash['success']
+        assert last_response.redirect?
+      end
+
+      def test_redirects_if_customer_not_found_to_remove_admin
+        delete "/1/admin"
+        assert 'Customer not found', flash['error']
+        assert last_response.redirect?
+      end
     end
   end
 end
