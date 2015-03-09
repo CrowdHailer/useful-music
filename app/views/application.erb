@@ -10,18 +10,26 @@
   <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
-  <%= render :'../header' %>
+    <%= render :'../header' %>
 
-  <% if flash['success'] %>
-      <div class="content flash success">
-          <%= flash['success'] %> <i class="fa fa-times right"></i>
-      </div>
-  <% end %>
-  <% if flash['error'] %>
-      <div class="content flash error">
-          <%= flash['error'] %> <i class="fa fa-times right"></i>
-      </div>
-  <% end %>
+    <% if flash['success'] %>
+    <div class="row collapse">
+        <div class="large-12 columns flash success">
+            <h2>
+                <%= flash['success'] %></i>
+            </h2>
+        </div>
+    </div>
+    <% end %>
+    <% if flash['error'] %>
+    <div class="row collapse">
+        <div class="large-12 columns flash error">
+            <h2>
+                <%= flash['error'] %></i>
+            </h2>
+        </div>
+    </div>
+    <% end %>
   <%= yield %>
   <%= render :'../footer' %>
   <script charset="utf-8">

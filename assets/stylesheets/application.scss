@@ -18,6 +18,49 @@ p {
   width: 100%;
 }
 
+.top-bar-section ul li {
+  background: white;
+}
+
+.logout-form input{
+  background: none;
+  font-family: 'Montserrat';
+  border: none;
+  text-transform: uppercase;
+  color: #4a4a49;
+  font-size: 0.83em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  top: 0.45125rem;
+}
+
+.logout-form input:hover {
+  background: red;
+  color: white;
+}
+
+.flash {
+  height: auto;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  margin: 1em 0em;
+}
+
+.flash h2{
+  color: white;
+  font-size: 1.4em;
+  padding-left: 1em;
+}
+
+.flash.success {
+  background: #83c747;
+}
+
+.flash.error {
+  background: #ff3a2e;
+}
+
+
 /*Home Page CSS*/
 
 .head-bg {
@@ -62,10 +105,15 @@ p {
   line-height: 1;
 }
 
+.ud-search-btn {
+  background: none;
+  padding: 0;
+  margin: 0;
+  float: right;
+}
+
 .search-field {
-  background: white;
-  padding: 0.5em;
-  margin-top: 0.5em;
+  margin-top: 0.9em;
   height: 3em;
 }
 
@@ -376,46 +424,10 @@ height: auto;
   padding-right: 1em;
 }
 
-/*Search Filter CSS*/
+/*Search Page CSS*/
 
-.filter-wrap {
-  background: #a6dbf8;
-  height: 55em;
-  margin-top: 2em;
-  padding: 0.6em;
-}
 
-.filter-wrap h1 {
-  font-size: 1.5em;
-  color: #4a4a18;
-  padding: 0;
-  margin:0;
-  line-height: 1;
-}
 
-.filter-wrap p {
-  color: #4a4a18;
-  margin-top: 0.5em;
-  line-height: 1;
-  font-size: 1.2em;
-}
-
-.filter-head {
-  width: 20em;
-  height: 2.5em;
-  background: #005a86;
-  margin-left: -0.6em;
-  padding: 0.6em;
-  margin-bottom: 0.6em;
-}
-
-.filter-head h2{
-  color: white;
-  font-size: 1.3em;
-  padding: 0;
-  margin: 0;
-  line-height: 1;
-}
 /*Basket CSS*/
 
 .basket-main {

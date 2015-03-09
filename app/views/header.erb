@@ -14,19 +14,22 @@
             </h2>
         </div>
         <div class="large-5 columns" style="padding-right: 0em;">
-            <button form="catalogue-search-input">
-                <div class="ud-search-submit">
-                    <i class="fa fa-search search-icon"></i>
+            <form id="catalogue-search-input" action="/pieces/search" method="get">
+                <button class="ud-search-btn" form="catalogue-search-input">
+
+                    <div class="ud-search-submit">
+                        <i class="fa fa-search search-icon"></i>
+                    </div>
+
+                </button>
+                <div class="ud-search-wrap">
+                    <label>Search Title or UD Code...</label>
+                    <div class="search-field">
+                        <input type="text" name="name" value="" placeholder="e.g. The Cool Camel">
+
+                    </div>
                 </div>
-            </button>
-            <div class="ud-search-wrap">
-                <label>Search Title or UD Code...</label>
-                <div class="search-field">
-                    <form id="catalogue-search-input" action="/pieces/search" method="get">
-                        <input type="text" name="name" value="">
-                    </form>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -90,7 +93,7 @@
                                 <a href="/customers/<%= current_customer.id %>"><%= current_customer.name %></a>
                             </li>
                             <li>
-                                <form id="form_id" action="/sessions" method="post">
+                                <form class="logout-form" id="form_id" action="/sessions" method="post">
                                     <%= csrf_tag %>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="submit" value="logout">
