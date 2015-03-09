@@ -1,4 +1,4 @@
-Customer.create(
+Customers.create(
   :first_name => 'Peter',
   :last_name => 'Saxton',
   :email => 'peterhsaxton@gmail.com',
