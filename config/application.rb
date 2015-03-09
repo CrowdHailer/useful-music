@@ -81,7 +81,7 @@ class UsefulMusic::App
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
 
   before do
-    if !!request.path[/(^\/$|^\/admin|^\/sessions)/] && RACK_ENV == 'production'
+    if !request.path[/(^\/$|^\/admin|^\/sessions)/] && RACK_ENV == 'production'
       flash['error'] = 'Section unavailable'
       redirect '/'
     end
