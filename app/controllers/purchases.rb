@@ -40,7 +40,7 @@ class PurchasesController < UsefulMusic::App
       flash['success'] = 'Shopping basket updated'
       redirect (request.referer || '/')
     else
-      basket_update_failed
+      basket_update_failed(id)
     end
   end
 
