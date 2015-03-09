@@ -2,6 +2,7 @@ class Purchase
   class Create
     class Form
       include Virtus.model
+      include Veto.model(Validator.new)
       attribute :quantity, Integer
       attribute :item, String
       attribute :shopping_basket, String

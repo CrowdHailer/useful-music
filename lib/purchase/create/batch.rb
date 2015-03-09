@@ -7,7 +7,7 @@ class Purchase
       end
 
       attr_reader :forms
-      delegate :each, :count, :to => :to_hash
+      delegate :each, :count, :to => :forms
 
       def valid?
         forms.all?(&:valid?)

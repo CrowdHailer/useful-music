@@ -9,31 +9,29 @@ class PurchasesController < UsefulMusic::App
   end
 
   def create
-    batch = Purchase::Create::Form.many request.POST['purchases']
-    # TODO batch valid
-    # TODO consider separate error object, do we want to assume same shopping cart
-    batch.each do |form|
-      begin
-        Purchases.create form
-      rescue Sequel::UniqueConstraintViolation => e
-        purchase_record = Purchase::Record
-          .where(:shopping_basket_id => form.shopping_basket.id)
-          .where(:item_id => form.item.id)
-          .first
-        purchase_record.quantity += form.quantity
-        purchase_record.save
-      rescue Sequel::NotNullConstraintViolation => e
-        flash['error'] = 'Add items to shopping basket failed'
-        redirect (request.referer || '/')
+    batch = Purchase::Create::Batch.new request.POST['purchases']
+    if batch.valid?
+    # batch.each { |f| ap f }
+    # # TODO batch valid
+    # # TODO consider separate error object, do we want to assume same shopping cart
+      batch.each do |form|
+        begin
+          Purchases.create form
+        rescue Sequel::UniqueConstraintViolation => e
+          purchase = Purchases.first(form.to_hash)
+          purchase.quantity += form.quantity
+          Purchases.save purchase
+        end
       end
-    end
-    redirect '/my-shopping-basket'
+      redirect '/my-shopping-basket'
 
-    # batch = Purchase::Create::Form.many request.POST['purchases']
-    # batch.valid?
-    # batch.each do |form|
-    #   Purchase.create_or_update form
-    # end
+      # batch.each do |form|
+      #   Purchase.create_or_update form
+      # end
+    else
+      flash['error'] = 'Add items to shopping basket failed'
+      redirect (request.referer || '/')
+    end
   end
 
   def update(id)
