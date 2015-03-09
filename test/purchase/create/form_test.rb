@@ -54,6 +54,17 @@ class Purchase
         form = Form.new
         assert_nil form.shopping_basket
       end
+
+      def test_is_empty_when_item_count_zero
+        form = Form.new
+        assert_empty form
+      end
+
+      def test_is_not_empty_when_item_count_nonzero
+        form = Form.new :quantity => 2
+        refute_empty form
+      end
+
     end
   end
 end
