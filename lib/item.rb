@@ -1,7 +1,11 @@
-require_relative './base_entity'
+# require_relative './base_entity'
 
-class Item < BaseEntity
+class Item < Errol::Entity
   require_relative './item/record'
+  def self.repository
+    Items
+  end
+  
   entry_accessor  :name,
                   :initial_price,
                   :discounted_price,

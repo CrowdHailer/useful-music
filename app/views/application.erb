@@ -3,31 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <title>UsefulMusic.com</title>
-  <!-- <link rel="stylesheet" href="//yui.yahooapis.com/pure/0.5.0/pure-min.css"> -->
+  <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/foundation80emwitheverything.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://owlgraphic.com/owlcarousel/owl-carousel/owl.carousel.css">
+  <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/owlcarousel.css">
   <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
-  <%= render :'../header' %>
+    <%= render :'../header' %>
 
-  <% if flash['success'] %>
-      <div class="content flash success">
-          <%= flash['success'] %> <i class="fa fa-times right"></i>
-      </div>
-  <% end %>
-  <% if flash['error'] %>
-      <div class="content flash error">
-          <%= flash['error'] %> <i class="fa fa-times right"></i>
-      </div>
-  <% end %>
+    <% if flash['success'] %>
+    <div class="row collapse">
+        <div class="large-12 columns flash success">
+            <h2>
+                <%= flash['success'] %></i>
+            </h2>
+        </div>
+    </div>
+    <% end %>
+    <% if flash['error'] %>
+    <div class="row collapse">
+        <div class="large-12 columns flash error">
+            <h2>
+                <%= flash['error'] %></i>
+            </h2>
+        </div>
+    </div>
+    <% end %>
   <%= yield %>
+  <%= render :'../footer' %>
   <script charset="utf-8">
     var $$ = document.querySelectorAll
 
     var flash = document.querySelectorAll('.flash')
+    function getClosest(el, tag) {
+      // this is necessary since nodeName is always in upper case
+      tag = tag.toUpperCase();
+      do {
+        if (el.nodeName === tag) {
+          // tag name is found! let's return it. :)
+          return el;
+        }
+      } while (el = el.parentNode);
+
+      // not found :(
+      return null;
+    }
 
     function slideUp(evt){
-      evt.target.classList.add('read');
+      getClosest(evt.target, 'div').classList.add('read');
     }
     flash[0].addEventListener("click", slideUp);
     flash[1].addEventListener("click", slideUp);

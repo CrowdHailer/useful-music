@@ -1,6 +1,4 @@
-require_relative './base_entity'
-
-class Purchase < BaseEntity
+class Purchase < Errol::Entity
   require_relative './purchase/record'
 
   entry_accessor  :quantity,

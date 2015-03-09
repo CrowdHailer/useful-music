@@ -12,7 +12,7 @@
           :solo_with_accompaniment,
           :duet,
           :trio,
-          :quarter,
+          :quartet,
           :larger_ensembles].each do |category| %>
               <label class="pure-checkbox">
                   <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
@@ -53,8 +53,8 @@
     </aside>
     <article class="col col-4-5">
         <h2>Pieces</h2>
-        <button form="search-form" name="catalogue_search[page]" value="1" <%= 'disabled' unless @pieces.prev_page %>>First Page</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.prev_page %>" <%= 'disabled' unless @pieces.prev_page %>>Previous</button>
+        <button form="search-form" name="catalogue_search[page]" value="1" <%= 'disabled' unless @pieces.previous_page %>>First Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.previous_page %>" <%= 'disabled' unless @pieces.previous_page %>>Previous</button>
         <select form="search-form" name="catalogue_search[page_size]">
             <option <%= 'selected' if @pieces.page_size == 10 %>>10</option>
             <option <%= 'selected' if @pieces.page_size == 15 %>>15</option>

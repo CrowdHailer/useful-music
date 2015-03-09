@@ -19,7 +19,7 @@ class CustomersController < UsefulMusic::App
       form = Customer::Create::Form.new request.POST['customer']
       validator = Customer::Create::Validator.new
       validator.validate! form
-      customer = Customer.create form
+      customer = Customers.create form
       log_in customer
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
@@ -64,10 +64,8 @@ class CustomersController < UsefulMusic::App
       form = Customer::Update::Form.new request.POST['customer']
       validator = Customer::Update::Validator.new
       validator.validate! form
-      form.each do |attr, value|
-        customer.public_send "#{attr}=", value
-      end
-      customer.record.save
+      customer.set form
+      Customers.save customer
       flash['success'] = "Update successful"
       redirect "/customers/#{customer.id}"
       # TODO untested failure cases, usecase or leave in entity layer
@@ -92,7 +90,7 @@ class CustomersController < UsefulMusic::App
       validator = Customer::UpdatePassword::Validator.new customer.password
       validator.validate! form
       customer.password = form.password
-      customer.record.save
+      Customers.save customer
       flash['success'] = "Password changed"
       redirect "/customers/#{customer.id}"
     rescue Veto::InvalidEntity => err
@@ -111,12 +109,12 @@ class CustomersController < UsefulMusic::App
 
   def destroy(id)
     customer = check_access!(id)
-    customer.record.destroy
+    Customers.remove customer
     redirect "/customers/"
   end
 
   def check_access!(id)
-    customer = Customers.find(id)
+    customer = Customers[id]
     if customer && (current_customer.admin? || current_customer.id == customer.id)
       customer
     else

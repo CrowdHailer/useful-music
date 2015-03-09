@@ -1,24 +1,35 @@
-<main class="content">
-    <aside id="" class="col col-1-5">
-      <ul>
-          <li>
-              <a href="/">Home</a>
-          </li>
-      </ul>
-    </aside>
-    <article class="col col-4-5">
-        <form class="pure-form pure-form-aligned" action="/sessions" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+<div class="row collapse">
+    <div class="large-12 columns promo-banner">
+        <h2>Login</h2>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="large-12 columns">
+        <form class="" action="/sessions" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <fieldset>
-
-                <input name="session[email]" type="email" placeholder="email" required>
-                <input name="session[password]" type="password" placeholder="password" required>
+                <div class="row">
+                    <div class="large-4 columns large-offset-2">
+                        <label>Email
+                            <input name="session[email]" type="email" placeholder="email" required>
+                        </label>
+                    </div>
+                    <div class="large-4 columns end">
+                        <label>Password
+                            <input name="session[password]" type="password" placeholder="password" required>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 columns large-offset-2">
+                        <a href="/customers/new">Need Account?</a><br>
+                        <a href="/password_resets/new">Forgotten password?</a>
+                    </div>
+                    <div class="large-2 columns  end">
+                        <button type="submit" class="right">Submit</button>
+                    </div>
+                </div>
             </fieldset>
-            <div class="pure-controls">
-                <button type="submit" class="pure-button pure-button-primary">Submit</button>
-            </div>
         </form>
-        <hr>
-        <a href="/password_resets/new">Forgotten password?</a>
-  </article>
-</main>
+    </div>
+</div>

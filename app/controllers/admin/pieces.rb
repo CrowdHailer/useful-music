@@ -18,7 +18,7 @@ module UsefulMusic
       def create
         begin
           form = Piece::Create::Form.new request.POST['piece']
-          piece = Piece.create form
+          piece = Catalogue.create form
           flash['success'] = 'Piece created'
           redirect "/admin/pieces"
         rescue Sequel::UniqueConstraintViolation => err
