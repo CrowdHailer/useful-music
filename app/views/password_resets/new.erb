@@ -1,37 +1,40 @@
-<main class="content">
-    <aside id="" class="col col-1-5">
-      <ul>
-          <li>
-              <a href="/">Home</a>
-          </li>
-      </ul>
-    </aside>
-    <article class="col col-4-5">
+<div class="row collapse">
+    <div class="large-12 columns promo-banner">
         <h2>Reset Password</h2>
-        <form class="pure-form pure-form-aligned" action="/password_resets" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+    </div>
+</div>
+<div class="row collapse">
+    <div class="large-12 columns">
+        <form class="" action="/password_resets" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <fieldset>
-                    <% if @customer_email_unknown %>
-                    <div class="pure-control-group">
-                        <label></label>
-                        <span class="errors">Email not found</span>
+                <div class="row">
+                    <div class="large-4 columns large-offset-2 end <%= 'error' if @customer_email_unknown %>">
+                        <label>Email
+                             <input
+                                 id="customer_email"
+                                 name="customer[email]"
+                                 type="email"
+                                 required
+                                 placeholder="">
+                        </label>
+                        <% if @customer_email_unknown %>
+                            <small class="error">Email not found</small>
+                        <% end %>
                     </div>
-                     <% end %>
-                 <div class="pure-control-group">
-                     <label for="customer_email">email</label>
-                     <input
-                         id="customer_email"
-                         name="customer[email]"
-                         type="email"
-                         required
-                         placeholder="">
-                 </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 columns large-offset-2">
+                        <a href="/customers/new"></a><br>
+                        <a href="/password_resets/new"></a>
+                    </div>
+                    <div class="large-2 columns  end">
+                        <button type="submit" class="right">Submit</button>
+                    </div>
+                </div>
 
             </fieldset>
-            <div class="pure-controls">
-                <button type="submit" class="pure-button pure-button-primary">Submit</button>
-            </div>
 
         </form>
-    </article>
-</main>
+    </div>
+</div>

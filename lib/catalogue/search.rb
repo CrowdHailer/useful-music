@@ -8,7 +8,7 @@ class Catalogue
     attribute :solo_with_accompaniment, Boolean
     attribute :duet, Boolean
     attribute :trio, Boolean
-    attribute :quarter, Boolean
+    attribute :quartet, Boolean
     attribute :larger_ensembles, Boolean
     attribute :beginner, Boolean
     attribute :intermediate, Boolean
@@ -33,7 +33,7 @@ class Catalogue
       :solo_with_accompaniment,
       :duet,
       :trio,
-      :quarter,
+      :quartet,
       :larger_ensembles].each do |category|
         result = result << category if public_send category
       end
