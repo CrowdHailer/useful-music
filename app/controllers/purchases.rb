@@ -11,9 +11,6 @@ class PurchasesController < UsefulMusic::App
   def create
     batch = Purchase::Create::Batch.new request.POST['purchases']
     if batch.valid?
-    # batch.each { |f| ap f }
-    # # TODO batch valid
-    # # TODO consider separate error object, do we want to assume same shopping cart
       batch.each do |form|
         begin
           Purchases.create form
@@ -35,10 +32,7 @@ class PurchasesController < UsefulMusic::App
   end
 
   def update(id)
-    purchase = Purchases.fetch(id) do
-      flash['error'] = 'Could not update basket'
-      redirect (request.referer || '/')
-    end
+    purchase = Purchases.fetch(id, &method(:basket_update_failed))
     quantity = request.POST['purchase']['quantity'].to_i
     if quantity > 0
       purchase.quantity = quantity
@@ -46,18 +40,19 @@ class PurchasesController < UsefulMusic::App
       flash['success'] = 'Shopping basket updated'
       redirect (request.referer || '/')
     else
-      flash['error'] = 'Could not update basket'
-      redirect (request.referer || '/')
+      basket_update_failed
     end
   end
 
   def destroy(id)
-    purchase = Purchases.fetch(id) do
-      flash['error'] = 'Could not update basket'
-      redirect (request.referer || '/')
-    end
+    purchase = Purchases.fetch(id, &method(:basket_update_failed))
     Purchases.remove purchase
     flash[:success] = 'Item removed from basket'
     redirect request.referer
+  end
+
+  def basket_update_failed(id)
+    flash['error'] = 'Could not update basket'
+    redirect (request.referer || '/')
   end
 end
