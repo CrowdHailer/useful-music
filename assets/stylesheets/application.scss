@@ -44,6 +44,7 @@ p {
   padding: 0.5em;
   border-radius: 0.5em;
   margin: 1em 0em;
+  transition: max-height 1s, padding 1s, margin 1s, border 2s;
 }
 
 .flash h2{
@@ -58,6 +59,15 @@ p {
 
 .flash.error {
   background: #ff3a2e;
+}
+
+.flash.read {
+  max-height: 0em;
+  padding: 0 1em;
+  margin-top: 0;
+  margin-bottom: 0;
+  // border: 2px solid #FFF;
+  display: none;
 }
 
 
