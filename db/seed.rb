@@ -1,4 +1,4 @@
-Customer.create(
+Customers.create(
   :first_name => 'Peter',
   :last_name => 'Saxton',
   :email => 'peterhsaxton@gmail.com',
@@ -7,7 +7,7 @@ Customer.create(
   :admin => true
 )
 
-Customer.create(
+Customers.create(
   :first_name => 'Daisy',
   :last_name => 'Hill',
   :email => 'daisy@usefulmusic.com',

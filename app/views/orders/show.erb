@@ -1,73 +1,117 @@
+<head>
+    <link rel="stylesheet" href="/stylesheets/license.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
 <header>
-    <h2>Date <%= @order.updated_at %></h2>
-    <h1>Reciept/License #<%= @order.id %></h1>
-    <p>
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png">
+    <h2>Date <%= @order.updated_at.strftime('%d/%m/%Y') %></h2>
+    <h1>Reciept/License #<%= @order.id[0..7] %></h1>
+    <p class="panel">
         <em>Please print and keep this page.</em> It is your proof of purchase and your license to print the number of copies listed below
     </p>
 </header>
-<table>
-    <thead>
-        <tr>
-            <th colspan=2>
-                Order Details
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>
-                <em>Order ID</em> <%= @order.id %><br>
-                <em>Date Added</em> <%= @order.updated_at %>
-            </th>
-            <th>
-                <em>Name</em> <%= @order.customer.name %><br>
-                <em>Email</em> <%= @order.customer.email %><br>
-            </th>
-        </tr>
-    </tbody>
-</table>
-<table>
-    <thead>
-        <tr>
-            <th>
-                Piece
-            </th>
-            <th>
-                Part
-            </th>
-            <th>
-                File
-            </th>
-            <th>
-                Quantity
-            </th>
-            <th>
-                Cost
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @order.shopping_basket.purchases.each do |purchase| %>
-            <tr>
-                <th>
-                    <%= purchase.item.piece.title %>
-                </th>
-                <th>
-                    <%= purchase.item.name %>
-                </th>
-                <th>
-                    <%= purchase.item.asset.filename %>
-                </th>
-                <th>
-                    <%= purchase.quantity %>
-                </th>
-                <th>
-                    <%= purchase.price.format %>
-                </th>
-            </tr>
-        <% end %>
-    </tbody>
-</table>
+<main>
+    <section class="col col-1-1">
+        <table class="pure-table pure-table-bordered">
+            <thead>
+                <tr>
+                    <th colspan=2>
+                        Order Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <em>Order ID</em> <%= @order.id[0..7] %><br>
+                        <em>Date Added</em> <%= @order.updated_at.strftime('%d/%m/%Y') %>
+                    </td>
+                    <td>
+                        <em>Name</em> <%= @order.customer.name %><br>
+                        <em>Email</em> <%= @order.customer.email %><br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="col col-1-1">
+        <table class="pure-table pure-table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Piece
+                    </th>
+                    <th>
+                        Part
+                    </th>
+                    <th>
+                        File
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Cost
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @order.shopping_basket.purchases.each do |purchase| %>
+                    <tr>
+                        <td>
+                            <%= purchase.item.piece.title %>
+                        </td>
+                        <td>
+                            <%= purchase.item.name %>
+                        </td>
+                        <td>
+                            <%= purchase.item.asset.filename %>
+                        </td>
+                        <td>
+                            <%= purchase.quantity %>
+                        </td>
+                        <td>
+                            <%= purchase.price.format %>
+                        </td>
+                    </tr>
+                <% end %>
+                <tr>
+                    <td class="sub-total" colspan="4">
+                        Basket Total
+                    </td>
+                    <td>
+                        <%= @order.basket_amount.format %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sub-total" colspan="4">
+                        Tax
+                    </td>
+                    <td>
+                        <%= @order.tax_amount.format %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sub-total" colspan="4">
+                        Discount
+                    </td>
+                    <td>
+                        <%= @order.discount_amount.format %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sub-total" colspan="4">
+                        Total
+                    </td>
+                    <td>
+                        <%= @order.to_pay.format %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
 <footer>
     <span>www.usefulmusic.com</span>
 </footer>
+</body>

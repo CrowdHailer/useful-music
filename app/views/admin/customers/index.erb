@@ -35,7 +35,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>email</th>
-                <!-- <th colspan=2>Action</th> -->
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -51,16 +51,20 @@
                     <th>
                         <%= customer.email %>
                     </th>
-                    <!-- <th>
-                        <a class="edit" href="/customers/<%= customer.id %>/edit">edit</a>
-                    </th>
                     <th>
-                        <form id="form_id" action="/customers/<%= customer.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy <%= customer.name %> ')">
+                        <% if customer.admin? %>
+                        <form class="button" id="form_id" action="/admin/customers/<%= customer.id %>/admin" method="post" onsubmit="return confirm('Are you sure you want to remove <%= customer.name %> from admin')">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
-                            <input class="destroy" type="submit" name="some_name" value="Destroy">
+                            <input class="edit" type="submit" name="some_name" value="Remove Admin">
                         </form>
-                    </th> -->
+                        <% else %>
+                        <form class="button" id="form_id" action="/admin/customers/<%= customer.id %>/admin" method="post" onsubmit="return confirm('Are you sure you want to make <%= customer.name %> and admin')">
+                            <%= csrf_tag %>
+                            <input class="submit" type="submit" name="some_name" value="Make Admin">
+                        </form>
+                        <% end %>
+                    </th>
                 </tr>
             <% end %>
         </tbody>

@@ -20,12 +20,15 @@ class OrdersController < UsefulMusic::App
     @order = Order.new(Order::Record[id])
     html = render :show, :layout => nil
     kit = PDFKit.new(html)
+    ap File.expand_path('./public/stylesheets/license.css', APP_ROOT)
+    kit.stylesheets << File.expand_path('./public/stylesheets/license.css', APP_ROOT)
     pdf = kit.to_pdf#
     file = Tempfile.new('foo')
-    ap file.path
+    # ap file.path
     file.write(pdf)
     @order.record.update(:license => {:type => 'application/pdf', :tempfile => file})
     @order.record.save
+    html = render :show, :layout => nil
     redirect @order.record.license.url
     # render :show
   end
