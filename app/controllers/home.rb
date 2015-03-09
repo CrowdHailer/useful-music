@@ -76,4 +76,34 @@ class HomeController < UsefulMusic::App
     redirect '/pieces?catalogue_search[percussion]=on'
   end
 
+  get '/solo' do
+    # TODO test
+    redirect '/pieces?catalogue_search[solo]=on'
+  end
+
+  get '/solo_with_accompaniment' do
+    # TODO test
+    redirect '/pieces?catalogue_search[solo_with_accompaniment]=on'
+  end
+
+  get '/duet' do
+    # TODO test
+    redirect '/pieces?catalogue_search[duet]=on'
+  end
+
+  get '/trio' do
+    # TODO test
+    redirect '/pieces?catalogue_search[trio]=on'
+  end
+
+  get '/quartet' do
+    # TODO test
+    redirect '/pieces?catalogue_search[quartet]=on'
+  end
+
+  get '/larger_ensembles' do
+    # TODO test
+    redirect '/pieces?catalogue_search[larger_ensembles]=on'
+  end
+
 end

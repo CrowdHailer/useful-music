@@ -12,7 +12,7 @@
           :solo_with_accompaniment,
           :duet,
           :trio,
-          :quarter,
+          :quartet,
           :larger_ensembles].each do |category| %>
               <label class="pure-checkbox">
                   <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
