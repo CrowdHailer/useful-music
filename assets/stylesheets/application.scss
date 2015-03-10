@@ -44,7 +44,6 @@ p {
   padding: 0.5em;
   border-radius: 0.5em;
   margin: 1em 0em;
-  transition: max-height 1s, padding 1s, margin 1s, border 2s;
 }
 
 .flash h2{
@@ -69,9 +68,6 @@ p {
   // border: 2px solid #FFF;
   display: none;
 }
-
-
-/*Home Page CSS*/
 
 .head-bg {
   background: white;
@@ -209,6 +205,8 @@ p {
   color: white;
   font-size: 0.85em;
 }
+
+/*Home Page CSS*/
 
 .above-fold-bg {
   width: 100%;
@@ -434,10 +432,6 @@ height: auto;
   padding-right: 1em;
 }
 
-/*Search Page CSS*/
-
-
-
 /*Basket CSS*/
 
 .basket-main {
@@ -576,6 +570,235 @@ height: auto;
 
 .product-main button:hover {
   background: #2ba6cb;
+}
+
+/*Search Filter CSS*/
+
+.filter-wrap {
+  background: #a6dbf8;
+  height: auto;
+  min-height: 55em;
+  margin-top: 1em;
+  padding: 0.6em;
+}
+
+.filter-wrap h1 {
+  font-size: 1.5em;
+  color: #4a4a18;
+  padding: 0;
+  margin:0;
+  line-height: 1;
+}
+
+.filter-wrap p {
+  color: #4a4a18;
+  margin-top: 0.5em;
+  line-height: 1;
+  font-size: 1.2em;
+}
+
+.filter-form label {
+  font-family: 'Palatino Linotype';
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1em;
+}
+
+input[type="checkbox"] {
+  margin: 0;
+}
+
+.clear-search-btn {
+  padding: 0.5em;
+  float: left;
+  font-family: 'Montserrat';
+  text-transform: uppercase;
+  font-size: 0.9em;
+  background: grey;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.search-btn {
+  float: left;
+  font-size: 1.4em;
+  background: #e41f21;
+}
+
+.search-filter-icon {
+  padding-left: 0.4em;
+}
+
+.filter-head {
+  width: 19.5em;
+  height: 2.5em;
+  background: #005a86;
+  margin-left: -0.6em;
+  padding: 0.6em;
+  margin-bottom: 0.6em;
+}
+
+.filter-head h2{
+  color: white;
+  font-size: 1.3em;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.search-bar-filter-inner {
+  width: 32em;
+  margin: 0 auto;
+}
+
+.search-bar-filter-inner p {
+  color: white;
+  text-align: center;
+  padding: 0;
+  margin-top: -1.2em;
+  font-size: 0.8em;
+}
+
+.search-bar-filter {
+  background: #005a86;
+  height: 3.6em;
+  margin-top: 1em;
+  margin-left: 0.5em
+}
+
+.search-bar-filter button {
+  padding: 0.2em;
+  background: none;
+  color: white;
+  font-family: 'Montserrat';
+  font-size: 0.8em;
+    padding-left: 0.7em;
+  padding-right: 0.7em;
+  border-left: 0.1em solid white;
+}
+
+.search-bar-filter select {
+  width: 4em;
+}
+
+/*Piece Page*/
+
+.piece-title h1 {
+  font-size: 2.4em;
+  margin-bottom: 0.1em;
+}
+
+.piece-title p {
+  float: right;
+  margin-top: 1.5em;
+  margin-bottom: 0;
+}
+
+.instrument-note p{
+  font-size: 1.4em;
+  margin-bottom: 0.5em;
+}
+
+.description {
+  margin-top: 0.5em;
+}
+
+.description p{
+ font-size: 1.1em;
+}
+
+.purchase-options-wrap {
+  background: #f8f7f7;
+  height: auto;
+  padding: 0.5em;
+  border-radius: 1em;
+  border: 0.1em solid #d9d9d9;
+}
+
+.purchase-options-wrap h2 {
+  color: #4a4a49;
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.purchase-options-wrap p {
+  color: #4a4a49;
+  font-size: 1.2em;
+  line-height: 1;
+  margin-bottom:0;
+}
+
+.purchase-options-wrap hr {
+  color: #4a4a49;
+border: 0.07em solid #4a4a49;
+  margin: 0.6em 0em;
+}
+
+.license-select {
+  height: 3em;
+  float: left;
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.license-select h6 {
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.license-select input {
+  width: 4em;
+  height: 3em;
+  float: left;
+  margin-right: 0.5em;
+}
+
+.license-icon {
+  color: #e41f21;
+}
+
+.license-icon:hover {
+  color: #005a86;
+}
+
+.total-box {
+  border: 0.15em solid #4a4a49;
+  padding: 0.5em;
+  margin: 0.75em 0em;
+  height: 4em;
+}
+
+.total-box h4 {
+  margin: 0;
+  float: left;
+  padding-top: 0.25em;
+}
+
+.total-box button {
+  float: right;
+  background: #e41f21;
+  padding: 0.7em 2em;
+  font-family: 'Montserrat';
+}
+
+.basket-btn:hover {
+  background: #005a86;
+}
+
+.score-btn {
+  background: #e41f21;
+  padding: 0.7em 2em;
+  margin: 1em 0em;
+  font-family: 'Montserrat';
+  width: 18.5em
+}
+
+.currency-piece h6{
+  color: #e41f21;
+}
+
+.currency-piece a {
+  color: #e41f21;
 }
 
 

@@ -1,57 +1,138 @@
-<% if show_admin %>
-    <section class="admin content">
-      <a href="<%= incognito_uri %>" class="pure-button button-primary right"><i class="fa fa-eye-slash"></i> Incognito</a>
-        <form id="form_id" action="/pieces/<%= @piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= @piece.id %> and <%= @piece.items.count %> associated items?')">
-            <%= csrf_tag %>
-            <input type="hidden" name="_method" value="DELETE">
-            <button class="pure-button button-error right"><i class="fa fa-trash-o"></i> Destroy</button>
-        </form>
-        <a href="/pieces/<%= @piece.id %>/edit" class="pure-button button-warning right">
-            <i class="fa fa-cog"></i>
-            Edit
-        </a>
-    </section>
-<% end %>
-<main class="content">
-    <aside class="col col-1-5">
-        <ul>
-            <li><a href="/pieces">Catalogue</a></li>
-        </ul>
-    </aside>
-    <article class="col col-4-5">
-        <h2><%= "#{@piece.catalogue_number}: " %><%= @piece.title %></h2>
-        <h3><%= @piece.sub_heading %></h3>
-        <div class="clearfix">
-          <section class="col-2">
-              <img src="<%= @piece.cover_image.url %>" alt="" />
-              <audio preload="auto" controls>
-                  <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
-              </audio>
+<div class="row collapse white-section section-bottom-margin">
+    <!-- FILTER FORM LEFT -->
+    <div class="large-3 columns">
+        <div class="filter-wrap">
+            <h1>Search Again</h1>
+            <p>Refine your search by selecting and<br> combining categories:</p>
+            <div class="filter-form">
+                <form action="/pieces" method="get">
+                    <div class="filter-head">
+                        <h2>SELECT INSTRUMENT(s)</h2>
+                    </div>
+                    <div class="row collapse">
+                        <% [:piano,
+                        :recorder,
+                        :flute,
+                        :oboe,
+                        :clarineo,
+                        :clarinet,
+                        :basson,
+                        :saxophone,
+                        :trumpet,
+                        :violin,
+                        :viola,
+                        :percussion].each do |instrument| %>
+                            <label class="pure-checkbox" style="float:left;width:50%;">
+                                <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
+                                <%= instrument.capitalize %>
+                            </label>
+                        <% end %>
+                    </div>
 
-          </section>
-          <section class="col-2">
-              <p>
-              </p>
-              <p>
-                  <a href="<%= @piece.notation_preview.url %>" target="_blank">pdf preview</a>
-              </p>
-              <p>
-                  Description: <%= @piece.description %>
-              </p>
-
-          </section>
+                    <div class="filter-head">
+                        <h2>LEVEL(s)</h2>
+                    </div>
+                    <div class="row collapse">
+                        <% [:beginner,
+                        :intermediate,
+                        :advanced,
+                        :professional].each do |level| %>
+                            <label class="pure-checkbox" style="float:left;width:50%;">
+                                <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if @search.public_send level %>>
+                                <%= level.capitalize %>
+                            </label>
+                        <% end %>
+                    </div>
+                    <div class="filter-head">
+                        <h2>SCORE TYPE(s)</h2>
+                    </div>
+                    <% [:solo,
+                    :solo_with_accompaniment,
+                    :duet,
+                    :trio,
+                    :quartet,
+                    :larger_ensembles].each do |category| %>
+                        <label class="pure-checkbox" style="float:left;width:50%;">
+                            <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
+                            <%= category.to_s.capitalize.gsub('_', ' ') %>
+                        </label>
+                    <% end %>
+                    <!-- <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a> -->
+                    <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+                </form>
+            </div>
         </div>
-        <h2>Available Downloads</h2>
-        <form class="pure-form pure-form-aligned" id="form_id" action="/purchases" method="post">
-            <%= csrf_tag %>
-            <% @piece.items.each do |item| %>
-                <input type="hidden" name="purchases[][shopping_basket]" value="<%= live_shopping_basket_id %>">
-                <input type="hidden" name="purchases[][item]" value="<%= item.record.id %>">
-                <input type="number" min="0" name="purchases[][quantity]" value="">
-                <%= item.name %>
-            <% end %>
-            <input type="submit" value="Add To basket">
-        </form>
+    </div>
+    <!-- END OF FILTER FORM -->
 
-    </article>
-</main>
+    <!-- SEARCH RESULTS RIGHT -->
+
+    <div class="large-9 columns">
+        <div class="row collapse white-section section-bottom-margin">
+            <div class="large-6 columns piece-title">
+                <h1><%= @piece.title %></h1>
+            </div>
+            <div class="large-6 columns piece-title">
+                <p>Catalogue Number: <%= @piece.catalogue_number %></p>
+            </div>
+
+            <hr style="margin: 1.25rem 0 0.1875rem;">
+            <div class="row collapse">
+                <div class="large-12 columns instrument-note">
+                    <p><%= @piece.sub_heading %></p>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="large-5 columns">
+                    <img src="<%= @piece.cover_image.url %>" alt="Piece Cover image">
+                    <a href="<%= @piece.notation_preview.url %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
+                    <h6>LISTEN TO AUDIO PREVIEW</h6>
+                    <audio preload="auto" controls <%= 'autoplay' if request.GET['autoplay'] %>>
+                        <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="large-7 columns">
+                    <div class="description">
+                        <p>Description: <%= @piece.description %></p>
+                    </div>
+
+                    <div class="purchase-options-wrap">
+                        <h2>Purchase Options</h2>
+                        <p>Please select how many licenses you would like:</p>
+                        <hr>
+                        <form action="/purchases" method="post">
+                            <%= csrf_tag %>
+                            <div class="row collapse">
+                                <% @piece.items.each do |item| %>
+                                <div class="license-select" style="float:left;width:50%;">
+                                    <h6><%= item.name %></h6>
+                                    <input type="hidden" name="purchases[][shopping_basket]" value="<%= live_shopping_basket_id %>">
+                                    <input type="hidden" name="purchases[][item]" value="<%= item.record.id %>">
+                                    <input type="number" min="0" name="purchases[][quantity]" value="0">
+                                    <!-- <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                    <a href=""><i class="fa fa-minus-circle license-icon"></i></a> -->
+                                    <p><%= item.initial_price.format %> first license</p>
+                                    <p><%= item.subsequent_price.format %> after</p>
+                                </div>
+                                <% end %>
+
+                            </div>
+                            <div class="total-box">
+                                <!-- <h4>TOTAL: £30.65</h4> -->
+                                <a href=""><button class="basket-btn">ADD TO BASKET</button></a>
+                            </div>
+                            <!-- <div class="currency-piece">
+                                <h6>SELECT CURRENCY</h6>
+                                <h6><a href="/">£ </a><a href="/">$ </a><a href="/">¥ </a><a href="/">€ </a></h6>
+                            </div> -->
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- END SEARCH RESULTS -->
+</div>
