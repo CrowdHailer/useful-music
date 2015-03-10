@@ -71,39 +71,38 @@
     <div class="large-9 columns">
         <div class="search-bar-filter">
             <div class="search-bar-filter-inner">
-                <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">First Page</button>
-                <button form="search-form" name="catalogue_search[page]" value="" >Previous Page</button>
+                <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= 'disabled' unless @pieces.previous_page %>>First Page</button>
+                <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.previous_page %>" <%= 'disabled' unless @pieces.previous_page %>>Previous Page</button>
                 <select form="search-form" name="catalogue_search[page_size]" >
-                    <option selected="">10</option>
+                    <option <%= 'selected' if @pieces.page_size == 10 %>>10</option>
                     <option>15</option>
                     <option>20</option>
                 </select>
                 <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
-                <button form="search-form" name="catalogue_search[page]" value="2">Next Page</button>
-                <button form="search-form" name="catalogue_search[page]" value="4">Last Page</button>
+                <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.next_page %>" <%= 'disabled' unless @pieces.next_page %>>Next Page</button>
+                <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.page_count %>" <%= 'disabled' unless @pieces.next_page %>>Last Page</button>
                 <p>Results Per Page</p>
             </div>
         </div>
-        <div class="row collapse">
-            <div class="large-4 columns">
-                <!-- START PRODUCT BLOCK-->
-                
+        <ul class="small-block-grid-3">
+            <% @pieces.each do |piece| %>
+            <li>
                 <div class="product-wrap">
                     <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
+                        <h4><%= piece.title %></h4>
                     </div>
                     <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
+                        <p><%= piece.sub_heading.upcase %></p>
                     </div>
                     <div class="row collapse">
                         <div class="large-6 columns product-main">
-                            <p>USD09</p>
+                            <p><%= piece.catalogue_number %></p>
                             <p>LEVEL 3</p>
                             <hr class="prod-break">
                             <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                             <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                             <a href="">
-                                <button>DOWNLOAD</button>
+                                <button>Full Details</button>
                             </a>
                         </div>
                         <div class="large-6 columns product-main">
@@ -112,225 +111,12 @@
                     </div>
 
                 </div>
-                <!-- END PRODUCT BLOCK-->
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
+            </li>
+            <% end %>
+        </ul>
 
-                </div>
-                <!-- END PRODUCT BLOCK-->
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-            </div>
-            <div class="large-4 columns">
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-
-            </div>
-            <div class="large-4 columns">
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-                <!-- START PRODUCT BLOCK-->
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4>Under The Fingers, Part 6</h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <p>PIANO, FLUTE AND OBOE &amp; CONCERTO</p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 columns product-main">
-                            <p>USD09</p>
-                            <p>LEVEL 3</p>
-                            <hr class="prod-break">
-                            <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="">
-                                <button>DOWNLOAD</button>
-                            </a>
-                        </div>
-                        <div class="large-6 columns product-main">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END PRODUCT BLOCK-->
-            </div>
-
-        </div>
         <div class="search-bar-filter">
-            <div class="search-bar-filter-inner">
+            <!-- <div class="search-bar-filter-inner">
                 <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">First Page</button>
                 <button form="search-form" name="catalogue_search[page]" value="" >Previous Page</button>
                 <select form="search-form" name="catalogue_search[page_size]" >
@@ -342,107 +128,9 @@
                 <button form="search-form" name="catalogue_search[page]" value="2">Next Page</button>
                 <button form="search-form" name="catalogue_search[page]" value="4">Last Page</button>
                 <p>Results Per Page</p>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <!-- END SEARCH RESULTS -->
 </div>
-
-
-<main class="content">
-    <aside id="search" class="col col-1-5">
-      <form id="search-form" class="pure-form" action="/pieces" method="get" id="search-form">
-          <h4>Category</h4>
-          <% [:solo,
-          :solo_with_accompaniment,
-          :duet,
-          :trio,
-          :quartet,
-          :larger_ensembles].each do |category| %>
-              <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
-                  <%= category.capitalize %>
-              </label>
-          <% end %>
-          <h4>Level</h4>
-          <% [:beginner,
-          :intermediate,
-          :advanced,
-          :professional].each do |level| %>
-              <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if @search.public_send level %>>
-                  <%= level.capitalize %>
-              </label>
-          <% end %>
-          <h4>Instrument</h4>
-          <% [:piano,
-          :recorder,
-          :flute,
-          :oboe,
-          :clarineo,
-          :clarinet,
-          :basson,
-          :saxophone,
-          :trumpet,
-          :violin,
-          :viola,
-          :percussion].each do |instrument| %>
-              <label class="pure-checkbox">
-                  <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
-                  <%= instrument.capitalize %>
-              </label>
-          <% end %>
-          <button type="submit" class="pure-button right">Search</button>
-          <a href="/pieces" class="right">clear search</a>
-      </form>
-    </aside>
-    <article class="col col-4-5">
-        <h2>Pieces</h2>
-        <button form="search-form" name="catalogue_search[page]" value="1" <%= 'disabled' unless @pieces.previous_page %>>First Page</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.previous_page %>" <%= 'disabled' unless @pieces.previous_page %>>Previous</button>
-        <select form="search-form" name="catalogue_search[page_size]">
-            <option <%= 'selected' if @pieces.page_size == 10 %>>10</option>
-            <option <%= 'selected' if @pieces.page_size == 15 %>>15</option>
-            <option <%= 'selected' if @pieces.page_size == 20 %>>20</option>
-        </select>
-        <button form="search-form" name="catalogue_search[page]" value="1">Refresh</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.next_page %>" <%= 'disabled' unless @pieces.next_page %>>Next</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.page_count %>" <%= 'disabled' unless @pieces.next_page %>>Last Page</button>
-        <%= @pieces.page_count %>
-        <table>
-            <thead>
-                <tr>
-                    <th>Catalogue number</th>
-                    <th>Product name</th>
-                    <th>Category</th>
-                    <th>Instruments</th>
-                    <th>Levels</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <% @pieces.each do |piece| %>
-                    <tr>
-                        <th>
-
-                            <a href="/pieces/<%= piece.id %>"><%= piece.catalogue_number %></a>
-                        </th>
-                        <th>
-                            <%= piece.product_name %>
-                        </th>
-                        <th>
-                            <%= piece.categories.join('<br>') %>
-                        </th>
-                        <th>
-                            <%= piece.instruments.join('<br>') %>
-                        </th>
-                        <th>
-                            <%= piece.levels.join('<br>') %>
-                        </th>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </article>
-</main>
