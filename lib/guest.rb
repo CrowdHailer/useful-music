@@ -21,7 +21,8 @@ class Guest
   end
 
   def currency_preference=(currency)
-    session['guest.currency_preference'] = currency.iso_code
+    # session['guest.currency_preference'] = currency.iso_code
+    session['guest.currency_preference'] = currency
   end
 
   def id

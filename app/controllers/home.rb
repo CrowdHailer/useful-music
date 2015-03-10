@@ -3,10 +3,12 @@ class HomeController < UsefulMusic::App
   render_defaults[:dir] += '/home'
 
   get '/' do
-    ap guest = Guest.new(session)
-    ap guest.shopping_basket
-    # ap Money::Currency.new(nil)
     render :index
+  end
+
+  post '/currency' do
+    Guest.new(session).currency_preference = request.POST['preference']
+    redirect request.referer
   end
 
   get '/my-shopping-basket' do
