@@ -3,6 +3,9 @@ class HomeController < UsefulMusic::App
   render_defaults[:dir] += '/home'
 
   get '/' do
+    ap guest = Guest.new(session)
+    ap guest.shopping_basket
+    # ap Money::Currency.new(nil)
     render :index
   end
 

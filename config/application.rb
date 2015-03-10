@@ -69,6 +69,14 @@ module UsefulMusic
     def customer_mailer
       CustomerMailer.new(current_customer, :application_url => url)
     end
+
+    # def guest_session
+    #   session.each_with_object({}) do |(key, value), obj|
+    #     if key.match(/guest.(.+)/)
+    #       obj[$1] = value
+    #     end
+    #   end
+    # end
   end
 end
 
