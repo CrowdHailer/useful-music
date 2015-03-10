@@ -16,7 +16,7 @@ Customers.create(
   :admin => true
 )
 
-Customer.create(
+Customers.create(
   :first_name => 'Richard',
   :last_name => 'Shepherd',
   :email => 'richard@richardesigns.co.uk',
@@ -25,7 +25,7 @@ Customer.create(
   :admin => true
 )
 
-Customer.create(
+Customers.create(
   :first_name => 'Graham',
   :last_name => 'Lyons',
   :email => 'usefulmusic@gmail.com',
@@ -35,7 +35,7 @@ Customer.create(
 )
 
 100.times do |i|
-  Customer.create(
+  Customers.create(
     :first_name => ['dave', 'clare', 'steve', 'amy', 'Jasmin', 'Dan', 'Lewis', 'Jess'].sample,
     :last_name => ['smith', 'jones', 'davis', 'edwards'].sample,
     :email => "my_account_#{i}@example.com",
