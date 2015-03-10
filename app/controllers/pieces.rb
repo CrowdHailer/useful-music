@@ -22,6 +22,7 @@ class PiecesController < UsefulMusic::App
 
   def show(catalogue_number)
     @piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
+    @search = OpenStruct.new
     render :show
   end
 

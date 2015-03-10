@@ -2,38 +2,63 @@
     <!-- FILTER FORM LEFT -->
     <div class="large-3 columns">
         <div class="filter-wrap">
-            <h1>Search Filter</h1>
+            <h1>Search Again</h1>
             <p>Refine your search by selecting and<br> combining categories:</p>
             <div class="filter-form">
-                <form>
+                <form action="/pieces" method="get">
                     <div class="filter-head">
                         <h2>SELECT INSTRUMENT(s)</h2>
                     </div>
                     <div class="row collapse">
-                        <div class="large-6 columns">
-                            <input type="checkbox"><label>Piano</label><br>
-                            <input type="checkbox"><label>Recorder</label><br>
-                        </div>
-                        <div class="large-6 columns">
-                            <input type="checkbox"><label>Flute</label><br>
-                            <input type="checkbox"><label>Saxophone</label><br>
-                        </div>
+                        <% [:piano,
+                        :recorder,
+                        :flute,
+                        :oboe,
+                        :clarineo,
+                        :clarinet,
+                        :basson,
+                        :saxophone,
+                        :trumpet,
+                        :violin,
+                        :viola,
+                        :percussion].each do |instrument| %>
+                            <label class="pure-checkbox" style="float:left;width:50%;">
+                                <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
+                                <%= instrument.capitalize %>
+                            </label>
+                        <% end %>
                     </div>
 
                     <div class="filter-head">
                         <h2>LEVEL(s)</h2>
                     </div>
-                    <input type="checkbox"><label>Beginner</label><br>
-                    <input type="checkbox"><label>Intermediate</label><br>
-                    <input type="checkbox"><label>Advanced</label><br>
-                    <input type="checkbox"><label>Professional</label><br>
+                    <div class="row collapse">
+                        <% [:beginner,
+                        :intermediate,
+                        :advanced,
+                        :professional].each do |level| %>
+                            <label class="pure-checkbox" style="float:left;width:50%;">
+                                <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if @search.public_send level %>>
+                                <%= level.capitalize %>
+                            </label>
+                        <% end %>
+                    </div>
                     <div class="filter-head">
                         <h2>SCORE TYPE(s)</h2>
                     </div>
-                    <input type="checkbox"><label>Type 1</label><br>
-                    <input type="checkbox"><label>Type 2</label><br>
-                    <button class="clear-search-btn" form="">Clear Search</button>
-                    <button class="search-btn" form="">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+                    <% [:solo,
+                    :solo_with_accompaniment,
+                    :duet,
+                    :trio,
+                    :quartet,
+                    :larger_ensembles].each do |category| %>
+                        <label class="pure-checkbox" style="float:left;width:50%;">
+                            <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
+                            <%= category.to_s.capitalize.gsub('_', ' ') %>
+                        </label>
+                    <% end %>
+                    <!-- <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a> -->
+                    <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
                 </form>
             </div>
         </div>
