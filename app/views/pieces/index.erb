@@ -6,7 +6,7 @@
             <h1>Search Filter</h1>
             <p>Refine your search by selecting and<br> combining categories:</p>
             <div class="filter-form">
-                <form>
+                <form id="search-form" action="/pieces" method="get">
                     <div class="filter-head">
                         <h2>SELECT INSTRUMENT(s)</h2>
                     </div>
@@ -75,8 +75,8 @@
                 <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.previous_page %>" <%= 'disabled' unless @pieces.previous_page %>>Previous Page</button>
                 <select form="search-form" name="catalogue_search[page_size]" >
                     <option <%= 'selected' if @pieces.page_size == 10 %>>10</option>
-                    <option>15</option>
-                    <option>20</option>
+                    <option <%= 'selected' if @pieces.page_size == 15 %>>15</option>
+                    <option <%= 'selected' if @pieces.page_size == 20 %>>20</option>
                 </select>
                 <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
                 <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.next_page %>" <%= 'disabled' unless @pieces.next_page %>>Next Page</button>
