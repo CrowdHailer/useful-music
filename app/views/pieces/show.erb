@@ -1,17 +1,173 @@
-<% if show_admin %>
-    <section class="admin content">
-      <a href="<%= incognito_uri %>" class="pure-button button-primary right"><i class="fa fa-eye-slash"></i> Incognito</a>
-        <form id="form_id" action="/pieces/<%= @piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= @piece.id %> and <%= @piece.items.count %> associated items?')">
-            <%= csrf_tag %>
-            <input type="hidden" name="_method" value="DELETE">
-            <button class="pure-button button-error right"><i class="fa fa-trash-o"></i> Destroy</button>
-        </form>
-        <a href="/pieces/<%= @piece.id %>/edit" class="pure-button button-warning right">
-            <i class="fa fa-cog"></i>
-            Edit
-        </a>
-    </section>
-<% end %>
+<div class="row collapse white-section section-bottom-margin">
+    <!-- FILTER FORM LEFT -->
+    <div class="large-3 columns">
+        <div class="filter-wrap">
+            <h1>Search Filter</h1>
+            <p>Refine your search by selecting and<br> combining categories:</p>
+            <div class="filter-form">
+                <form>
+                    <div class="filter-head">
+                        <h2>SELECT INSTRUMENT(s)</h2>
+                    </div>
+                    <div class="row collapse">
+                        <div class="large-6 columns">
+                            <input type="checkbox"><label>Piano</label><br>
+                            <input type="checkbox"><label>Recorder</label><br>
+                        </div>
+                        <div class="large-6 columns">
+                            <input type="checkbox"><label>Flute</label><br>
+                            <input type="checkbox"><label>Saxophone</label><br>
+                        </div>
+                    </div>
+
+                    <div class="filter-head">
+                        <h2>LEVEL(s)</h2>
+                    </div>
+                    <input type="checkbox"><label>Beginner</label><br>
+                    <input type="checkbox"><label>Intermediate</label><br>
+                    <input type="checkbox"><label>Advanced</label><br>
+                    <input type="checkbox"><label>Professional</label><br>
+                    <div class="filter-head">
+                        <h2>SCORE TYPE(s)</h2>
+                    </div>
+                    <input type="checkbox"><label>Type 1</label><br>
+                    <input type="checkbox"><label>Type 2</label><br>
+                    <button class="clear-search-btn" form="">Clear Search</button>
+                    <button class="search-btn" form="">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END OF FILTER FORM -->
+
+    <!-- SEARCH RESULTS RIGHT -->
+
+    <div class="large-9 columns">
+        <div class="row collapse white-section section-bottom-margin">
+            <div class="large-6 columns piece-title">
+                <h1><%= @piece.title %></h1>
+            </div>
+            <div class="large-6 columns piece-title">
+                <p>Catalogue Number: <%= @piece.catalogue_number %></p>
+            </div>
+
+            <hr style="margin: 1.25rem 0 0.1875rem;">
+            <div class="row collapse">
+                <div class="large-12 columns instrument-note">
+                    <p><%= @piece.sub_heading %></p>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="large-5 columns">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD100_cover_image.jpg">
+                    <a href=""><button class="score-btn">SEE SCORE PREVIEW</button></a>
+                    <h6>LISTEN TO AUDIO PREVIEW</h6>
+                    <audio controls>
+                        <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="large-7 columns">
+                    <div class="description">
+                        <p>Description: <%= @piece.description %></p>
+                        </div>
+
+                        <div class="purchase-options-wrap">
+                            <h2>Purchase Options</h2>
+                            <p>Please select how many licenses you would like:</p>
+                            <hr>
+                            <div class="row collapse">
+                                <!-- <div class="large-6 columns">
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                </div>
+                                <div class="large-6 columns">
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                    <div class="license-select">
+                                        <h6>Flute Part 1</h6>
+                                        <input type="number">
+                                        <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                        <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                        <p>£0.60 per license</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row collapse">
+                                    <div class="large-12 columns">
+                                        <div class="license-select">
+                                            <h6>All Parts</h6>
+                                            <input type="number">
+                                            <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
+                                            <a href=""><i class="fa fa-minus-circle license-icon"></i></a>
+                                            <p>£5.80 per license</p>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="total-box">
+                                    <!-- <h4>TOTAL: £30.65</h4> -->
+                                    <a href=""><button class="basket-btn">ADD TO BASKET</button></a>
+                                </div>
+                                <!-- <div class="currency-piece">
+                                    <h6>SELECT CURRENCY</h6>
+                                    <h6><a href="/">£ </a><a href="/">$ </a><a href="/">¥ </a><a href="/">€ </a></h6>
+                                </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- END SEARCH RESULTS -->
+    </div>
+
 <main class="content">
     <aside class="col col-1-5">
         <ul>
