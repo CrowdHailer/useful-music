@@ -9,10 +9,6 @@ class AboutController < UsefulMusic::App
   end
 
   get '/' do
-    ap session
-    ap guest = Guest.new(session)
-    ap guest.currency_preference
-    # ap Money::Currency.new(nil)
     render :index
   end
 

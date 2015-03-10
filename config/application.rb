@@ -39,7 +39,7 @@ module UsefulMusic
     end
 
     def current_customer
-      Customers.fetch(session[:user_id]) { Guest.new }
+      Customers.fetch(session[:user_id]) { Guest.new(session) }
     end
 
     def admin_logged_in?

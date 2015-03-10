@@ -7,6 +7,16 @@ class HomeControllerTest < MyRecordTest
     HomeController
   end
 
+  def test_sets_currency
+    post '/currency', {:preference => 'USD'}
+    assert_equal 'USD', last_request.session['guest.currency_preference']
+  end
+
+  def test_doesnt_set_unkown_currency
+    post '/currency', {:preference => 'ZZZ'}
+    assert_equal nil, last_request.session['guest.currency_preference']
+  end
+
   def test_home_page_is_available
     assert_ok get '/'
   end

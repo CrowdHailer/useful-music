@@ -2,8 +2,6 @@ class Guest
   # TODO untested
   def initialize(session={})
     @session = session
-    # @curreny_preference = session.fetch('currency_preference', 'GBP')
-    # @shopping_basket =
   end
 
   attr_reader :session

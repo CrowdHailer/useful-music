@@ -7,7 +7,8 @@ class HomeController < UsefulMusic::App
   end
 
   post '/currency' do
-    Guest.new(session).currency_preference = request.POST['preference']
+    currency = request.POST['preference']
+    current_customer.currency_preference = currency if ['USD', 'GBP', 'EUR'].include?(currency)
     redirect request.referer
   end
 
