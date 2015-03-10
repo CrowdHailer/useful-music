@@ -1,5 +1,6 @@
 class Purchase
   class Create
+    require_relative './validator'
     class Form
       include Virtus.model
       include Veto.model(Validator.new)
