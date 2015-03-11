@@ -1,20 +1,8 @@
-<main class="content">
-    <aside class="col col-1-5">
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/pieces">Continue shopping</a>
-            </li>
-        </ul>
-    </aside>
-    <article class="col col-4-5">
-      <div class="">
-          <span class="right">Last updated: <%= @basket.last_revision_at.strftime('%d-%m-%Y') if @basket.last_revision_at %></span>
-      </div>
-      <table class="pure-table">
-          <thead>
+      <div class="row">
+          <div class="columns large-12">
+
+      <table class="shopping-basket">
+          <thead class="top">
               <tr>
                   <th>Catalogue number</th>
                   <th>Product name</th>
@@ -23,7 +11,7 @@
                   <th>Initial Price</th>
                   <th>Discounted Price</th>
                   <th>Total</th>
-                  <th>Destroy</th>
+                  <th></th>
               </tr>
           </thead>
 
@@ -31,45 +19,45 @@
               <!-- TODO test sorting -->
               <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
                   <tr>
-                      <th>
+                      <td>
                           UD<%= purchase.item.piece.id %>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <a href="/pieces/<%= purchase.item.piece.id %>">
                               <%= purchase.item.piece.product_name %>
                           </a>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <%= purchase.item.name %>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
                               <%= csrf_tag %>
                               <input type="hidden" name="_method" value="PUT">
                               <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
-                              <input type="submit" value="Update">
+                              <input class="button tiny" type="submit" value="Update">
                           </form>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <%= purchase.item.initial_price.format %>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <%= purchase.item.subsequent_price.format %>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <%= purchase.price.format %>
-                      </th>
-                      <th>
+                      </td>
+                      <td>
                           <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
                               <%= csrf_tag %>
                               <input type="hidden" name="_method" value="DELETE">
-                              <input type="submit" value="Remove">
+                              <input class="button tiny alert" type="submit" value="Remove">
                           </form>
-                      </th>
+                      </td>
                   </tr>
               <% end %>
           </tbody>
-          <thead>
+          <thead class="top">
               <tr>
                   <th colspan="5">
                   </th>
@@ -80,11 +68,6 @@
                     <%= @basket.price.format %>
                   </th>
                   <th>
-                      <form id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
-                          <%= csrf_tag %>
-                          <input type="hidden" name="_method" value="DELETE">
-                          <input type="submit" value="Clear Basket">
-                      </form>
                   </th>
               </tr>
               <tr>
@@ -106,6 +89,20 @@
 
                   </th>
               </tr>
+              <!-- <tr>
+                  <th colspan="5">
+                  </th>
+                  <th>
+                      <input type="text" name="name" value="">
+
+                  </th>
+                  <th>
+
+                  </th>
+                  <th>
+
+                  </th>
+              </tr> -->
               <tr>
                   <th colspan="5">
                   </th>
@@ -121,6 +118,14 @@
           </thead>
 
       </table>
+                      <form id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+                          <%= csrf_tag %>
+                          <input type="hidden" name="_method" value="DELETE">
+                          <input class="button tiny alert" type="submit" value="Clear Basket">
+                      </form>
+          </div>
+
+      </div>
       <div style="overflow:hidden">
           <% if current_customer.customer? %>
               <form id="form_id" action="/orders" method="post" class="right">
@@ -137,7 +142,5 @@
           <% end %>
       </div>
       <div class="">
-        <a class="pure-button button-success" href="/pieces">Continue Shopping</a>
+        <a class="" href="/pieces">Continue Shopping</a>
       </div>
-    </article>
-</main>

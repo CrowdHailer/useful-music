@@ -1,0 +1,16 @@
+.shopping-basket {
+  width: 100%;
+  tr th, tr td {
+    text-align: center;
+  }
+
+  border-collapse: collapse;
+  thead.top {
+    border-top: 2px solid #005a86;
+    border-bottom: 2px solid #005a86;
+
+    th:last-child {
+      background: #005a86;
+    }
+  }
+}
