@@ -64,141 +64,33 @@
 </div>
 
 <div class="row collapse white-section">
+    <% @pieces.each do |piece| %>
     <div class="columns-5 small-12 columns">
         <div class="product-wrap">
-            <!-- START PRODUCT BLOCK-->
             <div class="title-wrap">
-                <h4>Under The Fingers, Part 6</h4>
+                <h4><%= piece.title %></h4>
             </div>
             <div class="product-info-wrap">
-                <p>PIANO, FLUTE AND OBOE & CONCERTO</p>
+                <p><%= piece.sub_heading.upcase %></p>
             </div>
             <div class="row collapse">
                 <div class="large-6 columns product-main">
-                    <p>USD09</p>
-                    <p>LEVEL 3</p>
+                    <p><%= piece.catalogue_number %></p>
+                    <p>LEVEL 3 [[TODO]]</p>
                     <hr class="prod-break">
-                    <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                    <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                    <a href="">
-                        <button>DOWNLOAD</button>
+                    <a href="/pieces/<%= piece.catalogue_number %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
+                    <a href="<%= piece.notation_preview.url %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
+                    <a href="/pieces/<%= piece.catalogue_number %>">
+                        <button>Full Details</button>
                     </a>
                 </div>
                 <div class="large-6 columns product-main">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
                 </div>
             </div>
-            <!-- END PRODUCT BLOCK-->
         </div>
     </div>
-    <div class="columns-5 small-12 columns">
-        <div class="product-wrap">
-            <!-- START PRODUCT BLOCK-->
-            <div class="title-wrap">
-                <h4>Under The Fingers, Part 6</h4>
-            </div>
-            <div class="product-info-wrap">
-                <p>PIANO, FLUTE AND OBOE & CONCERTO</p>
-            </div>
-            <div class="row collapse">
-                <div class="large-6 columns product-main">
-                    <p>USD09</p>
-                    <p>LEVEL 3</p>
-                    <hr class="prod-break">
-                    <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                    <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                    <a href="">
-                        <button>DOWNLOAD</button>
-                    </a>
-                </div>
-                <div class="large-6 columns product-main">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                </div>
-            </div>
-            <!-- END PRODUCT BLOCK-->
-        </div>
-    </div>
-    <div class="columns-5 small-12 columns">
-        <div class="product-wrap">
-            <!-- START PRODUCT BLOCK-->
-            <div class="title-wrap">
-                <h4>Under The Fingers, Part 6</h4>
-            </div>
-            <div class="product-info-wrap">
-                <p>PIANO, FLUTE AND OBOE & CONCERTO</p>
-            </div>
-            <div class="row collapse">
-                <div class="large-6 columns product-main">
-                    <p>USD09</p>
-                    <p>LEVEL 3</p>
-                    <hr class="prod-break">
-                    <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                    <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                    <a href="">
-                        <button>DOWNLOAD</button>
-                    </a>
-                </div>
-                <div class="large-6 columns product-main">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                </div>
-            </div>
-            <!-- END PRODUCT BLOCK-->
-        </div>
-    </div>
-    <div class="columns-5 small-12 columns">
-        <div class="product-wrap">
-            <!-- START PRODUCT BLOCK-->
-            <div class="title-wrap">
-                <h4>Under The Fingers, Part 6</h4>
-            </div>
-            <div class="product-info-wrap">
-                <p>PIANO, FLUTE AND OBOE & CONCERTO</p>
-            </div>
-            <div class="row collapse">
-                <div class="large-6 columns product-main">
-                    <p>USD09</p>
-                    <p>LEVEL 3</p>
-                    <hr class="prod-break">
-                    <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                    <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                    <a href="">
-                        <button>DOWNLOAD</button>
-                    </a>
-                </div>
-                <div class="large-6 columns product-main">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                </div>
-            </div>
-            <!-- END PRODUCT BLOCK-->
-        </div>
-    </div>
-    <div class="columns-5 small-12 columns">
-        <div class="product-wrap">
-            <!-- START PRODUCT BLOCK-->
-            <div class="title-wrap">
-                <h4>Under The Fingers, Part 6</h4>
-            </div>
-            <div class="product-info-wrap">
-                <p>PIANO, FLUTE AND OBOE & CONCERTO</p>
-            </div>
-            <div class="row collapse">
-                <div class="large-6 columns product-main">
-                    <p>USD09</p>
-                    <p>LEVEL 3</p>
-                    <hr class="prod-break">
-                    <a href=""><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                    <a href=""><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                    <a href="">
-                        <button>DOWNLOAD</button>
-                    </a>
-                </div>
-                <div class="large-6 columns product-main">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
-                </div>
-            </div>
-            <!-- END PRODUCT BLOCK-->
-        </div>
-    </div>
+    <% end %>
 </div>
 
 <div class="row collapse">

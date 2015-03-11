@@ -18,6 +18,7 @@ class HomeControllerTest < MyRecordTest
   end
 
   def test_home_page_is_available
+    create :piece_record
     assert_ok get '/'
   end
 
