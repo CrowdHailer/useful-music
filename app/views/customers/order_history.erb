@@ -1,67 +1,50 @@
-<main class="content">
-    <aside class="col col-1-5">
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>">My Account</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/orders">Orders</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
-            </li>
-            <li>
-                <form id="form_id" action="/sessions" method="post">
-                    <%= csrf_tag %>
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" value="logout">
-                </form>
-            </li>
-        </ul>
-    </aside>
-    <article class="col col-4-5">
-        <h2><%= @customer.name %>: your orders</h2>
-        <table class="pure-table">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>State</th>
-                    <th>Basket Amount</th>
-                    <th>Tax Amount</th>
-                    <th>Payer Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @customer.orders.each do |order| %>
-                    <tr>
-                        <th>
-                            <a href="/orders/<%= order.id %>"><%= order.id[0..4] %>...</a>
 
-                        </th>
-                        <th>
-                            <%= order.transaction.state %>
-                        </th>
-                        <th>
-                            <%= order.basket_amount.format %>
-                        </th>
-                        <th>
-                            <%= order.tax_amount.format %>
-                        </th>
-                        <th>
-                            <%= "#{order.transaction.payer_first_name} #{order.transaction.payer_last_name}" %>
-                        </th>
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-    </article>
-</main>
+<div class="row collapse white-section section-bottom-margin">
+    <!-- FILTER FORM LEFT -->
+    <%= render :'_account_sidebar' %>
+
+    <div class="large-9 columns">
+        <div class="search-bar-filter">
+            <div class="search-bar-filter-inner">
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <h4>Your orders</h4>
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>State</th>
+                            <th>Basket Amount</th>
+                            <th>Tax Amount</th>
+                            <th>Payer Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @customer.orders.each do |order| %>
+                            <tr>
+                                <th>
+                                    <a href="/orders/<%= order.id %>"><%= order.id[0..4] %>...</a>
+
+                                </th>
+                                <th>
+                                    <%= order.transaction.state %>
+                                </th>
+                                <th>
+                                    <%= order.basket_amount.format %>
+                                </th>
+                                <th>
+                                    <%= order.tax_amount.format %>
+                                </th>
+                                <th>
+                                    <%= "#{order.transaction.payer_first_name} #{order.transaction.payer_last_name}" %>
+                                </th>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
