@@ -1,0 +1,51 @@
+.about-blue {
+  width: 100%;
+  background: #0092b7;
+  background: -moz-radial-gradient(center, ellipse cover, #0092b7 0%, #01334c 96%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#0092b7), color-stop(96%,#01334c));
+  background: -webkit-radial-gradient(center, ellipse cover, #0092b7 0%,#01334c 96%);
+  background: -o-radial-gradient(center, ellipse cover, #0092b7 0%,#01334c 96%);
+  background: -ms-radial-gradient(center, ellipse cover, #0092b7 0%,#01334c 96%);
+  background: radial-gradient(ellipse at center, #0092b7 0%,#01334c 96%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0092b7', endColorstr='#01334c',GradientType=1 );
+  height: 35em;
+  padding: 1.5em;
+}
+
+.about-white {
+  height: 43em;
+  padding: 1.5em;
+}
+
+.about-blue h1,h6 {
+  color: white;
+}
+
+.about-blue p {
+  color: white;
+  font-size: 1.1em;
+}
+
+.about-blue h6:hover {
+  color: red;
+}
+
+.about-white p {
+  font-size: 1.1em;
+}
+
+.about-white h5 {
+  margin-bottom: 1em;
+}
+
+.about-white h6 {
+  color: #222222;
+}
+
+.about-white h6:hover {
+  color: red;
+}
+
+.section-3 {
+  height: 45em;
+}
