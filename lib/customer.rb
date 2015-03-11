@@ -42,7 +42,8 @@ class Customer < Errol::Entity
   end
 
   def shopping_basket
-    ShoppingBasket.new record.shopping_basket_record
+    shopping_basket_record = record.shopping_basket_record
+    ShoppingBasket.new shopping_basket_record if shopping_basket_record
   end
 
   def shopping_basket=(shopping_basket)
