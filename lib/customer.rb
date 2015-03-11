@@ -47,7 +47,12 @@ class Customer < Errol::Entity
   end
 
   def shopping_basket=(shopping_basket)
-    record.shopping_basket_record = shopping_basket.record
+    unless shopping_basket.nil?
+      record.shopping_basket_record = shopping_basket.record
+    else
+      # TODO test else case
+      record.shopping_basket_record = nil
+    end
   end
 
   def survey_unanswered?
