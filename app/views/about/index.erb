@@ -2,6 +2,13 @@
     <aside id="">
         <ul>
             <li>
+                <form class="" action="/currency" method="post">
+                    <%= csrf_tag %>
+                    <input type="text" name="preference" value="USD">
+                    <input type="submit" name="name" value="USD">
+                </form>
+            </li>
+            <li>
                 <a href="/">Home</a>
             </li>
             <hr>

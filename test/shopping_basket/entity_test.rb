@@ -15,6 +15,11 @@ class ShoppingBasket
       @record = nil
     end
 
+    def test_is_empty_if_no_purchases
+      record.purchase_records = []
+      assert shopping_basket.empty?
+    end
+
     def test_has_purchases
       purchase_record = create :purchase_record
       @record = ShoppingBasket::Record.last

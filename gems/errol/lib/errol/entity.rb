@@ -1,6 +1,7 @@
 module Errol
   class Entity
     RepositoryUndefined = Class.new(StandardError)
+    NilRecord = Class.new(StandardError)
     def self.repository=(repository)
       @repository = repository
     end
@@ -48,6 +49,8 @@ module Errol
     end
 
     def initialize(record)
+      raise NilRecord, "Tried to initialise #{self.class.name} with nil record" if record.nil?
+      # TODO test
       @record = record
     end
 

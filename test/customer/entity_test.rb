@@ -102,6 +102,19 @@ class Customer
       assert_equal Order, customer.orders.first.class
     end
 
+    def test_has_shopping_basket
+      shopping_basket_record = create(:shopping_basket_record)
+      record.shopping_basket_record = shopping_basket_record
+      assert_equal ShoppingBasket, customer.shopping_basket.class
+      assert_equal shopping_basket_record.id, customer.shopping_basket.id
+    end
+
+    def test_can_set_shopping_basket
+      shopping_basket = ShoppingBasket.new create(:shopping_basket_record)
+      customer.shopping_basket = shopping_basket
+      assert_equal shopping_basket.record, record.shopping_basket_record
+    end
+
 
     ################# Archive #####################
 
