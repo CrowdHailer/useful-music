@@ -29,6 +29,7 @@ class PiecesControllerTest < MyRecordTest
 
   def test_show_page_is_available
     record = create :piece_record, :id => 123
+    record.add_item_record create :item_record
     assert_ok get "/UD#{record.id}"
     assert_includes last_response.body, 'UD123'
   end

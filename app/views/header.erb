@@ -25,8 +25,7 @@
                 <div class="ud-search-wrap">
                     <label>Search Title or UD Code...</label>
                     <div class="search-field">
-                        <input type="text" name="name" value="" placeholder="e.g. The Cool Camel">
-
+                        <input type="text" name="search" value="" placeholder="e.g. The Cool Camel">
                     </div>
                 </div>
             </form>
@@ -105,8 +104,10 @@
                 </nav>
             </div>
             <div class="large-2 columns basket-nav">
-                <label>BASKET</label>
-                <label>0 ITEM(S) |  £0.00 <i class="fa fa-shopping-cart"></i></label>
+                <a href="/shopping_baskets/<%= shopping_basket.id %>">
+                    <label>BASKET</label>
+                    <label><%= shopping_basket.number_of_purchases %> ITEM(S) | <%= shopping_basket.price.format %> <i class="fa fa-shopping-cart"></i></label>
+                </a>
             </div>
         </div>
     </div>

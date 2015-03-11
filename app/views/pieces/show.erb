@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="filter-head">
-                        <h2>LEVEL(s)</h2>
+                        <h2>SELECT LEVEL(s)</h2>
                     </div>
                     <div class="row collapse">
                         <% [:beginner,
@@ -44,7 +44,7 @@
                         <% end %>
                     </div>
                     <div class="filter-head">
-                        <h2>SCORE TYPE(s)</h2>
+                        <h2>SELECT SCORE TYPE(s)</h2>
                     </div>
                     <% [:solo,
                     :solo_with_accompaniment,
@@ -94,7 +94,7 @@
                 </div>
                 <div class="large-7 columns">
                     <div class="description">
-                        <p>Description: <%= @piece.description %></p>
+                        <p><%= @piece.description %></p>
                     </div>
 
                     <div class="purchase-options-wrap">
@@ -107,13 +107,13 @@
                                 <% @piece.items.each do |item| %>
                                 <div class="license-select" style="float:left;width:50%;">
                                     <h6><%= item.name %></h6>
-                                    <input type="hidden" name="purchases[][shopping_basket]" value="<%= live_shopping_basket_id %>">
+                                    <input type="hidden" name="purchases[][shopping_basket]" value="<%= shopping_basket.id %>">
                                     <input type="hidden" name="purchases[][item]" value="<%= item.record.id %>">
                                     <input type="number" min="0" name="purchases[][quantity]" value="0">
                                     <!-- <a href=""><i class="fa fa-plus-circle license-icon"></i></a>
                                     <a href=""><i class="fa fa-minus-circle license-icon"></i></a> -->
                                     <p><%= item.initial_price.format %> first license</p>
-                                    <p><%= item.subsequent_price.format %> after</p>
+                                    <p><%= item.subsequent_price.format %> additional</p>
                                 </div>
                                 <% end %>
 

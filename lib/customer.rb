@@ -41,6 +41,20 @@ class Customer < Errol::Entity
     record.order_records.map{ |r| Order.new r }
   end
 
+  def shopping_basket
+    shopping_basket_record = record.shopping_basket_record
+    ShoppingBasket.new shopping_basket_record if shopping_basket_record
+  end
+
+  def shopping_basket=(shopping_basket)
+    unless shopping_basket.nil?
+      record.shopping_basket_record = shopping_basket.record
+    else
+      # TODO test else case
+      record.shopping_basket_record = nil
+    end
+  end
+
   def survey_unanswered?
     (question_1.nil? || question_1.empty?) &&
     (question_2.nil? || question_2.empty?) &&

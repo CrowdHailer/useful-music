@@ -10,6 +10,20 @@ class Customer
       assert_equal 2, record.order_records.count
     end
 
+    def test_can_have_shopping_basket
+      shopping_basket_record = create :shopping_basket_record
+      record = create :customer_record, :shopping_basket_record => shopping_basket_record
+      assert_equal shopping_basket_record, record.shopping_basket_record
+    end
+
+    def test_customers_cannot_have_the_same_basket
+      shopping_basket_record = create :shopping_basket_record
+      create :customer_record, :shopping_basket_record => shopping_basket_record
+      assert_raises Sequel::UniqueConstraintViolation do
+        create :customer_record, :shopping_basket_record => shopping_basket_record
+      end
+    end
+
     # Storage
 
     def test_has_an_id
@@ -104,6 +118,11 @@ class Customer
     def test_can_have_admin_status
       record = create :customer_record, :admin => true
       assert_equal true, record.admin
+    end
+
+    def test_can_have_currency_preference
+      record = create :customer_record, :currency_preference => 'USD'
+      assert_equal 'USD', record.currency_preference
     end
 
     def test_it_saves_time_of_creation

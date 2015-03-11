@@ -19,10 +19,10 @@ module UsefulMusic
       current_customer.admin? && request.GET['incognito'] != 'on'
     end
 
-    def incognito_uri
-      current_uri = request.env['REQUEST_URI']
-      current_uri.include?('?') ? current_uri + '&incognito=on' : current_uri + '?incognito=on'
-    end
+    # def incognito_uri
+    #   current_uri = request.env['REQUEST_URI']
+    #   current_uri.include?('?') ? current_uri + '&incognito=on' : current_uri + '?incognito=on'
+    # end
 
     def csrf_tag
       Rack::Csrf.csrf_tag(env)
@@ -39,7 +39,7 @@ module UsefulMusic
     end
 
     def current_customer
-      Customers.fetch(session[:user_id]) { Guest.new }
+      Customers.fetch(session[:user_id]) { Guest.new(session) }
     end
 
     def admin_logged_in?
@@ -51,18 +51,8 @@ module UsefulMusic
       redirect '/'
     end
 
-    def live_shopping_basket_id
-      if session['useful_music.basket_id'] && ShoppingBasket::Record[session['useful_music.basket_id']]
-        session['useful_music.basket_id']
-      else
-        session['useful_music.basket_id'] = ShoppingBasket::Record.create.id
-      end
-    end
-
     def shopping_basket
-      # TODO not good
-      # ShoppingBasket.new(ShoppingBasket::Record[live_shopping_basket_id])
-      ShoppingBasket.new(ShoppingBasket::Record.new)
+      current_customer.shopping_basket ||= ShoppingBaskets.create
     end
 
     def customer_mailer

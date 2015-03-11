@@ -266,7 +266,7 @@ height: auto;
 }
 
 .above-fold-right-main {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/sheet-music-right-main.jpg') ;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
   height: auto;
   min-height: 22.5em;
 }
@@ -300,12 +300,13 @@ height: auto;
 }
 
 .ensemble-pic {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/ensemble2.jpg');
-  background-size: contain;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/ensemble-main.jpg');
+  background-size: cover;
   background-repeat: no-repeat;
-  height: auto;
+  height: 15em;
   min-height: 15em;
   margin-top: 2em;
+  margin-right: 0.5em;
 }
 
 .cstm-narrow {
@@ -602,6 +603,7 @@ height: auto;
   font-style: italic;
   font-weight: 700;
   font-size: 1em;
+  padding: 0.1em;
 }
 
 input[type="checkbox"] {
@@ -615,12 +617,13 @@ input[type="checkbox"] {
   text-transform: uppercase;
   font-size: 0.9em;
   background: grey;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 1rem;
+  // margin-bottom: 1em;
 }
 
 .search-btn {
   float: left;
+  margin-top: 1rem;
   font-size: 1.4em;
   background: #e41f21;
 }
@@ -636,6 +639,7 @@ input[type="checkbox"] {
   margin-left: -0.6em;
   padding: 0.6em;
   margin-bottom: 0.6em;
+  margin-top: 0.6em;
 }
 
 .filter-head h2{
