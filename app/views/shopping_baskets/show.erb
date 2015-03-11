@@ -89,58 +89,49 @@
 
                     </th>
                 </tr>
-                <!-- <tr>
-                <th colspan="5">
-            </th>
-            <th>
-            <input type="text" name="name" value="">
-
-        </th>
-        <th>
-
-    </th>
-    <th>
-
-</th>
-</tr> -->
-<tr>
-    <th colspan="5">
-    </th>
-    <th>
-        Total
-    </th>
-    <th>
-        <%= (@basket.price * (current_customer.vat_rate || 0) + @basket.price).format %>
-    </th>
-    <th>
-    </th>
-</tr>
-</thead>
-
-</table>
-<form id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
-    <%= csrf_tag %>
-    <input type="hidden" name="_method" value="DELETE">
-    <input class="button tiny alert" type="submit" value="Clear Basket">
-</form>
+                <tr>
+                    <th colspan="5">
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                    <th>
+                        <%= (@basket.price * (current_customer.vat_rate || 0) + @basket.price).format %>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
-
+<div class="row">
+    <div class="columns large-12">
+        <a class="button success" href="/pieces">Continue Shopping</a>
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="button alert" type="submit" value="Clear Basket">
+        </form>
+        <form class="discount-code right" action="index.html" method="post">
+            <input type="text" name="name" value="" placeholder="Discount Code">
+            <input class="button" type="button" name="name" value="Submit" >
+        </form>
+    </div>
 </div>
-<div style="overflow:hidden">
-    <% if current_customer.customer? %>
-    <form id="form_id" action="/orders" method="post" class="right">
-        <%= csrf_tag %>
-        <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
-        <input type="text" name="order[discount_code]" value="" placeholder="discount code"><br>
-        <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
-    </form>
-    <% else %>
-    <p>
-        Please <a href="/sessions/new">login</a> or <a href="/customers/new">create account</a>
-    </p>
-    <p title="Downloads can be large files and will be available in your account for 4 days from purchase">Why?</p>
-    <% end %>
-</div>
-<div class="">
-    <a class="" href="/pieces">Continue Shopping</a>
+<div class="row">
+    <div class="columns large-12">
+        <% if current_customer.customer? %>
+        <form id="checkout-button" action="/orders" method="post" class="right">
+            <%= csrf_tag %>
+            <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
+            <!-- <input type="text" name="order[discount_code]" value="" placeholder="discount code"><br> -->
+            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
+        </form>
+        <% else %>
+        <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+            Please <a href="/sessions/new">login</a> or <a href="/customers/new">create account</a><br>Why?
+        </p>
+        <% end %>
+    </div>
 </div>

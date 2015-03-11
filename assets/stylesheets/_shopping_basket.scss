@@ -14,3 +14,18 @@
     }
   }
 }
+.as-button {
+  display: inline-block;
+}
+
+#checkout-button {
+  margin: 0.8em 1.2em;
+}
+
+
+.discount-code {
+  input[type="text"] {
+    display: inline-block;
+    width: 50%;
+  }
+}
