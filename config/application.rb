@@ -72,6 +72,7 @@ class UsefulMusic::App
 
   middleware << proc do |app|
     use Bugsnag::Rack
+    use Rack::GoogleAnalytics, :tracker => ENV['GOOGLE_ANALYTICS_CODE'] if RACK_ENV == 'production'
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
@@ -93,8 +94,8 @@ class UsefulMusic::App
     Bugsnag.notify(error, :severity => "info")
   end
 
-  error do
-    env["rack.exception"] = $!
+  error do |err|
+    env["rack.exception"] = err
     false
   end
 end

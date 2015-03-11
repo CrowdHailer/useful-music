@@ -32,7 +32,12 @@ class Catalogue < Errol::Repository
 
   def dataset
     val = raw_dataset
-    val = val.order(inquiry.order.to_sym)
+    order = inquiry.order.to_sym
+    if order == :random
+      val = val.order(Sequel.lit('RANDOM()'))
+    else
+      val = val.order(inquiry.order.to_sym)
+    end
 
     # val = levels_filter(val) if levels.count > 0
     levels = inquiry.levels

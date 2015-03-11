@@ -3,6 +3,8 @@ class HomeController < UsefulMusic::App
   render_defaults[:dir] += '/home'
 
   get '/' do
+    @pieces = Catalogue.new(:page_size => 5, :order => 'random')
+    @pieces.dataset
     render :index
   end
 

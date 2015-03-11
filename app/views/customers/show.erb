@@ -1,39 +1,14 @@
-<main class="content">
-    <aside class="col col-1-5">
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/admin">Admin Section</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>">My Account</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/orders">Orders</a>
-            </li>
-            <li>
-                <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
-            </li>
-            <li>
-                <form id="form_id" action="/sessions" method="post">
-                    <%= csrf_tag %>
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" value="logout">
-                </form>
-            </li>
-        </ul>
-    </aside>
-    <article class="col col-4-5">
+
+<div class="row collapse white-section section-bottom-margin">
+    <!-- FILTER FORM LEFT -->
+    <%= render :'_account_sidebar' %>
+
+    <div class="large-9 columns">
+        <div class="search-bar-filter">
+            <div class="search-bar-filter-inner">
+            </div>
+        </div>
         <h2><%= @customer.name %></h2>
-        <h3><%= @customer.email %></h3>
         <% if @customer.survey_unanswered? %>
             <div class="bold">
               <a href="/customers/<%= @customer.id %>/edit#customer-questions">Tell us more</a>
@@ -50,5 +25,5 @@
                 <b>name </b><%= @customer.country %>
             </li>
         </ul>
-    </article>
-</main>
+    </div>
+</div>

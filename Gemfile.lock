@@ -12,6 +12,19 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    actionpack (4.2.0)
+      actionview (= 4.2.0)
+      activesupport (= 4.2.0)
+      rack (~> 1.6.0)
+      rack-test (~> 0.6.2)
+      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    actionview (4.2.0)
+      activesupport (= 4.2.0)
+      builder (~> 3.1)
+      erubis (~> 2.7.0)
+      rails-dom-testing (~> 1.0, >= 1.0.5)
+      rails-html-sanitizer (~> 1.0, >= 1.0.1)
     activemodel (4.2.0)
       activesupport (= 4.2.0)
       builder (~> 3.1)
@@ -73,6 +86,8 @@ GEM
     i18n (0.7.0)
     ice_nine (0.11.1)
     json (1.8.2)
+    loofah (2.0.1)
+      nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
@@ -98,10 +113,21 @@ GEM
     rack (1.6.0)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-google-analytics (1.2.0)
+      actionpack
+      activesupport
     rack-test (0.6.3)
       rack (>= 1.0)
     rack_csrf (2.5.0)
       rack (>= 1.1.0)
+    rails-deprecated_sanitizer (1.0.3)
+      activesupport (>= 4.2.0.alpha)
+    rails-dom-testing (1.0.5)
+      activesupport (>= 4.2.0.beta, < 5.0)
+      nokogiri (~> 1.6.0)
+      rails-deprecated_sanitizer (>= 1.0.1)
+    rails-html-sanitizer (1.0.2)
+      loofah (~> 2.0)
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
@@ -155,6 +181,7 @@ DEPENDENCIES
   paypal-express
   pdfkit
   pg
+  rack-google-analytics
   rack-test
   rack_csrf
   sass
