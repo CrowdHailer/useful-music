@@ -47,21 +47,11 @@
             <hr>
             <div class="row">
                 <div class="large-12 columns basket-contain">
+                    <% shopping_basket.purchases.each do |purchase| %>
                     <div class="basket-item">
-                        <i class="fa fa-music basket-icon"></i><p>[[TODO]] Dancing in the rain - £4.00</p>
+                        <i class="fa fa-music basket-icon"></i><p><%= purchase.item.piece.title %> - <%= purchase.item.name %> -  <%= purchase.price.format %></p>
                     </div>
-                    <div class="basket-item">
-                        <i class="fa fa-music basket-icon"></i><p>[[TODO]] Dancing in the rain - £4.00</p>
-                    </div>
-                    <div class="basket-item">
-                        <i class="fa fa-music basket-icon"></i><p>[[TODO]] Dancing in the rain - £4.00</p>
-                    </div>
-                    <div class="basket-item">
-                        <i class="fa fa-music basket-icon"></i><p>[[TODO]] Dancing in the rain - £4.00</p>
-                    </div>
-                    <div class="basket-item">
-                        <i class="fa fa-music basket-icon"></i><p>[[TODO]] Dancing in the rain - £4.00</p>
-                    </div>
+                    <% end %>
                 </div>
             </div>
             <hr>
