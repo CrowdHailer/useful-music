@@ -266,7 +266,7 @@ height: auto;
 }
 
 .above-fold-right-main {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/sheet-music-right-main.jpg') ;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
   height: auto;
   min-height: 22.5em;
 }
@@ -300,12 +300,13 @@ height: auto;
 }
 
 .ensemble-pic {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/ensemble2.jpg');
-  background-size: contain;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/ensemble-main.jpg');
+  background-size: cover;
   background-repeat: no-repeat;
-  height: auto;
+  height: 15em;
   min-height: 15em;
   margin-top: 2em;
+  margin-right: 0.5em;
 }
 
 .cstm-narrow {
