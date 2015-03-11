@@ -6,6 +6,7 @@ class Piece
 
       attribute :title, String
       attribute :sub_heading, String
+      attribute :level_overview, String
       attribute :description, String
       attribute :solo, String
       attribute :solo_with_accompaniment, String

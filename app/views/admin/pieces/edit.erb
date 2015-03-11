@@ -68,6 +68,17 @@
                 </div>
 
                 <div class="pure-control-group">
+                    <label for="piece_level_overview">Level Overview</label>
+                    <input
+                        id="piece_level_overview"
+                        name="piece[level_overview]"
+                        type="text"
+                        required
+                        value="<%= @piece.level_overview %>"
+                        placeholder="e.g. 1 to 3">
+                </div>
+
+                <div class="pure-control-group">
                     <label for="piece_description">Description</label>
                     <textarea
                     id="piece_description"
