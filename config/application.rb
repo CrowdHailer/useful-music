@@ -94,8 +94,8 @@ class UsefulMusic::App
     Bugsnag.notify(error, :severity => "info")
   end
 
-  error do
-    env["rack.exception"] = $!
+  error do |err|
+    env["rack.exception"] = err
     false
   end
 end
