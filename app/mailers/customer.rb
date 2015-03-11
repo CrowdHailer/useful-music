@@ -10,7 +10,7 @@ class CustomerMailer
     mail = Mail.new
     mail.from 'info@usefulmusic.com'
     mail.to @customer.email
-    mail.subject 'Here is a message'
+    mail.subject 'Welcome to usefulmusic.com'
     mail.body render __method__
     mail.deliver
   end
