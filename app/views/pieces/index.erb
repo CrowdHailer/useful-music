@@ -92,7 +92,7 @@
                         <h4><%= piece.title %></h4>
                     </div>
                     <div class="product-info-wrap">
-                        <p><%= piece.sub_heading.upcase %></p>
+                        <p><%= piece.sub_heading.upcase.gsub('é', 'E') %></p>
                     </div>
                     <div class="row collapse">
                         <div class="large-6 columns product-main">
