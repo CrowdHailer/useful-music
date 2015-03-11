@@ -8,6 +8,7 @@ class Piece < Errol::Entity
   entry_accessor  :id,
                   :title,
                   :sub_heading,
+                  :level_overview, # TODO test
                   :description,
                   :notation_preview,
                   :audio_preview,
