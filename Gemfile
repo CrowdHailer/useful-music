@@ -36,6 +36,8 @@ gem 'paypal-express'
 gem 'pdfkit'
 gem 'wkhtmltopdf-heroku-edge', '~> 0.12.2.1b'
 
+gem 'rack-google-analytics'
+
 gem 'factory_girl'
 gem 'rack-test', :require => 'rack/test'
 group :test do
