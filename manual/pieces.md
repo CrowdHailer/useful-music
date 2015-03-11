@@ -11,6 +11,8 @@
   - Required
 - **sub_heading**
   - Required
+- **level_overview**
+  - Required
 - **description**
   - Required
 - **notation_preview**
