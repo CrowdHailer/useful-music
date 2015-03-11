@@ -15,21 +15,16 @@
                     <thead>
                         <tr>
                             <th>Order ID</th>
-                            <th>State</th>
                             <th>Basket Amount</th>
                             <th>Tax Amount</th>
-                            <th>Payer Name</th>
+                            <th>License</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% @customer.orders.each do |order| %>
                             <tr>
                                 <th>
-                                    <a href="/orders/<%= order.id %>"><%= order.id[0..4] %>...</a>
-
-                                </th>
-                                <th>
-                                    <%= order.transaction.state %>
+                                    <%= order.id %>
                                 </th>
                                 <th>
                                     <%= order.basket_amount.format %>
@@ -38,7 +33,7 @@
                                     <%= order.tax_amount.format %>
                                 </th>
                                 <th>
-                                    <%= "#{order.transaction.payer_first_name} #{order.transaction.payer_last_name}" %>
+                                    <a href="/orders/<%= order.id %>" target="_blank" download>Download</a>
                                 </th>
                             </tr>
                         <% end %>

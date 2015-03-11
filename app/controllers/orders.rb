@@ -15,7 +15,7 @@ class OrdersController < UsefulMusic::App
   def create
     form = Order::Create::Form.new request.POST['order']
     form.customer = current_customer
-    order = Order.create(form.to_hash) do |order|
+    order = Orders.create(form.to_hash) do |order|
       order.calculate_prices
       order.transaction
     end
