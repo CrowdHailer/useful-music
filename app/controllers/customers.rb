@@ -54,6 +54,7 @@ class CustomersController < UsefulMusic::App
 
   def edit(id)
     @customer = check_access!(id)
+    @form = Customer::Create::Form.new
     @validator = Customer::Create::Validator.new
     render :edit
   end
