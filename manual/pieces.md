@@ -11,6 +11,8 @@
   - Required
 - **sub_heading**
   - Required
+- **level_overview**
+  - Required
 - **description**
   - Required
 - **notation_preview**
@@ -64,7 +66,7 @@
   - true/false
 - **clarinet**
   - true/false
-- **basson**
+- **bassoon**
   - true/false
 - **saxophone**
   - true/false

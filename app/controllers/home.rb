@@ -24,7 +24,7 @@ class HomeController < UsefulMusic::App
   end
 
   get '/woodwind' do
-    redirect '/pieces?catalogue_search%5Brecorder%5D=on&catalogue_search%5Bflute%5D=on&catalogue_search%5Boboe%5D=on&catalogue_search%5Bclarineo%5D=on&catalogue_search%5Bclarinet%5D=on&catalogue_search%5Bbasson%5D=on&catalogue_search%5Bsaxophone%5D=on&catalogue_search%5Bpage_size%5D=10'
+    redirect '/pieces?catalogue_search%5Brecorder%5D=on&catalogue_search%5Bflute%5D=on&catalogue_search%5Boboe%5D=on&catalogue_search%5Bclarineo%5D=on&catalogue_search%5Bclarinet%5D=on&catalogue_search%5Bbassoon%5D=on&catalogue_search%5Bsaxophone%5D=on&catalogue_search%5Bpage_size%5D=10'
   end
 
   get '/recorder' do
@@ -48,7 +48,7 @@ class HomeController < UsefulMusic::App
   end
 
   get '/bassoon' do
-    redirect '/pieces?catalogue_search[basson]=on'
+    redirect '/pieces?catalogue_search[bassoon]=on'
   end
 
   get '/saxophone' do
