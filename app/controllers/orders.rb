@@ -5,13 +5,6 @@ class OrdersController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/orders'
 
-  before do
-    if RACK_ENV == 'production'
-      flash['error'] = 'Section unavailable'
-      redirect '/'
-    end
-  end
-
   def create
     form = Order::Create::Form.new request.POST['order']
     form.customer = current_customer
