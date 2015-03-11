@@ -28,7 +28,8 @@
           </thead>
 
           <tbody>
-              <% @basket.purchases.sort_by{purchase.item.piece.id}.each do |purchase| %>
+              <!-- TODO test sorting -->
+              <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
                   <tr>
                       <th>
                           UD<%= purchase.item.piece.id %>
