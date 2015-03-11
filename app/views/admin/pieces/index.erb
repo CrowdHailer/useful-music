@@ -40,6 +40,7 @@
                 <th>Description</th>
                 <th>Categories</th>
                 <th>Instruments</th>
+                <th>Level overview</th>
                 <th>Levels</th>
                 <th>Items</th>
                 <th>Action</th>
@@ -63,6 +64,9 @@
                     </th>
                     <th>
                         <%= piece.instruments.join('<br>') %>
+                    </th>
+                    <th>
+                        <%= piece.level_overview %>
                     </th>
                     <th>
                         <%= piece.levels.join('<br>') %>

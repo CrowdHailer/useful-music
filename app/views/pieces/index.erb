@@ -97,7 +97,7 @@
                     <div class="row collapse">
                         <div class="large-6 columns product-main">
                             <p><%= piece.catalogue_number %></p>
-                            <p>LEVEL 3 [[TODO]]</p>
+                            <p>LEVEL <%= piece.level_overview %></p>
                             <hr class="prod-break">
                             <a href="/pieces/<%= piece.catalogue_number %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                             <a href="<%= piece.notation_preview.url %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
