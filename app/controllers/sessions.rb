@@ -13,17 +13,18 @@ class SessionsController < UsefulMusic::App
   end
 
   def create
+    # TODO clean old baskets task
     form = Session::Create::Form.new request.POST['session']
     validator = Session::Create::Validator.new
-    guest = current_customer
-    ap session
-    # ap guest.shopping_basket && guest.shopping_basket.empty?
 
     customer = validator.valid?(form) && Customers.authenticate(form.email, form.password)
     if customer
+      guest = current_customer
       log_in customer
-      customer.shopping_basket = guest.shopping_basket
-      Customers.save customer
+      if guest.shopping_basket && !guest.shopping_basket.empty?
+        customer.shopping_basket = guest.shopping_basket
+        Customers.save customer
+      end
       flash['success'] = "Welcome back #{customer.name}"
       redirect "/customers/#{customer.id}"
     else

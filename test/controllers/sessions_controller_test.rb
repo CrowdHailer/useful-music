@@ -41,13 +41,13 @@ class SessionsControllerTest < MyRecordTest
 
   def test_takes_session_basket
     shopping_basket_record = create :shopping_basket_record
+    purchase_record = create :purchase_record, :shopping_basket_record => shopping_basket_record
     customer_record = create :customer_record, :email => email, :password => password
     post '/', {:session => {:email => email, :password => password}}, {'rack.session' => { 'guest.shopping_basket' => shopping_basket_record.id }}
     assert_equal shopping_basket_record, customer_record.reload.shopping_basket_record
   end
 
-  def test_uses_customer_existing_basket_when_not_empty
-    skip
+  def test_uses_customer_existing_basket_when_session_empty
     shopping_basket_record = create :shopping_basket_record
     purchase_record = create :purchase_record, :shopping_basket_record => shopping_basket_record
     customer_record = create :customer_record, :email => email, :password => password, :shopping_basket_record => shopping_basket_record
