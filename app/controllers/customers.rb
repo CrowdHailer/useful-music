@@ -121,7 +121,7 @@ class CustomersController < UsefulMusic::App
       customer
     else
       flash['error'] = 'Access denied'
-      redirect '/'
+      redirect '/sessions/new'
     end
   end
 end
