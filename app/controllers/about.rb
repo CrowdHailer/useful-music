@@ -1,13 +1,6 @@
 class AboutController < UsefulMusic::App
   render_defaults[:dir] += '/about'
 
-  before do
-    if RACK_ENV == 'production'
-      flash['error'] = 'Section unavailable'
-      redirect '/'
-    end
-  end
-
   get '/' do
     render :index
   end

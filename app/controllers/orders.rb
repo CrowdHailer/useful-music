@@ -5,13 +5,6 @@ class OrdersController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/orders'
 
-  before do
-    if RACK_ENV == 'production'
-      flash['error'] = 'Section unavailable'
-      redirect '/'
-    end
-  end
-
   def create
     form = Order::Create::Form.new request.POST['order']
     form.customer = current_customer
@@ -52,7 +45,7 @@ class OrdersController < UsefulMusic::App
     session['useful_music.basket_id'] = nil
     # template = Tilt::ERBTemplate.new('template.erb')
     mail = Mail.new
-    mail.from 'info@usefulmusic.com'
+    mail.from 'orders@usefulmusic.com'
     mail.to order.customer.email
     mail.subject 'Here is a message'
     mail.body "Your purchases are available in your account for the next 4 days"

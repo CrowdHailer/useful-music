@@ -1,0 +1,31 @@
+.shopping-basket {
+  width: 100%;
+  tr th, tr td {
+    text-align: center;
+  }
+
+  border-collapse: collapse;
+  thead.top {
+    border-top: 2px solid #005a86;
+    border-bottom: 2px solid #005a86;
+
+    th:last-child {
+      background: #005a86;
+    }
+  }
+}
+.as-button {
+  display: inline-block;
+}
+
+#checkout-button {
+  margin: 0.8em 1.2em;
+}
+
+
+.discount-code {
+  input[type="text"] {
+    display: inline-block;
+    width: 50%;
+  }
+}

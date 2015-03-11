@@ -20,7 +20,8 @@ class PurchasesController < UsefulMusic::App
           Purchases.save purchase
         end
       end
-      redirect '/my-shopping-basket'
+      flash['success'] = 'Items added to basket'
+      redirect (request.referer || '/my-shopping-basket')
 
       # batch.each do |form|
       #   Purchase.create_or_update form

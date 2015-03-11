@@ -1,49 +1,49 @@
-<main class="content">
-    <aside id="" class="col col-1-5">
-      <ul>
-          <li>
-              <a href="/">Home</a>
-          </li>
-      </ul>
-    </aside>
-    <article class="col col-4-5">
-        <h2>Reset password</h2>
-        <form class="pure-form pure-form-aligned" action="/password_resets/<%= @id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+<div class="row collapse">
+    <div class="large-12 columns promo-banner">
+        <h2>Password Reset</h2>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="large-12 columns">
+        <form class="" action="/password_resets/<%= @id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="email" value="<%= @customer.email %>">
             <fieldset>
-                <% @validator.errors.full_messages.each do |message| %>
-                    <div class="pure-control-group">
-                        <label></label>
-                        <span class="errors"><%= message.gsub('_', ' ').capitalize %></span>
+                <div class="row">
+                    <div class="large-4 columns large-offset-2">
+                        <label for="customer_password">New password
+                            <input
+                                id="customer_password"
+                                name="customer[password]"
+                                type="password"
+                                required
+                                placeholder="">
+                        </label>
                     </div>
-                <% end %>
-                <div class="pure-control-group">
-                    <label for="customer_password">New password</label>
-                    <input
-                        id="customer_password"
-                        name="customer[password]"
-                        type="password"
-                        required
-                        placeholder="">
-                </div>
 
-                <div class="pure-control-group">
-                    <label for="customer_password_confirmation">New password confirmation</label>
-                    <input
-                        id="customer_password_confirmation"
-                        name="customer[password_confirmation]"
-                        type="password"
-                        required
-                        placeholder="">
+                    <div class="large-4 columns end">
+                        <label for="customer_password_confirmation">New password confirmation
+                            <input
+                                id="customer_password_confirmation"
+                                name="customer[password_confirmation]"
+                                type="password"
+                                required
+                                placeholder="">
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="large-6 columns large-offset-2">
+                        <a href="/customers/new">Need Account?</a><br>
+                        <a href="/password_resets/new">Forgotten password?</a>
+                    </div> -->
+                    <div class="large-2 columns large-offset-8 end">
+                        <button type="submit" class="right">Submit</button>
+                    </div>
                 </div>
 
             </fieldset>
-            <div class="pure-controls">
-                <button type="submit" class="pure-button pure-button-primary">Submit</button>
-            </div>
-
         </form>
-    </article>
-</main>
+    </div>
+</div>

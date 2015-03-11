@@ -1,143 +1,150 @@
-<main class="content">
-    <aside class="col col-1-5">
-        <ul>
-            <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/pieces">Continue shopping</a>
-            </li>
-        </ul>
-    </aside>
-    <article class="col col-4-5">
-      <div class="">
-          <span class="right">Last updated: <%= @basket.last_revision_at.strftime('%d-%m-%Y') if @basket.last_revision_at %></span>
-      </div>
-      <table class="pure-table">
-          <thead>
-              <tr>
-                  <th>Catalogue number</th>
-                  <th>Product name</th>
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Initial Price</th>
-                  <th>Discounted Price</th>
-                  <th>Total</th>
-                  <th>Destroy</th>
-              </tr>
-          </thead>
+<div class="row">
+    <div class="columns large-12">
 
-          <tbody>
-              <!-- TODO test sorting -->
-              <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
-                  <tr>
-                      <th>
-                          UD<%= purchase.item.piece.id %>
-                      </th>
-                      <th>
-                          <a href="/pieces/<%= purchase.item.piece.id %>">
-                              <%= purchase.item.piece.product_name %>
-                          </a>
-                      </th>
-                      <th>
-                          <%= purchase.item.name %>
-                      </th>
-                      <th>
-                          <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
-                              <%= csrf_tag %>
-                              <input type="hidden" name="_method" value="PUT">
-                              <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
-                              <input type="submit" value="Update">
-                          </form>
-                      </th>
-                      <th>
-                          <%= purchase.item.initial_price.format %>
-                      </th>
-                      <th>
-                          <%= purchase.item.subsequent_price.format %>
-                      </th>
-                      <th>
-                          <%= purchase.price.format %>
-                      </th>
-                      <th>
-                          <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
-                              <%= csrf_tag %>
-                              <input type="hidden" name="_method" value="DELETE">
-                              <input type="submit" value="Remove">
-                          </form>
-                      </th>
-                  </tr>
-              <% end %>
-          </tbody>
-          <thead>
-              <tr>
-                  <th colspan="5">
-                  </th>
-                  <th>
-                    Total
-                  </th>
-                  <th>
-                    <%= @basket.price.format %>
-                  </th>
-                  <th>
-                      <form id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
-                          <%= csrf_tag %>
-                          <input type="hidden" name="_method" value="DELETE">
-                          <input type="submit" value="Clear Basket">
-                      </form>
-                  </th>
-              </tr>
-              <tr>
-                  <th colspan="3">
-                  </th>
-                  <th>
-                    VAT
-                  </th>
-                  <th>
-                    <%= current_customer.country %>
-                  </th>
-                  <th>
-                      <%= "#{current_customer.vat_rate * 100}%" if current_customer.vat_rate %>
-                  </th>
-                  <th>
-                      <%= (@basket.price * (current_customer.vat_rate || 0)).format %>
-                  </th>
-                  <th>
+        <table class="shopping-basket">
+            <thead class="top">
+                <tr>
+                    <th>Catalogue number</th>
+                    <th>Product name</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Initial Price</th>
+                    <th>Discounted Price</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-                  </th>
-              </tr>
-              <tr>
-                  <th colspan="5">
-                  </th>
-                  <th>
-                    Total
-                  </th>
-                  <th>
-                    <%= (@basket.price * (current_customer.vat_rate || 0) + @basket.price).format %>
-                  </th>
-                  <th>
-                  </th>
-              </tr>
-          </thead>
+            <tbody>
+                <!-- TODO test sorting -->
+                <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
+                <tr>
+                    <td>
+                        UD<%= purchase.item.piece.id %>
+                    </td>
+                    <td>
+                        <a href="/pieces/<%= purchase.item.piece.id %>">
+                            <%= purchase.item.piece.product_name %>
+                        </a>
+                    </td>
+                    <td>
+                        <%= purchase.item.name %>
+                    </td>
+                    <td>
+                        <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
+                            <input class="button tiny" type="submit" value="Update">
+                        </form>
+                    </td>
+                    <td>
+                        <%= purchase.item.initial_price.format %>
+                    </td>
+                    <td>
+                        <%= purchase.item.subsequent_price.format %>
+                    </td>
+                    <td>
+                        <%= purchase.price.format %>
+                    </td>
+                    <td>
+                        <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input class="button tiny alert" type="submit" value="Remove">
+                        </form>
+                    </td>
+                </tr>
+                <% end %>
+            </tbody>
+            <thead class="top">
+                <tr>
+                    <th colspan="5">
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                    <th>
+                        <%= @basket.price.format %>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="3">
+                    </th>
+                    <th>
+                        VAT
+                    </th>
+                    <th>
+                        <%= current_customer.country %>
+                    </th>
+                    <th>
+                        <%= "#{current_customer.vat_rate * 100}%" if current_customer.vat_rate %>
+                    </th>
+                    <th>
+                        <%= (@basket.price * (current_customer.vat_rate || 0)).format %>
+                    </th>
+                    <th>
 
-      </table>
-      <div style="overflow:hidden">
-          <% if current_customer.customer? %>
-              <form id="form_id" action="/orders" method="post" class="right">
-                  <%= csrf_tag %>
-                  <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
-                  <input type="text" name="order[discount_code]" value="" placeholder="discount code"><br>
-                  <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
-              </form>
-          <% else %>
-              <p>
-                Please <a href="/sessions/new">login</a> or <a href="/customers/new">create account</a>
-              </p>
-              <p title="Downloads can be large files and will be available in your account for 4 days from purchase">Why?</p>
-          <% end %>
-      </div>
-      <div class="">
-        <a class="pure-button button-success" href="/pieces">Continue Shopping</a>
-      </div>
-    </article>
-</main>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="5">
+                    </th>
+                    <th>
+                        Total
+                    </th>
+                    <th>
+                        <%= (@basket.price * (current_customer.vat_rate || 0) + @basket.price).format %>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="columns large-12">
+        <p style="text-align:right;">
+            If you have a discount or free download code, please enter it here:
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="columns large-12">
+        <a class="button success" href="/pieces">Continue Shopping</a>
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="button alert" type="submit" value="Clear Basket">
+        </form>
+        <form class="discount-code right" action="index.html" method="post">
+            <input type="text" name="name" value="" placeholder="Discount Code">
+            <input class="button" onclick="alert('Coming soon')" type="button" name="name" value="Submit" >
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="columns large-12">
+        <% if current_customer.customer? %>
+        <div class="row collapse">
+            <div class="large-12 columns flash" style="background-color:grey;">
+                <h2>
+                    Wow you were quick! We are just finalising the site. Don't worry your shopping basket has been saved. Thank you for visiting Useful Music and why not join our <a href="http://eepurl.com/bgyKh1">mailing list</a>
+                </h2>
+            </div>
+        </div>
+        <!-- <form id="checkout-button" action="/orders" method="post" class="right">
+            <%= csrf_tag %>
+            <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
+            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
+        </form> -->
+        <% else %>
+        <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+            Please <a class="button" href="/sessions/new">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
+        </p>
+        <% end %>
+    </div>
+</div>
