@@ -19,6 +19,9 @@ class OrdersController < UsefulMusic::App
       order.calculate_prices
       order.transaction
     end
+    current_customer.shopping_basket = nil
+    Customers.save current_customer
+    session['guest.shopping_basket'] = nil
     redirect order.setup(url).redirect_uri
   end
 

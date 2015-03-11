@@ -1,15 +1,15 @@
-require_relative './item'
+require_relative './order'
 
 class Orders < Errol::Repository
-  # require_relative './items/inquiry'
+  require_relative './orders/inquiry'
   class << self
     def record_class
       Order::Record
     end
 
-    # def inquiry(requirements)
-    #   Inquiry.new(requirements)
-    # end
+    def inquiry(requirements)
+      Inquiry.new(requirements)
+    end
 
     def dispatch(record)
       Order.new(record)
