@@ -64,7 +64,7 @@
   - true/false
 - **clarinet**
   - true/false
-- **basson**
+- **bassoon**
   - true/false
 - **saxophone**
   - true/false

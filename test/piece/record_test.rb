@@ -132,9 +132,9 @@ class Piece
       assert record.clarinet
     end
 
-    def test_can_be_for_basson
-      record = create :piece_record, :basson => true
-      assert record.basson
+    def test_can_be_for_bassoon
+      record = create :piece_record, :bassoon => true
+      assert record.bassoon
     end
 
     def test_can_be_for_saxophone

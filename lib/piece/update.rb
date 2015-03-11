@@ -25,7 +25,7 @@ class Piece
       attribute :oboe, Boolean
       attribute :clarineo, Boolean
       attribute :clarinet, Boolean
-      attribute :basson, Boolean
+      attribute :bassoon, Boolean
       attribute :saxophone, Boolean
       attribute :trumpet, Boolean
       attribute :violin, Boolean
