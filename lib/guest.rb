@@ -1,6 +1,6 @@
 class Guest
   # TODO untested
-  def initialize(session={})
+  def initialize(session)
     @session = session
   end
 
@@ -8,10 +8,14 @@ class Guest
 
   def shopping_basket
     shopping_basket = ShoppingBaskets[session['guest.shopping_basket']]
-    return shopping_basket if shopping_basket
-    shopping_basket = ShoppingBaskets.create
+    # return shopping_basket if shopping_basket
+    # shopping_basket = ShoppingBaskets.create
+    # session['guest.shopping_basket'] = shopping_basket.id
+    # shopping_basket
+  end
+
+  def shopping_basket=(shopping_basket)
     session['guest.shopping_basket'] = shopping_basket.id
-    shopping_basket
   end
 
   def currency_preference
