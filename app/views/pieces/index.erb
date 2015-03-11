@@ -74,14 +74,17 @@
                 <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= 'disabled' unless @pieces.previous_page %>>First Page</button>
                 <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.previous_page %>" <%= 'disabled' unless @pieces.previous_page %>>Previous Page</button>
                 <select form="search-form" name="catalogue_search[page_size]" >
-                    <option <%= 'selected' if @pieces.page_size == 10 %>>10</option>
-                    <option <%= 'selected' if @pieces.page_size == 15 %>>15</option>
-                    <option <%= 'selected' if @pieces.page_size == 20 %>>20</option>
+                    <option <%= 'selected' if @pieces.page_size == 10 %>>12</option>
+                    <option <%= 'selected' if @pieces.page_size == 15 %>>18</option>
+                    <option <%= 'selected' if @pieces.page_size == 20 %>>24</option>
                 </select>
                 <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
                 <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.next_page %>" <%= 'disabled' unless @pieces.next_page %>>Next Page</button>
                 <button form="search-form" name="catalogue_search[page]" value="<%= @pieces.page_count %>" <%= 'disabled' unless @pieces.next_page %>>Last Page</button>
-                <p>Results Per Page</p>
+                <!-- <p>Results Per Page</p> -->
+                <p>
+                  Page <%= @pieces.current_page %> of <%= @pieces.page_count %>
+                </p>
             </div>
         </div>
         <ul class="small-block-grid-3">
