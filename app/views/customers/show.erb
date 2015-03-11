@@ -1,3 +1,40 @@
+
+<div class="row collapse white-section section-bottom-margin">
+    <!-- FILTER FORM LEFT -->
+    <div class="large-3 columns">
+        <div class="filter-wrap">
+            <h1></h1>
+            <li class="button account-button">
+                <a href="/">Home</a>
+            </li>
+            <li class="button account-button">
+                <a href="/admin">Admin Section</a>
+            </li>
+            <li class="button account-button">
+                <a href="/customers/<%= @customer.id %>">My Account</a>
+            </li>
+            <li class="button account-button">
+                <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
+            </li>
+            <li class="button account-button">
+                <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
+            </li>
+            <li class="button account-button">
+                <a href="/customers/<%= @customer.id %>/orders">Orders</a>
+            </li>
+            <li class="button account-button">
+                <a href="/customers/<%= @customer.id %>/purchases">Downloads</a>
+            </li>
+            <li class="button account-button">
+                <form id="form_id" action="/sessions" method="post">
+                    <%= csrf_tag %>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="logout">
+                </form>
+            </li>
+        </div>
+    </div>
+</div>
 <main class="content">
     <aside class="col col-1-5">
         <ul>
