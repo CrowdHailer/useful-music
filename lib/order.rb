@@ -155,6 +155,18 @@ class Order < Errol::Entity
   #   Discount.new record.discount_record if record.discount_record
   # end
   #
+  def shopping_basket
+    ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
+  end
+
+  def shopping_basket=(shopping_basket)
+    if shopping_basket.nil?
+      record.shopping_basket_record = shopping_basket
+    else
+      record.shopping_basket_record = shopping_basket.record
+    end
+  end
+
   def customer
     Customer.new record.customer_record if record.customer_record
   end

@@ -55,6 +55,25 @@ class Order
       order.customer = nil
     end
 
+    def test_can_make_shopping_basket
+      record.shopping_basket_record = :shopping_basket
+      assert_equal ShoppingBasket.new(:shopping_basket), order.shopping_basket
+    end
+
+    def test_nil_shopping_basket_if_no_record
+      assert_nil order.shopping_basket
+    end
+
+    def test_can_set_shopping_basket
+      order.shopping_basket = ShoppingBasket.new(:shopping_basket)
+      assert_equal :shopping_basket, record.shopping_basket_record
+    end
+
+    def test_can_set_nil_shopping_basket
+      record.shopping_basket_record = :shopping_basket
+      order.shopping_basket = nil
+    end
+
     ################# Archive #####################
 
     def test_can_access_state
