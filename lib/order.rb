@@ -97,39 +97,38 @@ end
 class Order < Errol::Entity
   require_relative './order/record'
 
-  entry_accessor  :state
+  entry_accessor  :state,
+                  :basket_total,
+                  :discount_value,
+                  :payment_gross,
+                  :tax_payment,
+                  :payment_net
 
   def initialize(*args)
     super
     record.state ||= 'pending'
   end
 
-  # def mark_pending
-  #   self.record.state = 'pending'
-  # end
-  #
   # def transaction
   #   @transaction ||= Transaction.new(record)
   # end
-  #
-  #                 :tax_amount,
-  #                 :discount_amount,
-  #                 :updated_at,
-  #                 :created_at
-  #
-  # def calculate_prices
-  #   self.basket_amount = shopping_basket.price
-  #   self.tax_amount = basket_amount * customer.vat_rate
-  #   self.discount_amount = Money.new(discount.value) if discount
-  #   self.discount_amount = Money.new(0) if !discount
-  # end
-  #
-  # def to_pay
-  #   basket_amount + tax_amount - discount_amount
-  # end
-  #
+  def calculate_payment
+    self.basket_total = shopping_basket.price
+    self.discount_value = discount_value
+    self.payment_gross = [(basket_total - discount_value), Money.new(0)].max
+    self.tax_payment = payment_gross * customer.vat_rate
+    self.payment_net = payment_gross + tax_payment
+  end
   # delegate :setup, :fetch_details, :checkout, :to => :transaction
-  
+
+  def discount_value
+    if discount
+      discount.value
+    else
+      0
+    end
+  end
+
   def discount
     Discount.new record.discount_record if record.discount_record
   end
@@ -143,10 +142,12 @@ class Order < Errol::Entity
   end
 
   def shopping_basket
-    ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
+    return @shopping_basket if @shopping_basket
+    @shopping_basket = ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
   end
 
   def shopping_basket=(shopping_basket)
+    @shopping_basket = shopping_basket
     if shopping_basket.nil?
       record.shopping_basket_record = shopping_basket
     else
@@ -155,10 +156,12 @@ class Order < Errol::Entity
   end
 
   def customer
-    Customer.new record.customer_record if record.customer_record
+    return @customer if @customer
+    @customer = Customer.new record.customer_record if record.customer_record
   end
 
   def customer=(customer)
+    @customer = customer
     if customer.nil?
       record.customer_record = customer
     else

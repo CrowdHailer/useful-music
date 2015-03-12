@@ -20,6 +20,20 @@ class Order
       assert_equal 'processing', order.state
     end
 
+    def test_calculates_prices
+      # @record = create :order_record, :discount_record => create(:discount_record)
+      # order.calculate_payment
+
+    end
+
+    def test_dummy_calculate_price
+      order.customer = Struct.new(:vat_rate, :record).new(0, :customer)
+      order.shopping_basket = Struct.new(:price, :record).new(Money.new(1200), :shopping_basket)
+      order.calculate_payment
+      assert_equal Money.new(1200), order.basket_total
+      # assert_equal Money.new(0), order.discount_value
+    end
+
     # def test_creation
     #   purchase = Purchase.new(create :purchase_record)
     #   customer = Customer.new(create :customer_record)
@@ -53,11 +67,6 @@ class Order
     def test_can_set_nil_customer
       record.customer_record = :customer
       order.customer = nil
-    end
-
-    def test_can_initialize_with_customer
-      order = Order.new :customer => Customer.new(:customer)
-      assert_equal :customer, order.customer.record
     end
 
     def test_can_make_shopping_basket

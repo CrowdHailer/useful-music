@@ -23,8 +23,7 @@ class OrdersController < UsefulMusic::App
     order = Orders.build :customer => current_customer,
       :shopping_basket => shopping_basket,
       :discount => discount
-    order.mark_pending
-    order.calculate_prices
+    order.calculate_payment
     Orders.save order
     redirect order.setup(url).redirect_uri
   end
