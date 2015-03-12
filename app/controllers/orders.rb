@@ -30,7 +30,6 @@ class OrdersController < UsefulMusic::App
     @order = Order.new(Order::Record[id])
     html = render :show, :layout => nil
     kit = PDFKit.new(html)
-    ap File.expand_path('./public/stylesheets/license.css', APP_ROOT)
     kit.stylesheets << File.expand_path('./public/stylesheets/license.css', APP_ROOT)
     pdf = kit.to_pdf#
     file = Tempfile.new('foo')
@@ -49,14 +48,7 @@ class OrdersController < UsefulMusic::App
     payer_ID = request.GET['PayerID']
     # order.fetch_details token
     # order.checkout token, payer_ID
-    # session['useful_music.basket_id'] = nil
-    # template = Tilt::ERBTemplate.new('template.erb')
-    # mail = Mail.new
-    # mail.from 'orders@usefulmusic.com'
-    # mail.to order.customer.email
-    # mail.subject 'Here is a message'
-    # mail.body "Your purchases are available in your account for the next 4 days"
-    # mail.deliver
+    customer_mailer.order_successful
     current_customer.record.update :shopping_basket_record => nil
     session.delete 'guest.shopping_basket'
 

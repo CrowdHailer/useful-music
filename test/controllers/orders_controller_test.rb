@@ -72,5 +72,6 @@ class OrdersControllerTest < MyRecordTest
     # assert_equal 'succeded', Orders.last.transaction.state
     assert_equal nil, customer.record.reload.shopping_basket_record
     assert_equal nil, last_request.session['guest.shopping_basket']
+    # ap last_message.body
   end
 end
