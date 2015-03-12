@@ -97,13 +97,19 @@ end
 class Order < Errol::Entity
   require_relative './order/record'
 
-  def transaction
-    Transaction.new(record)
+  def initialize(*args)
+    super
   end
 
-  entry_accessor  :created_at,
-                  :updated_at,
-                  :basket_amount,
+  def mark_pending
+    self.record.state = 'pending'
+  end
+
+  def transaction
+    @transaction ||= Transaction.new(record)
+  end
+
+  entry_accessor  :basket_amount,
                   :tax_amount,
                   :discount_amount
 

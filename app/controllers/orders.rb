@@ -8,19 +8,14 @@ class OrdersController < UsefulMusic::App
   def create
     send_to_login if current_customer.guest?
     send_back if shopping_basket.empty?
-    form = Order::Create::Form.new request.POST['order'], current_customer
-    order = Orders.create form
-    order.process!
-    redirect order.redirect_uri
-    # form.customer = current_customer
-    # order = Orders.create(form.to_hash) do |order|
-    #   order.calculate_prices
-    #   order.transaction
-    # end
+    order = Orders.build :customer => current_customer, :shopping_basket => shopping_basket
+    order.mark_pending
+    order.calculate_prices
+    Orders.save order
     # current_customer.shopping_basket = nil
     # Customers.save current_customer
     # session['guest.shopping_basket'] = nil
-    # redirect order.setup(url).redirect_uri
+    redirect order.setup(url).redirect_uri
   end
 
   def send_to_login
