@@ -129,32 +129,19 @@ class Order < Errol::Entity
   # end
   #
   # delegate :setup, :fetch_details, :checkout, :to => :transaction
-  #
-  #
-  # def shopping_basket
-  #   ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
-  # end
-  #
-  # def shopping_basket=(shopping_basket)
-  #   record.shopping_basket_record = shopping_basket.record
-  # end
-  #
-  # def discount=(discount)
-  #   # TODO FIX
-  #   return
-  #   if discount.nil?
-  #     record.discount_record = nil
-  #   else
-  #     record.discount_record = discount.record
-  #   end
-  # end
-  #
-  # def discount
-  #   # TODO FIX
-  #   return
-  #   Discount.new record.discount_record if record.discount_record
-  # end
-  #
+  
+  def discount
+    Discount.new record.discount_record if record.discount_record
+  end
+
+  def discount=(discount)
+    if discount.nil?
+      record.discount_record = discount
+    else
+      record.discount_record = discount.record
+    end
+  end
+
   def shopping_basket
     ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
   end

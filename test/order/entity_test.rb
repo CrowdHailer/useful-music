@@ -74,6 +74,25 @@ class Order
       order.shopping_basket = nil
     end
 
+    def test_can_make_discount
+      record.discount_record = :discount
+      assert_equal Discount.new(:discount), order.discount
+    end
+
+    def test_nil_discount_if_no_record
+      assert_nil order.discount
+    end
+
+    def test_can_set_discount
+      order.discount = Discount.new(:discount)
+      assert_equal :discount, record.discount_record
+    end
+
+    def test_can_set_nil_discount
+      record.discount_record = :discount
+      order.discount = nil
+    end
+
     ################# Archive #####################
 
     def test_can_access_state
