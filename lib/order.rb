@@ -102,7 +102,8 @@ class Order < Errol::Entity
                   :discount_value,
                   :payment_gross,
                   :tax_payment,
-                  :payment_net
+                  :payment_net,
+                  :updated_at # TODO untested
 
   def initialize(*args)
     super
