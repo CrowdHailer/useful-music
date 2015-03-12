@@ -12,9 +12,6 @@ class OrdersController < UsefulMusic::App
     order.mark_pending
     order.calculate_prices
     Orders.save order
-    # current_customer.shopping_basket = nil
-    # Customers.save current_customer
-    # session['guest.shopping_basket'] = nil
     redirect order.setup(url).redirect_uri
   end
 
@@ -47,19 +44,21 @@ class OrdersController < UsefulMusic::App
   end
 
   get '/:id/success' do |id|
-    order = Order.new(Order::Record[id])
-    order.fetch_details request.GET['token']
-    ap order.record.values
-    order.checkout request.GET['token'], request.GET['PayerID']
-    ap order.record.values
-    session['useful_music.basket_id'] = nil
+    order = Orders.fetch(id)
+    token = request.GET['token']
+    payer_ID = request.GET['PayerID']
+    # order.fetch_details token
+    # order.checkout token, payer_ID
+    # session['useful_music.basket_id'] = nil
     # template = Tilt::ERBTemplate.new('template.erb')
-    mail = Mail.new
-    mail.from 'orders@usefulmusic.com'
-    mail.to order.customer.email
-    mail.subject 'Here is a message'
-    mail.body "Your purchases are available in your account for the next 4 days"
-    mail.deliver
+    # mail = Mail.new
+    # mail.from 'orders@usefulmusic.com'
+    # mail.to order.customer.email
+    # mail.subject 'Here is a message'
+    # mail.body "Your purchases are available in your account for the next 4 days"
+    # mail.deliver
+    current_customer.record.update :shopping_basket_record => nil
+    session.delete 'guest.shopping_basket'
 
     flash[:success] = 'Order placed successfuly'
     redirect "customers/#{current_customer.id}"
