@@ -65,6 +65,11 @@ class OrdersController < UsefulMusic::App
     # render :show
   end
 
+  get '/:id/cancel' do |id|
+    flash['success'] = 'Order cancelled'
+    redirect '/'
+  end
+
   get '/:id/success' do |id|
     order = Orders.fetch(id)
     token = request.GET['token']
