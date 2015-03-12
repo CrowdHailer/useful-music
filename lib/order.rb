@@ -123,14 +123,16 @@ class Order < Errol::Entity
 
 
   def discount
+    return @discount if @discount
     if record.discount_record
-      Discount.new record.discount_record
+      @discount = Discount.new record.discount_record
     else
       Discount.null
     end
   end
 
   def discount=(discount)
+    @discount = discount
     if discount.nil?
       record.discount_record = discount
     else

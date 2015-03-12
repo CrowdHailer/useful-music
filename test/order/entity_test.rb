@@ -28,13 +28,11 @@ class Order
       Struct.new(:price, :record).new(price, :shopping_basket)
     end
 
-    def test_calculates_prices
-      # @record = create :order_record, :discount_record => create(:discount_record)
-      # order.calculate_payment
-
+    def dummy_discount(value)
+      Struct.new(:value, :record).new(value, :discount)
     end
 
-    def test_dummy_calculate_price
+    def test_calculate_payment_no_discount
       tenner = Money.new(1000)
       order.customer = dummy_customer
       order.shopping_basket = dummy_basket(tenner)
@@ -44,6 +42,46 @@ class Order
       assert_equal tenner, order.payment_gross
       assert_equal Money.new(0), order.tax_payment
       assert_equal tenner, order.payment_net
+    end
+
+    def test_calculates_payment_with_discount
+      tenner = Money.new(1000)
+      fiver = Money.new(500)
+      order.customer = dummy_customer
+      order.shopping_basket = dummy_basket(tenner)
+      order.discount = dummy_discount(fiver)
+      order.calculate_payment
+      assert_equal tenner, order.basket_total
+      assert_equal fiver, order.discount_value
+      assert_equal fiver, order.payment_gross
+      assert_equal Money.new(0), order.tax_payment
+      assert_equal fiver, order.payment_net
+    end
+
+    def test_calculates_prive_with_big_discount
+      tenner = Money.new(1000)
+      fiver = Money.new(500)
+      order.customer = dummy_customer
+      order.shopping_basket = dummy_basket(fiver)
+      order.discount = dummy_discount(tenner)
+      order.calculate_payment
+      assert_equal fiver, order.basket_total
+      assert_equal tenner, order.discount_value
+      assert_equal Money.new(0), order.payment_gross
+      assert_equal Money.new(0), order.tax_payment
+      assert_equal Money.new(0), order.payment_net
+    end
+
+    def test_calculate_payment_with_vat
+      tenner = Money.new(1000)
+      order.customer = dummy_customer(0.2)
+      order.shopping_basket = dummy_basket(tenner)
+      order.calculate_payment
+      assert_equal tenner, order.basket_total
+      assert_equal Money.new(0), order.discount_value
+      assert_equal tenner, order.payment_gross
+      assert_equal Money.new(200), order.tax_payment
+      assert_equal Money.new(1200), order.payment_net
     end
 
     ################# Associations #####################
