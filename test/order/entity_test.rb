@@ -55,6 +55,11 @@ class Order
       order.customer = nil
     end
 
+    def test_can_initialize_with_customer
+      order = Order.new :customer => Customer.new(:customer)
+      assert_equal :customer, order.customer.record
+    end
+
     def test_can_make_shopping_basket
       record.shopping_basket_record = :shopping_basket
       assert_equal ShoppingBasket.new(:shopping_basket), order.shopping_basket
