@@ -138,6 +138,8 @@ class Order < Errol::Entity
   end
 
   def discount=(discount)
+    # TODO FIX
+    return
     if discount.nil?
       record.discount_record = nil
     else
@@ -146,6 +148,8 @@ class Order < Errol::Entity
   end
 
   def discount
+    # TODO FIX
+    return
     Discount.new record.discount_record if record.discount_record
   end
 

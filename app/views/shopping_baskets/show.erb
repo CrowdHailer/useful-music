@@ -108,7 +108,7 @@
 <div class="row">
     <div class="columns large-12">
         <p style="text-align:right;">
-            If you have a discount or free download code, please enter it here:
+            <!-- If you have a discount or free download code, please enter it here: -->
         </p>
     </div>
 </div>
@@ -126,19 +126,25 @@
         </form> -->
     </div>
     <div class="columns large-6">
-        <form id="checkout-button" action="/orders" method="post" class="right">
-            <%= csrf_tag %>
-            <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
-            <div class="row">
-                <div class="columns large-6">
-                    <input type="text" name="discount" value="" placeholder="Discount Code">
-                </div>
-                <div class="columns large-6">
-                    <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
-                </div>
+        <% if current_customer.customer? %>
+            <form id="checkout-button" action="/orders" method="post" class="right">
+                <%= csrf_tag %>
+                <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
+                <div class="row">
+                    <!-- <div class="columns large-6">
+                        <input type="text" name="discount" value="" placeholder="Discount Code">
+                    </div> -->
+                    <div class="columns large-6">
+                        <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
+                    </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+        <% else %>
+            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                Please <a class="button" href="/sessions/new">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
+            </p>
+        <% end %>
     </div>
 
 </div>
@@ -159,9 +165,9 @@
             <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
         </form> -->
         <% else %>
-        <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+        <!-- <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
             Please <a class="button" href="/sessions/new">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
-        </p>
+        </p> -->
         <% end %>
     </div>
 </div>
