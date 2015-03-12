@@ -21,6 +21,16 @@ class Orders < Errol::Repository
   end
 
   def dataset
-    raw_dataset
+    tmp = raw_dataset
+    if inquiry.succeded
+      tmp = tmp.where(:state => 'succeded')
+    end
+    if inquiry.customer
+      tmp = tmp.where(:customer_record => inquiry.customer.record)
+    end
+    if inquiry.discount
+      tmp = tmp.where(:discount_record => inquiry.discount.record)
+    end
+    tmp
   end
 end

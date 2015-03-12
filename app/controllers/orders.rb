@@ -12,6 +12,11 @@ class OrdersController < UsefulMusic::App
     if discount_code && !discount_code.empty?
       discount = Discounts.available(discount_code)
       invalid_discount if discount.nil?
+      used_discount if Orders.first(
+        :succeded => true,
+        :customer => current_customer,
+        :discount => discount
+      )
     else
       discount = nil
     end
@@ -34,6 +39,11 @@ class OrdersController < UsefulMusic::App
 
   def invalid_discount
     flash['error'] = 'This discount code is invalid'
+    redirect request.referer
+  end
+
+  def used_discount
+    flash['error'] = 'This discount code has been used'
     redirect request.referer
   end
 
