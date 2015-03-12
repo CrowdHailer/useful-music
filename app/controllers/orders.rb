@@ -20,7 +20,9 @@ class OrdersController < UsefulMusic::App
     else
       discount = nil
     end
-    order = Orders.build :customer => current_customer, :shopping_basket => shopping_basket
+    order = Orders.build :customer => current_customer,
+      :shopping_basket => shopping_basket,
+      :discount => discount
     order.mark_pending
     order.calculate_prices
     Orders.save order
