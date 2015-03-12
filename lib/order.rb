@@ -111,7 +111,9 @@ class Order < Errol::Entity
 
   entry_accessor  :basket_amount,
                   :tax_amount,
-                  :discount_amount
+                  :discount_amount,
+                  :updated_at,
+                  :created_at
 
   def calculate_prices
     self.basket_amount = shopping_basket.price

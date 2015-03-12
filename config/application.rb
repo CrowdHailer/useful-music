@@ -39,6 +39,7 @@ module UsefulMusic
     end
 
     def current_customer
+      # TODO memoissation
       Customers.fetch(session[:user_id]) { Guest.new(session) }
     end
 
@@ -52,7 +53,14 @@ module UsefulMusic
     end
 
     def shopping_basket
-      current_customer.shopping_basket ||= ShoppingBaskets.create
+      customer = current_customer
+      return customer.shopping_basket if customer.shopping_basket
+      if customer.guest?
+        customer.shopping_basket ||= ShoppingBaskets.create
+      else
+        customer.record.update :shopping_basket_record => ShoppingBaskets.create.record
+      end
+      customer.shopping_basket
     end
 
     def customer_mailer
