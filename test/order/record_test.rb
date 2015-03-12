@@ -97,6 +97,12 @@ class Order
       assert_match(/discount_amount_limit/, err.message)
     end
 
+    def test_can_have_a_discount_record
+      discount_record = create :discount_record
+      order_record = create :order_record, :discount_record => discount_record
+      assert_equal discount_record, order_record.discount_record
+    end
+
     def test_discount_amount_cannot_be_1000_pounds
       err = assert_raises Sequel::CheckConstraintViolation do
         create :order_record, :discount_amount => Money.new(100000)

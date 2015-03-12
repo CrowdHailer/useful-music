@@ -128,10 +128,10 @@
     <div class="columns large-6">
         <form id="checkout-button" action="/orders" method="post" class="right">
             <%= csrf_tag %>
-            <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
+            <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
             <div class="row">
                 <div class="columns large-6">
-                    <input type="text" name="order[discount]" value="" placeholder="Discount Code">
+                    <input type="text" name="discount" value="" placeholder="Discount Code">
                 </div>
                 <div class="columns large-6">
                     <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>

@@ -118,7 +118,8 @@ class Order < Errol::Entity
   def calculate_prices
     self.basket_amount = shopping_basket.price
     self.tax_amount = basket_amount * customer.vat_rate
-    self.discount_amount ||= Money.new(0)
+    self.discount_amount = Money.new(discount.value) if discount
+    self.discount_amount = Money.new(0) if !discount
   end
 
   def to_pay
@@ -134,6 +135,18 @@ class Order < Errol::Entity
 
   def shopping_basket=(shopping_basket)
     record.shopping_basket_record = shopping_basket.record
+  end
+
+  def discount=(discount)
+    if discount.nil?
+      record.discount_record = nil
+    else
+      record.discount_record = discount.record
+    end
+  end
+
+  def discount
+    Discount.new record.discount_record if record.discount_record
   end
 
   def customer
