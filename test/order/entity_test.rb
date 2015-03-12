@@ -20,6 +20,14 @@ class Order
       assert_equal 'processing', order.state
     end
 
+    def dummy_customer(vat_rate=0)
+      Struct.new(:vat_rate, :record).new(vat_rate, :customer)
+    end
+
+    def dummy_basket(price)
+      Struct.new(:price, :record).new(price, :shopping_basket)
+    end
+
     def test_calculates_prices
       # @record = create :order_record, :discount_record => create(:discount_record)
       # order.calculate_payment
@@ -27,26 +35,16 @@ class Order
     end
 
     def test_dummy_calculate_price
-      order.customer = Struct.new(:vat_rate, :record).new(0, :customer)
-      order.shopping_basket = Struct.new(:price, :record).new(Money.new(1200), :shopping_basket)
+      tenner = Money.new(1000)
+      order.customer = dummy_customer
+      order.shopping_basket = dummy_basket(tenner)
       order.calculate_payment
-      assert_equal Money.new(1200), order.basket_total
-      # assert_equal Money.new(0), order.discount_value
+      assert_equal tenner, order.basket_total
+      assert_equal Money.new(0), order.discount_value
+      assert_equal tenner, order.payment_gross
+      assert_equal Money.new(0), order.tax_payment
+      assert_equal tenner, order.payment_net
     end
-
-    # def test_creation
-    #   purchase = Purchase.new(create :purchase_record)
-    #   customer = Customer.new(create :customer_record)
-    #   order = Order.create(
-    #     :shopping_basket => purchase.shopping_basket,
-    #     :customer => customer
-    #   ) do |order|
-    #     order.calculate_prices
-    #     order.transaction
-    #   end
-    #
-    #   order.setup('http://www.example.com').redirect_uri
-    # end
 
     ################# Associations #####################
 
