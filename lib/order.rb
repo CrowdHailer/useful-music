@@ -114,23 +114,20 @@ class Order < Errol::Entity
   # end
   def calculate_payment
     self.basket_total = shopping_basket.price
-    self.discount_value = discount_value
-    self.payment_gross = [(basket_total - discount_value), Money.new(0)].max
+    self.discount_value = discount.value
+    self.payment_gross = [(basket_total - discount.value), Money.new(0)].max
     self.tax_payment = payment_gross * customer.vat_rate
     self.payment_net = payment_gross + tax_payment
   end
   # delegate :setup, :fetch_details, :checkout, :to => :transaction
 
-  def discount_value
-    if discount
-      discount.value
-    else
-      0
-    end
-  end
 
   def discount
-    Discount.new record.discount_record if record.discount_record
+    if record.discount_record
+      Discount.new record.discount_record
+    else
+      Discount.null
+    end
   end
 
   def discount=(discount)

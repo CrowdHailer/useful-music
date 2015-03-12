@@ -95,6 +95,7 @@ class Order
 
     def test_nil_discount_if_no_record
       assert_nil order.discount
+      assert_equal Money.new(0), order.discount.value
     end
 
     def test_can_set_discount
