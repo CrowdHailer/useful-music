@@ -19,6 +19,16 @@ class OrdersControllerTest < MyRecordTest
     assert_equal 'Your shopping basket is empty', flash['error']
     assert last_response.redirect?
   end
+  def test_redirects_for_invalid_discount
+    shopping_basket_record = create :shopping_basket_record
+    shopping_basket = ShoppingBasket.new shopping_basket_record
+    shopping_basket_record.add_purchase_record create(:purchase_record)
+    customer.record.shopping_basket_record = shopping_basket_record
+    customer.record.save
+    post '/', {:discount => 'RANDOM'}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'This discount code is invalid', flash['error']
+    assert last_response.redirect?
+  end
 
   def test_creates_order
     shopping_basket_record = create :shopping_basket_record

@@ -8,6 +8,13 @@ class OrdersController < UsefulMusic::App
   def create
     send_to_login if current_customer.guest?
     send_back if shopping_basket.empty?
+    discount_code = request.POST['discount']
+    if discount_code && !discount_code.empty?
+      discount = Discounts.available(discount_code)
+      invalid_discount if discount.nil?
+    else
+      discount = nil
+    end
     order = Orders.build :customer => current_customer, :shopping_basket => shopping_basket
     order.mark_pending
     order.calculate_prices
@@ -22,6 +29,11 @@ class OrdersController < UsefulMusic::App
 
   def send_back
     flash['error'] = 'Your shopping basket is empty'
+    redirect request.referer
+  end
+
+  def invalid_discount
+    flash['error'] = 'This discount code is invalid'
     redirect request.referer
   end
 
