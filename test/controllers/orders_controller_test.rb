@@ -56,7 +56,7 @@ class OrdersControllerTest < MyRecordTest
     customer.record.save
     post '/', {}, {'rack.session' => {:user_id => customer.id}}
     order = Orders.last
-    assert_equal order.basket_amount, shopping_basket.price
+    assert_equal order.basket_total, shopping_basket.price
     assert_equal order.record.state, 'processing'
     assert last_response.redirect?
     assert_includes last_response.location, 'sandbox'

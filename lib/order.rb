@@ -1,7 +1,10 @@
 class Transaction < Errol::Entity
   entry_accessor  :state,
-                  :basket_amount,
-                  :tax_amount,
+                  :basket_total,
+                  :tax_payment,
+                  :discount_value,
+                  :payment_gross,
+                  :payment_net,
                   :token,
                   :payer_email,
                   :payer_first_name,
@@ -48,14 +51,17 @@ class Transaction < Errol::Entity
   end
 
   def payment_request
+    ap payment_net.fractional
+    ap tax_payment.fractional
+    ap payment_gross.fractional
     Paypal::Payment::Request.new(
       :currency_code => :GBP,
       :quantity      => 1,
-      :amount => basket_amount + tax_amount,
-      :tax_amount => tax_amount,
+      :amount => payment_net.fractional,
+      :tax_amount => tax_payment.fractional,
       :items => [{
         :name => 'Order Total',
-        :amount => basket_amount,
+        :amount => payment_gross.fractional,
         :category => :Digital
       }],
       :custom_fields => {
@@ -110,9 +116,11 @@ class Order < Errol::Entity
     record.state ||= 'pending'
   end
 
-  # def transaction
-  #   @transaction ||= Transaction.new(record)
-  # end
+  # TODO untested
+  def transaction
+    @transaction ||= Transaction.new(record)
+  end
+
   def calculate_payment
     self.basket_total = shopping_basket.price
     self.discount_value = discount.value
@@ -120,7 +128,8 @@ class Order < Errol::Entity
     self.tax_payment = payment_gross * customer.vat_rate
     self.payment_net = payment_gross + tax_payment
   end
-  # delegate :setup, :fetch_details, :checkout, :to => :transaction
+  # TODO untested
+  delegate :setup, :fetch_details, :checkout, :to => :transaction
 
 
   def discount

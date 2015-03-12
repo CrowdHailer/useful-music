@@ -35,7 +35,7 @@ class Order
     serialize_attributes [
       lambda{ |money| money.fractional },
       lambda{ |fractional| Money.new(fractional) }
-    ], :basket_amount, :tax_amount, :discount_amount
+    ], :basket_total, :tax_payment, :discount_value, :payment_gross, :payment_net
 
     mount_uploader :license, LicenseUploader
   end
