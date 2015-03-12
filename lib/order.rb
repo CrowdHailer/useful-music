@@ -51,17 +51,17 @@ class Transaction < Errol::Entity
   end
 
   def payment_request
-    ap payment_net.fractional
-    ap tax_payment.fractional
-    ap payment_gross.fractional
+    ap payment_net.to_f
+    ap tax_payment.to_f
+    ap payment_gross.to_f
     Paypal::Payment::Request.new(
       :currency_code => :GBP,
       :quantity      => 1,
-      :amount => payment_net.fractional,
-      :tax_amount => tax_payment.fractional,
+      :amount => payment_net.to_f,
+      :tax_amount => tax_payment.to_f,
       :items => [{
         :name => 'Order Total',
-        :amount => payment_gross.fractional,
+        :amount => payment_gross.to_f,
         :category => :Digital
       }],
       :custom_fields => {
