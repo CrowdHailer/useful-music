@@ -51,9 +51,6 @@ class Transaction < Errol::Entity
   end
 
   def payment_request
-    ap payment_net.to_f
-    ap tax_payment.to_f
-    ap payment_gross.to_f
     Paypal::Payment::Request.new(
       :currency_code => :GBP,
       :quantity      => 1,
