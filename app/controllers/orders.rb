@@ -46,8 +46,8 @@ class OrdersController < UsefulMusic::App
     order = Orders.fetch(id)
     token = request.GET['token']
     payer_ID = request.GET['PayerID']
-    # order.fetch_details token
-    # order.checkout token, payer_ID
+    order.fetch_details token
+    order.checkout token, payer_ID
     customer_mailer.order_successful
     current_customer.record.update :shopping_basket_record => nil
     session.delete 'guest.shopping_basket'
