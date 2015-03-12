@@ -6,7 +6,12 @@ class OrdersController < UsefulMusic::App
   render_defaults[:dir] += '/orders'
 
   def create
+    send_to_login if current_customer.guest?
+    send_back if shopping_basket.empty?
     form = Order::Create::Form.new request.POST['order'], current_customer
+    order = Orders.create form
+    order.process!
+    redirect order.redirect_uri
     # form.customer = current_customer
     # order = Orders.create(form.to_hash) do |order|
     #   order.calculate_prices
@@ -16,6 +21,16 @@ class OrdersController < UsefulMusic::App
     # Customers.save current_customer
     # session['guest.shopping_basket'] = nil
     # redirect order.setup(url).redirect_uri
+  end
+
+  def send_to_login
+    flash['error'] = 'Please Sign in or Create account to checkout purchases'
+    redirect '/sessions/new'
+  end
+
+  def send_back
+    flash['error'] = 'Your shopping basket is empty'
+    redirect request.referer
   end
 
   def show(id)
