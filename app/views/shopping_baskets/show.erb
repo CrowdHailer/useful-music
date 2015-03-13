@@ -127,7 +127,7 @@
     </div>
     <div class="columns large-6">
         <% if current_customer.customer? %>
-            <% if true %>
+            <% if RACK_ENV == 'production' %>
             <div class="row collapse">
                 <div class="large-12 columns flash" style="background-color:grey;">
                     <h2>
