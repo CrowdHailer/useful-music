@@ -7,7 +7,9 @@ class ShoppingBasketsController < UsefulMusic::App
   # TODO test
 
   def show(id)
-    @basket = ShoppingBasket.new ShoppingBasket::Record[id]
+    record = ShoppingBasket::Record[id]
+    redirect '/' if record.nil?
+    @basket = ShoppingBasket.new record
     render :show
   end
 
