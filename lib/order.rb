@@ -1,7 +1,10 @@
 class Transaction < Errol::Entity
   entry_accessor  :state,
-                  :basket_amount,
-                  :tax_amount,
+                  :basket_total,
+                  :tax_payment,
+                  :discount_value,
+                  :payment_gross,
+                  :payment_net,
                   :token,
                   :payer_email,
                   :payer_first_name,
@@ -51,11 +54,11 @@ class Transaction < Errol::Entity
     Paypal::Payment::Request.new(
       :currency_code => :GBP,
       :quantity      => 1,
-      :amount => basket_amount + tax_amount,
-      :tax_amount => tax_amount,
+      :amount => payment_net.to_f,
+      :tax_amount => tax_payment.to_f,
       :items => [{
         :name => 'Order Total',
-        :amount => basket_amount,
+        :amount => payment_gross.to_f,
         :category => :Digital
       }],
       :custom_fields => {
@@ -97,67 +100,78 @@ end
 class Order < Errol::Entity
   require_relative './order/record'
 
+  entry_accessor  :state,
+                  :basket_total,
+                  :discount_value,
+                  :payment_gross,
+                  :tax_payment,
+                  :payment_net,
+                  :updated_at # TODO untested
+
   def initialize(*args)
     super
+    record.state ||= 'pending'
   end
 
-  def mark_pending
-    self.record.state = 'pending'
-  end
-
+  # TODO untested
   def transaction
     @transaction ||= Transaction.new(record)
   end
 
-  entry_accessor  :basket_amount,
-                  :tax_amount,
-                  :discount_amount,
-                  :updated_at,
-                  :created_at
-
-  def calculate_prices
-    self.basket_amount = shopping_basket.price
-    self.tax_amount = basket_amount * customer.vat_rate
-    self.discount_amount = Money.new(discount.value) if discount
-    self.discount_amount = Money.new(0) if !discount
+  def calculate_payment
+    self.basket_total = shopping_basket.price
+    self.discount_value = discount.value
+    self.payment_gross = [(basket_total - discount.value), Money.new(0)].max
+    self.tax_payment = payment_gross * customer.vat_rate
+    self.payment_net = payment_gross + tax_payment
   end
-
-  def to_pay
-    basket_amount + tax_amount - discount_amount
-  end
-
+  # TODO untested
   delegate :setup, :fetch_details, :checkout, :to => :transaction
 
 
-  def shopping_basket
-    ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
-  end
-
-  def shopping_basket=(shopping_basket)
-    record.shopping_basket_record = shopping_basket.record
+  def discount
+    return @discount if @discount
+    if record.discount_record
+      @discount = Discount.new record.discount_record
+    else
+      Discount.null
+    end
   end
 
   def discount=(discount)
-    # TODO FIX
-    return
+    @discount = discount
     if discount.nil?
-      record.discount_record = nil
+      record.discount_record = discount
     else
       record.discount_record = discount.record
     end
   end
 
-  def discount
-    # TODO FIX
-    return
-    Discount.new record.discount_record if record.discount_record
+  def shopping_basket
+    return @shopping_basket if @shopping_basket
+    @shopping_basket = ShoppingBasket.new record.shopping_basket_record if record.shopping_basket_record
+  end
+
+  def shopping_basket=(shopping_basket)
+    @shopping_basket = shopping_basket
+    if shopping_basket.nil?
+      record.shopping_basket_record = shopping_basket
+    else
+      record.shopping_basket_record = shopping_basket.record
+    end
   end
 
   def customer
-    Customer.new record.customer_record if record.customer_record
+    return @customer if @customer
+    @customer = Customer.new record.customer_record if record.customer_record
   end
 
   def customer=(customer)
-    record.customer_record = customer.record
+    @customer = customer
+    if customer.nil?
+      record.customer_record = customer
+    else
+      record.customer_record = customer.record
+    end
   end
 end

@@ -23,8 +23,7 @@ class OrdersController < UsefulMusic::App
     order = Orders.build :customer => current_customer,
       :shopping_basket => shopping_basket,
       :discount => discount
-    order.mark_pending
-    order.calculate_prices
+    order.calculate_payment
     Orders.save order
     redirect order.setup(url).redirect_uri
   end
@@ -64,6 +63,11 @@ class OrdersController < UsefulMusic::App
     html = render :show, :layout => nil
     redirect @order.record.license.url
     # render :show
+  end
+
+  get '/:id/cancel' do |id|
+    flash['success'] = 'Order cancelled'
+    redirect '/'
   end
 
   get '/:id/success' do |id|

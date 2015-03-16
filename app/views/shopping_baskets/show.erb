@@ -108,7 +108,7 @@
 <div class="row">
     <div class="columns large-12">
         <p style="text-align:right;">
-            <!-- If you have a discount or free download code, please enter it here: -->
+            If you have a discount or free download code, please enter it here:
         </p>
     </div>
 </div>
@@ -127,19 +127,29 @@
     </div>
     <div class="columns large-6">
         <% if current_customer.customer? %>
+            <% if RACK_ENV == 'production' %>
+            <div class="row collapse">
+                <div class="large-12 columns flash" style="background-color:grey;">
+                    <h2>
+                        Wow you were quick! We are just finalising the site. Don't worry your shopping basket has been saved. Thank you for visiting Useful Music and why not join our <a href="http://eepurl.com/bgyKh1">mailing list</a>
+                    </h2>
+                </div>
+            </div>
+            <% else %>
             <form id="checkout-button" action="/orders" method="post" class="right">
                 <%= csrf_tag %>
                 <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
                 <div class="row">
-                    <!-- <div class="columns large-6">
+                    <div class="columns large-6">
                         <input type="text" name="discount" value="" placeholder="Discount Code">
-                    </div> -->
+                    </div>
                     <div class="columns large-6">
                         <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
                     </div>
 
                 </div>
             </form>
+            <% end %>
         <% else %>
             <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
                 Please <a class="button" href="/sessions/new">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
@@ -151,13 +161,6 @@
 <div class="row">
     <div class="columns large-12">
         <% if current_customer.customer? %>
-        <!-- <div class="row collapse">
-            <div class="large-12 columns flash" style="background-color:grey;">
-                <h2>
-                    Wow you were quick! We are just finalising the site. Don't worry your shopping basket has been saved. Thank you for visiting Useful Music and why not join our <a href="http://eepurl.com/bgyKh1">mailing list</a>
-                </h2>
-            </div>
-        </div> -->
         <!-- <form id="checkout-button" action="/orders" method="post" class="right">
             <%= csrf_tag %>
             <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
