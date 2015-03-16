@@ -18,9 +18,20 @@ class Discounts < Errol::Repository
     def receive(entity)
       entity.record
     end
+
+    def available(code)
+      first(:code => code, :available => true)
+    end
   end
 
   def dataset
-    raw_dataset
+    tmp = raw_dataset
+    if inquiry.available == true
+      tmp = tmp.where{start_datetime < DateTime.now}.where{end_datetime > DateTime.now}
+    end
+    if inquiry.code
+      tmp = tmp.where(:code => inquiry.code)
+    end
+    tmp
   end
 end

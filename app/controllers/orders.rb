@@ -6,16 +6,46 @@ class OrdersController < UsefulMusic::App
   render_defaults[:dir] += '/orders'
 
   def create
-    form = Order::Create::Form.new request.POST['order']
-    form.customer = current_customer
-    order = Orders.create(form.to_hash) do |order|
-      order.calculate_prices
-      order.transaction
+    send_to_login if current_customer.guest?
+    send_back if shopping_basket.empty?
+    discount_code = request.POST['discount']
+    if discount_code && !discount_code.empty?
+      discount = Discounts.available(discount_code)
+      invalid_discount if discount.nil?
+      used_discount if Orders.first(
+        :succeded => true,
+        :customer => current_customer,
+        :discount => discount
+      )
+    else
+      discount = nil
     end
-    current_customer.shopping_basket = nil
-    Customers.save current_customer
-    session['guest.shopping_basket'] = nil
+    order = Orders.build :customer => current_customer,
+      :shopping_basket => shopping_basket,
+      :discount => discount
+    order.calculate_payment
+    Orders.save order
     redirect order.setup(url).redirect_uri
+  end
+
+  def send_to_login
+    flash['error'] = 'Please Sign in or Create account to checkout purchases'
+    redirect '/sessions/new'
+  end
+
+  def send_back
+    flash['error'] = 'Your shopping basket is empty'
+    redirect request.referer
+  end
+
+  def invalid_discount
+    flash['error'] = 'This discount code is invalid'
+    redirect request.referer
+  end
+
+  def used_discount
+    flash['error'] = 'This discount code has been used'
+    redirect request.referer
   end
 
   def show(id)
@@ -23,7 +53,6 @@ class OrdersController < UsefulMusic::App
     @order = Order.new(Order::Record[id])
     html = render :show, :layout => nil
     kit = PDFKit.new(html)
-    ap File.expand_path('./public/stylesheets/license.css', APP_ROOT)
     kit.stylesheets << File.expand_path('./public/stylesheets/license.css', APP_ROOT)
     pdf = kit.to_pdf#
     file = Tempfile.new('foo')
@@ -36,20 +65,20 @@ class OrdersController < UsefulMusic::App
     # render :show
   end
 
+  get '/:id/cancel' do |id|
+    flash['success'] = 'Order cancelled'
+    redirect '/'
+  end
+
   get '/:id/success' do |id|
-    order = Order.new(Order::Record[id])
-    order.fetch_details request.GET['token']
-    ap order.record.values
-    order.checkout request.GET['token'], request.GET['PayerID']
-    ap order.record.values
-    session['useful_music.basket_id'] = nil
-    # template = Tilt::ERBTemplate.new('template.erb')
-    mail = Mail.new
-    mail.from 'orders@usefulmusic.com'
-    mail.to order.customer.email
-    mail.subject 'Here is a message'
-    mail.body "Your purchases are available in your account for the next 4 days"
-    mail.deliver
+    order = Orders.fetch(id)
+    token = request.GET['token']
+    payer_ID = request.GET['PayerID']
+    order.fetch_details token
+    order.checkout token, payer_ID
+    customer_mailer.order_successful
+    current_customer.record.update :shopping_basket_record => nil
+    session.delete 'guest.shopping_basket'
 
     flash[:success] = 'Order placed successfuly'
     redirect "customers/#{current_customer.id}"

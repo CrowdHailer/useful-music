@@ -7,11 +7,17 @@ class ShoppingBasketsController < UsefulMusic::App
   # TODO test
 
   def show(id)
-    @basket = ShoppingBasket.new ShoppingBasket::Record[id]
+    record = ShoppingBasket::Record[id]
+    redirect '/' if record.nil?
+    @basket = ShoppingBasket.new record
     render :show
   end
 
   def destroy(id)
+    customer = current_customer
+    unless customer.guest?
+      customer.record.update :shopping_basket_record => nil
+    end
     record = ShoppingBasket::Record[id]
     record.destroy
     flash['success'] = 'Shopping basket cleared'

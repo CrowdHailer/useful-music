@@ -27,10 +27,10 @@
                                     <%= order.id %>
                                 </th>
                                 <th>
-                                    <%= order.basket_amount.format %>
+                                    <%= order.basket_total.format %>
                                 </th>
                                 <th>
-                                    <%= order.tax_amount.format %>
+                                    <%= order.tax_payment.format %>
                                 </th>
                                 <th>
                                     <a href="/orders/<%= order.id %>" target="_blank" download>Download</a>

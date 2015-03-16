@@ -24,6 +24,15 @@ class CustomerMailer
     mail.deliver
   end
 
+  def order_successful
+    mail = Mail.new
+    mail.from 'orders@usefulmusic.com'
+    mail.to @customer.email
+    mail.subject 'Your Order at Useful Music'
+    mail.body render __method__
+    mail.deliver
+  end
+
   def locals
     OpenStruct.new(:customer => customer, :account_url => account_url, :application_url => options.fetch(:application_url))
   end
