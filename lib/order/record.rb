@@ -1,6 +1,6 @@
 Dir[File.expand_path('../**/*.rb', __FILE__)].each { |file| require file }
 
-class LicenseUploader < CarrierWave::Uploader::Base
+class LicenceUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # def extension_white_list
@@ -8,7 +8,7 @@ class LicenseUploader < CarrierWave::Uploader::Base
   # end
 
   def store_dir
-    super + "/licenses"
+    super + "/licences"
   end
 
   def filename
@@ -37,6 +37,6 @@ class Order
       lambda{ |fractional| Money.new(fractional) }
     ], :basket_total, :tax_payment, :discount_value, :payment_gross, :payment_net
 
-    mount_uploader :license, LicenseUploader
+    mount_uploader :licence, LicenceUploader
   end
 end
