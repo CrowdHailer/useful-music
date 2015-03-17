@@ -342,7 +342,7 @@ height: auto;
 }
 
 .ensemble p {
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1.55;
 }
 
@@ -482,12 +482,16 @@ height: auto;
 .basket-item {
   width: 100%;
   height: 2em;
+  padding: 0.2em;
 }
 
 .basket-item p{
   color: white;
   float: left;
   line-height: 0.8;
+  background: #e41f21;
+  position: absolute;
+  z-index: 10;
 }
 
 .basket-contain {
