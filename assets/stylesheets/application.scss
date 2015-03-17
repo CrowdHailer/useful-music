@@ -265,6 +265,30 @@ border-top: 0.1em solid white;
   padding: 0.8em;
 }
 
+.mobile-user-mgmt li {
+  font-family: 'Montserrat';
+  float: left;
+  list-style: none;
+  margin: 0em 1em;
+}
+
+.logout-form-mobile {
+  background: none;
+  border: 0.1em solid #4a4a49;
+  padding: 0.1em;
+  float: right;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+
+.logout-form-input {
+  background: none;
+  border: 0em;
+  font-family: 'Montserrat';
+  margin:0em;
+  text-transform: uppercase;
+}
+
 /*Home Page CSS*/
 
 .above-fold-bg {

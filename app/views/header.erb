@@ -118,21 +118,54 @@
   <div class="row collapse">
     <div class="small-12 columns">
       <div class="mob-menu-wrap" onclick="document.getElementById('mob-menu-display').style.display = 'inline'">
-        <h3 style="float: left; color: white;">Menu</h3><i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+        <h3 style="float: left; color: white;">
+          Menu
+        </h3>
+        <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
       </div>
     </div>
   </div>
+  <div class="mobile-user-mgmt">
+    <div class="row">
+      <div class="medium-6 small-12 columns">
+    <% if current_customer.guest? %>
+    <li>
+        <a href="/sessions/new">Login</a>
+    </li>
+    <li>
+        <a href="/customers/new">Create Account</a>
+    </li>
+    <% else %>
+    <li>
+        <a href="/customers/<%= current_customer.id %>">Hello <%= current_customer.name %></a>
+    </li>
+    <li>
+        <a href="/customers/shopping_baskets/">View Basket</a>
+    </li>
+  </div>
+  <div class="medium-6 small-12 columns">
+    <li>
+        <form class="logout-form-mobile" id="form_id" action="/sessions" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="logout-form-input" type="submit" value="logout">
+        </form>
+    </li>
+    <% end %>
+  </div>
+  </div>
+  </div>
 </div>
 
-<div id="mob-menu-display">
+<div id="mob-menu-display" style="margin-top: 1.5em;">
   <div class="row">
     <div class="small-12 columns">
       <div class="mob-menu">
-        <div class="close-button">
+        <div class="close-button" style="margin-top: 1.5em;">
            <button class="expand close-menu-btn" onclick="document.getElementById('mob-menu-display').style.display = 'none'">Close Menu</button>
         </div>
         <a href="/"><button class="expand mob-menu-button">Home - usefulmusic.com</button></a>
-        <a href="/"><button class="expand mob-menu-button">Piano</button></a>
+        <a href="/piano"><button class="expand mob-menu-button">Piano</button></a>
         <button class="expand mob-menu-button" onclick="document.getElementById('sub-mob-menu-1').style.display = 'inline'">Woodwind <i class="fa  fa-caret-right" style="margin-left: 0.5em; color: white;"></i></button>
 
           <div id="sub-mob-menu-1" style="display: none;">
@@ -141,14 +174,14 @@
                     <div class="mob-menu">
                       <div class="close-button">
                           <button class="expand close-menu-btn" onclick="document.getElementById('sub-mob-menu-1').style.display = 'none'">Close Sub-Menu</button>
-                            <a href="/"><button class="expand mob-sub-menu-button">ALL</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">RECORDER</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">FLUTE</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">OBOE</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">CLARINET</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">CLARINEO</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">BASSOON</button></a>
-                            <a href="/"><button class="expand mob-sub-menu-button">SAXOPHONES</button></a>
+                            <a href="/woodwind"><button class="expand mob-sub-menu-button">ALL</button></a>
+                            <a href="/recorder"><button class="expand mob-sub-menu-button">RECORDER</button></a>
+                            <a href="/flute"><button class="expand mob-sub-menu-button">FLUTE</button></a>
+                            <a href="/oboe"><button class="expand mob-sub-menu-button">OBOE</button></a>
+                            <a href="/clarinet"><button class="expand mob-sub-menu-button">CLARINET</button></a>
+                            <a href="/clarineo"><button class="expand mob-sub-menu-button">CLARINEO</button></a>
+                            <a href="/bassoon"><button class="expand mob-sub-menu-button">BASSOON</button></a>
+                            <a href="/saxophones"><button class="expand mob-sub-menu-button">SAXOPHONES</button></a>
                       </div>
                     </div>
                   </div>
@@ -163,9 +196,9 @@
                       <div class="mob-menu">
                         <div class="close-button">
                             <button class="expand close-menu-btn" onclick="document.getElementById('sub-mob-menu-2').style.display = 'none'">Close Sub-Menu</button>
-                              <a href="/"><button class="expand mob-sub-menu-button">VIOLIN</button></a>
-                              <a href="/"><button class="expand mob-sub-menu-button">VIOLA</button></a>
-                              <a href="/"><button class="expand mob-sub-menu-button">PERCUSSION</button></a>
+                              <a href="/violin"><button class="expand mob-sub-menu-button">VIOLIN</button></a>
+                              <a href="/viola"><button class="expand mob-sub-menu-button">VIOLA</button></a>
+                              <a href="/percussion"><button class="expand mob-sub-menu-button">PERCUSSION</button></a>
                         </div>
                       </div>
                     </div>
@@ -180,16 +213,16 @@
                         <div class="mob-menu">
                           <div class="close-button">
                               <button class="expand close-menu-btn" onclick="document.getElementById('sub-mob-menu-3').style.display = 'none'">Close Sub-Menu</button>
-                                <a href="/"><button class="expand mob-sub-menu-button">DUETS</button></a>
-                                <a href="/"><button class="expand mob-sub-menu-button">TRIOS</button></a>
-                                <a href="/"><button class="expand mob-sub-menu-button">QUARTETS</button></a>
-                                <a href="/"><button class="expand mob-sub-menu-button">LARGER ENSEMBLES</button></a>
+                                <a href="/duet"><button class="expand mob-sub-menu-button">DUETS</button></a>
+                                <a href="/trio"><button class="expand mob-sub-menu-button">TRIOS</button></a>
+                                <a href="/quartet"><button class="expand mob-sub-menu-button">QUARTETS</button></a>
+                                <a href="/larger_ensembles"><button class="expand mob-sub-menu-button">LARGER ENSEMBLES</button></a>
                           </div>
                         </div>
                       </div>
                     </div>
               </div>
-        <a href="/"><button class="expand mob-menu-button">About Useful Music</button></a>
+        <a href="/about"><button class="expand mob-menu-button">About Useful Music</button></a>
       </div>
     </div>
   </div>
