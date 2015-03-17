@@ -1,6 +1,6 @@
 class OrdersController < UsefulMusic::App
   include Scorched::Rest
-  # get('/:id/download_license') { |id| send :download, id }
+  # get('/:id/download_licence') { |id| send :download, id }
 
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/orders'
@@ -53,15 +53,15 @@ class OrdersController < UsefulMusic::App
     @order = Order.new(Order::Record[id])
     html = render :show, :layout => nil
     kit = PDFKit.new(html)
-    kit.stylesheets << File.expand_path('./public/stylesheets/license.css', APP_ROOT)
+    kit.stylesheets << File.expand_path('./public/stylesheets/licence.css', APP_ROOT)
     pdf = kit.to_pdf#
     file = Tempfile.new('foo')
     # ap file.path
     file.write(pdf)
-    @order.record.update(:license => {:type => 'application/pdf', :tempfile => file})
+    @order.record.update(:licence => {:type => 'application/pdf', :tempfile => file})
     @order.record.save
     html = render :show, :layout => nil
-    redirect @order.record.license.url
+    redirect @order.record.licence.url
     # render :show
   end
 

@@ -18,7 +18,7 @@ class ShoppingBasket < Errol::Entity
     number_of_purchases == 0
   end
 
-  def number_of_licenses
+  def number_of_licences
     purchases.map(&:quantity).reduce(0, &:+)
   end
 
