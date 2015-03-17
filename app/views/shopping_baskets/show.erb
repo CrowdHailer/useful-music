@@ -6,7 +6,7 @@
                 <tr>
                     <th>Catalogue number</th>
                     <th>Product name</th>
-                    <th>Item</th>
+                    <th>Instrument</th>
                     <th>Quantity</th>
                     <th>Initial Price</th>
                     <th>Discounted Price</th>
@@ -71,10 +71,12 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="3">
+                    <th colspan="2">
                     </th>
                     <th>
-                        VAT
+                        VAT is charged at your local<br> rate for customers in the EU:
+                    </th>
+                    <th colspan="1">
                     </th>
                     <th>
                         <%= current_customer.country %>
@@ -106,10 +108,68 @@
     </div>
 </div>
 <div class="row">
-    <div class="columns large-12">
-        <p style="text-align:right;">
-            If you have a discount or free download code, please enter it here:
-        </p>
+  <div class="columns large-6">
+    <a class="button success" href="/pieces">Continue Shopping</a>
+    <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+        <%= csrf_tag %>
+        <input type="hidden" name="_method" value="DELETE">
+        <input class="button alert" type="submit" value="Clear Basket">
+    </form>
+  </div>
+    <div class="columns large-6">
+      <div class="checkout-actions">
+        <h6>
+            Do you have a discount or free download code? Please enter it here:
+        </h6>
+        <div class="row collapse">
+          <div class="large-12 columns">
+          <form id="checkout-button" action="/orders" method="post" class="right">
+              <%= csrf_tag %>
+              <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
+              <div class="row">
+                  <div class="columns large-5">
+                      <input type="text" name="discount" value="" placeholder="Discount Code">
+                  </div>
+                  <div class="columns large-7">
+                    <button class="updatecart-btn">Apply Discount</button>
+                  </div>
+               </div>
+               <div class="row">
+                 <div class="large-5 columns">
+                    <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                      Existing User?
+                    </p>
+                    <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                      New Customer?
+                    </p>
+                  </div>
+                  <div class="large-7 columns">
+                    <a class="button checkout-option-1" href="/sessions/new">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                    <a class="button checkout-option-2" href="/customers/new">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-5 columns">
+                    <p>Secure PayPal Checkout:</p>
+                  </div>
+                  <div class="large-7 columns">
+                    <a class="button checkout-secure-btn" href="/">Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                  </div>
+                </div>
+          </form>
+        </div>
+      </div>
+      </div>
+      <div class="secure">
+        <div class="row">
+          <div class="large-8 columns">
+            <h6>Useful Music uses secure payments by PayPal</h6>
+          </div>
+          <div class="large-4 columns">
+            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif">
+          </div>
+        </div>
+      </div>
     </div>
 </div>
 <div class="row">

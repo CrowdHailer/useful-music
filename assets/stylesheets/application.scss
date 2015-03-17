@@ -519,6 +519,50 @@ height: auto;
   color: #3c3c3b;
 }
 
+.checkout-actions {
+  background: #f7f7f8;
+  min-height: 15em;
+  height: auto;
+  border-radius: 0.5em;
+  border: 0.15em solid #d9d9d9;
+  padding: 0.5em;
+}
+
+.checkout-actions h6 {
+  color: #4a4a49;
+}
+
+.updatecart-btn {
+  padding: 0.5em;
+}
+
+.checkout-option-1 {
+  padding: 0.5em;
+  background-color: #2ad955;
+}
+
+.checkout-option-2 {
+  padding: 0.5em;
+  background-color: #f75d1b;
+}
+
+.checkout-icon {
+  margin-left: 0.5em;
+}
+
+.checkout-secure-btn {
+
+}
+
+.secure {
+  margin-top: 1em;
+}
+
+.secure h6 {
+  color: #4a4a49;
+}
+
+
 /*Product Block CSS*/
 
 .columns-5 {
