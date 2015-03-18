@@ -2,6 +2,7 @@ class Catalogue
   class Search
     include Virtus.model
 
+    attribute :title_like, String
     attribute :page, Integer
     attribute :page_size, Integer
     attribute :solo, Boolean
@@ -84,7 +85,8 @@ class Catalogue
         :levels => levels,
         :instruments => instruments,
         :page => page,
-        :page_size => page_size
+        :page_size => page_size,
+        :title_like => title_like
       }
     end
 
