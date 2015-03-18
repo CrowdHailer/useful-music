@@ -7,6 +7,10 @@ module UsefulMusic
     render_defaults[:dir] += '/admin'
     render_defaults[:layout] = File.expand_path('app/views/admin/application', APP_ROOT).to_sym
     before do
+      if current_customer.guest?
+        flash['error'] = 'Login required'
+        redirect '/sessions/new?requested_path=/admin'
+      end
       admin_logged_in? or deny_access
     end
 
