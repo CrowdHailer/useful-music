@@ -12,5 +12,11 @@ module UsefulMusic
         post '/customers'
       end
     end
+
+    def test_redirects_when_page_not_found
+      @app = UsefulMusic::App
+      get '/empty'
+      assert last_response.redirect?
+    end
   end
 end
