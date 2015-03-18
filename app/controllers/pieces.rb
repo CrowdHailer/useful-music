@@ -15,8 +15,9 @@ class PiecesController < UsefulMusic::App
     if piece
       redirect "/pieces/#{piece.catalogue_number}"
     else
-      flash['error'] = 'Could not find piece requested'
-      redirect(request.referer || '/pieces')
+      # flash['error'] = 'Could not find piece requested'
+      # redirect(request.referer || '/pieces')
+      redirect "/pieces?catalogue_search[title_like]=#{request.GET.fetch('search') { '' }}"
     end
   end
 

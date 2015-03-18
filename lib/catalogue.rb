@@ -61,6 +61,10 @@ class Catalogue < Errol::Repository
       end
     end
 
+    if inquiry.title_like
+      val = val.where(Sequel.ilike(:title, "%#{inquiry.title_like}%"))
+    end
+
     val = val.where(:title => inquiry.title) if inquiry.title
     val
   end

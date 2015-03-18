@@ -20,11 +20,12 @@ class PiecesControllerTest < MyRecordTest
     assert_equal '/pieces/UD100', last_response.location
   end
 
-  def test_search_redirects_to_show_page
-    get '/search', {:search => '100'}
-    assert_equal 'Could not find piece requested', flash['error']
-    assert last_response.redirect?
-    assert_equal '/pieces', last_response.location
+  def test_searchs_on_text_if_no_piece
+    create :piece_record, :title => 'test piece'
+    get '/search', {:search => 'test'}
+    # assert_equal 'Could not find piece requested', flash['error']
+    # assert last_response.redirect?
+    assert_equal '/pieces?catalogue_search[title_like]=test', last_response.location
   end
 
   def test_show_page_is_available
