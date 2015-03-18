@@ -11,6 +11,7 @@ module UsefulMusic
         flash['error'] = 'Login required'
         redirect '/sessions/new?requested_path=/admin'
       end
+      # require_login(:success_path => '/admin')
       admin_logged_in? or deny_access
     end
 
