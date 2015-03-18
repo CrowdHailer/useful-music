@@ -152,7 +152,7 @@
             <% end %>
         <% else %>
             <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                Please <a class="button" href="/sessions/new">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
+                Please <a class="button" href="/sessions/new?requested_path=<%= request.path %>">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
             </p>
         <% end %>
     </div>

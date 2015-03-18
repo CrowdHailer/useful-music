@@ -19,10 +19,10 @@ module UsefulMusic
       assert last_response.redirect?
     end
 
-    def test_index_page_is_not_available_to_guest
+    def test_guest_is_redirected_to_login
       get '/', {}, {}
-      assert_equal 'Access denied', flash['error']
-      assert last_response.redirect?
+      assert_equal 'Login required', flash['error']
+      assert_equal '/sessions/new?requested_path=/admin', last_response.location
     end
   end
 end

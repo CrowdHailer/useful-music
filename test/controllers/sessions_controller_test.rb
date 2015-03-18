@@ -20,6 +20,11 @@ class SessionsControllerTest < MyRecordTest
     assert_ok get '/new'
   end
 
+  def test_new_page_includes_redirection_field
+    assert_ok get '/new?requested_path=/admin'
+    assert_includes last_response.body, 'name="requested_path" value="/admin"'
+  end
+
   def test_redirect_to_account_if_logged_in
     customer_record = create :customer_record
     get '/new', {}, {'rack.session' => { :user_id => customer_record.id }}
@@ -37,6 +42,18 @@ class SessionsControllerTest < MyRecordTest
     assert_includes last_response.location, customer_record.id
     assert_equal customer_record.id, last_request.env['rack.session'][:user_id]
     assert_equal "Welcome back #{customer_record.first_name} #{customer_record.last_name}", flash['success']
+  end
+
+  def test_redirects_to_customer
+    customer_record = create :customer_record, :email => email, :password => password
+    post '/', {:session => {:email => email, :password => password}, :requested_path => ''}
+    assert_includes last_response.location, customer_record.id
+  end
+
+  def test_redirects_to_requested_path_if_given
+    customer_record = create :customer_record, :email => email, :password => password
+    post '/', {:session => {:email => email, :password => password}, :requested_path => '/admin'}
+    assert_equal '/admin', last_response.location
   end
 
   def test_takes_session_basket
