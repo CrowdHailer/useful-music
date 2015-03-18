@@ -15,7 +15,9 @@ module UsefulMusic
 
     def test_redirects_when_page_not_found
       @app = UsefulMusic::App
-      get '/empty'
+      get '/random'
+      # TODO scorced issue
+      # assert_equal 'Page not found', flash['error']
       assert last_response.redirect?
     end
   end
