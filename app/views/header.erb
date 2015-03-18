@@ -1,11 +1,11 @@
 <div class="row collapse">
     <div class="head-bg">
-        <div class="large-1 columns" style="padding-left: 0em;">
+        <div class="large-1 small-3 columns" style="padding-left: 0em;">
             <a href="/">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png" class="logo-wrap">
+                <div class="logo-wrap"></div>
             </a>
         </div>
-        <div class="large-6 columns header-text">
+        <div class="large-6 small-9 columns header-text">
             <h1>
                 Original Sheet Music Downloads
             </h1>
@@ -13,8 +13,15 @@
                 Selected and arranged by <a href="/about#graham-lyons">Graham Lyons</a>
             </h2>
         </div>
-        <div class="large-5 columns" style="padding-right: 0em;">
+        <div class="large-5 small-12 columns" style="padding-right: 0em;">
             <form id="catalogue-search-input" action="/pieces/search" method="get">
+
+                <div class="ud-search-wrap">
+                    <label>Search catalogue number...</label>
+                    <div class="search-field">
+                        <input type="text" name="search" value="" placeholder="e.g. UD123">
+                    </div>
+                </div>
                 <button class="ud-search-btn" form="catalogue-search-input">
 
                     <div class="ud-search-submit">
@@ -22,12 +29,6 @@
                     </div>
 
                 </button>
-                <div class="ud-search-wrap">
-                    <label>Search catalogue number...</label>
-                    <div class="search-field">
-                        <input type="text" name="search" value="" placeholder="e.g. UD123">
-                    </div>
-                </div>
             </form>
         </div>
     </div>
