@@ -147,4 +147,13 @@ class CatalogueTest < MyRecordTest
     assert_equal 4, page.page_count
     assert_equal 2, page.current_page
   end
+
+  def test_can_filter_on_title
+    a = Piece.new(create :piece_record, :title => 'A Good tune')
+    b = Piece.new(create :piece_record, :title => 'A Bad tune')
+    c = Piece.new(create :piece_record, :title => 'A Ugly tune')
+    pieces = Catalogue.all(:title_like => 'Bad')
+    assert_includes pieces, b
+    assert_equal 1, pieces.count
+  end
 end
