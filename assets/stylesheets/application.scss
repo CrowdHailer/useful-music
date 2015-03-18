@@ -272,7 +272,7 @@ border-top: 0.1em solid white;
   font-family: 'Montserrat';
   float: left;
   list-style: none;
-  margin: 0em 1em;
+  margin: 0.75em 1em;
 }
 
 .logout-form-mobile {
@@ -1180,13 +1180,150 @@ footer a:hover {
 
  }
 
+ @media only screen and (min-width: 40em) and (max-width: 58em) {
+   .header-text {
+     padding-right: 1em;
+     padding-left: 2.5em;
+   }
+
+   .header-text h1 {
+     font-size: 1em;
+     color: #4a4a49;
+     text-align: right;
+   }
+
+   .header-text h2 {
+     font-size: 0.6em;
+     color: #4a4a49;
+     text-align: right;
+   }
+
+   .logo-wrap {
+     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+     background-size: contain;
+     background-repeat: no-repeat;
+     width: 6em;
+     height: 6em;
+   }
+
+   .ud-search-wrap {
+     background: #f8f7f7;
+     padding-left: 0.25em;
+     padding-top: 0.75em;
+     padding-right: 0.5em;
+     padding-bottom:0.75em;
+     float: left;
+     width: 70%;
+     height: 7em;
+     margin-left: -0.9em;
+   }
+
+   .ud-search-wrap label {
+     font-family: 'Montserrat';
+     font-size: 1em;
+     line-height: 1;
+   }
+
+   .ud-search-btn {
+     background: none;
+     padding: 0;
+     margin: 0;
+     float: right;
+     width: 30%;
+   }
+
+   .ud-search-submit {
+     height: 7em;
+     background: #e41f21;
+     float: right;
+     width: 100%;
+   }
+
+   .ud-search-submit:hover {
+     background: #00ccff;
+     transition: .3s;
+   }
+
+     .search-icon {
+       color: white;
+       font-size: 2em;
+       padding: 0.5em;
+       padding-top: 1em;
+     }
+ }
+
 //Medium screens
-@media only screen and (min-width: 40.063em) { }
-@media only screen and (min-width: 40.063em) and (max-width: 64em) { }
+@media only screen and (min-width: 58em) { }
+@media only screen and (min-width: 58em) and (max-width: 79.9em) {
+
+  .header-text {
+    padding-right: 3em;
+  }
+
+  .header-text h1 {
+    font-size: 1.3em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.8em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 7em;
+    height: 7em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: left;
+    width: 70%;
+    height: 7em;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+    width: 30%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .ud-search-submit:hover {
+    background: #00ccff;
+    transition: .3s;
+  }
+
+
+}
 
 //Large screens
-@media only screen and (min-width: 64.063em) { }
-@media only screen and (min-width: 64.063em) and (max-width: 90em) { }
+@media only screen and (min-width:79.9em) { }
+@media only screen and (min-width: 79.9em) and (max-width: 90em) { }
 
 //XLarge screens
 @media only screen and (min-width: 90.063em) { }
