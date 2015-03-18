@@ -124,4 +124,9 @@ class CustomersController < UsefulMusic::App
       redirect '/sessions/new'
     end
   end
+
+  def success_path
+    path = request.GET.fetch('success_path') { '' }
+    path.empty? ? nil : path
+  end
 end

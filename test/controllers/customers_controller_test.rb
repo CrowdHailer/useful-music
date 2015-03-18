@@ -12,6 +12,11 @@ class CustomersControllerTest < MyRecordTest
     assert_ok get '/new'
   end
 
+  def test_new_page_keeps_success_path
+    assert_ok get '/new?success_path=/shopping_baskets/1'
+    assert_includes last_response.body, 'action="/customers?success_path=/shopping_baskets/1"' 
+  end
+
   def test_can_create_customer
     clear_mail
     post '/', :customer => attributes_for(:customer_record).merge(
