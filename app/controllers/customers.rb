@@ -23,7 +23,7 @@ class CustomersController < UsefulMusic::App
       log_in customer
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
-      redirect "/customers/#{customer.id}"
+      redirect success_path || "/customers/#{customer.id}"
       # TODO untested failure cases, usecase or leave in entity layer
     rescue Veto::InvalidEntity => err
       @form = form
@@ -123,5 +123,10 @@ class CustomersController < UsefulMusic::App
       flash['error'] = 'Access denied'
       redirect '/sessions/new'
     end
+  end
+
+  def success_path
+    path = request.GET.fetch('success_path') { '' }
+    path.empty? ? nil : path
   end
 end
