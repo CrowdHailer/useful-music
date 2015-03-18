@@ -100,6 +100,8 @@ class UsefulMusic::App
   after :status => 404 do
     error = NotFoundError.new "Attempted Path: #{request.path}"
     Bugsnag.notify(error, :severity => "info")
+    flash['error'] = 'Page not found'
+    redirect '/'
   end
 
   error do |err|
