@@ -39,6 +39,12 @@ class SessionsControllerTest < MyRecordTest
     assert_equal "Welcome back #{customer_record.first_name} #{customer_record.last_name}", flash['success']
   end
 
+  def test_redirects_to_requested_path_if_given
+    customer_record = create :customer_record, :email => email, :password => password
+    post '/', {:session => {:email => email, :password => password}, :requested_path => '/admin'}
+    assert_equal '/admin', last_response.location
+  end
+
   def test_takes_session_basket
     shopping_basket_record = create :shopping_basket_record
     purchase_record = create :purchase_record, :shopping_basket_record => shopping_basket_record

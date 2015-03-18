@@ -26,7 +26,7 @@ class SessionsController < UsefulMusic::App
         Customers.save customer
       end
       flash['success'] = "Welcome back #{customer.name}"
-      redirect "/customers/#{customer.id}"
+      redirect request.POST['requested_path'] || "/customers/#{customer.id}"
     else
       flash['error'] = 'Invalid login details'
       redirect '/sessions/new'
