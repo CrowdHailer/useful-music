@@ -1109,6 +1109,10 @@ footer a:hover {
     display: none;
   }
 
+  .ensemble-pic {
+    background-image: none;
+  }
+
 }
 
 @media only screen and (min-width: 23.2em) and (max-width: 40em) {
@@ -1199,6 +1203,10 @@ footer a:hover {
 
   .header-btn i {
     display: none;
+  }
+
+  .ensemble-pic {
+    background-image: none;
   }
 
  }
