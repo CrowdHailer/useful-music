@@ -8,12 +8,12 @@ class ShoppingBasketsController < UsefulMusic::App
   end
 
   def destroy(id)
+    basket = ShoppingBaskets.fetch(id) { redirect '/' }
     customer = current_customer
     unless customer.guest?
       customer.record.update :shopping_basket_record => nil
     end
-    record = ShoppingBasket::Record[id]
-    record.destroy
+    ShoppingBaskets.remove basket
     flash['success'] = 'Shopping basket cleared'
     redirect '/'
   end
