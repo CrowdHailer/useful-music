@@ -70,6 +70,23 @@
                     <th>
                     </th>
                 </tr>
+                <% unless @basket.discount.nil? %>
+                <tr>
+                    <th colspan="4">
+                    </th>
+                    <th>
+                        Discount
+                    </th>
+                    <th>
+                        <%= @basket.discount.code %>
+                    </th>
+                    <th>
+                        <%= @basket.discount.value.format %>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                <% end %>
                 <tr>
                     <th colspan="2">
                     </th>
