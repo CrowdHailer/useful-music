@@ -108,79 +108,80 @@
     </div>
 </div>
 <div class="row">
-  <div class="columns large-6">
-    <a class="button success" href="/pieces">Continue Shopping</a>
-    <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
-        <%= csrf_tag %>
-        <input type="hidden" name="_method" value="DELETE">
-        <input class="button alert" type="submit" value="Clear Basket">
-    </form>
-  </div>
     <div class="columns large-6">
-      <div class="checkout-actions">
-        <h6>
-            Do you have a discount or free download code? Please enter it here:
-        </h6>
-        <div class="row collapse">
-          <div class="large-12 columns">
-          <form id="checkout-button" action="/orders" method="post" class="right">
-              <%= csrf_tag %>
-              <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
-              <div class="row">
-                  <div class="columns large-5">
-                      <input type="text" name="discount" value="" placeholder="Discount Code">
-                  </div>
-                  <div class="columns large-7">
-                    <button class="updatecart-btn">Apply Discount</button>
-                  </div>
-               </div>
-               <div class="row">
-                 <div class="large-5 columns">
-                    <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                      Existing User?
-                    </p>
-                    <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                      New Customer?
-                    </p>
-                  </div>
-                  <div class="large-7 columns">
-                    <a class="button checkout-option-1" href="/sessions/new">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                    <a class="button checkout-option-2" href="/customers/new">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                  </div>
+        <a class="button success" href="/pieces">Continue Shopping</a>
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="button alert" type="submit" value="Clear Basket">
+        </form>
+    </div>
+    <div class="columns large-6">
+        <div class="checkout-actions">
+            <h6>
+                Do you have a discount or free download code? Please enter it here:
+            </h6>
+            <div class="row collapse">
+                <div class="large-12 columns">
+                    <form id="checkout-button" action="/orders" method="post" class="right">
+                        <%= csrf_tag %>
+                        <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
+                        <div class="row">
+                            <div class="columns large-5">
+                                <input type="text" name="discount" value="" placeholder="Discount Code">
+                            </div>
+                            <div class="columns large-7">
+                                <button class="updatecart-btn">Apply Discount</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-5 columns">
+                                <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                    Existing User?
+                                </p>
+                                <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                    New Customer?
+                                </p>
+                            </div>
+                            <div class="large-7 columns">
+                                <a class="button checkout-option-1" href="/sessions/new">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                                <a class="button checkout-option-2" href="/customers/new">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="large-5 columns">
+                                <p>Secure PayPal Checkout:</p>
+                            </div>
+                            <div class="large-7 columns">
+                                <a class="button checkout-secure-btn" href="/">Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="row">
-                  <div class="large-5 columns">
-                    <p>Secure PayPal Checkout:</p>
-                  </div>
-                  <div class="large-7 columns">
-                    <a class="button checkout-secure-btn" href="/">Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                  </div>
+            </div>
+        </div>
+        <div class="secure">
+            <div class="row">
+                <div class="large-6 columns">
+                    <h6>Useful Music uses secure payments by PayPal</h6>
                 </div>
-          </form>
+                <div class="large-6 columns">
+                    <table border="0" cellpadding="10" cellspacing="0" align="center">
+                        <tr>
+                            <td align="center">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <a href="https://www.paypal.com/uk/webapps/mpp/paypal-popup" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/uk/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" border="0" alt="PayPal Logo">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
-      </div>
-      <div class="secure">
-        <div class="row">
-          <div class="large-6 columns">
-            <h6>Useful Music uses secure payments by PayPal</h6>
-          </div>
-          <div class="large-6 columns">
-            <table border="0" cellpadding="10" cellspacing="0" align="center">
-            <tr>
-              <td align="center">
-              </td>
-            </tr>
-            <tr>
-              <td align="center"><a href="https://www.paypal.com/uk/webapps/mpp/paypal-popup" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/uk/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
-                <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" border="0" alt="PayPal Logo">
-                </a>
-              </td>
-            </tr>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
 </div>
 <div class="row">
