@@ -42,6 +42,10 @@ class Country
       rates[country.alpha2]
     end
 
+    def to_s
+      "%.0f%" % (100 * to_f)
+    end
+
     def *(n)
       to_f * n
     end

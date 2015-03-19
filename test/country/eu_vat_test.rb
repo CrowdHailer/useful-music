@@ -40,5 +40,10 @@ class Country
       assert_equal Money.new(21, 'EUR'), Money.new(100, 'EUR') * rate.to_f
     end
 
+    def test_can_interpolate_in_string
+      rate = EUVAT.new belgium
+      assert_equal "21%", "#{rate}"
+    end
+
   end
 end
