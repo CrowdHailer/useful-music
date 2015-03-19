@@ -32,6 +32,26 @@ class ShoppingBasket
       assert_equal Order, shopping_basket.order.class
     end
 
+    def test_can_make_discount
+      record.discount_record = :discount
+      assert_equal Discount.new(:discount), shopping_basket.discount
+    end
+
+    def test_nil_discount_if_no_record
+      assert_nil shopping_basket.discount
+      assert_equal Money.new(0), shopping_basket.discount.value
+    end
+
+    def test_can_set_discount
+      shopping_basket.discount = Discount.new(:discount)
+      assert_equal :discount, record.discount_record
+    end
+
+    def test_can_set_nil_discount
+      record.discount_record = :discount
+      shopping_basket.discount = nil
+    end
+
     def test_no_order_if_no_order_record
       @record = create :shopping_basket_record
       assert_nil shopping_basket.order
