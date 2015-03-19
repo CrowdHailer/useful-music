@@ -1355,6 +1355,14 @@ footer a:hover {
        height: auto;
        min-height: 22.5em;
      }
+
+
+ }
+
+ @media only screen and (max-width: 64em) {
+   #filter-display {
+     display: none;
+   }
  }
 
 //Medium screens
