@@ -304,6 +304,12 @@ border-top: 0.1em solid white;
   min-height: 22em;
 }
 
+.above-fold-right-main {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
+  height: auto;
+  min-height: 22.5em;
+}
+
 .above-fold-left-main {
   background: #08344c; /* Old browsers */
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -352,12 +358,6 @@ height: auto;
   float: left;
   margin: 0;
   padding-top: 0.2em;
-}
-
-.above-fold-right-main {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
-  height: auto;
-  min-height: 22.5em;
 }
 
 .fa-music-cstm {
@@ -1099,6 +1099,16 @@ footer a:hover {
     padding: 0.5em;
   }
 
+  .above-fold-right-main {
+    background-image: none;
+    height: auto;
+    min-height: 22.5em;
+  }
+
+  .header-btn i {
+    display: none;
+  }
+
 }
 
 @media only screen and (min-width: 23.2em) and (max-width: 40em) {
@@ -1181,6 +1191,16 @@ footer a:hover {
     padding: 0.2em;
   }
 
+  .above-fold-right-main {
+    background-image: none;
+    height: auto;
+    min-height: 22.5em;
+  }
+
+  .header-btn i {
+    display: none;
+  }
+
  }
 
  @media only screen and (min-width: 40em) and (max-width: 58em) {
@@ -1253,6 +1273,12 @@ footer a:hover {
        padding: 0.5em;
        padding-top: 1em;
      }
+
+     .above-fold-right-main {
+       background-image: none;
+       height: auto;
+       min-height: 22.5em;
+     }
  }
 
 //Medium screens
@@ -1321,17 +1347,20 @@ footer a:hover {
     transition: .3s;
   }
 
-
 }
 
 //Large screens
 
 @media only screen and (min-width:79.9em) { }
-@media only screen and (min-width: 79.9em) and (max-width: 90em) { }
+@media only screen and (min-width: 79.9em) and (max-width: 90em) {
+
+ }
 
 //XLarge screens
 @media only screen and (min-width: 90.063em) { }
-@media only screen and (min-width: 90.063em) and (max-width: 120em) { }
+@media only screen and (min-width: 90.063em) and (max-width: 120em) {}
 
 //XXLarge screens
-@media only screen and (min-width: 120.063em) { }
+@media only screen and (min-width: 120.063em) {
+
+}
