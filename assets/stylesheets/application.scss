@@ -1113,6 +1113,38 @@ footer a:hover {
     background-image: none;
   }
 
+  .piece-btn {
+    width: 100%;
+    padding: 1.5em !important;
+    font-size: 1.5em !important;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-info-wrap {
+    height: auto;
+  }
+
+  .product-info-wrap p {
+    font-size: 1.5em;
+  }
+
+  .title-wrap {
+    height: auto;
+  }
+
+  .product-main p {
+    font-size: 1.2em;
+  }
+
+  .product-main h6 {
+    color: #e41f21;
+    font-size:1.2em;
+    line-height: 0.6;
+  }
+
 }
 
 @media only screen and (min-width: 23.2em) and (max-width: 40em) {
@@ -1207,6 +1239,42 @@ footer a:hover {
 
   .ensemble-pic {
     background-image: none;
+  }
+
+  .piece-btn {
+    width: 100%;
+    padding: 1em !important;
+    font-size: 1em !important;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-info-wrap {
+    height: auto;
+  }
+
+  .product-info-wrap p {
+    font-size: 1.5em;
+  }
+
+  .title-wrap {
+    height: auto;
+  }
+
+  .product-main p {
+    font-size: 1.2em;
+  }
+
+  .product-main h6 {
+    color: #e41f21;
+    font-size:1.2em;
+    line-height: 0.6;
   }
 
  }

@@ -75,14 +75,14 @@
                 <p>For Flute and Keyboard</p>
             </div>
             <div class="row collapse">
-                <div class="large-6 columns product-main">
+                <div class="large-6 small-12 columns product-main">
                     <p>UD123</p>
                     <p>LEVEL 4</p>
                     <hr class="prod-break">
                     <a href="/"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                     <a href="/" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                     <a href="/pieces/">
-                        <button>Full Details</button>
+                        <button class="piece-btn">Full Details</button>
                     </a>
                 </div>
                 <div class="large-6 columns product-main hide-for-small-only">
@@ -100,14 +100,14 @@
                 <p>For Flute and Keyboard</p>
             </div>
             <div class="row collapse">
-                <div class="large-6 columns product-main">
+                <div class="large-6 small-12 columns product-main">
                     <p>UD123</p>
                     <p>LEVEL 4</p>
                     <hr class="prod-break">
                     <a href="/"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                     <a href="/" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                     <a href="/pieces/">
-                        <button>Full Details</button>
+                        <button class="piece-btn">Full Details</button>
                     </a>
                 </div>
                 <div class="large-6 columns product-main hide-for-small-only">
@@ -125,14 +125,14 @@
                 <p>For Flute and Keyboard</p>
             </div>
             <div class="row collapse">
-                <div class="large-6 columns product-main">
+                <div class="large-6 small-12 columns product-main">
                     <p>UD123</p>
                     <p>LEVEL 4</p>
                     <hr class="prod-break">
                     <a href="/"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                     <a href="/" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                     <a href="/pieces/">
-                        <button>Full Details</button>
+                        <button class="piece-btn">Full Details</button>
                     </a>
                 </div>
                 <div class="large-6 columns product-main hide-for-small-only">
@@ -150,14 +150,14 @@
                 <p>For Flute and Keyboard</p>
             </div>
             <div class="row collapse">
-                <div class="large-6 columns product-main">
+                <div class="large-6 small-12 columns product-main">
                     <p>UD123</p>
                     <p>LEVEL 4</p>
                     <hr class="prod-break">
                     <a href="/"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                     <a href="/" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                     <a href="/pieces/">
-                        <button>Full Details</button>
+                        <button class="piece-btn">Full Details</button>
                     </a>
                 </div>
                 <div class="large-6 columns product-main hide-for-small-only">
@@ -166,6 +166,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- END SAMPLE DATA -->
@@ -183,17 +184,17 @@
                 <p><%= piece.sub_heading.upcase %></p>
             </div>
             <div class="row collapse">
-                <div class="large-6 columns product-main">
+                <div class="large-6 small-12 columns product-main">
                     <p><%= piece.catalogue_number %></p>
                     <p>LEVEL <%= piece.level_overview %></p>
                     <hr class="prod-break">
                     <a href="/pieces/<%= piece.catalogue_number %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                     <a href="<%= piece.notation_preview.url %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                     <a href="/pieces/<%= piece.catalogue_number %>">
-                        <button>Full Details</button>
+                        <button class="piece-btn">Full Details</button>
                     </a>
                 </div>
-                <div class="large-6 columns product-main hide-for-small-only">
+                <div class="large-6 columns product-main small-prod-image">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
                 </div>
             </div>
