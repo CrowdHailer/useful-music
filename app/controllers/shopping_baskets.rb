@@ -8,7 +8,13 @@ class ShoppingBasketsController < UsefulMusic::App
   end
 
   def update(id)
-    ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
+    shopping_basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
+    code = request.POST.fetch('shopping_basket') { {} }['discount']
+    discount = Discounts.first(:code => code)
+    shopping_basket.discount = discount
+    ShoppingBaskets.save shopping_basket
+    flash['success'] = 'Discount Code Added'
+    redirect request.referer
   end
 
   def destroy(id)

@@ -26,7 +26,9 @@ class ShoppingBasketsControllerTest < MyRecordTest
     discount_record = create :discount_record
     shopping_basket_record = create :shopping_basket_record
     patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => discount_record.code}}
-    skip
+    assert_equal discount_record, shopping_basket_record.reload.discount_record
+    assert_equal 'Discount Code Added', flash['success']
+    assert last_response.redirect?
   end
 
   def test_redirect_when_editing_non_existant_basket
