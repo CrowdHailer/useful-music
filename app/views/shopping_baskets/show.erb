@@ -123,33 +123,41 @@
             </h6>
             <div class="row collapse">
                 <div class="large-12 columns">
-                    <form id="checkout-button" action="/orders" method="post" class="right">
+                    <form class="" action="/shopping_baskets/<%= @basket.id %>" method="post">
+                    <input type="hidden" name="_method" value="PATCH">
                         <%= csrf_tag %>
                         <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
                         <div class="row">
                             <div class="columns large-5">
-                                <input type="text" name="discount" value="" placeholder="Discount Code">
+                                <input type="text" name="shopping_basket[discount]" value="<%= @basket.discount.code %>" placeholder="Discount Code">
                             </div>
                             <div class="columns large-7">
-                                <button class="updatecart-btn">Apply Discount</button>
+                                <% if @basket.discount.nil? %>
+                                    <button class="updatecart-btn">Apply Discount</button>
+                                <% else %>
+                                    <button class="updatecart-btn success">Change Discount</button>
+                                <% end %>
                             </div>
                         </div>
-                        <% if current_customer.guest? %>
-                        <div class="row">
-                            <div class="large-5 columns">
-                                <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                                    Existing User?
-                                </p>
-                                <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                                    New Customer?
-                                </p>
-                            </div>
-                            <div class="large-7 columns">
-                                <a class="button checkout-option-1" href="/sessions/new?requested_path=<%= request.path %>">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                                <a class="button checkout-option-2" href="/customers/new?success_path=<%= request.path %>">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                            </div>
+                    </form>
+                    <% if current_customer.guest? %>
+                    <div class="row">
+                        <div class="large-5 columns">
+                            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                Existing User?
+                            </p>
+                            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                New Customer?
+                            </p>
                         </div>
-                        <% else %>
+                        <div class="large-7 columns">
+                            <a class="button checkout-option-1" href="/sessions/new?requested_path=<%= request.path %>">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            <a class="button checkout-option-2" href="/customers/new?success_path=<%= request.path %>">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                        </div>
+                    </div>
+                    <% else %>
+                    <form id="checkout-button" action="/orders" method="post" class="right">
+                        <%= csrf_tag %>
                         <div class="row">
                             <div class="large-5 columns">
                                 <p>Secure PayPal Checkout:</p>
@@ -158,8 +166,8 @@
                                 <a class="button checkout-secure-btn" href="/">Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
                             </div>
                         </div>
-                        <% end %>
                     </form>
+                    <% end %>
                 </div>
             </div>
         </div>

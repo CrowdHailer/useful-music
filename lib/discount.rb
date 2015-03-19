@@ -7,6 +7,10 @@ class Discount < Errol::Entity
     def nil?
       true
     end
+
+    def code
+      ''
+    end
   end
   def self.null
     Null.new

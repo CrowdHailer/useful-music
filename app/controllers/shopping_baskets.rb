@@ -9,7 +9,7 @@ class ShoppingBasketsController < UsefulMusic::App
 
   def update(id)
     shopping_basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
-    code = request.POST.fetch('shopping_basket') { {} }['discount']
+    code = request.POST.fetch('shopping_basket') { {} }['discount'] || ''
     discount = Discounts.first(:code => code)
     shopping_basket.discount = discount
     ShoppingBaskets.save shopping_basket
