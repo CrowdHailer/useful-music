@@ -25,9 +25,19 @@ class Country
       assert_equal 0.21, rate * 1
     end
 
+    def test_rate_can_multiply_with_number
+      rate = EUVAT.new belgium
+      assert_equal 0.21, 1 * rate.to_f
+    end
+
     def test_can_multiply_money
       rate = EUVAT.new belgium
       assert_equal Money.new(21, 'EUR'), rate * Money.new(100, 'EUR')
+    end
+
+    def test_can_multiply_with_money
+      rate = EUVAT.new belgium
+      assert_equal Money.new(21, 'EUR'), Money.new(100, 'EUR') * rate.to_f
     end
 
   end
