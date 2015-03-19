@@ -80,10 +80,10 @@
                         <%= current_customer.country %>
                     </th>
                     <th>
-                        <%= "#{current_customer.vat_rate * 100}%" if current_customer.vat_rate %>
+                        <%= current_customer.vat_rate.to_s if current_customer.vat_rate %>
                     </th>
                     <th>
-                        <%= (@basket.price * (current_customer.vat_rate || 0)).format %>
+                        <%= (current_customer.vat_rate * @basket.price).format %>
                     </th>
                     <th>
 
@@ -96,7 +96,7 @@
                         Total
                     </th>
                     <th>
-                        <%= (@basket.price * (current_customer.vat_rate || 0) + @basket.price).format %>
+                        <%= ((current_customer.vat_rate * @basket.price) + @basket.price).format %>
                     </th>
                     <th>
                     </th>
