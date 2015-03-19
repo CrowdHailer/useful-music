@@ -79,10 +79,10 @@
                     <th colspan="1">
                     </th>
                     <th>
-                        <%= current_customer.country %>
+                        <%= current_customer.country || 'Login to provide Country' %>
                     </th>
                     <th>
-                        <%= current_customer.vat_rate.to_s if current_customer.vat_rate %>
+                        <%= current_customer.vat_rate.to_s %>
                     </th>
                     <th>
                         <%= (current_customer.vat_rate * @basket.price).format %>
