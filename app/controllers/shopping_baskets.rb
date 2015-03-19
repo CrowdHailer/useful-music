@@ -13,7 +13,11 @@ class ShoppingBasketsController < UsefulMusic::App
     discount = Discounts.first(:code => code)
     shopping_basket.discount = discount
     ShoppingBaskets.save shopping_basket
-    flash['success'] = 'Discount Code Added'
+    if !code.empty? && discount.nil?
+      flash['error'] = 'Discount Code Invalid'
+    else
+      flash['success'] = 'Discount Code Added'
+    end
     redirect request.referer
   end
 

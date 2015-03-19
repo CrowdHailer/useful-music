@@ -31,6 +31,13 @@ class ShoppingBasketsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_cant_update_basket_with_non_existant_discount_code
+    shopping_basket_record = create :shopping_basket_record
+    patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => 'WRONG'}}
+    assert_equal 'Discount Code Invalid', flash['error']
+    assert last_response.redirect?
+  end
+
   def test_redirect_when_editing_non_existant_basket
     patch "/1", {:shopping_basket => {:discount => 3}}
     assert last_response.redirect?
