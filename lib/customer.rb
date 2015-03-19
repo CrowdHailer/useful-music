@@ -67,8 +67,7 @@ class Customer < Errol::Entity
   end
 
   def vat_rate
-    # Country::EUVAT.new(self.country)
-    country.eu? ? 0.2 : 0
+    Country::EUVAT.new(self.country)
   end
 
   private

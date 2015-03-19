@@ -86,12 +86,12 @@ class Customer
 
     def test_has_20_vat_rate_in_eu
       record.country = Country.new('GB')
-      assert_equal 0.20, customer.vat_rate
+      assert_equal 0.20, customer.vat_rate.to_f
     end
 
     def test_has_0_vat_rate_outside_eu
       record.country = Country.new('AF')
-      assert_equal 0, customer.vat_rate
+      assert_equal 0, customer.vat_rate.to_f
     end
 
     ################# Associations #####################
