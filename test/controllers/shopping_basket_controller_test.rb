@@ -33,6 +33,17 @@ class ShoppingBasketsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_can_remove_discount_code
+    discount_record = create :discount_record,
+      :start_datetime => DateTime.new(2014),
+      :end_datetime => DateTime.new(2017)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => ''}}
+    assert_nil shopping_basket_record.reload.discount_record
+    assert_equal 'Discount Code Removed', flash['success']
+    assert last_response.redirect?
+  end
+
   def test_cant_update_basket_with_non_existant_discount_code
     shopping_basket_record = create :shopping_basket_record
     patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => 'WRONG'}}
