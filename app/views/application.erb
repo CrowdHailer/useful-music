@@ -8,12 +8,9 @@
   <link rel="stylesheet" href="http://owlgraphic.com/owlcarousel/owl-carousel/owl.carousel.css">
   <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/owlcarousel.css">
   <link rel="stylesheet" href="/stylesheets/application.css">
-  <% if @style %>
-      <link rel="stylesheet" href="/stylesheets/<%= @style %>.css">
-  <% end %>
 </head>
 <body>
-    <%= render :'../header' %>
+    <%= render File.expand_path('../header.erb', __FILE__).to_sym %>
     <!-- <div class="row collapse">
         <div class="large-12 columns flash" style="background-color:grey;">
             <h2>
@@ -41,31 +38,7 @@
     </div>
     <% end %>
   <%= yield %>
-  <%= render :'../footer' %>
-  <script charset="utf-8">
-    var $$ = document.querySelectorAll
-
-    var flash = document.querySelectorAll('.flash')
-    function getClosest(el, tag) {
-      // this is necessary since nodeName is always in upper case
-      tag = tag.toUpperCase();
-      do {
-        if (el.nodeName === tag) {
-          // tag name is found! let's return it. :)
-          return el;
-        }
-      } while (el = el.parentNode);
-
-      // not found :(
-      return null;
-    }
-
-    function slideUp(evt){
-      getClosest(evt.target, 'div').classList.add('read');
-    }
-    flash[0].addEventListener("click", slideUp);
-    flash[1].addEventListener("click", slideUp);
-
-  </script>
+  <%= render File.expand_path('../footer.erb', __FILE__).to_sym %>
+  <script src="/scripts/close-flash.js"></script>
 </body>
 </html>

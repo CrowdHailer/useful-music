@@ -26,7 +26,7 @@ class SessionsController < UsefulMusic::App
         Customers.save customer
       end
       flash['success'] = "Welcome back #{customer.name}"
-      redirect "/customers/#{customer.id}"
+      redirect redirect_path || "/customers/#{customer.id}"
     else
       flash['error'] = 'Invalid login details'
       redirect '/sessions/new'
@@ -36,6 +36,16 @@ class SessionsController < UsefulMusic::App
   delete '/' do
     log_out
     redirect '/'
+  end
+
+  def redirect_path
+    path = request.POST.fetch('requested_path') { '' }
+    path.empty? ? nil : path
+  end
+
+  def requested_path
+    path = request.GET.fetch('requested_path') { '' }
+    path.empty? ? nil : path
   end
 
 end

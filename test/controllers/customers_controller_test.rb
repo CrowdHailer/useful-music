@@ -12,6 +12,11 @@ class CustomersControllerTest < MyRecordTest
     assert_ok get '/new'
   end
 
+  def test_new_page_keeps_success_path
+    assert_ok get '/new?success_path=/shopping_baskets/1'
+    assert_includes last_response.body, 'action="/customers?success_path=/shopping_baskets/1"'
+  end
+
   def test_can_create_customer
     clear_mail
     post '/', :customer => attributes_for(:customer_record).merge(
@@ -22,6 +27,16 @@ class CustomersControllerTest < MyRecordTest
     assert_match(/#{last_customer.id}/, last_response.location)
     assert_includes last_message.to, last_customer.email
     assert_includes last_message.body, last_customer.id
+    assert_equal 'Welcome to Useful Music', flash['success']
+  end
+
+  def test_redirect_after_creation
+    clear_mail
+    post '/?success_path=/my-shopping-basket', :customer => attributes_for(:customer_record).merge(
+      :password_confirmation => 'password',
+      :terms_agreement => 'on',
+      :country => 'GB')
+    assert_equal '/my-shopping-basket', last_response.location
     assert_equal 'Welcome to Useful Music', flash['success']
   end
 

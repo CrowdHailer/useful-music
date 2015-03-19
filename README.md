@@ -1,13 +1,80 @@
 Useful Music
 ============
 
-Application to sell tracks
+Application to sell sheet music and associated audio tracks.
 
-### Requirements
+## Usage
 
-Ecomerce cart
+#### Clone the app
 
-**NB `sudo apt-get install wkhtmltopdf`**
+```
+git clone git@github.com:CrowdHailer/useful-music.git
+cd useful-music
+```
+
+#### Install PDF Kit extension
+
+*This extension is used to translate HTML to PDF documents*
+
+```
+sudo apt-get install wkhtmltopdf
+```
+
+#### Install Ruby Gem Dependencies
+
+```
+bundle install
+```
+
+#### Add Enviroment Variable
+
+*Enviroment variables loaded with dotenv Gem*
+
+```
+touch .env
+```
+
+required
+
+- SESSION_SECRET_KEY
+- S3_BUCKET_NAME
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- PAYPAL_USERNAME
+- PAYPAL_PASSWORD
+- PAYPAL_SIGNATURE
+- MANDRILL_USERNAME
+- MANDRILL_APIKEY
+
+#### Create Databases
+
+```
+createdb useful_music_development
+createdb useful_music_test
+```
+
+#### Migrate Databases
+
+```
+rake db:migrate:up
+RACK_ENV=test rake db:migrate:up
+```
+
+#### Run tests
+
+```
+rake test
+```
+
+### Run locally
+
+```
+# Start application server
+shotgun
+
+# Start SASS watch and compilation
+rake sass:watch
+```
 
 ### Class Diagram
 
