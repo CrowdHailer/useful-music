@@ -13,7 +13,7 @@
   <% end %>
 </head>
 <body>
-    <%= render :'../header' %>
+    <%= render File.expand_path('../header.erb', __FILE__).to_sym %>
     <!-- <div class="row collapse">
         <div class="large-12 columns flash" style="background-color:grey;">
             <h2>
@@ -41,7 +41,7 @@
     </div>
     <% end %>
   <%= yield %>
-  <%= render :'../footer' %>
+  <%= render File.expand_path('../footer.erb', __FILE__).to_sym %>
   <script charset="utf-8">
     var $$ = document.querySelectorAll
 
