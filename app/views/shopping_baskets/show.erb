@@ -180,7 +180,11 @@
                                 <p>Secure PayPal Checkout:</p>
                             </div>
                             <div class="large-7 columns">
-                                <a class="button checkout-secure-btn" href="/">Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                                <% if @basket.free? %>
+                                    <a class="button checkout-secure-btn" href="/">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                                <% else %>
+                                    <a class="button checkout-secure-btn" href="/">Checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                                <% end %>
                             </div>
                         </div>
                     </form>

@@ -27,6 +27,10 @@ class ShoppingBasket < Errol::Entity
       record.discount_record = discount.record
     end
   end
+  
+  def free?
+    Money.new(0) == price
+  end
 
   def price
     [purchases_price - discount.value, Money.new(0)].max
