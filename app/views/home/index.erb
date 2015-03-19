@@ -2,7 +2,7 @@
     <div class="row collapse">
         <div class="large-6 columns">
             <div class="above-fold-left-main">
-                <h1>Original Sheet Music <br>Downloads</h1>
+                <h1>Original Sheet Music Downloads</h1>
                 <h2>Expertly arranged for instruments</h2>
                 <p>Compositions, arrangements and technical studies at all levels and in a variety of styles. Exclusive to Useful Music, these pieces have helped over a million children and adult learners to progress and are available online to sample, download and play.</p>
                 <a href="/pieces">
@@ -31,9 +31,9 @@
         <p>Do you play in a group, conduct ensembles, or are you looking for a group festival piece? Useful Music has a great selection of ensemble pieces for all sorts of instruments and levels.</p>
         <a href="/pieces?catalogue_search%5Btrio%5D=on&catalogue_search%5Bquartet%5D=on&catalogue_search%5Blarger_ensembles%5D=on">
             <button>
-                <i class="fa fa-music fa-music-cstm-2"></i>
+                <!--<i class="fa fa-music fa-music-cstm-2"></i>-->
                 <h3>BROWSE ENSEMBLE PIECES</h3>
-                <i class="fa fa-play fa-play-cstm-2"></i>
+                <!--<i class="fa fa-play fa-play-cstm-2"></i>-->
             </button>
         </a>
     </div>
@@ -49,7 +49,7 @@
                 <div class="large-12 columns basket-contain">
                     <% shopping_basket.purchases.each do |purchase| %>
                     <div class="basket-item">
-                        <i class="fa fa-music basket-icon"></i><p><%= purchase.item.piece.title %> - <%= purchase.item.name %> -  <%= purchase.price.format %></p>
+                        <p><%= purchase.item.piece.title %> - <%= purchase.item.name %> -  <%= purchase.price.format %></p>
                     </div>
                     <% end %>
                 </div>
@@ -101,7 +101,7 @@
 
 <div class="row collapse white-section">
     <div class="large-6 columns">
-        <div class="promo-wrap">
+        <div class="promo-wrap top-promo">
             <div class="row collapse">
                 <div class="large-4 columns">
                     <div class="hand-img">
@@ -110,7 +110,7 @@
                 <div class="large-8 columns ">
                     <h3>Hand Independence Studies for Piano</h3>
                     <p>A new tuneful way to encourage very early hand indepence by keeping fingers on the first five notes of the scale.</p>
-                    <a href="/piano">
+                    <a href="/pieces?catalogue_search[title_like]=under%20the%20fingers">
                         <button style="margin-top: -0.3em;">LEARN MORE</button>
                     </a>
                 </div>
@@ -138,208 +138,38 @@
             <!-- Slide 1 -->
             <div class="row collapse">
                 <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/79BrS1xDQCY" frameborder="0" allowfullscreen></iframe>
-                        <h5>Away in a Manger for Clarinéo, arranged by Graham Lyons</h5>
-                        <p>Free sheet music and backing track for a new arrangement of the traditional English</p>
-                    </div>
+                  <div class="vid-wrap">
+                      <iframe width="290" height="200" src="https://www.youtube.com/embed/9FRbhRrn9DM" frameborder="0" allowfullscreen></iframe>
+                      <h5>Useful Music Studio Sessions: Papillons de Nuit by Graham Lyons</h5>
+                      <p>A professional recording of 'Papillons de Nuit' by Graham Lyons at Sublime Studios.</p>
+                  </div>
                 </div>
                 <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/9FRbhRrn9DM" frameborder="0" allowfullscreen></iframe>
-                        <h5>Useful Music Studio Sessions: Papillons de Nuit by Graham Lyons</h5>
-                        <p>A professional recording of 'Papillons de Nuit' by Graham Lyons at Sublime Studios.</p>
-                    </div>
+                  <div class="vid-wrap">
+                      <iframe width="290" height="200" src="https://www.youtube.com/embed/cCLE_k33R54" frameborder="0" allowfullscreen></iframe>
+                      <h5>Useful Music Studio Sessions: Fanfare by Graham Lyons</h5>
+                      <p>A professional recording of 'Fanfare' by Graham Lyons at Sublime Studios.</p>
+                  </div>
                 </div>
             </div>
             <!-- Slide 2 -->
             <div class="row collapse">
                 <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/cCLE_k33R54" frameborder="0" allowfullscreen></iframe>
-                        <h5>Useful Music Studio Sessions: Fanfare by Graham Lyons</h5>
-                        <p>A professional recording of 'Fanfare' by Graham Lyons at Sublime Studios, Islington.</p>
-                    </div>
+                  <div class="vid-wrap">
+                      <iframe width="290" height="200" src="https://www.youtube.com/embed/On7aCPY8ONI" frameborder="0" allowfullscreen></iframe>
+                      <h5>Useful Music studio sessions: Calypso Facto</h5>
+                      <p>Professional recording of Calypso Facto by Graham Lyons at Sublime Studios.</p>
+                  </div>
                 </div>
                 <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/On7aCPY8ONI" frameborder="0" allowfullscreen></iframe>
-                        <h5>Useful Music studio sessions: Calypso Facto</h5>
-                        <p>Professional recording of Calypso Facto by Graham Lyons at Sublime Studios.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 3 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/6aWoesdmEzQ" frameborder="0" allowfullscreen></iframe>
-                        <h5>Useful Music studio sessions: The Lazy Leopard by Graham Lyons</h5>
-                        <p>A professional recording of our most popular ensemble piece, The Lazy Leopard by...</p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/iqyFD1mjA3Y" frameborder="0" allowfullscreen></iframe>
-                        <h5>Nuvo Flute Introduction Part 2</h5>
-                        <p>The new Nuvo jFlute. Lightweight, low cost, low maintenance, accident-proof, </p>
-                    </div>
+                  <div class="vid-wrap">
+                      <iframe width="290" height="200" src="https://www.youtube.com/embed/6aWoesdmEzQ" frameborder="0" allowfullscreen></iframe>
+                      <h5>Useful Music studio sessions: The Lazy Leopard by Graham Lyons</h5>
+                      <p>A professional recording of our most popular ensemble piece, The Lazy Leopard by Graham Lyons at Sublime Studios.</p>
+                  </div>
                 </div>
             </div>
-            <!-- Slide 4 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/V38kDuVDUKQ" frameborder="0" allowfullscreen></iframe>
-                        <h5>Sergio in the Pool</h5>
-                        <p>A waterproof flute Watch other Nuvo flute YouTube videos to hear how good it </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/QMyV4GHogBw" frameborder="0" allowfullscreen></iframe>
-                        <h5>New curved headjoint flute by Nuvo</h5>
-                        <p>This brand new flute, called the jFlute, and launched at the Frankfurt Music Fair.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 5 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/57VAhQoHPoI" frameborder="0" allowfullscreen></iframe>
-                        <h5>The new Nuvo Flute.wmv</h5>
-                        <p>The Nuvo Student Flute makes its debut at the Frankfurt Music fair 2012.</p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/WFwhLEMglYk" frameborder="0" allowfullscreen></iframe>
-                        <h5>New Nuvo Instrumental flute</h5>
-                        <p>A new quality plastic flute full of astonishing innovations that help </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 6 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/8dyfH-BKxC0" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo lessons 13, 14, 15</h5>
-                        <p>The Clarineo is a unique instrument designed to bring millions more into the joy of </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/G_yqyNiAIIo" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo Lessons 10, 11, 12</h5>
-                        <p>The Clarineo is based on the clarinet and leads instantly to the saxophone or clarinet. </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 7 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/QH_g3RBPQxQ" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo lessons 7, 8 and 9</h5>
-                        <p>The Clarineo is a musical instrument pitched in C and based on the Clarinet. It is </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/IJf6bhJksVI" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo Lessons 4, 5, and 6</h5>
-                        <p>The Clarineo is a musical instrument pitched in C and based on the Clarinet. It is </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 8 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/uZfwnsCTL1I" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo: Lessons 1, 2, 3</h5>
-                        <p>The first of a series of lessons on how to play the Clarineo. (Rhymes with Galileo) All the </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/06ghfBjB3D4" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo BBC TV Look North</h5>
-                        <p>A brief demonstration and discussion of the new Clarinéo C clarinet that can </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 9 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/TTpTuh_i9xk" frameborder="0" allowfullscreen></iframe>
-                        <h5>CLARINEO PERFORMANCE Graham Lyons and Al Morrison.wmv</h5>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/KuUdTk7FkMc" frameborder="0" allowfullscreen></iframe>
-                        <h5>CLARINEO SOLO GRAHAM LYONS</h5>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 10 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/lebvy1Wt19A" frameborder="0" allowfullscreen></iframe>
-                        <h5>CLARINEO DEMO VIDEO</h5>
-                        <p>Meet Graham Lyons , inventor of the Clarineo , musical instrument ready to </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/hglRcQiYadk" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo and Wood saxophone</h5>
-                        <p>Jamming in the Saxophone Centre in Bangkok. Mr Koh, Saxman, plays a wooden </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 11 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/QYITRAED-5g" frameborder="0" allowfullscreen></iframe>
-                        <h5>The Lazy Leopard</h5>
-                        <p>for Clarineo and piano To learn more about the Clarineo please visit </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/ZSgpjL34Z1A" frameborder="0" allowfullscreen></iframe>
-                        <h5>Clarineo June in Paris - played by Lydia Richardson</h5>
-                        <p>You've heard of 'bitter sweet', so why not 'happy sad' - which describes the mood of </p>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 12 -->
-            <div class="row collapse">
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/XkmH5XXXxG4" frameborder="0" allowfullscreen></iframe>
-                        <h5>Danny Boy, and improvisations on All of Me</h5>
-                        <p>The Clarineo:* a beginner's instrument that will take you as far as you want to go. You </p>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    <div class="vid-wrap">
-                        <iframe width="290" height="200" src="https://www.youtube.com/embed/W8ZNhscdbK4" frameborder="0" allowfullscreen></iframe>
 
-                        <h5></h5>
-                        <p></p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-</div>

@@ -31,7 +31,7 @@ p {
 }
 
 .logout-form input{
-  background: none;
+  background: white;
   font-family: 'Montserrat';
   border: none;
   text-transform: uppercase;
@@ -39,12 +39,19 @@ p {
   font-size: 0.83em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  top: 0.45125rem;
+  padding-top: 0.3em;
+  height: 3.3em;
+  margin-top: 0;
+  position: inherit !important;
+
 }
 
 .logout-form input:hover {
-  background: red;
+  background: #e41f21;
   color: white;
+  margin: 0;
+  height: 3.3em;
+  transition: .2s;
 }
 
 .flash {
@@ -85,8 +92,11 @@ p {
 }
 
 .logo-wrap {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 6em;
-  float: left;
+  height: 6em;
 }
 
 .header-text {
@@ -108,7 +118,7 @@ p {
 .ud-search-wrap {
   background: #f8f7f7;
   padding: 0.75em;
-  float: right;
+  float: left;
   width: 24.4em;
   height: 6em;
 }
@@ -156,28 +166,33 @@ p {
 
 .nav-bg {
   background: white;
-  height: 4.3em;
+  min-height: 4.3em;
+  height: auto;
     padding: 0em 1em 0em 1em;
 }
 
 .nav-border {
   border-top: 0.4em solid #e41f21;
   border-bottom: 0.4em solid #e41f21;
-  height: 3.5em;
+  min-height: 3.5em;
+  height: auto;
  }
 
 .top-bar {
   background: white;
-  height: 2.7125rem;
+  min-height: 2.7125rem;
+  height: auto;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button) {
   background: white;
   height: 2.7125rem;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
 }
 
 .top-bar-section ul li > a {
-  padding: 1em;
+  padding: 0.5em;
   font-family: 'Montserrat';
   text-transform: uppercase;
   color: #4a4a49;
@@ -212,6 +227,72 @@ p {
   font-family: 'Montserrat';
   color: white;
   font-size: 0.85em;
+}
+
+.mob-menu-wrap {
+height: 2.75em;
+background: #e41f21;
+padding: 0.4em;
+margin: 0.5em 0em;
+cursor: pointer;
+}
+
+.mob-menu-wrap h3 {
+font-size: 1.3em;
+line-height: 1.1em;
+font-family: 'Montserrat';
+text-transform: uppercase;
+}
+
+#mob-menu-display {
+display: none;
+}
+
+.mob-menu {
+height: auto;
+}
+
+.mob-menu-button{
+margin: 0em;
+background: #e41f21;
+border-top: 0.1em solid white;
+  font-family: 'Montserrat';
+  padding: 0.8em;
+}
+
+.close-menu-btn {
+  background: #e41f21;
+}
+
+.mob-sub-menu-button {
+  margin: 0em;
+  border-top: 0.1em solid white;
+  font-family: 'Montserrat';
+  padding: 0.8em;
+}
+
+.mobile-user-mgmt li {
+  font-family: 'Montserrat';
+  float: left;
+  list-style: none;
+  margin: 0.75em 1em;
+}
+
+.logout-form-mobile {
+  background: none;
+  border: 0.1em solid #4a4a49;
+  padding: 0.1em;
+  float: right;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+
+.logout-form-input {
+  background: none;
+  border: 0em;
+  font-family: 'Montserrat';
+  margin:0em;
+  text-transform: uppercase;
 }
 
 /*Home Page CSS*/
@@ -333,7 +414,7 @@ height: auto;
 }
 
 .ensemble p {
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1.55;
 }
 
@@ -379,6 +460,10 @@ height: auto;
   height: 10em;
   margin: 1em;
   padding: 0.5em;
+}
+
+.top-promo {
+  margin-top: 4.4em;
 }
 
 .hand-img {
@@ -469,12 +554,16 @@ height: auto;
 .basket-item {
   width: 100%;
   height: 2em;
+  padding: 0.2em;
 }
 
 .basket-item p{
   color: white;
   float: left;
   line-height: 0.8;
+  background: #e41f21;
+  position: absolute;
+  z-index: 10;
 }
 
 .basket-contain {
@@ -501,6 +590,50 @@ height: auto;
 .checkout:hover {
   color: #3c3c3b;
 }
+
+.checkout-actions {
+  background: #f7f7f8;
+  min-height: 15em;
+  height: auto;
+  border-radius: 0.5em;
+  border: 0.15em solid #d9d9d9;
+  padding: 0.5em;
+}
+
+.checkout-actions h6 {
+  color: #4a4a49;
+}
+
+.updatecart-btn {
+  padding: 0.5em;
+}
+
+.checkout-option-1 {
+  padding: 0.5em;
+  background-color: #2ad955;
+}
+
+.checkout-option-2 {
+  padding: 0.5em;
+  background-color: #f75d1b;
+}
+
+.checkout-icon {
+  margin-left: 0.5em;
+}
+
+.checkout-secure-btn {
+
+}
+
+.secure {
+  margin-top: 1em;
+}
+
+.secure h6 {
+  color: #4a4a49;
+}
+
 
 /*Product Block CSS*/
 
@@ -814,6 +947,10 @@ border: 0.07em solid #4a4a49;
   color: #e41f21;
 }
 
+.orders h6 {
+  color: #4a4a49;
+}
+
 
 /* FOOTER CSS */
 
@@ -822,6 +959,7 @@ footer {
   height: auto;
   min-height: 30em;
   margin-top: 2em;
+  padding: 1em;
 }
 
 footer h6 {
@@ -891,3 +1029,309 @@ footer a {
 footer a:hover {
   color: red;
 }
+
+//Small screens
+@media only screen { }
+
+@media only screen and (max-width: 23.2em) {
+
+  .header-text {
+    padding-right: 0em;
+    margin-top: -0.5em;
+  }
+
+  .header-text h1 {
+    font-size: 0.8em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.5em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 3.5em;
+    height: 3.5em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: right;
+    width: 100%;
+    height: auto;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 100%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .search-icon {
+    color: white;
+    font-size: 3em;
+    padding: 0.5em;
+  }
+
+}
+
+@media only screen and (min-width: 23.2em) and (max-width: 40em) {
+
+  .header-text {
+    padding-right: 0em;
+  }
+
+  .header-text h1 {
+    font-size: 1em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.6em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 6.5em;
+    height: 6.5em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: left;
+    width: 70%;
+    height: 7em;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+    width: 30%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .ud-search-submit:hover {
+    background: #00ccff;
+    transition: .3s;
+  }
+
+  .search-icon {
+    color: white;
+    font-size: 3em;
+    padding: 0.5em;
+  }
+
+  .search-field {
+    margin-top: 0.9em;
+    height: 3em;
+  }
+
+  .search-field p {
+   color: #d0d0d0;
+    padding: 0.2em;
+  }
+
+ }
+
+ @media only screen and (min-width: 40em) and (max-width: 58em) {
+   .header-text {
+     padding-right: 1em;
+     padding-left: 2.5em;
+   }
+
+   .header-text h1 {
+     font-size: 1em;
+     color: #4a4a49;
+     text-align: right;
+   }
+
+   .header-text h2 {
+     font-size: 0.6em;
+     color: #4a4a49;
+     text-align: right;
+   }
+
+   .logo-wrap {
+     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+     background-size: contain;
+     background-repeat: no-repeat;
+     width: 6em;
+     height: 6em;
+   }
+
+   .ud-search-wrap {
+     background: #f8f7f7;
+     padding-left: 0.25em;
+     padding-top: 0.75em;
+     padding-right: 0.5em;
+     padding-bottom:0.75em;
+     float: left;
+     width: 70%;
+     height: 7em;
+     margin-left: -0.9em;
+   }
+
+   .ud-search-wrap label {
+     font-family: 'Montserrat';
+     font-size: 1em;
+     line-height: 1;
+   }
+
+   .ud-search-btn {
+     background: none;
+     padding: 0;
+     margin: 0;
+     float: right;
+     width: 30%;
+   }
+
+   .ud-search-submit {
+     height: 7em;
+     background: #e41f21;
+     float: right;
+     width: 100%;
+   }
+
+   .ud-search-submit:hover {
+     background: #00ccff;
+     transition: .3s;
+   }
+
+     .search-icon {
+       color: white;
+       font-size: 2em;
+       padding: 0.5em;
+       padding-top: 1em;
+     }
+ }
+
+//Medium screens
+@media only screen and (min-width: 58em) { }
+@media only screen and (min-width: 58em) and (max-width: 79.9em) {
+
+  .header-text {
+    padding-right: 3em;
+  }
+
+  .header-text h1 {
+    font-size: 1.3em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.8em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 7em;
+    height: 7em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: left;
+    width: 70%;
+    height: 7em;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+    width: 30%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .ud-search-submit:hover {
+    background: #00ccff;
+    transition: .3s;
+  }
+
+
+}
+
+//Large screens
+
+@media only screen and (min-width:79.9em) { }
+@media only screen and (min-width: 79.9em) and (max-width: 90em) { }
+
+//XLarge screens
+@media only screen and (min-width: 90.063em) { }
+@media only screen and (min-width: 90.063em) and (max-width: 120em) { }
+
+//XXLarge screens
+@media only screen and (min-width: 120.063em) { }
