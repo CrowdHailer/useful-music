@@ -8,9 +8,6 @@
   <link rel="stylesheet" href="http://owlgraphic.com/owlcarousel/owl-carousel/owl.carousel.css">
   <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/owlcarousel.css">
   <link rel="stylesheet" href="/stylesheets/application.css">
-  <% if @style %>
-      <link rel="stylesheet" href="/stylesheets/<%= @style %>.css">
-  <% end %>
 </head>
 <body>
     <%= render File.expand_path('../header.erb', __FILE__).to_sym %>
