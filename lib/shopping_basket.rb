@@ -29,6 +29,10 @@ class ShoppingBasket < Errol::Entity
   end
 
   def price
+    [purchases_price - discount.value, Money.new(0)].max
+  end
+
+  def purchases_price
     purchases.map(&:price).reduce(Money.new(0), &:+)
   end
 

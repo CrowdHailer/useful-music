@@ -65,7 +65,7 @@
                         Total
                     </th>
                     <th>
-                        <%= @basket.price.format %>
+                        <%= @basket.purchases_price.format %>
                     </th>
                     <th>
                     </th>
@@ -81,7 +81,7 @@
                         <%= @basket.discount.code %>
                     </th>
                     <th>
-                        <%= @basket.discount.value.format %>
+                        -<%= @basket.discount.value.format %>
                     </th>
                     <th>
                     </th>
