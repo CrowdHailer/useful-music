@@ -74,6 +74,7 @@ Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require fi
 Dir[File.expand_path('app/mailers/*.rb', APP_ROOT)].each { |file| require file}
 
 class UsefulMusic::App
+  TestError = Class.new(StandardError)
   NotFoundError = Class.new(StandardError)
   # belongs in top setting
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
@@ -84,6 +85,10 @@ class UsefulMusic::App
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
     use Rack::Csrf, :raise => true if app.config[:protect_from_csrf]
     use Rack::MethodOverride
+  end
+
+  get '/test-error' do
+    raise TestError, 'This is a drill'
   end
 
   controller '/customers', CustomersController
@@ -97,15 +102,22 @@ class UsefulMusic::App
   controller '/admin', UsefulMusic::AdminController
   controller '/', HomeController
 
+
   after :status => 404 do
     error = NotFoundError.new "Attempted Path: #{request.path}"
     Bugsnag.notify(error, :severity => "info")
-    flash['error'] = 'Page not found'
-    redirect '/'
+    response.body = render File.expand_path('app/views/errors/404', APP_ROOT).to_sym, :layout => File.expand_path('app/views/error', APP_ROOT).to_sym
   end
 
   error do |err|
     env["rack.exception"] = err
     false
+  end
+
+  error do |err|
+    if RACK_ENV == 'production'
+      response.status = 500
+      response.body = render File.expand_path('app/views/errors/500', APP_ROOT).to_sym, :layout => File.expand_path('app/views/error', APP_ROOT).to_sym
+    end
   end
 end

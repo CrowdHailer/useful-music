@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>UsefulMusic.com</title>
+  <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/foundation80emwitheverything.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/application.css">
+</head>
+<body>
+    <%= render File.expand_path('../header.erb', __FILE__).to_sym %>
+    <%= yield %>
+    <%= render File.expand_path('../footer.erb', __FILE__).to_sym %>
+</body>
+</html>
