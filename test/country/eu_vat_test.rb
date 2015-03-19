@@ -12,7 +12,7 @@ class Country
 
     def test_afghanistan_uses_the_default_rate
       rate = EUVAT.new afghanistan
-      assert_equal 0, rate.to_f
+      assert_equal 0, rate.to_i
     end
 
     def test_can_access_country
