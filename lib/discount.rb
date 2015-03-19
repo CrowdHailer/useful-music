@@ -22,4 +22,12 @@ class Discount < Errol::Entity
                   :customer_allocation,
                   :start_datetime,
                   :end_datetime
+
+  def expired?
+    end_datetime < DateTime.now
+  end
+
+  def pending?
+    start_datetime > DateTime.now
+  end
 end

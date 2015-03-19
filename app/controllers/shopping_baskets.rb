@@ -11,12 +11,14 @@ class ShoppingBasketsController < UsefulMusic::App
     shopping_basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
     code = request.POST.fetch('shopping_basket') { {} }['discount'] || ''
     discount = Discounts.first(:code => code)
-    shopping_basket.discount = discount
-    ShoppingBaskets.save shopping_basket
     if !code.empty? && discount.nil?
       flash['error'] = 'Discount Code Invalid'
+    elsif discount.expired? || discount.pending?
+      flash['error'] = 'Discount Code Currently Unavailable'
     else
       flash['success'] = 'Discount Code Added'
+      shopping_basket.discount = discount
+      ShoppingBaskets.save shopping_basket
     end
     redirect request.referer
   end

@@ -23,7 +23,9 @@ class ShoppingBasketsControllerTest < MyRecordTest
   end
 
   def test_can_update_basket_with_discount_code
-    discount_record = create :discount_record
+    discount_record = create :discount_record,
+      :start_datetime => DateTime.new(2014),
+      :end_datetime => DateTime.new(2017)
     shopping_basket_record = create :shopping_basket_record
     patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => discount_record.code}}
     assert_equal discount_record, shopping_basket_record.reload.discount_record
@@ -35,6 +37,22 @@ class ShoppingBasketsControllerTest < MyRecordTest
     shopping_basket_record = create :shopping_basket_record
     patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => 'WRONG'}}
     assert_equal 'Discount Code Invalid', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_cant_use_expired_discount_code
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2014)
+    shopping_basket_record = create :shopping_basket_record
+    patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => discount_record.code}}
+    assert_equal 'Discount Code Currently Unavailable', flash['error']
+    assert last_response.redirect?
+  end
+
+  def test_cant_use_pending_discount_code
+    discount_record = create :discount_record, :start_datetime => DateTime.new(2017)
+    shopping_basket_record = create :shopping_basket_record
+    patch "/#{shopping_basket_record.id}", {:shopping_basket => {:discount => discount_record.code}}
+    assert_equal 'Discount Code Currently Unavailable', flash['error']
     assert last_response.redirect?
   end
 
