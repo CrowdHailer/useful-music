@@ -3,6 +3,11 @@ require_relative './shopping_basket'
 class ShoppingBaskets < Errol::Repository
   require_relative './shopping_baskets/inquiry'
   class << self
+    def save(entity)
+      entity.modifiable!
+      super
+    end
+
     def record_class
       ShoppingBasket::Record
     end

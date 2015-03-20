@@ -1,13 +1,13 @@
 class ShoppingBasket < Errol::Entity
+  AlreadyCheckedOut = Class.new(StandardError)
   require_relative './shopping_basket/record'
 
   def purchases
     record.purchase_records.map{ |r| Purchase.new r }
   end
 
-  def order
-    order_record = record.order_record
-    Order.new(order_record) if order_record
+  def orders
+    record.order_records.map{ |r| Order.new r }
   end
 
   def discount
@@ -30,6 +30,14 @@ class ShoppingBasket < Errol::Entity
 
   def free?
     Money.new(0) == price
+  end
+
+  def modifiable?
+    !orders.any?(&:succeded?)
+  end
+
+  def modifiable!
+    raise AlreadyCheckedOut unless modifiable?
   end
 
   def discount_value
