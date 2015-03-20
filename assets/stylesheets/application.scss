@@ -12,6 +12,11 @@
   text-decoration: underline;
 }
 
+#mc_embed_signup label {
+  color: white;
+}
+
+
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Montserrat';
 }
@@ -304,6 +309,12 @@ border-top: 0.1em solid white;
   min-height: 22em;
 }
 
+.above-fold-right-main {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
+  height: auto;
+  min-height: 22.5em;
+}
+
 .above-fold-left-main {
   background: #08344c; /* Old browsers */
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -352,12 +363,6 @@ height: auto;
   float: left;
   margin: 0;
   padding-top: 0.2em;
-}
-
-.above-fold-right-main {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
-  height: auto;
-  min-height: 22.5em;
 }
 
 .fa-music-cstm {
@@ -444,7 +449,7 @@ height: auto;
 .promo-banner {
   background: #a6dbf8;
   width: 100%;
-  height: 4em;
+  height: auto;
   padding-left: 1em;
 }
 
@@ -1099,6 +1104,52 @@ footer a:hover {
     padding: 0.5em;
   }
 
+  .above-fold-right-main {
+    background-image: none;
+    height: auto;
+    min-height: 22.5em;
+  }
+
+  .header-btn i {
+    display: none;
+  }
+
+  .ensemble-pic {
+    background-image: none;
+  }
+
+  .piece-btn {
+    width: 100%;
+    padding: 1.5em !important;
+    font-size: 1.5em !important;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-info-wrap {
+    height: auto;
+  }
+
+  .product-info-wrap p {
+    font-size: 1.5em;
+  }
+
+  .title-wrap {
+    height: auto;
+  }
+
+  .product-main p {
+    font-size: 1.2em;
+  }
+
+  .product-main h6 {
+    color: #e41f21;
+    font-size:1.2em;
+    line-height: 0.6;
+  }
+
 }
 
 @media only screen and (min-width: 23.2em) and (max-width: 40em) {
@@ -1181,6 +1232,56 @@ footer a:hover {
     padding: 0.2em;
   }
 
+  .above-fold-right-main {
+    background-image: none;
+    height: auto;
+    min-height: 22.5em;
+  }
+
+  .header-btn i {
+    display: none;
+  }
+
+  .ensemble-pic {
+    background-image: none;
+  }
+
+  .piece-btn {
+    width: 100%;
+    padding: 1em !important;
+    font-size: 1em !important;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-info-wrap {
+    height: auto;
+  }
+
+  .product-info-wrap p {
+    font-size: 1.5em;
+  }
+
+  .title-wrap {
+    height: auto;
+  }
+
+  .product-main p {
+    font-size: 1.2em;
+  }
+
+  .product-main h6 {
+    color: #e41f21;
+    font-size:1.2em;
+    line-height: 0.6;
+  }
+
  }
 
  @media only screen and (min-width: 40em) and (max-width: 58em) {
@@ -1253,6 +1354,20 @@ footer a:hover {
        padding: 0.5em;
        padding-top: 1em;
      }
+
+     .above-fold-right-main {
+       background-image: none;
+       height: auto;
+       min-height: 22.5em;
+     }
+
+
+ }
+
+ @media only screen and (max-width: 64em) {
+   #filter-display {
+     display: none;
+   }
  }
 
 //Medium screens
@@ -1321,17 +1436,20 @@ footer a:hover {
     transition: .3s;
   }
 
-
 }
 
 //Large screens
 
 @media only screen and (min-width:79.9em) { }
-@media only screen and (min-width: 79.9em) and (max-width: 90em) { }
+@media only screen and (min-width: 79.9em) and (max-width: 90em) {
+
+ }
 
 //XLarge screens
 @media only screen and (min-width: 90.063em) { }
-@media only screen and (min-width: 90.063em) and (max-width: 120em) { }
+@media only screen and (min-width: 90.063em) and (max-width: 120em) {}
 
 //XXLarge screens
-@media only screen and (min-width: 120.063em) { }
+@media only screen and (min-width: 120.063em) {
+
+}
