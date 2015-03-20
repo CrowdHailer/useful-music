@@ -1,8 +1,22 @@
+<div class="hide-for-large-up">
+  <div class="row collapse">
+    <div class="mob-menu-wrap" onclick="document.getElementById('filter-display').style.display = 'block'">
+      <h3 style="float: left; color: white;">
+        Search Filter
+      </h3>
+      <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+    </div>
+  </div>
+</div>
+
 
 <div class="row collapse white-section section-bottom-margin">
     <!-- FILTER FORM LEFT -->
-    <div class="large-3 columns">
-        <div class="filter-wrap">
+    <div class="large-3 medium-12 columns">
+          <div id="filter-display" class="filter-wrap">
+            <div class="hide-for-large-up">
+              <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
+            </div>
             <h1>Search Filter</h1>
             <p>Refine your search by selecting and<br> combining categories:</p>
             <div class="filter-form">

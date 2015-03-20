@@ -122,7 +122,7 @@ class Order < Errol::Entity
     self.basket_total = shopping_basket.price
     self.discount_value = discount.value
     self.payment_gross = [(basket_total - discount.value), Money.new(0)].max
-    self.tax_payment = payment_gross * customer.vat_rate
+    self.tax_payment = customer.vat_rate * payment_gross
     self.payment_net = payment_gross + tax_payment
   end
   # TODO untested

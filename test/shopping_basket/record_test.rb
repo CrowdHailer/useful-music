@@ -18,6 +18,12 @@ class ShoppingBasket
     #   refute_equal Time.at(0), record.updated_at
     # end
 
+    def test_can_have_discount
+      discount_record = create :discount_record
+      record = create :shopping_basket_record, :discount_record => discount_record
+      assert record.discount_record
+    end
+
     def test_can_have_purchase_records
       record = create :shopping_basket_record
       record.add_purchase_record create(:purchase_record)

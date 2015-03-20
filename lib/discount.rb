@@ -7,6 +7,10 @@ class Discount < Errol::Entity
     def nil?
       true
     end
+
+    def code
+      ''
+    end
   end
   def self.null
     Null.new
@@ -18,4 +22,12 @@ class Discount < Errol::Entity
                   :customer_allocation,
                   :start_datetime,
                   :end_datetime
+
+  def expired?
+    end_datetime < DateTime.now
+  end
+
+  def pending?
+    start_datetime > DateTime.now
+  end
 end

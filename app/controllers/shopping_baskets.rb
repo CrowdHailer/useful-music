@@ -1,27 +1,46 @@
 class ShoppingBasketsController < UsefulMusic::App
   include Scorched::Rest
-
-  # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/shopping_baskets'
 
-  # TODO test
-
   def show(id)
-    record = ShoppingBasket::Record[id]
-    redirect '/' if record.nil?
-    @basket = ShoppingBasket.new record
+    @basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
     render :show
   end
 
+  def update(id)
+    shopping_basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
+    code = request.POST.fetch('shopping_basket') { {} }['discount'] || ''
+    discount = Discounts.first(:code => code)
+    if code.empty?
+      flash['success'] = 'Discount Code Removed'
+      shopping_basket.discount = nil
+      ShoppingBaskets.save shopping_basket
+    elsif discount.nil?
+      flash['error'] = 'Discount Code Invalid'
+    elsif discount.expired? || discount.pending?
+      flash['error'] = 'Discount Code Currently Unavailable'
+    else
+      flash['success'] = 'Discount Code Added'
+      shopping_basket.discount = discount
+      ShoppingBaskets.save shopping_basket
+    end
+    redirect request.referer
+  end
+
   def destroy(id)
+    basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
     customer = current_customer
     unless customer.guest?
       customer.record.update :shopping_basket_record => nil
     end
-    record = ShoppingBasket::Record[id]
-    record.destroy
+    ShoppingBaskets.remove basket
     flash['success'] = 'Shopping basket cleared'
     redirect '/'
+  end
+
+  def shopping_basket_not_found(id)
+    flash['error'] = 'Shopping Basket not found'
+    redirect request.referer
   end
 
 end

@@ -10,7 +10,33 @@ class ShoppingBasket < Errol::Entity
     Order.new(order_record) if order_record
   end
 
+  def discount
+    return @discount if @discount
+    if record.discount_record
+      @discount = Discount.new record.discount_record
+    else
+      Discount.null
+    end
+  end
+
+  def discount=(discount)
+    @discount = discount
+    if discount.nil?
+      record.discount_record = discount
+    else
+      record.discount_record = discount.record
+    end
+  end
+  
+  def free?
+    Money.new(0) == price
+  end
+
   def price
+    [purchases_price - discount.value, Money.new(0)].max
+  end
+
+  def purchases_price
     purchases.map(&:price).reduce(Money.new(0), &:+)
   end
 
