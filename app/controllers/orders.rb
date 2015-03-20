@@ -10,6 +10,12 @@ class OrdersController < UsefulMusic::App
     send_back if shopping_basket.empty?
     remove_discount('Your discount has expired') if shopping_basket.discount.expired?
     remove_discount('Your discount is pending') if shopping_basket.discount.pending?
+    # ap ShoppingBaskets.new(:checked_out => true, :discount => shopping_basket.discount).dataset.sql
+    if !shopping_basket.discount.nil? && shopping_basket.discount.allocation <= ShoppingBaskets.count(:checked_out => true, :discount => shopping_basket.discount)
+      remove_discount('This discount code has been used')
+    end
+    # ap ShoppingBaskets.all
+    # ap Orders.new(:discount => shopping_basket.discount).dataset.sql
     # remove_discount if discount.all_spent
     # remove_discount if discount.spent_by(current_customer)
     order = Orders.build :customer => current_customer,
