@@ -1,13 +1,11 @@
 
 <div class="row collapse white-section section-bottom-margin">
+  <div class="large-3 columns">
     <!-- FILTER FORM LEFT -->
     <%= render :'_account_sidebar' %>
+  </div>
 
     <div class="large-9 columns">
-        <div class="search-bar-filter">
-            <div class="search-bar-filter-inner">
-            </div>
-        </div>
         <div class="row">
             <div class="large-12 columns">
                 <form class="pure-form pure-form-aligned" action="/customers/<%= @customer.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
