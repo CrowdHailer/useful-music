@@ -16,7 +16,18 @@ class OrdersController < UsefulMusic::App
       :shopping_basket => shopping_basket
     order.calculate_payment
     Orders.save order
-    redirect order.setup(url).redirect_uri
+    if shopping_basket.free?
+      order.state = 'succeded'
+      order.record.save
+      customer_mailer.order_successful
+      current_customer.record.update :shopping_basket_record => nil
+      session.delete 'guest.shopping_basket'
+
+      flash[:success] = 'Order placed successfuly'
+      redirect "customers/#{current_customer.id}"
+    else
+      redirect order.setup(url).redirect_uri
+    end
   end
 
   def send_to_login

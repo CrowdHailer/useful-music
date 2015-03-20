@@ -76,27 +76,15 @@ class OrdersControllerTest < MyRecordTest
     # ap last_response.location
   end
 
-  # def test_creates_order_with_discount
-  #   discount_record = create :discount_record
-  #   shopping_basket_record = create :shopping_basket_record
-  #   shopping_basket = ShoppingBasket.new shopping_basket_record
-  #   shopping_basket_record.add_purchase_record create(:purchase_record)
-  #   customer.record.shopping_basket_record = shopping_basket_record
-  #   customer.record.save
-  #   post '/', {}, {'rack.session' => {:user_id => customer.id}}
-  # end
-
-  # def test_zero_price_item
-  #   item_record = create :item_record, :initial_price => Money.new(0)
-  #   purchase_record = create :purchase_record, :item_record => item_record
-  #   shopping_basket_record = create :shopping_basket_record
-  #   shopping_basket = ShoppingBasket.new shopping_basket_record
-  #   shopping_basket_record.add_purchase_record create(:purchase_record)
-  #   customer.record.shopping_basket_record = shopping_basket_record
-  #   customer.record.save
-  #   post '/', {}, {'rack.session' => {:user_id => customer.id}}
-  #
-  # end
+  def test_creates_order_with_discount
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2016), :start_datetime => DateTime.new(2014)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    shopping_basket_record.add_purchase_record create :purchase_record
+    customer.record.update(:shopping_basket_record => shopping_basket_record)
+    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    order = Orders.last
+    # TODO test values
+  end
 
   def test_success_story
     skip

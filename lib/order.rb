@@ -119,9 +119,9 @@ class Order < Errol::Entity
   end
 
   def calculate_payment
-    self.basket_total = shopping_basket.price
-    self.discount_value = discount.value
-    self.payment_gross = [(basket_total - discount.value), Money.new(0)].max
+    self.basket_total = shopping_basket.purchases_price
+    self.discount_value = shopping_basket.discount.value
+    self.payment_gross = shopping_basket.price
     self.tax_payment = customer.vat_rate * payment_gross
     self.payment_net = payment_gross + tax_payment
   end
