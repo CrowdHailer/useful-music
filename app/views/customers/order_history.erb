@@ -23,12 +23,13 @@
                     </thead>
                     <tbody>
                         <% @customer.orders.each do |order| %>
+                            <% if order.succeded? %>
                             <tr>
                                 <th>
                                     <%= order.id %>
                                 </th>
                                 <th>
-                                    <%= order.basket_total.format %>
+                                    <%= order.payment_gross.format %>
                                 </th>
                                 <th>
                                     <%= order.tax_payment.format %>
@@ -37,6 +38,7 @@
                                     <a href="/orders/<%= order.id %>" target="_blank" download>Download</a>
                                 </th>
                             </tr>
+                            <% end %>
                         <% end %>
                     </tbody>
                 </table>
