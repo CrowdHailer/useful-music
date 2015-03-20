@@ -27,9 +27,13 @@ class ShoppingBasket < Errol::Entity
       record.discount_record = discount.record
     end
   end
-  
+
   def free?
     Money.new(0) == price
+  end
+
+  def discount_value
+    discount.value
   end
 
   def price
