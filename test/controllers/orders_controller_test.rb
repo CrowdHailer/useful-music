@@ -50,12 +50,12 @@ class OrdersControllerTest < MyRecordTest
       :allocation => 2
     completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
     create :order_record,
-      :customer_record => customer.record,
+      # :customer_record => customer.record,
       :shopping_basket_record => completed_basket_record,
       :state => 'succeded'
     completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
     create :order_record,
-      :customer_record => customer.record,
+      # :customer_record => customer.record,
       :shopping_basket_record => completed_basket_record,
       :state => 'succeded'
     shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
@@ -66,6 +66,31 @@ class OrdersControllerTest < MyRecordTest
     post '/', {:discount => discount_record.code}, {'rack.session' => {:user_id => customer.id}}
     assert_equal 'This discount code has been used', flash['error']
     assert last_response.redirect?
+  end
+
+  def test_stops_on_individual_allocation
+    discount_record = create :discount_record,
+      :start_datetime => DateTime.new(2000),
+      :end_datetime => DateTime.new(3000),
+      :customer_allocation => 2
+    completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create :order_record,
+      :customer_record => customer.record,
+      :shopping_basket_record => completed_basket_record,
+      :state => 'succeded'
+    completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create :order_record,
+      :customer_record => customer.record,
+      :shopping_basket_record => completed_basket_record,
+      :state => 'succeded'
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create(:purchase_record, :shopping_basket_record => shopping_basket_record)
+    customer.record.shopping_basket_record = shopping_basket_record
+    customer.record.save
+    post '/', {:discount => discount_record.code}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'You have used this discount code', flash['error']
+    assert last_response.redirect?
+
   end
 
   def test_creates_order

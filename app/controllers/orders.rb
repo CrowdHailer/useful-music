@@ -14,6 +14,10 @@ class OrdersController < UsefulMusic::App
     if !shopping_basket.discount.nil? && shopping_basket.discount.allocation <= ShoppingBaskets.count(:checked_out => true, :discount => shopping_basket.discount)
       remove_discount('This discount code has been used')
     end
+    count = current_customer.orders.select{ |o|
+      o.succeded? && o.discount == shopping_basket.discount
+    }.count
+    remove_discount('You have used this discount code') if !shopping_basket.discount.nil? && count >= shopping_basket.discount.customer_allocation
     # ap ShoppingBaskets.all
     # ap Orders.new(:discount => shopping_basket.discount).dataset.sql
     # remove_discount if discount.all_spent
