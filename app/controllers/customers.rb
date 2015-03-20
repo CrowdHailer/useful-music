@@ -39,7 +39,7 @@ class CustomersController < UsefulMusic::App
 
   def show(id)
     @customer = check_access!(id)
-    redirect "/customers/#{@customer.id}/purchases"
+    redirect "/customers/#{@customer.id}/orders"
     # render :show
   end
 
@@ -48,10 +48,10 @@ class CustomersController < UsefulMusic::App
     render :order_history
   end
 
-  def purchase_history(id)
-    @customer = check_access!(id)
-    render :purchase_history
-  end
+  # def purchase_history(id)
+  #   @customer = check_access!(id)
+  #   render :purchase_history
+  # end
 
   def edit(id)
     @customer = check_access!(id)
