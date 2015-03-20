@@ -721,12 +721,18 @@ height: auto;
 
 /*Search Filter CSS*/
 
+.pure-checkbox {
+  float:left;
+  width:50%;
+}
+
 .filter-wrap {
   background: #a6dbf8;
   height: auto;
   min-height: 55em;
   margin-top: 1em;
   padding: 0.6em;
+  overflow: hidden;
 }
 
 .filter-wrap h1 {
@@ -758,7 +764,7 @@ input[type="checkbox"] {
 
 .clear-search-btn {
   padding: 0.5em;
-  float: left;
+  float: right;
   font-family: 'Montserrat';
   text-transform: uppercase;
   font-size: 0.9em;
@@ -1195,6 +1201,11 @@ footer a:hover {
     color: #e41f21;
     font-size:1.2em;
     line-height: 0.6;
+  }
+
+  .pure-checkbox {
+    float:left;
+    width:100%;
   }
 
 }
