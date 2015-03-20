@@ -99,7 +99,8 @@ class Order
 
     def test_can_have_a_discount_record
       discount_record = create :discount_record
-      order_record = create :order_record, :discount_record => discount_record
+      shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+      order_record = create :order_record, :shopping_basket_record => shopping_basket_record
       assert_equal discount_record, order_record.discount_record
     end
 

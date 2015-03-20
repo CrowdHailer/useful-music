@@ -26,10 +26,10 @@ class ShoppingBasket
       assert_equal Purchase, shopping_basket.purchases.first.class
     end
 
-    def test_has_order
+    def test_has_orders
       order_record = create :order_record
       @record = ShoppingBasket::Record.last
-      assert_equal Order, shopping_basket.order.class
+      assert_equal Order, shopping_basket.orders.first.class
     end
 
     def test_can_make_discount
@@ -54,7 +54,7 @@ class ShoppingBasket
 
     def test_no_order_if_no_order_record
       @record = create :shopping_basket_record
-      assert_nil shopping_basket.order
+      assert_equal [], shopping_basket.orders
     end
 
     def test_has_price_from_all_purchases

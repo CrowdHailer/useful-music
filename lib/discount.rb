@@ -8,6 +8,14 @@ class Discount < Errol::Entity
       true
     end
 
+    def expired?
+      false
+    end
+
+    def pending?
+      false
+    end
+
     def code
       ''
     end

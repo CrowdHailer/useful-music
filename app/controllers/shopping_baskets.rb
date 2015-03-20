@@ -24,7 +24,7 @@ class ShoppingBasketsController < UsefulMusic::App
       shopping_basket.discount = discount
       ShoppingBaskets.save shopping_basket
     end
-    redirect request.referer
+    redirect "/shopping_baskets/#{shopping_basket.id}"
   end
 
   def destroy(id)

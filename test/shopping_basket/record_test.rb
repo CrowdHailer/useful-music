@@ -30,9 +30,9 @@ class ShoppingBasket
       assert record.purchase_records
     end
 
-    def test_can_have_an_order
+    def test_can_have_orders
       order_record = create :order_record
-      assert_equal Order::Record, ShoppingBasket::Record.last.order_record.class
+      assert_equal Order::Record, ShoppingBasket::Record.last.order_records.last.class
     end
   end
 end
