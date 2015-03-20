@@ -952,8 +952,37 @@ border: 0.07em solid #4a4a49;
   color: #e41f21;
 }
 
+.orders {
+  padding-left: 0.5em;
+}
+
 .orders h6 {
   color: #4a4a49;
+}
+
+.order-summary {
+  height: auto;
+  background: #f7f7f8;
+  padding: 0.6em;
+}
+
+.summary-padding {
+  padding: 0.5em;
+}
+
+.order-title-wrap {
+  background: #e41f21;
+  padding: 0.6em;
+  width: 100%;
+}
+
+.order-title-wrap h6 {
+  color: white;
+  line-height: 1;
+}
+
+.download-wrap {
+  padding: 0.6em;
 }
 
 

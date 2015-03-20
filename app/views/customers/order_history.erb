@@ -1,17 +1,89 @@
 
 <div class="row collapse white-section section-bottom-margin">
+  <div class="large-3 columns">
     <!-- FILTER FORM LEFT -->
     <%= render :'_account_sidebar' %>
+  </div>
 
     <div class="large-9 columns">
         <div class="search-bar-filter">
             <div class="search-bar-filter-inner">
             </div>
         </div>
-        <div class="row">
+        <div class="orders">
+        <h4>Your orders</h4>
+        <h6>Your files will be available for 4 days from purchase.</h6>
+        <hr>
+        </div>
+    </div>
+</div>
+
+        <div class="row summary-padding">
+          <div class="large-12 columns orders">
+            <!-- repeat this bit-->
+            <div class="row collapse">
+              <div class="order-title-wrap">
+                <h6>Order - 12th of January 2015</h6>
+              </div>
+              <div class="large-2 columns">
+                <div class="order-summary">
+                  <h6>Order ID</h6>
+                  <h6>123xxc</h6>
+                  <hr>
+                  <h6>Amount</h6>
+                  <h6>£12.00</h6>
+                  <hr>
+                  <h6>Tax</h6>
+                  <h6>£2.00</h6>
+                  <hr>
+                  <h6>License</h6>
+                  <a href="/"><h6>Download</h6></a>
+                </div>
+              </div>
+              <div class="large-10 columns">
+                <div class="download-wrap">
+                  <h6>File Download</h6>
+                  <table class="order-table">
+                      <thead>
+                          <tr>
+                              <th>Title</th>
+                              <th>Instrument</th>
+                              <th>Part</th>
+                              <th>File</th>
+                              <th>Expires</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                              <tr>
+                                  <th>
+                                      The Cool Camel
+                                  </th>
+                                  <th>
+                                      Piano and Flute
+                                  </th>
+                                  <th>
+                                      Part 1
+                                  </th>
+                                  <th>
+                                      <a href="/orders/" target="_blank" download>Download</a>
+                                  </th>
+                                  <th>
+                                      15.1.15 - 10:32
+                                  </th>
+                              </tr>
+
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!--DOWN TO HERE-->
+          </div>
+        </div>
+    <!--    <div class="row">
             <div class="large-12 columns orders">
                 <h4>Your orders</h4>
-                <h6>Your files will be available for 4 days from purchase.  You have [[X hours and X minutes remaining TODO]].</h6>
+                <h6>Your files will be available for 4 days from purchase.</h6>
                 <table class="order-table">
                     <thead>
                         <tr>
@@ -41,6 +113,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
