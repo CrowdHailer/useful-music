@@ -20,16 +20,28 @@ class OrdersControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
-  # def test_redirects_for_invalid_discount
-  #   shopping_basket_record = create :shopping_basket_record
-  #   shopping_basket = ShoppingBasket.new shopping_basket_record
-  #   shopping_basket_record.add_purchase_record create(:purchase_record)
-  #   customer.record.shopping_basket_record = shopping_basket_record
-  #   customer.record.save
-  #   post '/', {:discount => 'RANDOM'}, {'rack.session' => {:user_id => customer.id}}
-  #   assert_equal 'This discount code is invalid', flash['error']
-  #   assert last_response.redirect?
-  # end
+  def test_redirect_with_expired_discount
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2014)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    shopping_basket_record.add_purchase_record create :purchase_record
+    customer.record.update(:shopping_basket_record => shopping_basket_record)
+    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'Your discount has expired', flash['error']
+    assert last_response.redirect?
+    assert_nil shopping_basket_record.reload.discount_record
+  end
+
+  def test_redirect_with_pending_discount
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2016), :start_datetime => DateTime.new(2016)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    shopping_basket_record.add_purchase_record create :purchase_record
+    customer.record.update(:shopping_basket_record => shopping_basket_record)
+    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'Your discount is pending2', flash['error']
+    assert last_response.redirect?
+    assert_nil shopping_basket_record.reload.discount_record
+  end
+
   #
   # def test_redirects_for_used_discount
   #   discount_record = create :discount_record,

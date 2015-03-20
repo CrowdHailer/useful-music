@@ -8,7 +8,8 @@ class OrdersController < UsefulMusic::App
   def create
     send_to_login if current_customer.guest?
     send_back if shopping_basket.empty?
-    # remove_discount() discount.expred?
+    remove_discount('Your discount has expired') if shopping_basket.discount.expired?
+    remove_discount('Your discount is pending') if shopping_basket.discount.pending?
     # remove_discount if discount.all_spent
     # remove_discount if discount.spent_by(current_customer)
     # order = Orders.build :customer => current_customer,
@@ -28,14 +29,12 @@ class OrdersController < UsefulMusic::App
     redirect request.referer
   end
 
-  def invalid_discount
-    flash['error'] = 'This discount code is invalid'
-    redirect request.referer
-  end
-
-  def used_discount
-    flash['error'] = 'This discount code has been used'
-    redirect request.referer
+  def remove_discount(message)
+    b = shopping_basket
+    b.discount = nil
+    ShoppingBaskets.save b
+    flash['error'] = message
+    redirect "/shopping_baskets/#{shopping_basket.id}"
   end
 
   def show(id)
