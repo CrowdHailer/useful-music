@@ -37,7 +37,7 @@ class OrdersControllerTest < MyRecordTest
     shopping_basket_record.add_purchase_record create :purchase_record
     customer.record.update(:shopping_basket_record => shopping_basket_record)
     post '/', {}, {'rack.session' => {:user_id => customer.id}}
-    assert_equal 'Your discount is pending2', flash['error']
+    assert_equal 'Your discount is pending', flash['error']
     assert last_response.redirect?
     assert_nil shopping_basket_record.reload.discount_record
   end
@@ -62,7 +62,6 @@ class OrdersControllerTest < MyRecordTest
   # end
 
   def test_creates_order
-    skip
     shopping_basket_record = create :shopping_basket_record
     shopping_basket = ShoppingBasket.new shopping_basket_record
     shopping_basket_record.add_purchase_record create(:purchase_record)

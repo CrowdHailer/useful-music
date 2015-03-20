@@ -12,11 +12,11 @@ class OrdersController < UsefulMusic::App
     remove_discount('Your discount is pending') if shopping_basket.discount.pending?
     # remove_discount if discount.all_spent
     # remove_discount if discount.spent_by(current_customer)
-    # order = Orders.build :customer => current_customer,
-    #   :shopping_basket => shopping_basket,
-    # order.calculate_payment
-    # Orders.save order
-    # redirect order.setup(url).redirect_uri
+    order = Orders.build :customer => current_customer,
+      :shopping_basket => shopping_basket
+    order.calculate_payment
+    Orders.save order
+    redirect order.setup(url).redirect_uri
   end
 
   def send_to_login
