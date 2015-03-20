@@ -15,7 +15,7 @@
 
 <div class="row summary-padding">
     <div class="large-12 columns orders">
-        <% @customer.orders.each do |order| %>
+        <% @customer.orders.sort_by(&:updated_at).reverse.each do |order| %>
             <% if order.succeded? && DateTime.now <= order.updated_at.+(4*3600*24) %>
             <!-- repeat this bit-->
             <div class="row collapse">
