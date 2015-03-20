@@ -966,8 +966,21 @@ border: 0.07em solid #4a4a49;
   padding: 0.6em;
 }
 
+.order-summary h6 {
+  font-size: 0.8em;
+  line-height: 1;
+}
+
+.order-summary hr {
+  margin: 0.75em 0em;
+}
+
 .summary-padding {
   padding: 0.5em;
+}
+
+.expired {
+  opacity: 0.5;
 }
 
 .order-title-wrap {
