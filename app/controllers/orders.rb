@@ -8,29 +8,19 @@ class OrdersController < UsefulMusic::App
   def create
     send_to_login if current_customer.guest?
     send_back if shopping_basket.empty?
-    discount_code = request.POST['discount']
-    if discount_code && !discount_code.empty?
-      discount = Discounts.available(discount_code)
-      invalid_discount if discount.nil?
-      used_discount if Orders.first(
-        :succeded => true,
-        :customer => current_customer,
-        :discount => discount
-      )
-    else
-      discount = nil
-    end
-    order = Orders.build :customer => current_customer,
-      :shopping_basket => shopping_basket,
-      :discount => discount
-    order.calculate_payment
-    Orders.save order
-    redirect order.setup(url).redirect_uri
+    # remove_discount() discount.expred?
+    # remove_discount if discount.all_spent
+    # remove_discount if discount.spent_by(current_customer)
+    # order = Orders.build :customer => current_customer,
+    #   :shopping_basket => shopping_basket,
+    # order.calculate_payment
+    # Orders.save order
+    # redirect order.setup(url).redirect_uri
   end
 
   def send_to_login
     flash['error'] = 'Please Sign in or Create account to checkout purchases'
-    redirect '/sessions/new'
+    redirect "/sessions/new?requested_path=#{request.referer}"
   end
 
   def send_back
