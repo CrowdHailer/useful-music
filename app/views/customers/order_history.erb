@@ -22,10 +22,10 @@
             <div class="order-title-wrap">
                 <div class="row collapse">
                     <div class="large-6 columns">
-                        <h6 class="left-order">12th of January 2015 |  Order ID: <%= order.id %></h6>
+                        <h6 class="left-order"><%= order.updated_at.strftime('%d of %B %Y') %> |  Order ID: <%= order.id %></h6>
                     </div>
                     <div class="large-6 columns">
-                        <h6 class="right-order">Order Expires on 12.12.14</h6>
+                        <h6 class="right-order">Order Expires on <%= order.updated_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
                     </div>
                 </div>
             </div>
@@ -54,34 +54,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% order.shopping_basket.purchases.each do |purchase| %>
                             <tr>
                                 <th>
-                                    The Cool Camel
+                                    <%= purchase.item.piece.title %>
                                 </th>
                                 <th>
-                                    Piano and Flute
+                                    <%= purchase.item.piece.sub_heading %>
                                 </th>
                                 <th>
-                                    Part 1
+                                    <%= purchase.item.name %>
                                 </th>
                                 <th>
-                                    <a href="/orders/" target="_blank" download>Download</a>
+                                    <a href="<%= purchase.item.asset.url %>" target="_blank">Download</a>
                                 </th>
                             </tr>
-                            <tr>
-                                <th>
-                                    The Cool Camel
-                                </th>
-                                <th>
-                                    Piano and Flute
-                                </th>
-                                <th>
-                                    Part 1
-                                </th>
-                                <th>
-                                    <a href="/orders/" target="_blank" download>Download</a>
-                                </th>
-                            </tr>
+                            <% end %>
 
                         </tbody>
                     </table>
@@ -164,42 +152,4 @@
         </div>
         <!--DOWN TO HERE-->
     </div>
-</div>
-<!--    <div class="row">
-<div class="large-12 columns orders">
-<h4>Your orders</h4>
-<h6>Your files will be available for 4 days from purchase.</h6>
-<table class="order-table">
-<thead>
-<tr>
-<th>Order ID</th>
-<th>Basket Amount</th>
-<th>Tax Amount</th>
-<th>licence</th>
-</tr>
-</thead>
-<tbody>
-<% @customer.orders.each do |order| %>
-<% if order.succeded? %>
-<tr>
-<th>
-<%= order.id %>
-</th>
-<th>
-<%= order.payment_gross.format %>
-</th>
-<th>
-<%= order.tax_payment.format %>
-</th>
-<th>
-<a href="/orders/<%= order.id %>" target="_blank" download>Download</a>
-</th>
-</tr>
-<% end %>
-<% end %>
-</tbody>
-</table>
-</div>
-</div>-->
-</div>
 </div>
