@@ -39,7 +39,7 @@ Discounts.create(
   :value => Money.new(1000),
   :allocation => 1000,
   :customer_allocation => 1,
-  :start_datetime => DateTime.new(2015)
+  :start_datetime => DateTime.new(2015),
   :end_datetime => DateTime.new(2016)
 )
 
@@ -48,7 +48,7 @@ Discounts.create(
   :value => Money.new(1000),
   :allocation => 1000,
   :customer_allocation => 1,
-  :start_datetime => DateTime.new(2015,1,1)
+  :start_datetime => DateTime.new(2015,1,1),
   :end_datetime => DateTime.new(2015,1,3)
 )
 
@@ -57,7 +57,7 @@ Discounts.create(
   :value => Money.new(1000),
   :allocation => 1000,
   :customer_allocation => 1,
-  :start_datetime => DateTime.new(2016,1,1)
+  :start_datetime => DateTime.new(2016,1,1),
   :end_datetime => DateTime.new(2016,1,3)
 )
 
