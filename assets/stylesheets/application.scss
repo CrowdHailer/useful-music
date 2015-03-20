@@ -803,8 +803,9 @@ input[type="checkbox"] {
 }
 
 .search-bar-filter-inner {
-  width: 32em;
+  width: 100%;
   margin: 0 auto;
+  height: auto;
 }
 
 .search-bar-filter-inner p {
@@ -817,7 +818,7 @@ input[type="checkbox"] {
 
 .search-bar-filter {
   background: #005a86;
-  height: 3.6em;
+  height: auto;
   margin-top: 1em;
   margin-left: 0.5em
 }
@@ -1206,6 +1207,10 @@ footer a:hover {
   .pure-checkbox {
     float:left;
     width:100%;
+  }
+
+  .filter-head h2{
+    font-size: 0.9em;
   }
 
 }
