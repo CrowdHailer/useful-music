@@ -8,12 +8,12 @@
   background: -ms-radial-gradient(center, ellipse cover, #0092b7 0%,#01334c 96%);
   background: radial-gradient(ellipse at center, #0092b7 0%,#01334c 96%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0092b7', endColorstr='#01334c',GradientType=1 );
-  height: 35em;
+  height: auto;
   padding: 1.5em;
 }
 
 .about-white {
-  height: 43em;
+  height: auto;
   padding: 1.5em;
 }
 
@@ -47,9 +47,36 @@
 }
 
 .section-3 {
-  height: 45em;
+  height: auto;
 }
 
 .general-content h6 {
   color: #222222;
+}
+
+.about-img-1 {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/about-sheet.png');
+  background-repeat: no-repeat;
+  margin-top: 5em;
+  margin-left: 3em;
+  width: 100%;
+  height: 35em;
+}
+
+.about-img-2 {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/ipad.png');
+  background-repeat: no-repeat;
+  margin-top: 5em;
+  margin-left: 3em;
+  width: 100%;
+  height: 35em;
+}
+
+.about-img-3 {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/graham-headshot.png');
+  background-repeat: no-repeat;
+  margin-top: 5em;
+  margin-left: 3em;
+  width: 100%;
+  height: 35em;
 }
