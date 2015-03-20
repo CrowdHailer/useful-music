@@ -16,140 +16,127 @@
 <div class="row summary-padding">
     <div class="large-12 columns orders">
         <% @customer.orders.each do |order| %>
-        <% if order.succeded? %>
-        <!-- repeat this bit-->
-        <div class="row collapse">
-            <div class="order-title-wrap">
-                <div class="row collapse">
-                    <div class="large-6 columns">
-                        <h6 class="left-order"><%= order.updated_at.strftime('%d of %B %Y') %> |  Order ID: <%= order.id %></h6>
-                    </div>
-                    <div class="large-6 columns">
-                        <h6 class="right-order">Order Expires on <%= order.updated_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+            <% if order.succeded? && DateTime.now <= order.updated_at.+(4*3600*24) %>
+            <!-- repeat this bit-->
+            <div class="row collapse">
+                <div class="order-title-wrap">
+                    <div class="row collapse">
+                        <div class="large-6 columns">
+                            <h6 class="left-order"><%= order.updated_at.strftime('%d of %B %Y') %> |  Order ID: <%= order.id %></h6>
+                        </div>
+                        <div class="large-6 columns">
+                            <h6 class="right-order">Order Expires on <%= order.updated_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="large-2 columns">
-                <div class="order-summary">
-                    <h6>Amount</h6>
-                    <h6><%= order.payment_gross.format %></h6>
-                    <hr>
-                    <h6>Tax</h6>
-                    <h6><%= order.tax_payment.format %></h6>
-                    <hr>
-                    <h6>License</h6>
-                    <a href="/orders/<%= order.id %>" target="_blank" download><h6>Download</h6></a>
+                <div class="large-2 columns">
+                    <div class="order-summary">
+                        <h6>Amount</h6>
+                        <h6><%= order.payment_gross.format %></h6>
+                        <hr>
+                        <h6>Tax</h6>
+                        <h6><%= order.tax_payment.format %></h6>
+                        <hr>
+                        <h6>License</h6>
+                        <a href="/orders/<%= order.id %>" target="_blank" download><h6>Download</h6></a>
+                    </div>
                 </div>
-            </div>
-            <div class="large-10 columns">
-                <div class="download-wrap">
-                    <h6>File Download</h6>
-                    <table class="order-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Instrument</th>
-                                <th>Part</th>
-                                <th>File</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% order.shopping_basket.purchases.each do |purchase| %>
-                            <tr>
-                                <th>
-                                    <%= purchase.item.piece.title %>
-                                </th>
-                                <th>
-                                    <%= purchase.item.piece.sub_heading %>
-                                </th>
-                                <th>
-                                    <%= purchase.item.name %>
-                                </th>
-                                <th>
-                                    <a href="<%= purchase.item.asset.url %>" target="_blank">Download</a>
-                                </th>
-                            </tr>
-                            <% end %>
+                <div class="large-10 columns">
+                    <div class="download-wrap">
+                        <h6>File Download</h6>
+                        <table class="order-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Instrument</th>
+                                    <th>Part</th>
+                                    <th>File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% order.shopping_basket.purchases.each do |purchase| %>
+                                <tr>
+                                    <th>
+                                        <%= purchase.item.piece.title %>
+                                    </th>
+                                    <th>
+                                        <%= purchase.item.piece.sub_heading %>
+                                    </th>
+                                    <th>
+                                        <%= purchase.item.name %>
+                                    </th>
+                                    <th>
+                                        <a href="<%= purchase.item.asset.url %>" target="_blank">Download</a>
+                                    </th>
+                                </tr>
+                                <% end %>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <% end %>
-        <% end %>
-        <!--DOWN TO HERE-->
-        <!-- repeat this bit-->
-        <div class="row collapse">
-            <div class="order-title-wrap expired">
+            <% elsif order.succeded? %>
                 <div class="row collapse">
-                    <div class="large-6 columns">
-                        <h6 class="left-order">12th of January 2015 |  Order ID: 123xxx</h6>
+                    <div class="order-title-wrap expired">
+                        <div class="row collapse">
+                            <div class="large-6 columns">
+                                <h6 class="left-order"><%= order.updated_at.strftime('%d of %B %Y') %> |  Order ID: <%= order.id %></h6>
+                            </div>
+                            <div class="large-6 columns">
+                                <h6 class="right-order">Order Expires on <%= order.updated_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+                            </div>
+                        </div>
                     </div>
-                    <div class="large-6 columns">
-                        <h6 class="right-order">Order Expired on 12.12.14</h6>
+                    <div class="large-2 columns">
+                        <div class="order-summary">
+                            <h6>Amount</h6>
+                            <h6><%= order.payment_gross.format %></h6>
+                            <hr>
+                            <h6>Tax</h6>
+                            <h6><%= order.tax_payment.format %></h6>
+                            <hr>
+                            <h6>License</h6>
+                            <a href="/orders/<%= order.id %>" target="_blank" download><h6>Download</h6></a>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="large-2 columns">
-                <div class="order-summary">
-                    <h6>Amount</h6>
-                    <h6>£12.00</h6>
-                    <hr>
-                    <h6>Tax</h6>
-                    <h6>£2.00</h6>
-                    <hr>
-                    <h6>License</h6>
-                    <a href="/"><h6>Download</h6></a>
-                </div>
-            </div>
-            <div class="large-10 columns">
-                <div class="download-wrap">
-                    <h6>File Download</h6>
-                    <table class="order-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Instrument</th>
-                                <th>Part</th>
-                                <th>File</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>
-                                    The Cool Camel
-                                </th>
-                                <th>
-                                    Piano and Flute
-                                </th>
-                                <th>
-                                    Part 1
-                                </th>
-                                <th class="expired">
-                                    Expired - <a href="/">Repurchase</a>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>
-                                    The Cool Camel
-                                </th>
-                                <th>
-                                    Piano and Flute
-                                </th>
-                                <th>
-                                    Part 1
-                                </th>
-                                <th class="expired">
-                                    Expired - <a href="/">Repurchase</a>
-                                </th>
-                            </tr>
+                    <div class="large-10 columns">
+                        <div class="download-wrap">
+                            <h6>File Download</h6>
+                            <table class="order-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Instrument</th>
+                                        <th>Part</th>
+                                        <th>File</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% order.shopping_basket.purchases.each do |purchase| %>
+                                    <tr>
+                                        <th>
+                                            <%= purchase.item.piece.title %>
+                                        </th>
+                                        <th>
+                                            <%= purchase.item.piece.sub_heading %>
+                                        </th>
+                                        <th>
+                                            <%= purchase.item.name %>
+                                        </th>
+                                        <th>
+                                            Expired - <a href="/pieces/<%= purchase.item.piece.id %>" target="_blank">Repurchase</a>
+                                        </th>
+                                    </tr>
+                                    <% end %>
 
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <!--DOWN TO HERE-->
+
+            <% end %>
+        <% end %>
     </div>
 </div>
