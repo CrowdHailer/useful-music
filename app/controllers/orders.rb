@@ -7,7 +7,8 @@ class OrdersController < UsefulMusic::App
 
   def create
     send_to_login if current_customer.guest?
-    send_back if shopping_basket.empty?
+    send_back('Checkout unavailable') unless ENV.fetch('SUSPEND_PAYMENTS', '').empty?
+    send_back('Your shopping basket is empty') if shopping_basket.empty?
     remove_discount('Your discount has expired') if shopping_basket.discount.expired?
     remove_discount('Your discount is pending') if shopping_basket.discount.pending?
     # ap ShoppingBaskets.new(:checked_out => true, :discount => shopping_basket.discount).dataset.sql
@@ -45,8 +46,8 @@ class OrdersController < UsefulMusic::App
     redirect "/sessions/new?requested_path=#{request.referer}"
   end
 
-  def send_back
-    flash['error'] = 'Your shopping basket is empty'
+  def send_back(message)
+    flash['error'] = message
     redirect request.referer
   end
 

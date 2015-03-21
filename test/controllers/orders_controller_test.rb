@@ -14,6 +14,14 @@ class OrdersControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_redirect_if_payments_suspended
+    ENV.stub :fetch, 'something' do
+      post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    end
+    assert_equal 'Checkout unavailable', flash['error']
+    assert last_response.redirect?
+  end
+
   def test_redirect_if_basket_is_empty
     post '/', {}, {'rack.session' => {:user_id => customer.id}}
     assert_equal 'Your shopping basket is empty', flash['error']
