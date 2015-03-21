@@ -6,7 +6,9 @@
                 <h2>An unexpected error occured. A message has been sent to us so we can look into it</h2>
                 <p>
                     <!-- Compositions, arrangements and technical studies at all levels and in a variety of styles. Exclusive to Useful Music, these pieces have helped over a million children and adult learners to progress and are available online to sample, download and play. -->
-                    <%= @err.message %>
+                    <% if current_customer.admin? %>
+                        <%= @err.message %>
+                    <% end %>
                 </p>
                 <a href="/">
                     <button>
