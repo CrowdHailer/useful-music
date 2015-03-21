@@ -95,9 +95,9 @@ class Transaction < Errol::Entity
   def checkout(token, payer_id)
     express_response = express_request.checkout! token, payer_id, payment_request
     self.transaction_id = express_response.payment_info[0].transaction_id
-    if 'Completed' == express_response.payment_info[0].payment_status
+    # if 'Completed' == express_response.payment_info[0].payment_status
       self.state = 'succeded'
-    end
+    # end
     record.save
   end
 end
