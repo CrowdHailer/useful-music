@@ -48,7 +48,7 @@ class OrdersController < UsefulMusic::App
 
   def send_back(message)
     flash['error'] = message
-    redirect request.referer
+    redirect "/shopping_baskets/#{shopping_basket.id}"
   end
 
   def remove_discount(message)

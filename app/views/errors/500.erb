@@ -4,9 +4,13 @@
             <div class="above-fold-left-main">
                 <h1>Something went wrong!</h1>
                 <h2>An unexpected error occured. A message has been sent to us so we can look into it</h2>
-                <p>
-                    <!-- Compositions, arrangements and technical studies at all levels and in a variety of styles. Exclusive to Useful Music, these pieces have helped over a million children and adult learners to progress and are available online to sample, download and play. -->
-                </p>
+                <% if current_customer.admin? %>
+                    <p>
+                        <%= @err.message %>
+                        <%= @err.response if @err.respond_to? :response %>
+                        <%= @err.response.details if @err.respond_to? :response %>
+                    </p>
+                <% end %>
                 <a href="/">
                     <button>
                         <i class="fa fa-music fa-music-cstm"></i>
@@ -16,9 +20,5 @@
                 </a>
             </div>
         </div>
-        <!-- <div class="large-6 columns">
-            <div class="above-fold-right-main">
-            </div>
-        </div> -->
     </div>
 </div>
