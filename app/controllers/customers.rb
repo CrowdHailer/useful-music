@@ -23,6 +23,7 @@ class CustomersController < UsefulMusic::App
       customer = Customers.create form
       log_in customer
       if guest.shopping_basket && !guest.shopping_basket.empty?
+        # TODO test transfer of basket
         customer.shopping_basket = guest.shopping_basket
         Customers.save customer
       end
