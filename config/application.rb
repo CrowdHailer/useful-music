@@ -116,6 +116,7 @@ class UsefulMusic::App
 
   error do |err|
     if RACK_ENV == 'production'
+      ap err
       response.status = 500
       response.body = render File.expand_path('app/views/errors/500', APP_ROOT).to_sym, :layout => File.expand_path('app/views/error', APP_ROOT).to_sym
     end
