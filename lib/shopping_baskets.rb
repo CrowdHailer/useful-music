@@ -3,6 +3,11 @@ require_relative './shopping_basket'
 class ShoppingBaskets < Errol::Repository
   require_relative './shopping_baskets/inquiry'
   class << self
+    def save(entity)
+      entity.modifiable!
+      super
+    end
+
     def record_class
       ShoppingBasket::Record
     end
@@ -21,6 +26,14 @@ class ShoppingBaskets < Errol::Repository
   end
 
   def dataset
-    raw_dataset
+    tmp = raw_dataset
+    if inquiry.checked_out
+      # ap Orders.new(:paginate => false, :succeded => true).dataset.sql
+      tmp = tmp.where(:order_records => Orders.new(:paginate => false, :succeded => true).dataset)
+    end
+    if inquiry.discount
+      tmp = tmp.where(:discount_record => inquiry.discount.record)
+    end
+    tmp
   end
 end

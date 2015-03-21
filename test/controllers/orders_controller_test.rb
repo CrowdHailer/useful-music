@@ -14,38 +14,91 @@ class OrdersControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_redirect_if_payments_suspended
+    ENV.stub :fetch, 'something' do
+      post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    end
+    assert_equal 'Checkout unavailable', flash['error']
+    assert last_response.redirect?
+  end
+
   def test_redirect_if_basket_is_empty
     post '/', {}, {'rack.session' => {:user_id => customer.id}}
     assert_equal 'Your shopping basket is empty', flash['error']
     assert last_response.redirect?
   end
-  def test_redirects_for_invalid_discount
-    shopping_basket_record = create :shopping_basket_record
-    shopping_basket = ShoppingBasket.new shopping_basket_record
-    shopping_basket_record.add_purchase_record create(:purchase_record)
-    customer.record.shopping_basket_record = shopping_basket_record
-    customer.record.save
-    post '/', {:discount => 'RANDOM'}, {'rack.session' => {:user_id => customer.id}}
-    assert_equal 'This discount code is invalid', flash['error']
+
+  def test_redirect_with_expired_discount
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2014)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    shopping_basket_record.add_purchase_record create :purchase_record
+    customer.record.update(:shopping_basket_record => shopping_basket_record)
+    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'Your discount has expired', flash['error']
     assert last_response.redirect?
+    assert_nil shopping_basket_record.reload.discount_record
   end
+
+  def test_redirect_with_pending_discount
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2016), :start_datetime => DateTime.new(2016)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    shopping_basket_record.add_purchase_record create :purchase_record
+    customer.record.update(:shopping_basket_record => shopping_basket_record)
+    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'Your discount is pending', flash['error']
+    assert last_response.redirect?
+    assert_nil shopping_basket_record.reload.discount_record
+  end
+
 
   def test_redirects_for_used_discount
     discount_record = create :discount_record,
       :start_datetime => DateTime.new(2000),
-      :end_datetime => DateTime.new(3000)
+      :end_datetime => DateTime.new(3000),
+      :allocation => 2
+    completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
     create :order_record,
-      :customer_record => customer.record,
-      :discount_record => discount_record,
+      # :customer_record => customer.record,
+      :shopping_basket_record => completed_basket_record,
       :state => 'succeded'
-    shopping_basket_record = create :shopping_basket_record
+    completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create :order_record,
+      # :customer_record => customer.record,
+      :shopping_basket_record => completed_basket_record,
+      :state => 'succeded'
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
     shopping_basket = ShoppingBasket.new shopping_basket_record
-    shopping_basket_record.add_purchase_record create(:purchase_record)
+    create(:purchase_record, :shopping_basket_record => shopping_basket_record)
     customer.record.shopping_basket_record = shopping_basket_record
     customer.record.save
     post '/', {:discount => discount_record.code}, {'rack.session' => {:user_id => customer.id}}
     assert_equal 'This discount code has been used', flash['error']
     assert last_response.redirect?
+  end
+
+  def test_stops_on_individual_allocation
+    discount_record = create :discount_record,
+      :start_datetime => DateTime.new(2000),
+      :end_datetime => DateTime.new(3000),
+      :customer_allocation => 2
+    completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create :order_record,
+      :customer_record => customer.record,
+      :shopping_basket_record => completed_basket_record,
+      :state => 'succeded'
+    completed_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create :order_record,
+      :customer_record => customer.record,
+      :shopping_basket_record => completed_basket_record,
+      :state => 'succeded'
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    create(:purchase_record, :shopping_basket_record => shopping_basket_record)
+    customer.record.shopping_basket_record = shopping_basket_record
+    customer.record.save
+    post '/', {:discount => discount_record.code}, {'rack.session' => {:user_id => customer.id}}
+    assert_equal 'You have used this discount code', flash['error']
+    assert last_response.redirect?
+
   end
 
   def test_creates_order
@@ -63,27 +116,15 @@ class OrdersControllerTest < MyRecordTest
     # ap last_response.location
   end
 
-  # def test_creates_order_with_discount
-  #   discount_record = create :discount_record
-  #   shopping_basket_record = create :shopping_basket_record
-  #   shopping_basket = ShoppingBasket.new shopping_basket_record
-  #   shopping_basket_record.add_purchase_record create(:purchase_record)
-  #   customer.record.shopping_basket_record = shopping_basket_record
-  #   customer.record.save
-  #   post '/', {}, {'rack.session' => {:user_id => customer.id}}
-  # end
-
-  # def test_zero_price_item
-  #   item_record = create :item_record, :initial_price => Money.new(0)
-  #   purchase_record = create :purchase_record, :item_record => item_record
-  #   shopping_basket_record = create :shopping_basket_record
-  #   shopping_basket = ShoppingBasket.new shopping_basket_record
-  #   shopping_basket_record.add_purchase_record create(:purchase_record)
-  #   customer.record.shopping_basket_record = shopping_basket_record
-  #   customer.record.save
-  #   post '/', {}, {'rack.session' => {:user_id => customer.id}}
-  #
-  # end
+  def test_creates_order_with_discount
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2016), :start_datetime => DateTime.new(2014)
+    shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
+    shopping_basket_record.add_purchase_record create :purchase_record
+    customer.record.update(:shopping_basket_record => shopping_basket_record)
+    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    order = Orders.last
+    # TODO test values
+  end
 
   def test_success_story
     skip

@@ -26,7 +26,10 @@ class Order
 
     many_to_one :shopping_basket_record, :class => :'ShoppingBasket::Record', :key => :shopping_basket_id
     many_to_one :customer_record, :class => :'Customer::Record', :key => :customer_id
-    many_to_one :discount_record, :class => :'Discount::Record', :key => :discount_id
+    # many_to_one :discount_record, :class => :'Discount::Record', :left_primary_key => :shopping_basket_id, :right_primary_key => :discount_id, :join_table => :shopping_baskets
+    def discount_record
+      shopping_basket_record.discount_record
+    end
 
     plugin :timestamps, :update_on_create => true
 

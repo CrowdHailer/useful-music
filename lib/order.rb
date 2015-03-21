@@ -41,6 +41,11 @@ class Transaction < Errol::Entity
     "orders/#{id}/cancel"
   end
 
+  def succeded?
+    # TODO test
+    state == 'succeded'
+  end
+
   def express_response(url_base)
     express_request.setup(
       payment_request,
@@ -119,14 +124,14 @@ class Order < Errol::Entity
   end
 
   def calculate_payment
-    self.basket_total = shopping_basket.price
-    self.discount_value = discount.value
-    self.payment_gross = [(basket_total - discount.value), Money.new(0)].max
-    self.tax_payment = payment_gross * customer.vat_rate
+    self.basket_total = shopping_basket.purchases_price
+    self.discount_value = shopping_basket.discount_value
+    self.payment_gross = shopping_basket.price
+    self.tax_payment = customer.vat_rate * payment_gross
     self.payment_net = payment_gross + tax_payment
   end
   # TODO untested
-  delegate :setup, :fetch_details, :checkout, :to => :transaction
+  delegate :setup, :fetch_details, :checkout, :succeded?, :to => :transaction
 
 
   def discount

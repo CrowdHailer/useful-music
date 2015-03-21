@@ -12,6 +12,11 @@
   text-decoration: underline;
 }
 
+#mc_embed_signup label {
+  color: white;
+}
+
+
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Montserrat';
 }
@@ -31,7 +36,7 @@ p {
 }
 
 .logout-form input{
-  background: none;
+  background: white;
   font-family: 'Montserrat';
   border: none;
   text-transform: uppercase;
@@ -39,12 +44,19 @@ p {
   font-size: 0.83em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  top: 0.45125rem;
+  padding-top: 0.3em;
+  height: 3.3em;
+  margin-top: 0;
+  position: inherit !important;
+
 }
 
 .logout-form input:hover {
-  background: red;
+  background: #e41f21;
   color: white;
+  margin: 0;
+  height: 3.3em;
+  transition: .2s;
 }
 
 .flash {
@@ -85,8 +97,11 @@ p {
 }
 
 .logo-wrap {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 6em;
-  float: left;
+  height: 6em;
 }
 
 .header-text {
@@ -108,7 +123,7 @@ p {
 .ud-search-wrap {
   background: #f8f7f7;
   padding: 0.75em;
-  float: right;
+  float: left;
   width: 24.4em;
   height: 6em;
 }
@@ -156,28 +171,33 @@ p {
 
 .nav-bg {
   background: white;
-  height: 4.3em;
+  min-height: 4.3em;
+  height: auto;
     padding: 0em 1em 0em 1em;
 }
 
 .nav-border {
   border-top: 0.4em solid #e41f21;
   border-bottom: 0.4em solid #e41f21;
-  height: 3.5em;
+  min-height: 3.5em;
+  height: auto;
  }
 
 .top-bar {
   background: white;
-  height: 2.7125rem;
+  min-height: 2.7125rem;
+  height: auto;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button) {
   background: white;
   height: 2.7125rem;
+  padding-left: 0.7em;
+  padding-right: 0.7em;
 }
 
 .top-bar-section ul li > a {
-  padding: 1em;
+  padding: 0.5em;
   font-family: 'Montserrat';
   text-transform: uppercase;
   color: #4a4a49;
@@ -214,6 +234,72 @@ p {
   font-size: 0.85em;
 }
 
+.mob-menu-wrap {
+height: 2.75em;
+background: #e41f21;
+padding: 0.4em;
+margin: 0.5em 0em;
+cursor: pointer;
+}
+
+.mob-menu-wrap h3 {
+font-size: 1.3em;
+line-height: 1.1em;
+font-family: 'Montserrat';
+text-transform: uppercase;
+}
+
+#mob-menu-display {
+display: none;
+}
+
+.mob-menu {
+height: auto;
+}
+
+.mob-menu-button{
+margin: 0em;
+background: #e41f21;
+border-top: 0.1em solid white;
+  font-family: 'Montserrat';
+  padding: 0.8em;
+}
+
+.close-menu-btn {
+  background: #e41f21;
+}
+
+.mob-sub-menu-button {
+  margin: 0em;
+  border-top: 0.1em solid white;
+  font-family: 'Montserrat';
+  padding: 0.8em;
+}
+
+.mobile-user-mgmt li {
+  font-family: 'Montserrat';
+  float: left;
+  list-style: none;
+  margin: 0.75em 1em;
+}
+
+.logout-form-mobile {
+  background: none;
+  border: 0.1em solid #4a4a49;
+  padding: 0.1em;
+  float: right;
+  margin-top: 0em;
+  margin-bottom: 0.5em;
+}
+
+.logout-form-input {
+  background: none;
+  border: 0em;
+  font-family: 'Montserrat';
+  margin:0em;
+  text-transform: uppercase;
+}
+
 /*Home Page CSS*/
 
 .above-fold-bg {
@@ -221,6 +307,12 @@ p {
   background: #c3e4f2;
   height: auto;
   min-height: 22em;
+}
+
+.above-fold-right-main {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
+  height: auto;
+  min-height: 22.5em;
 }
 
 .above-fold-left-main {
@@ -271,12 +363,6 @@ height: auto;
   float: left;
   margin: 0;
   padding-top: 0.2em;
-}
-
-.above-fold-right-main {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/home-page-main.jpg') ;
-  height: auto;
-  min-height: 22.5em;
 }
 
 .fa-music-cstm {
@@ -333,7 +419,7 @@ height: auto;
 }
 
 .ensemble p {
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1.55;
 }
 
@@ -363,7 +449,7 @@ height: auto;
 .promo-banner {
   background: #a6dbf8;
   width: 100%;
-  height: 4em;
+  height: auto;
   padding-left: 1em;
 }
 
@@ -376,9 +462,13 @@ height: auto;
 
 .promo-wrap {
   background: #f8f7f7;
-  height: 10em;
+  height: auto;
   margin: 1em;
   padding: 0.5em;
+}
+
+.top-promo {
+  margin-top: 4.4em;
 }
 
 .hand-img {
@@ -469,12 +559,16 @@ height: auto;
 .basket-item {
   width: 100%;
   height: 2em;
+  padding: 0.2em;
 }
 
 .basket-item p{
   color: white;
   float: left;
   line-height: 0.8;
+  background: #e41f21;
+  position: absolute;
+  z-index: 10;
 }
 
 .basket-contain {
@@ -501,6 +595,50 @@ height: auto;
 .checkout:hover {
   color: #3c3c3b;
 }
+
+.checkout-actions {
+  background: #f7f7f8;
+  min-height: 15em;
+  height: auto;
+  border-radius: 0.5em;
+  border: 0.15em solid #d9d9d9;
+  padding: 0.5em;
+}
+
+.checkout-actions h6 {
+  color: #4a4a49;
+}
+
+.updatecart-btn {
+  padding: 0.5em;
+}
+
+.checkout-option-1 {
+  padding: 0.5em;
+  background-color: #2ad955;
+}
+
+.checkout-option-2 {
+  padding: 0.5em;
+  background-color: #f75d1b;
+}
+
+.checkout-icon {
+  margin-left: 0.5em;
+}
+
+.checkout-secure-btn {
+
+}
+
+.secure {
+  margin-top: 1em;
+}
+
+.secure h6 {
+  color: #4a4a49;
+}
+
 
 /*Product Block CSS*/
 
@@ -583,12 +721,18 @@ height: auto;
 
 /*Search Filter CSS*/
 
+.pure-checkbox {
+  float:left;
+  width:50%;
+}
+
 .filter-wrap {
   background: #a6dbf8;
   height: auto;
   min-height: 55em;
   margin-top: 1em;
   padding: 0.6em;
+  overflow: hidden;
 }
 
 .filter-wrap h1 {
@@ -620,7 +764,7 @@ input[type="checkbox"] {
 
 .clear-search-btn {
   padding: 0.5em;
-  float: left;
+  float: right;
   font-family: 'Montserrat';
   text-transform: uppercase;
   font-size: 0.9em;
@@ -659,8 +803,9 @@ input[type="checkbox"] {
 }
 
 .search-bar-filter-inner {
-  width: 32em;
+  width: 35em;
   margin: 0 auto;
+  height: auto;
 }
 
 .search-bar-filter-inner p {
@@ -673,7 +818,7 @@ input[type="checkbox"] {
 
 .search-bar-filter {
   background: #005a86;
-  height: 3.6em;
+  height: auto;
   margin-top: 1em;
   margin-left: 0.5em
 }
@@ -814,6 +959,57 @@ border: 0.07em solid #4a4a49;
   color: #e41f21;
 }
 
+.orders {
+  padding-left: 0.5em;
+  padding-top: 2em;
+}
+
+.orders h4 {
+  font-size: 1.6em;
+}
+
+.orders h6 {
+  color: #4a4a49;
+}
+
+.order-summary {
+  height: auto;
+  background: #f7f7f8;
+  padding: 0.6em;
+}
+
+.order-summary h6 {
+  font-size: 0.8em;
+  line-height: 1;
+}
+
+.order-summary hr {
+  margin: 0.75em 0em;
+}
+
+.summary-padding {
+  padding: 0.5em;
+}
+
+.expired {
+  opacity: 0.5;
+}
+
+.order-title-wrap {
+  background: #e41f21;
+  padding: 0.6em;
+  width: 100%;
+}
+
+.order-title-wrap h6 {
+  color: white;
+  line-height: 1;
+}
+
+.download-wrap {
+  padding: 0.6em;
+}
+
 
 /* FOOTER CSS */
 
@@ -822,6 +1018,7 @@ footer {
   height: auto;
   min-height: 30em;
   margin-top: 2em;
+  padding: 1em;
 }
 
 footer h6 {
@@ -890,4 +1087,502 @@ footer a {
 
 footer a:hover {
   color: red;
+}
+
+//Small screens
+@media only screen { }
+
+@media only screen and (max-width: 23.2em) {
+
+  .header-text {
+    padding-right: 0em;
+    margin-top: -0.5em;
+  }
+
+  .header-text h1 {
+    font-size: 0.8em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.5em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 3.5em;
+    height: 3.5em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: right;
+    width: 100%;
+    height: auto;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 100%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .search-icon {
+    color: white;
+    font-size: 3em;
+    padding: 0.5em;
+  }
+
+  .above-fold-right-main {
+    background-image: none;
+    height: auto;
+    min-height: 22.5em;
+  }
+
+  .header-btn i {
+    display: none;
+  }
+
+  .ensemble-pic {
+    background-image: none;
+  }
+
+  .piece-btn {
+    width: 100%;
+    padding: 1.5em !important;
+    font-size: 1.5em !important;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-info-wrap {
+    height: auto;
+  }
+
+  .product-info-wrap p {
+    font-size: 1.5em;
+  }
+
+  .title-wrap {
+    height: auto;
+  }
+
+  .product-main p {
+    font-size: 1.2em;
+  }
+
+  .product-main h6 {
+    color: #e41f21;
+    font-size:1.2em;
+    line-height: 0.6;
+  }
+
+  .pure-checkbox {
+    float:left;
+    width:100%;
+  }
+
+  .filter-head h2{
+    font-size: 0.9em;
+  }
+
+  .search-bar-filter-inner {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .about-img-1 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-2 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-3 {
+    background-image: none;
+    display: none;
+  }
+
+}
+
+@media only screen and (min-width: 23.2em) and (max-width: 40em) {
+
+  .header-text {
+    padding-right: 0em;
+  }
+
+  .header-text h1 {
+    font-size: 1em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.6em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 6.5em;
+    height: 6.5em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: left;
+    width: 70%;
+    height: 7em;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+    width: 30%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .ud-search-submit:hover {
+    background: #00ccff;
+    transition: .3s;
+  }
+
+  .search-icon {
+    color: white;
+    font-size: 3em;
+    padding: 0.5em;
+  }
+
+  .search-field {
+    margin-top: 0.9em;
+    height: 3em;
+  }
+
+  .search-field p {
+   color: #d0d0d0;
+    padding: 0.2em;
+  }
+
+  .above-fold-right-main {
+    background-image: none;
+    height: auto;
+    min-height: 22.5em;
+  }
+
+  .header-btn i {
+    display: none;
+  }
+
+  .ensemble-pic {
+    background-image: none;
+  }
+
+  .piece-btn {
+    width: 100%;
+    padding: 1em !important;
+    font-size: 1em !important;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-wrap h4 {
+    font-size: 1.75em;
+  }
+
+  .product-info-wrap {
+    height: auto;
+  }
+
+  .product-info-wrap p {
+    font-size: 1.5em;
+  }
+
+  .title-wrap {
+    height: auto;
+  }
+
+  .product-main p {
+    font-size: 1.2em;
+  }
+
+  .product-main h6 {
+    color: #e41f21;
+    font-size:1.2em;
+    line-height: 0.6;
+  }
+
+  .search-bar-filter-inner {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .about-img-1 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-2 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-3 {
+    background-image: none;
+    display: none;
+  }
+
+ }
+
+ @media only screen and (min-width: 40em) and (max-width: 58em) {
+   .header-text {
+     padding-right: 1em;
+     padding-left: 2.5em;
+   }
+
+   .header-text h1 {
+     font-size: 1em;
+     color: #4a4a49;
+     text-align: right;
+   }
+
+   .header-text h2 {
+     font-size: 0.6em;
+     color: #4a4a49;
+     text-align: right;
+   }
+
+   .logo-wrap {
+     background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+     background-size: contain;
+     background-repeat: no-repeat;
+     width: 6em;
+     height: 6em;
+   }
+
+   .ud-search-wrap {
+     background: #f8f7f7;
+     padding-left: 0.25em;
+     padding-top: 0.75em;
+     padding-right: 0.5em;
+     padding-bottom:0.75em;
+     float: left;
+     width: 70%;
+     height: 7em;
+     margin-left: -0.9em;
+   }
+
+   .ud-search-wrap label {
+     font-family: 'Montserrat';
+     font-size: 1em;
+     line-height: 1;
+   }
+
+   .ud-search-btn {
+     background: none;
+     padding: 0;
+     margin: 0;
+     float: right;
+     width: 30%;
+   }
+
+   .ud-search-submit {
+     height: 7em;
+     background: #e41f21;
+     float: right;
+     width: 100%;
+   }
+
+   .ud-search-submit:hover {
+     background: #00ccff;
+     transition: .3s;
+   }
+
+     .search-icon {
+       color: white;
+       font-size: 2em;
+       padding: 0.5em;
+       padding-top: 1em;
+     }
+
+     .above-fold-right-main {
+       background-image: none;
+       height: auto;
+       min-height: 22.5em;
+     }
+
+     .search-bar-filter-inner {
+       width: 100%;
+       margin: 0 auto;
+       height: auto;
+     }
+
+     .about-img-1 {
+       background-image: none;
+       display: none;
+     }
+
+     .about-img-2 {
+       background-image: none;
+       display: none;
+     }
+
+     .about-img-3 {
+       background-image: none;
+       display: none;
+     }
+
+
+ }
+
+ @media only screen and (max-width: 64em) {
+   #filter-display {
+     display: none;
+   }
+
+ }
+
+//Medium screens
+@media only screen and (min-width: 58em) { }
+@media only screen and (min-width: 58em) and (max-width: 79.9em) {
+
+  .header-text {
+    padding-right: 3em;
+  }
+
+  .header-text h1 {
+    font-size: 1.3em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .header-text h2 {
+    font-size: 0.8em;
+    color: #4a4a49;
+    text-align: right;
+  }
+
+  .logo-wrap {
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/logored.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 7em;
+    height: 7em;
+  }
+
+  .ud-search-wrap {
+    background: #f8f7f7;
+    padding-left: 0.25em;
+    padding-top: 0.75em;
+    padding-right: 0.5em;
+    padding-bottom:0.75em;
+    float: left;
+    width: 70%;
+    height: 7em;
+    margin-left: -0.9em;
+  }
+
+  .ud-search-wrap label {
+    font-family: 'Montserrat';
+    font-size: 1.2em;
+    line-height: 1;
+  }
+
+  .ud-search-btn {
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+    width: 30%;
+  }
+
+  .ud-search-submit {
+    height: 7em;
+    background: #e41f21;
+    float: right;
+    width: 100%;
+  }
+
+  .ud-search-submit:hover {
+    background: #00ccff;
+    transition: .3s;
+  }
+
+  .search-bar-filter-inner {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+}
+
+//Large screens
+
+@media only screen and (min-width:79.9em) { }
+@media only screen and (min-width: 79.9em) and (max-width: 90em) {
+
+ }
+
+//XLarge screens
+@media only screen and (min-width: 90.063em) { }
+@media only screen and (min-width: 90.063em) and (max-width: 120em) {}
+
+//XXLarge screens
+@media only screen and (min-width: 120.063em) {
+
 }

@@ -7,45 +7,56 @@ class OrdersController < UsefulMusic::App
 
   def create
     send_to_login if current_customer.guest?
-    send_back if shopping_basket.empty?
-    discount_code = request.POST['discount']
-    if discount_code && !discount_code.empty?
-      discount = Discounts.available(discount_code)
-      invalid_discount if discount.nil?
-      used_discount if Orders.first(
-        :succeded => true,
-        :customer => current_customer,
-        :discount => discount
-      )
-    else
-      discount = nil
+    send_back('Checkout unavailable') unless ENV.fetch('SUSPEND_PAYMENTS', '').empty?
+    send_back('Your shopping basket is empty') if shopping_basket.empty?
+    remove_discount('Your discount has expired') if shopping_basket.discount.expired?
+    remove_discount('Your discount is pending') if shopping_basket.discount.pending?
+    # ap ShoppingBaskets.new(:checked_out => true, :discount => shopping_basket.discount).dataset.sql
+    if !shopping_basket.discount.nil? && shopping_basket.discount.allocation <= ShoppingBaskets.count(:checked_out => true, :discount => shopping_basket.discount)
+      remove_discount('This discount code has been used')
     end
+    count = current_customer.orders.select{ |o|
+      o.succeded? && o.discount == shopping_basket.discount
+    }.count
+    remove_discount('You have used this discount code') if !shopping_basket.discount.nil? && count >= shopping_basket.discount.customer_allocation
+    # ap ShoppingBaskets.all
+    # ap Orders.new(:discount => shopping_basket.discount).dataset.sql
+    # remove_discount if discount.all_spent
+    # remove_discount if discount.spent_by(current_customer)
     order = Orders.build :customer => current_customer,
-      :shopping_basket => shopping_basket,
-      :discount => discount
+      :shopping_basket => shopping_basket
     order.calculate_payment
     Orders.save order
-    redirect order.setup(url).redirect_uri
+    if shopping_basket.free?
+      order.state = 'succeded'
+      order.record.save
+      customer_mailer.order_successful
+      current_customer.record.update :shopping_basket_record => nil
+      session.delete 'guest.shopping_basket'
+
+      flash[:success] = 'Order placed successfuly'
+      redirect "customers/#{current_customer.id}"
+    else
+      redirect order.setup(url).redirect_uri
+    end
   end
 
   def send_to_login
     flash['error'] = 'Please Sign in or Create account to checkout purchases'
-    redirect '/sessions/new'
+    redirect "/sessions/new?requested_path=#{request.referer}"
   end
 
-  def send_back
-    flash['error'] = 'Your shopping basket is empty'
+  def send_back(message)
+    flash['error'] = message
     redirect request.referer
   end
 
-  def invalid_discount
-    flash['error'] = 'This discount code is invalid'
-    redirect request.referer
-  end
-
-  def used_discount
-    flash['error'] = 'This discount code has been used'
-    redirect request.referer
+  def remove_discount(message)
+    b = shopping_basket
+    b.discount = nil
+    ShoppingBaskets.save b
+    flash['error'] = message
+    redirect "/shopping_baskets/#{shopping_basket.id}"
   end
 
   def show(id)

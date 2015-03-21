@@ -28,9 +28,9 @@ class Orders < Errol::Repository
     if inquiry.customer
       tmp = tmp.where(:customer_record => inquiry.customer.record)
     end
-    if inquiry.discount
-      tmp = tmp.where(:discount_record => inquiry.discount.record)
-    end
+    # if inquiry.discount
+    #   tmp = tmp.where(:discount_record => inquiry.discount.record)
+    # end
     tmp
   end
 end

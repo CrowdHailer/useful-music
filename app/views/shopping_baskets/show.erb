@@ -6,10 +6,10 @@
                 <tr>
                     <th>Catalogue number</th>
                     <th>Product name</th>
-                    <th>Item</th>
+                    <th>Instrument</th>
                     <th>Quantity</th>
-                    <th>Initial Price</th>
-                    <th>Discounted Price</th>
+                    <th>Price</th>
+                    <th>Extra Licence Price</th>
                     <th>Total</th>
                     <th></th>
                 </tr>
@@ -65,25 +65,44 @@
                         Total
                     </th>
                     <th>
-                        <%= @basket.price.format %>
+                        <%= @basket.purchases_price.format %>
                     </th>
                     <th>
                     </th>
                 </tr>
+                <% unless @basket.discount.nil? %>
                 <tr>
-                    <th colspan="3">
+                    <th colspan="4">
                     </th>
                     <th>
-                        VAT
+                        Discount
                     </th>
                     <th>
-                        <%= current_customer.country %>
+                        <%= @basket.discount.code %>
                     </th>
                     <th>
-                        <%= "#{current_customer.vat_rate * 100}%" if current_customer.vat_rate %>
+                        -<%= @basket.discount.value.format %>
                     </th>
                     <th>
-                        <%= (@basket.price * (current_customer.vat_rate || 0)).format %>
+                    </th>
+                </tr>
+                <% end %>
+                <tr>
+                    <th colspan="2">
+                    </th>
+                    <th>
+                        VAT is charged at your local<br> rate for customers in the EU:
+                    </th>
+                    <th colspan="1">
+                    </th>
+                    <th>
+                        <%= current_customer.country || 'Login to provide Country' %>
+                    </th>
+                    <th>
+                        <%= current_customer.vat_rate.to_s %>
+                    </th>
+                    <th>
+                        <%= (current_customer.vat_rate * @basket.price).format %>
                     </th>
                     <th>
 
@@ -96,20 +115,13 @@
                         Total
                     </th>
                     <th>
-                        <%= (@basket.price * (current_customer.vat_rate || 0) + @basket.price).format %>
+                        <%= ((current_customer.vat_rate * @basket.price) + @basket.price).format %>
                     </th>
                     <th>
                     </th>
                 </tr>
             </thead>
         </table>
-    </div>
-</div>
-<div class="row">
-    <div class="columns large-12">
-        <p style="text-align:right;">
-            If you have a discount or free download code, please enter it here:
-        </p>
     </div>
 </div>
 <div class="row">
@@ -120,10 +132,100 @@
             <input type="hidden" name="_method" value="DELETE">
             <input class="button alert" type="submit" value="Clear Basket">
         </form>
-        <!-- <form class="discount-code right" action="index.html" method="post">
-            <input type="text" name="name" value="" placeholder="Discount Code">
-            <input class="button" onclick="alert('Coming soon')" type="button" name="name" value="Submit" >
-        </form> -->
+    </div>
+    <div class="columns large-6">
+        <div class="checkout-actions">
+            <h6>
+                Do you have a discount or free download code? Please enter it here:
+            </h6>
+            <div class="row collapse">
+                <div class="large-12 columns">
+                    <form class="" action="/shopping_baskets/<%= @basket.id %>" method="post">
+                    <input type="hidden" name="_method" value="PATCH">
+                        <%= csrf_tag %>
+                        <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
+                        <div class="row">
+                            <div class="columns large-5">
+                                <input type="text" name="shopping_basket[discount]" value="<%= @basket.discount.code %>" placeholder="Discount Code">
+                            </div>
+                            <div class="columns large-7">
+                                <% if @basket.discount.nil? %>
+                                    <button class="updatecart-btn">Apply Discount</button>
+                                <% else %>
+                                    <button class="updatecart-btn success">Change Discount</button>
+                                <% end %>
+                            </div>
+                        </div>
+                    </form>
+                    <% if current_customer.guest? %>
+                    <div class="row">
+                        <div class="large-5 columns">
+                            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                Existing User?
+                            </p>
+                            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                New Customer?
+                            </p>
+                        </div>
+                        <div class="large-7 columns">
+                            <a class="button checkout-option-1" href="/sessions/new?requested_path=<%= request.path %>">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            <a class="button checkout-option-2" href="/customers/new?success_path=<%= request.path %>">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                        </div>
+                    </div>
+                    <% else %>
+                    <form id="checkout-button" action="/orders" method="post" class="">
+                        <%= csrf_tag %>
+                        <div class="row">
+                            <div class="large-5 columns">
+                                <p>Secure PayPal Checkout:</p>
+                            </div>
+                            <div class="large-7 columns">
+                                <% if !ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
+                                    <button class="button checkout-secure-btn alert" type="button" onclick="alert('Payments are temporarily unavailable. please checkback soon or contact for more details')">Checkout Unavailable<i class="fa fa-arrow-right checkout-icon"></i></button>
+                                <% elsif @basket.free? %>
+                                    <button class="button checkout-secure-btn">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
+                                <% else %>
+                                    <button class="button checkout-secure-btn">Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
+                                <% end %>
+                            </div>
+                        </div>
+                    </form>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="secure">
+            <div class="row">
+                <div class="large-6 columns">
+                    <h6>Useful Music uses secure payments by PayPal</h6>
+                </div>
+                <div class="large-6 columns">
+                    <table border="0" cellpadding="10" cellspacing="0" align="center">
+                        <tr>
+                            <td align="center">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <a href="https://www.paypal.com/uk/webapps/mpp/paypal-popup" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/uk/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
+                                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" border="0" alt="PayPal Logo">
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="columns large-6">
+        <a class="button success" href="/pieces">Continue Shopping</a>
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="button alert" type="submit" value="Clear Basket">
+        </form>
     </div>
     <div class="columns large-6">
         <% if current_customer.customer? %>
@@ -138,7 +240,6 @@
             <% else %>
             <form id="checkout-button" action="/orders" method="post" class="right">
                 <%= csrf_tag %>
-                <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
                 <div class="row">
                     <div class="columns large-6">
                         <input type="text" name="discount" value="" placeholder="Discount Code">
@@ -154,23 +255,6 @@
             <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
                 Please <a class="button" href="/sessions/new?requested_path=<%= request.path %>">login and checkout</a> or <a class="button" href="/customers/new?success_path=<%= request.path %>">create account and checkout</a>
             </p>
-        <% end %>
-    </div>
-
-</div>
-<div class="row">
-    <div class="columns large-12">
-        <% if current_customer.customer? %>
-        <!-- <form id="checkout-button" action="/orders" method="post" class="right">
-            <%= csrf_tag %>
-            <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>">
-            <input type="text" name="name" value="" placeholder="Discount Code">
-            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;" alt="Submit Form" class="right"/>
-        </form> -->
-        <% else %>
-        <!-- <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-            Please <a class="button" href="/sessions/new">login and checkout</a> or <a class="button" href="/customers/new">create account and checkout</a>
-        </p> -->
         <% end %>
     </div>
 </div>

@@ -1,8 +1,22 @@
+<div class="hide-for-large-up">
+  <div class="row collapse">
+    <div class="mob-menu-wrap" onclick="document.getElementById('filter-display').style.display = 'block'">
+      <h3 style="float: left; color: white;">
+        Search Filter
+      </h3>
+      <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+    </div>
+  </div>
+</div>
+
 
 <div class="row collapse white-section section-bottom-margin">
     <!-- FILTER FORM LEFT -->
-    <div class="large-3 columns">
-        <div class="filter-wrap">
+    <div class="large-3 medium-12 columns">
+          <div id="filter-display" class="filter-wrap">
+            <div class="hide-for-large-up">
+              <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
+            </div>
             <h1>Search Filter</h1>
             <p>Refine your search by selecting and<br> combining categories:</p>
             <div class="filter-form">
@@ -23,7 +37,7 @@
                         :violin,
                         :viola,
                         :percussion].each do |instrument| %>
-                            <label class="pure-checkbox" style="float:left;width:50%;">
+                            <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
                                 <%= instrument.capitalize %>
                             </label>
@@ -38,7 +52,7 @@
                         :intermediate,
                         :advanced,
                         :professional].each do |level| %>
-                            <label class="pure-checkbox" style="float:left;width:50%;">
+                            <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if @search.public_send level %>>
                                 <%= level.capitalize %>
                             </label>
@@ -53,7 +67,7 @@
                     :trio,
                     :quartet,
                     :larger_ensembles].each do |category| %>
-                        <label class="pure-checkbox" style="float:left;width:50%;">
+                        <label class="pure-checkbox">
                             <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
                             <%= category.to_s.capitalize.gsub('_', ' ') %>
                         </label>
@@ -68,7 +82,7 @@
 
     <!-- SEARCH RESULTS RIGHT -->
 
-    <div class="large-9 columns">
+    <div class="large-9 small-12 columns">
         <div class="search-bar-filter">
             <div class="search-bar-filter-inner">
                 <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= 'disabled' unless @pieces.previous_page %>>First Page</button>
@@ -87,7 +101,8 @@
                 </p>
             </div>
         </div>
-        <ul class="small-block-grid-3">
+
+        <ul class="small-block-grid-1 large-block-grid-3 medium-block-grid-2">
             <% @pieces.each do |piece| %>
             <li>
                 <div class="product-wrap">
@@ -98,17 +113,17 @@
                         <p><%= piece.sub_heading.upcase.gsub('é', 'E') %></p>
                     </div>
                     <div class="row collapse">
-                        <div class="large-6 columns product-main">
+                        <div class="large-6 medium-6 small-12 columns product-main">
                             <p><%= piece.catalogue_number %></p>
                             <p>LEVEL <%= piece.level_overview %></p>
                             <hr class="prod-break">
                             <a href="/pieces/<%= piece.catalogue_number %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                             <a href="<%= piece.notation_preview.url %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
                             <a href="/pieces/<%= piece.catalogue_number %>">
-                                <button>Full Details</button>
+                                <button class="piece-btn">Full Details</button>
                             </a>
                         </div>
-                        <div class="large-6 columns product-main">
+                        <div class="large-6 medium-6 columns hide-for-small-only product-main">
                             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/UD96-98x137.jpg">
                         </div>
                     </div>

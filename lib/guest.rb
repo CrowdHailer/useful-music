@@ -56,7 +56,7 @@ class Guest
   end
 
   def vat_rate
-    nil
+    0
   end
 
   def country
