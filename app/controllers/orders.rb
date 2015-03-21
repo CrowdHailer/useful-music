@@ -6,7 +6,6 @@ class OrdersController < UsefulMusic::App
   render_defaults[:dir] += '/orders'
 
   def create
-    ap 'hello'
     send_to_login if current_customer.guest?
     send_back('Checkout unavailable') unless ENV.fetch('SUSPEND_PAYMENTS', '').empty?
     send_back('Your shopping basket is empty') if shopping_basket.empty?
@@ -49,7 +48,7 @@ class OrdersController < UsefulMusic::App
 
   def send_back(message)
     flash['error'] = message
-    redirect request.referer
+    redirect "/shopping_baskets/#{shopping_basket.id}"
   end
 
   def remove_discount(message)
