@@ -180,10 +180,12 @@
                                 <p>Secure PayPal Checkout:</p>
                             </div>
                             <div class="large-7 columns">
-                                <% if @basket.free? %>
-                                    <button class="button checkout-secure-btn" href="#">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
+                                <% if !ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
+                                    <button class="button checkout-secure-btn alert" type="button" onclick="alert('Payments are temporarily unavailable. please checkback soon or contact for more details')">Checkout Unavailable<i class="fa fa-arrow-right checkout-icon"></i></button>
+                                <% elsif @basket.free? %>
+                                    <button class="button checkout-secure-btn">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
                                 <% else %>
-                                    <button class="button checkout-secure-btn" href="#">Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
+                                    <button class="button checkout-secure-btn">Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
                                 <% end %>
                             </div>
                         </div>
