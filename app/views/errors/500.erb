@@ -7,8 +7,8 @@
                 <% if current_customer.admin? %>
                     <p>
                         <%= @err.message %>
-                        <%= @err.response %>
-                        <%= @err.response.details if @err.response %>
+                        <%= @err.response if @err.respond_to? :response %>
+                        <%= @err.response.details if @err.respond_to? :response %>
                     </p>
                 <% end %>
                 <a href="/">
