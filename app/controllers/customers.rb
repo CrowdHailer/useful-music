@@ -16,11 +16,17 @@ class CustomersController < UsefulMusic::App
 
   def create
     begin
+      guest = current_customer
       form = Customer::Create::Form.new request.POST['customer']
       validator = Customer::Create::Validator.new
       validator.validate! form
       customer = Customers.create form
       log_in customer
+      if guest.shopping_basket && !guest.shopping_basket.empty?
+        # TODO test transfer of basket
+        customer.shopping_basket = guest.shopping_basket
+        Customers.save customer
+      end
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
       redirect success_path || "/customers/#{customer.id}"
