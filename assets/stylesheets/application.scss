@@ -462,7 +462,7 @@ height: auto;
 
 .promo-wrap {
   background: #f8f7f7;
-  height: 10em;
+  height: auto;
   margin: 1em;
   padding: 0.5em;
 }
@@ -721,12 +721,18 @@ height: auto;
 
 /*Search Filter CSS*/
 
+.pure-checkbox {
+  float:left;
+  width:50%;
+}
+
 .filter-wrap {
   background: #a6dbf8;
   height: auto;
   min-height: 55em;
   margin-top: 1em;
   padding: 0.6em;
+  overflow: hidden;
 }
 
 .filter-wrap h1 {
@@ -758,7 +764,7 @@ input[type="checkbox"] {
 
 .clear-search-btn {
   padding: 0.5em;
-  float: left;
+  float: right;
   font-family: 'Montserrat';
   text-transform: uppercase;
   font-size: 0.9em;
@@ -797,8 +803,9 @@ input[type="checkbox"] {
 }
 
 .search-bar-filter-inner {
-  width: 32em;
+  width: 35em;
   margin: 0 auto;
+  height: auto;
 }
 
 .search-bar-filter-inner p {
@@ -811,7 +818,7 @@ input[type="checkbox"] {
 
 .search-bar-filter {
   background: #005a86;
-  height: 3.6em;
+  height: auto;
   margin-top: 1em;
   margin-left: 0.5em
 }
@@ -1197,6 +1204,36 @@ footer a:hover {
     line-height: 0.6;
   }
 
+  .pure-checkbox {
+    float:left;
+    width:100%;
+  }
+
+  .filter-head h2{
+    font-size: 0.9em;
+  }
+
+  .search-bar-filter-inner {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .about-img-1 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-2 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-3 {
+    background-image: none;
+    display: none;
+  }
+
 }
 
 @media only screen and (min-width: 23.2em) and (max-width: 40em) {
@@ -1329,6 +1366,27 @@ footer a:hover {
     line-height: 0.6;
   }
 
+  .search-bar-filter-inner {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .about-img-1 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-2 {
+    background-image: none;
+    display: none;
+  }
+
+  .about-img-3 {
+    background-image: none;
+    display: none;
+  }
+
  }
 
  @media only screen and (min-width: 40em) and (max-width: 58em) {
@@ -1408,6 +1466,27 @@ footer a:hover {
        min-height: 22.5em;
      }
 
+     .search-bar-filter-inner {
+       width: 100%;
+       margin: 0 auto;
+       height: auto;
+     }
+
+     .about-img-1 {
+       background-image: none;
+       display: none;
+     }
+
+     .about-img-2 {
+       background-image: none;
+       display: none;
+     }
+
+     .about-img-3 {
+       background-image: none;
+       display: none;
+     }
+
 
  }
 
@@ -1415,6 +1494,7 @@ footer a:hover {
    #filter-display {
      display: none;
    }
+
  }
 
 //Medium screens
@@ -1481,6 +1561,12 @@ footer a:hover {
   .ud-search-submit:hover {
     background: #00ccff;
     transition: .3s;
+  }
+
+  .search-bar-filter-inner {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
   }
 
 }
