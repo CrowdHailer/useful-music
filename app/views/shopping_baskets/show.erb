@@ -4,11 +4,11 @@
         <table class="shopping-basket">
             <thead class="top">
                 <tr>
-                    <th>Catalogue number</th>
+                    <th width="50" class="hide-for-medium-only hide-for-small-only">Catalogue number</th>
                     <th>Product name</th>
                     <th>Instrument</th>
                     <th>Quantity</th>
-                    <th>Price</th>
+                    <th width="50">Price</th>
                     <th>Extra Licence Price</th>
                     <th>Total</th>
                     <th></th>
@@ -19,7 +19,7 @@
                 <!-- TODO test sorting -->
                 <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
                 <tr>
-                    <td>
+                    <td class="hide-for-medium-only hide-for-small-only">
                         UD<%= purchase.item.piece.id %>
                     </td>
                     <td>
@@ -57,75 +57,71 @@
                 </tr>
                 <% end %>
             </tbody>
-            <thead class="top">
-                <tr>
-                    <th colspan="5">
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        <%= @basket.purchases_price.format %>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                <% unless @basket.discount.nil? %>
-                <tr>
-                    <th colspan="4">
-                    </th>
-                    <th>
-                        Discount
-                    </th>
-                    <th>
-                        <%= @basket.discount.code %>
-                    </th>
-                    <th>
-                        -<%= @basket.discount.value.format %>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                <% end %>
-                <tr>
-                    <th colspan="2">
-                    </th>
-                    <th>
-                        VAT is charged at your local<br> rate for customers in the EU:
-                    </th>
-                    <th colspan="1">
-                    </th>
-                    <th>
-                        <%= current_customer.country || 'Login to provide Country' %>
-                    </th>
-                    <th>
-                        <%= current_customer.vat_rate.to_s %>
-                    </th>
-                    <th>
-                        <%= (current_customer.vat_rate * @basket.price).format %>
-                    </th>
-                    <th>
+          </table>
+          <div class="row collapse">
+            <div class="large-9 medium-12 small-12 columns">
+              <div class="vat-wrap">
+                <h6>VAT is charged at your local rate for customers in the EU.<br>  VAT is not charged for customers outside of the EU.</h6>
+                <h6>You are purchasing from: <%= current_customer.country || 'Login to provide Country' %></h6>
+              </div>
+            </div>
+            <div class="large-3 medium-12 small-12 columns">
+              <table>
+                <thead class="top">
+                    <tr>
+                      <th>
+                      </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            <%= @basket.purchases_price.format %>
+                        </th>
+                    </tr>
+                    <% unless @basket.discount.nil? %>
+                    <tr>
 
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="5">
-                    </th>
-                    <th>
-                        Total
-                    </th>
-                    <th>
-                        <%= ((current_customer.vat_rate * @basket.price) + @basket.price).format %>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        <th width="200">
+                            Discount
+                        </th>
+                        <th>
+                            <%= @basket.discount.code %>
+                        </th>
+                        <th>
+                            -<%= @basket.discount.value.format %>
+                        </th>
+                    </tr>
+                    <% end %>
+                    <tr>
+
+                      <th width="200">
+                        VAT
+                      </th>
+                      <th>
+                          <%= current_customer.vat_rate.to_s %>
+                      </th>
+                      <th>
+                          <%= (current_customer.vat_rate * @basket.price).format %>
+                      </th>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            <%= ((current_customer.vat_rate * @basket.price) + @basket.price).format %>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            </div>
+          </div>
     </div>
 </div>
 <div class="row">
-    <div class="columns large-6">
+    <div class="columns large-6 small-12 ">
         <a class="button success" href="/pieces">Continue Shopping</a>
         <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
             <%= csrf_tag %>
@@ -133,7 +129,7 @@
             <input class="button alert" type="submit" value="Clear Basket">
         </form>
     </div>
-    <div class="columns large-6">
+    <div class="columns large-6 small-12 ">
         <div class="checkout-actions">
             <h6>
                 Do you have a discount or free download code? Please enter it here:
@@ -145,10 +141,10 @@
                         <%= csrf_tag %>
                         <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
                         <div class="row">
-                            <div class="columns large-5">
+                            <div class="large-5 medium-6 small-12 columns">
                                 <input type="text" name="shopping_basket[discount]" value="<%= @basket.discount.code %>" placeholder="Discount Code">
                             </div>
-                            <div class="columns large-7">
+                            <div class="large-7 medium-6 small-12 columns">
                                 <% if @basket.discount.nil? %>
                                     <button class="updatecart-btn">Apply Discount</button>
                                 <% else %>
@@ -159,15 +155,15 @@
                     </form>
                     <% if current_customer.guest? %>
                     <div class="row">
-                        <div class="large-5 columns">
-                            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                        <div class="large-5 medium-6 small-12 columns">
+                            <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
                                 Existing User?
                             </p>
-                            <p class="right" style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                            <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
                                 New Customer?
                             </p>
                         </div>
-                        <div class="large-7 columns">
+                        <div class="large-7 medium-6 small-12 columns">
                             <a class="button checkout-option-1" href="/sessions/new?requested_path=<%= request.path %>">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
                             <a class="button checkout-option-2" href="/customers/new?success_path=<%= request.path %>">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
                         </div>
@@ -176,10 +172,10 @@
                     <form id="checkout-button" action="/orders" method="post" class="">
                         <%= csrf_tag %>
                         <div class="row">
-                            <div class="large-5 columns">
+                            <div class="large-5 medium-6 small-12 columns">
                                 <p>Secure PayPal Checkout:</p>
                             </div>
-                            <div class="large-7 columns">
+                            <div class="large-7 medium-6 small-12 columns">
                                 <% if !ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
                                     <button class="button checkout-secure-btn alert" type="button" onclick="alert('Payments are temporarily unavailable. please checkback soon or contact for more details')">Checkout Unavailable<i class="fa fa-arrow-right checkout-icon"></i></button>
                                 <% elsif @basket.free? %>
@@ -196,19 +192,15 @@
         </div>
         <div class="secure">
             <div class="row">
-                <div class="large-6 columns">
-                    <h6>Useful Music uses secure payments by PayPal</h6>
+                <div class="large-6 columns paypal-text">
+                    <h6>Useful Music uses secure payments by PayPal. Click the logo find out more about Paypal.</h6>
                 </div>
                 <div class="large-6 columns">
-                    <table border="0" cellpadding="10" cellspacing="0" align="center">
-                        <tr>
-                            <td align="center">
-                            </td>
-                        </tr>
+                    <table class="paypal-link" border="0" cellpadding="0" cellspacing="0" align="center">
                         <tr>
                             <td align="center">
                                 <a href="https://www.paypal.com/uk/webapps/mpp/paypal-popup" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/uk/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">
-                                    <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" border="0" alt="PayPal Logo">
+                                    <img class="paypal-logo" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" border="0" alt="PayPal Logo">
                                 </a>
                             </td>
                         </tr>
