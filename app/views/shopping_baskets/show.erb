@@ -1,7 +1,50 @@
 <div class="row">
     <div class="columns large-12">
 
-        <table class="shopping-basket">
+      <div class="mobile-checkout-head hide-for-medium-up">
+        <h2>Basket</h2>
+        <h5>Here is your order summary:</h5>
+      </div>
+      <div class="mobile-basket-list">
+        <table>
+          <thead class="top">
+            <tr>
+              <th>ID</th>
+              <th>Quantity</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+              <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
+              <tr>
+                <td>
+                  <a href="/pieces/<%= purchase.item.piece.id %>">
+                     UD<%= purchase.item.piece.id %>
+                  </a>
+                </td>
+                <td>
+                  <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                      <%= csrf_tag %>
+                      <input type="hidden" name="_method" value="PUT">
+                      <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
+                      <input class="button mobile-alert" type="submit" value="Update">
+                  </form>
+                  <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                      <%= csrf_tag %>
+                      <input type="hidden" name="_method" value="DELETE">
+                      <input class="button alert mobile-alert" type="submit" value="Remove">
+                  </form>
+                </td>
+                <td>
+                  <%= purchase.price.format %>
+                </td>
+              </tr>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
+
+        <table class="shopping-basket hide-for-small">
             <thead class="top">
                 <tr>
                     <th width="50" class="hide-for-medium-only hide-for-small-only">Catalogue number</th>
@@ -19,7 +62,7 @@
                 <!-- TODO test sorting -->
                 <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
                 <tr>
-                    <td class="hide-for-medium-only hide-for-small-only">
+                    <td>
                         UD<%= purchase.item.piece.id %>
                     </td>
                     <td>
@@ -59,13 +102,14 @@
             </tbody>
           </table>
           <div class="row collapse">
-            <div class="large-9 medium-12 small-12 columns">
+            <div class="large-9 medium-6 small-12 columns hide-for-small">
               <div class="vat-wrap">
-                <h6>VAT is charged at your local rate for customers in the EU.<br>  VAT is not charged for customers outside of the EU.</h6>
+                <h5>How we charge VAT:</h5>
+                <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
                 <h6>You are purchasing from: <%= current_customer.country || 'Login to provide Country' %></h6>
               </div>
             </div>
-            <div class="large-3 medium-12 small-12 columns">
+            <div class="large-3 medium-6 small-12 columns">
               <table>
                 <thead class="top">
                     <tr>
@@ -117,16 +161,16 @@
                 </thead>
             </table>
             </div>
-          </div>
+        </div>
     </div>
 </div>
 <div class="row">
-    <div class="columns large-6 small-12 ">
-        <a class="button success" href="/pieces">Continue Shopping</a>
+    <div class="columns large-6 small-12 hide-for-small">
+        <a class="button success continue-shopping" href="/pieces">Continue Shopping</a>
         <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
-            <input class="button alert" type="submit" value="Clear Basket">
+            <input class="button alert clear-basket" type="submit" value="Clear Basket">
         </form>
     </div>
     <div class="columns large-6 small-12 ">
@@ -208,5 +252,20 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="small-12 columns hide-for-medium-up">
+      <div class="vat-wrap">
+        <h5>How we charge VAT:</h5>
+        <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
+        <h6>You are purchasing from: <%= current_customer.country || 'Login to provide Country' %></h6>
+      </div>
+    </div>
+    <div class="columns large-6 small-12 hide-for-medium-up">
+        <a class="button success continue-shopping" href="/pieces">Continue Shopping</a>
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="button alert clear-basket" type="submit" value="Clear Basket">
+        </form>
     </div>
 </div>
