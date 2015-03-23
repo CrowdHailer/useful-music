@@ -5,13 +5,13 @@
         <h2>Basket</h2>
         <h5>Here is your order summary:</h5>
       </div>
-      <div class="mobile-basket-list">
+      <div class="hide-for-medium-up">
         <table>
           <thead class="top">
             <tr>
-              <th>ID</th>
-              <th>Quantity</th>
-              <th>Total Price</th>
+              <th width="50%">Name</th>
+              <th width="50%">Quantity</th>
+              <th width="50%">Total Price</th>
             </tr>
           </thead>
           <tbody>
@@ -19,7 +19,7 @@
               <tr>
                 <td>
                   <a href="/pieces/<%= purchase.item.piece.id %>">
-                     UD<%= purchase.item.piece.id %>
+                    <%= purchase.item.piece.product_name %>
                   </a>
                 </td>
                 <td>
