@@ -751,7 +751,6 @@ height: auto;
 .filter-wrap {
   background: #a6dbf8;
   height: auto;
-  min-height: 55em;
   margin-top: 1em;
   padding: 0.6em;
   overflow: hidden;
@@ -892,6 +891,7 @@ input[type="checkbox"] {
   padding: 0.5em;
   border-radius: 1em;
   border: 0.1em solid #d9d9d9;
+  margin-left: 0.5em;
 }
 
 .purchase-options-wrap h2 {
@@ -914,7 +914,7 @@ border: 0.07em solid #4a4a49;
 }
 
 .licence-select {
-  height: 3em;
+  height: auto;
   float: left;
   width: 100%;
   margin-bottom: 2em;
@@ -970,7 +970,15 @@ border: 0.07em solid #4a4a49;
   padding: 0.7em 2em;
   margin: 1em 0em;
   font-family: 'Montserrat';
-  width: 18.5em
+  width: 100%;
+}
+
+.audio {
+  width: 100% !important;
+}
+
+audio {
+  width: 100% !important;
 }
 
 .currency-piece h6{
@@ -1288,6 +1296,16 @@ footer a:hover {
     font-size: 0.6em;
   }
 
+  .licence-select h6 {
+    text-transform: uppercase;
+    font-size: 0.75em;
+    color: #4A4A49;
+  }
+
+  .licence-select p {
+    font-size: 0.75em;
+  }
+
 }
 
 @media only screen and (min-width: 23.2em) and (max-width: 40em) {
@@ -1454,6 +1472,16 @@ footer a:hover {
     font-size: 0.8em;
   }
 
+  .licence-select h6 {
+    text-transform: uppercase;
+    font-size: 0.75em;
+    color: #4A4A49;
+  }
+
+  .licence-select p {
+    font-size: 0.75em;
+  }
+
  }
 
  @media only screen and (min-width: 40em) and (max-width: 58em) {
@@ -1563,6 +1591,15 @@ footer a:hover {
        font-size: 0.8em;
      }
 
+     .licence-select h6 {
+       text-transform: uppercase;
+       font-size: 0.8em;
+       color: #4A4A49;
+     }
+
+     .licence-select p {
+       font-size: 0.85em;
+     }
 
  }
 
@@ -1643,6 +1680,16 @@ footer a:hover {
     width: 100%;
     margin: 0 auto;
     height: auto;
+  }
+
+  .licence-select h6 {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    color: #4A4A49;
+  }
+
+  .licence-select p {
+    font-size: 0.85em;
   }
 
 }

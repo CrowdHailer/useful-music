@@ -1,11 +1,25 @@
+<div class="hide-for-large-up">
+  <div class="row collapse">
+    <div class="mob-menu-wrap" onclick="document.getElementById('filter-display').style.display = 'block'">
+      <h3 style="float: left; color: white;">
+        Search Filter
+      </h3>
+      <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+    </div>
+  </div>
+</div>
+
 <div class="row collapse white-section section-bottom-margin">
     <!-- FILTER FORM LEFT -->
-    <div class="large-3 columns">
-        <div class="filter-wrap">
-            <h1>Search Again</h1>
+    <div class="large-3 medium-12 columns">
+          <div id="filter-display" class="filter-wrap">
+            <div class="hide-for-large-up">
+              <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
+            </div>
+            <h1>Search Filter</h1>
             <p>Refine your search by selecting and<br> combining categories:</p>
             <div class="filter-form">
-                <form action="/pieces" method="get">
+                <form id="search-form" action="/pieces" method="get">
                     <div class="filter-head">
                         <h2>SELECT INSTRUMENT(s)</h2>
                     </div>
@@ -22,7 +36,7 @@
                         :violin,
                         :viola,
                         :percussion].each do |instrument| %>
-                            <label class="pure-checkbox" style="float:left;width:50%;">
+                            <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
                                 <%= instrument.capitalize %>
                             </label>
@@ -37,7 +51,7 @@
                         :intermediate,
                         :advanced,
                         :professional].each do |level| %>
-                            <label class="pure-checkbox" style="float:left;width:50%;">
+                            <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if @search.public_send level %>>
                                 <%= level.capitalize %>
                             </label>
@@ -52,13 +66,13 @@
                     :trio,
                     :quartet,
                     :larger_ensembles].each do |category| %>
-                        <label class="pure-checkbox" style="float:left;width:50%;">
+                        <label class="pure-checkbox">
                             <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
                             <%= category.to_s.capitalize.gsub('_', ' ') %>
                         </label>
                     <% end %>
-                    <!-- <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a> -->
                     <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+                    <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a>
                 </form>
             </div>
         </div>
@@ -69,10 +83,10 @@
 
     <div class="large-9 columns">
         <div class="row collapse white-section section-bottom-margin">
-            <div class="large-6 columns piece-title">
+            <div class="large-6 medium-6 small-12 columns piece-title">
                 <h1><%= @piece.title %></h1>
             </div>
-            <div class="large-6 columns piece-title">
+            <div class="large-6 medium-6 small-12 columns piece-title">
                 <p>Catalogue Number: <%= @piece.catalogue_number %></p>
             </div>
 
@@ -83,7 +97,7 @@
                 </div>
             </div>
             <div class="row collapse">
-                <div class="large-5 columns">
+                <div class="large-5 medium-5 small-12 columns">
                     <img src="<%= @piece.cover_image.url %>" alt="Piece Cover image">
                     <a href="<%= @piece.notation_preview.url %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
                     <h6>LISTEN TO AUDIO PREVIEW</h6>
@@ -92,7 +106,7 @@
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-                <div class="large-7 columns">
+                <div class="large-7 medium-7 small-12 columns">
                     <div class="description">
                         <p><%= @piece.description %></p>
                     </div>
@@ -102,11 +116,13 @@
                         <p>Please select how many <a href="/about/licencing_and_copyright">licences</a> you would like:</p>
                         <hr>
                         <form action="/purchases" method="post">
-                            <%= csrf_tag %>
+                          <%= csrf_tag %>
                             <div class="row collapse">
-                                <% @piece.items.each do |item| %>
+                              <% @piece.items.each do |item| %>
                                 <div class="licence-select" style="float:left;width:50%;">
-                                    <h6><%= item.name %></h6>
+                                    <h6>
+                                      <%= item.name %>
+                                    </h6>
                                     <input type="hidden" name="purchases[][shopping_basket]" value="<%= shopping_basket.id %>">
                                     <input type="hidden" name="purchases[][item]" value="<%= item.record.id %>">
                                     <input type="number" min="0" name="purchases[][quantity]" value="0">
@@ -115,8 +131,7 @@
                                     <p><%= item.initial_price.format %> first licence</p>
                                     <p><%= item.subsequent_price.format %> additional</p>
                                 </div>
-                                <% end %>
-
+                              <% end %>
                             </div>
                             <div class="total-box">
                                 <!-- <h4>TOTAL: £30.65</h4> -->
