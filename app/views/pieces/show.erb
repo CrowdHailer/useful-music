@@ -1,11 +1,25 @@
+<div class="hide-for-large-up">
+  <div class="row collapse">
+    <div class="mob-menu-wrap" onclick="document.getElementById('filter-display').style.display = 'block'">
+      <h3 style="float: left; color: white;">
+        Search Filter
+      </h3>
+      <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+    </div>
+  </div>
+</div>
+
 <div class="row collapse white-section section-bottom-margin">
     <!-- FILTER FORM LEFT -->
-    <div class="large-3 columns">
-        <div class="filter-wrap">
-            <h1>Search Again</h1>
+    <div class="large-3 medium-12 columns">
+          <div id="filter-display" class="filter-wrap">
+            <div class="hide-for-large-up">
+              <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
+            </div>
+            <h1>Search Filter</h1>
             <p>Refine your search by selecting and<br> combining categories:</p>
             <div class="filter-form">
-                <form action="/pieces" method="get">
+                <form id="search-form" action="/pieces" method="get">
                     <div class="filter-head">
                         <h2>SELECT INSTRUMENT(s)</h2>
                     </div>
@@ -22,7 +36,7 @@
                         :violin,
                         :viola,
                         :percussion].each do |instrument| %>
-                            <label class="pure-checkbox" style="float:left;width:50%;">
+                            <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
                                 <%= instrument.capitalize %>
                             </label>
@@ -37,7 +51,7 @@
                         :intermediate,
                         :advanced,
                         :professional].each do |level| %>
-                            <label class="pure-checkbox" style="float:left;width:50%;">
+                            <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= level %>]" <%= 'checked' if @search.public_send level %>>
                                 <%= level.capitalize %>
                             </label>
@@ -52,13 +66,13 @@
                     :trio,
                     :quartet,
                     :larger_ensembles].each do |category| %>
-                        <label class="pure-checkbox" style="float:left;width:50%;">
+                        <label class="pure-checkbox">
                             <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>
                             <%= category.to_s.capitalize.gsub('_', ' ') %>
                         </label>
                     <% end %>
-                    <!-- <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a> -->
                     <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+                    <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a>
                 </form>
             </div>
         </div>

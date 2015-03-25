@@ -751,7 +751,6 @@ height: auto;
 .filter-wrap {
   background: #a6dbf8;
   height: auto;
-  min-height: 55em;
   margin-top: 1em;
   padding: 0.6em;
   overflow: hidden;
@@ -970,7 +969,11 @@ border: 0.07em solid #4a4a49;
   padding: 0.7em 2em;
   margin: 1em 0em;
   font-family: 'Montserrat';
-  width: 18.5em
+  width: 100%;
+}
+
+.audio {
+  width: 100% !important;
 }
 
 .currency-piece h6{
