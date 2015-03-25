@@ -83,10 +83,10 @@
 
     <div class="large-9 columns">
         <div class="row collapse white-section section-bottom-margin">
-            <div class="large-6 columns piece-title">
+            <div class="large-6 medium-6 small-12 columns piece-title">
                 <h1><%= @piece.title %></h1>
             </div>
-            <div class="large-6 columns piece-title">
+            <div class="large-6 medium-6 small-12 columns piece-title">
                 <p>Catalogue Number: <%= @piece.catalogue_number %></p>
             </div>
 
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="row collapse">
-                <div class="large-5 columns">
+                <div class="large-5 medium-5 small-12 columns">
                     <img src="<%= @piece.cover_image.url %>" alt="Piece Cover image">
                     <a href="<%= @piece.notation_preview.url %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
                     <h6>LISTEN TO AUDIO PREVIEW</h6>
@@ -106,7 +106,7 @@
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-                <div class="large-7 columns">
+                <div class="large-7 medium-7 small-12 columns">
                     <div class="description">
                         <p><%= @piece.description %></p>
                     </div>
@@ -116,11 +116,13 @@
                         <p>Please select how many <a href="/about/licencing_and_copyright">licences</a> you would like:</p>
                         <hr>
                         <form action="/purchases" method="post">
-                            <%= csrf_tag %>
+                          <%= csrf_tag %>
                             <div class="row collapse">
-                                <% @piece.items.each do |item| %>
+                              <% @piece.items.each do |item| %>
                                 <div class="licence-select" style="float:left;width:50%;">
-                                    <h6><%= item.name %></h6>
+                                    <h6>
+                                      <%= item.name %>
+                                    </h6>
                                     <input type="hidden" name="purchases[][shopping_basket]" value="<%= shopping_basket.id %>">
                                     <input type="hidden" name="purchases[][item]" value="<%= item.record.id %>">
                                     <input type="number" min="0" name="purchases[][quantity]" value="0">
@@ -129,8 +131,7 @@
                                     <p><%= item.initial_price.format %> first licence</p>
                                     <p><%= item.subsequent_price.format %> additional</p>
                                 </div>
-                                <% end %>
-
+                              <% end %>
                             </div>
                             <div class="total-box">
                                 <!-- <h4>TOTAL: £30.65</h4> -->
