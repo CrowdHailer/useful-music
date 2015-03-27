@@ -20,7 +20,7 @@ class PasswordResetsControllerTest < MyRecordTest
     post '/', :customer => {:email => customer.email}
     assert_match(/sessions\/new/, last_response.location)
     assert_includes last_message.to, last_customer.email
-    assert_includes last_message.body, 'password_resets'
+    assert_includes last_message.text_part.body, 'password_resets'
     assert_equal 'A password reset as been sent to your email', flash['success']
   end
 

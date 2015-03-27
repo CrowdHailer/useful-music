@@ -11,7 +11,19 @@ class CustomerMailer
     mail.from 'info@usefulmusic.com'
     mail.to @customer.email
     mail.subject 'Welcome to usefulmusic.com'
-    mail.body render __method__
+    text_body = render __method__
+    text_part = Mail::Part.new do
+      body text_body
+    end
+
+    html_body = render __method__, :extension => 'html'
+    html_part = Mail::Part.new do
+      content_type 'text/html; charset=UTF-8'
+      body html_body
+    end
+
+    mail.text_part = text_part
+    mail.html_part = html_part
     mail.deliver
   end
 
@@ -20,7 +32,19 @@ class CustomerMailer
     mail.from 'info@usefulmusic.com'
     mail.to @customer.email
     mail.subject 'Useful Music password reset'
-    mail.body render __method__
+    text_body = render __method__
+    text_part = Mail::Part.new do
+      body text_body
+    end
+
+    html_body = render __method__, :extension => 'html'
+    html_part = Mail::Part.new do
+      content_type 'text/html; charset=UTF-8'
+      body html_body
+    end
+
+    mail.text_part = text_part
+    mail.html_part = html_part
     mail.deliver
   end
 
@@ -29,7 +53,19 @@ class CustomerMailer
     mail.from 'orders@usefulmusic.com'
     mail.to @customer.email
     mail.subject 'Your Order at Useful Music'
-    mail.body render __method__
+    text_body = render __method__
+    text_part = Mail::Part.new do
+      body text_body
+    end
+
+    html_body = render __method__, :extension => 'html'
+    html_part = Mail::Part.new do
+      content_type 'text/html; charset=UTF-8'
+      body html_body
+    end
+
+    mail.text_part = text_part
+    mail.html_part = html_part
     mail.deliver
   end
 
@@ -41,12 +77,13 @@ class CustomerMailer
     File.join(options.fetch(:application_url), 'customers', customer.id)
   end
 
-  def render(file)
-    template = Tilt::ERBTemplate.new(template_file(file))
+  def render(file, **options)
+    extension = options.fetch(:extension, 'txt')
+    template = Tilt::ERBTemplate.new(template_file(file, extension))
     template.render locals
   end
 
-  def template_file(file)
-    File.expand_path("customer/#{file}.erb", File.dirname(__FILE__))
+  def template_file(file, extension)
+    File.expand_path("customer/#{file}.#{extension}.erb", File.dirname(__FILE__))
   end
 end
