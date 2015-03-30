@@ -26,7 +26,7 @@ class CustomersControllerTest < MyRecordTest
 
     assert_match(/#{last_customer.id}/, last_response.location)
     assert_includes last_message.to, last_customer.email
-    assert_includes last_message.body, last_customer.id
+    assert_includes last_message.text_part.body, last_customer.id
     assert_equal 'Welcome to Useful Music', flash['success']
   end
 

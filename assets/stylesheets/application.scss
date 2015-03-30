@@ -670,7 +670,7 @@ height: auto;
 
 .product-wrap {
   background:#f8f7f7;
-  height: 18em;
+  height: auto;
   margin-top: 1.5em;
   margin-bottom: 1.5em;
   margin-left: 0.5em;
@@ -1038,6 +1038,13 @@ audio {
 
 .download-wrap {
   padding: 0.6em;
+}
+
+.license-inform {
+  background-color: red;
+  height: auto;
+  width: auto;
+  padding: 0.3em;
 }
 
 

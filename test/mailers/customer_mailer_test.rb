@@ -21,6 +21,7 @@ class CustomerMailerTest < MyRecordTest
   end
 
   def test_case_name
+    skip
     customer.expect :name, 'Rodger Rabbit'
     customer.expect :email, 'test@example.com'
     customer.expect :id, 'some-unique-identifier'
