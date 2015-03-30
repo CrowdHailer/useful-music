@@ -1041,10 +1041,22 @@ audio {
 }
 
 .license-inform {
-  background-color: red;
+  background-color: #e41f21;
   height: auto;
   width: auto;
+  padding: 0.6em;
+}
+
+.license-inform h6 {
+color: white;
+}
+
+.license-inform a {
   padding: 0.3em;
+  border: 0.1em solid white;
+  border-radius: 0.3em;
+  color: white;
+  margin: 0.5em 0em;
 }
 
 
