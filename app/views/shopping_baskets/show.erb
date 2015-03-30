@@ -172,12 +172,14 @@
             <input type="hidden" name="_method" value="DELETE">
             <input class="button alert clear-basket" type="submit" value="Clear Basket">
         </form>
+        <% if !ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
         <h6 style="color: black; margin-top: 1em;">This is (temporarily) as far as you can go.  We are still working on the checkout to make buying and downloading sheet music as simple, safe and reliable as possible.  You are welcome to stay here awhile and sample some scores and music.</h6>
         <h6 style="color: black;">Please come back soon.</h6>
+        <% end %>
     </div>
     <div class="columns large-6 small-12">
         <div class="checkout-actions">
-          <!-- REMOVE
+            <% if ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
             <h6>
                 Do you have a discount or free download code? Please enter it here:
             </h6>
@@ -187,7 +189,7 @@
                     <input type="hidden" name="_method" value="PATCH">
                         <%= csrf_tag %>
                         <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
-                      <!-- REMOVE <div class="row">
+                      <div class="row">
                             <div class="large-5 medium-6 small-12 columns">
                                 <input type="text" name="shopping_basket[discount]" value="<%= @basket.discount.code %>" placeholder="Discount Code">
                             </div>
@@ -223,9 +225,7 @@
                                 <p>Secure PayPal Checkout:</p>
                             </div>
                             <div class="large-7 medium-6 small-12 columns">
-                                <% if !ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
-                                    <button class="button checkout-secure-btn alert" type="button" onclick="alert('Payments are temporarily unavailable. please checkback soon or contact for more details')">Checkout Unavailable<i class="fa fa-arrow-right checkout-icon"></i></button>
-                                <% elsif @basket.free? %>
+                                <% if @basket.free? %>
                                     <button class="button checkout-secure-btn">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
                                 <% else %>
                                     <button class="button checkout-secure-btn">Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
@@ -235,7 +235,8 @@
                     </form>
                     <% end %>
                 </div>
-            </div>-->
+            </div>
+            <% end %>
         </div>
         <div class="secure">
             <div class="row">
