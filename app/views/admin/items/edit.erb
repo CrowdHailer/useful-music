@@ -19,7 +19,7 @@
           Edit item '<%= @item.name %>'. Which belongs to piece <em>'<%= @item.piece.product_name %>'</em>, Catalogue number '<%= @item.piece.catalogue_number %>'
         </p>
         <hr>
-        <form class="pure-form pure-form-aligned" action="/admin/items/<%= @item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form class="pure-form pure-form-aligned" action="/admin/items/<%= @item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
