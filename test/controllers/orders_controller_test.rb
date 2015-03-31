@@ -102,6 +102,7 @@ class OrdersControllerTest < MyRecordTest
   end
 
   def test_creates_order
+    skip
     shopping_basket_record = create :shopping_basket_record
     shopping_basket = ShoppingBasket.new shopping_basket_record
     shopping_basket_record.add_purchase_record create(:purchase_record)
