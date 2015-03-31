@@ -1,1 +1,1 @@
-# Paypal.sandbox! unless RACK_ENV == 'production'
+Paypal.sandbox! unless RACK_ENV == 'production'

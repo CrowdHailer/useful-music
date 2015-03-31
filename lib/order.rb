@@ -47,20 +47,12 @@ class Transaction < Errol::Entity
   end
 
   def express_response(url_base)
-    ap url_base
-    ap payment_request
-    begin
-      express_request.setup(
-        payment_request,
-        File.join(url_base, success_path),
-        File.join(url_base, cancel_path),
-        PAYPAL_OPTIONS
-      )
-    rescue Paypal::Exception::APIError => err
-      ap err.methods - StandardError.new.methods
-      ap err.response.details
-      raise err
-    end
+    express_request.setup(
+      payment_request,
+      File.join(url_base, success_path),
+      File.join(url_base, cancel_path),
+      PAYPAL_OPTIONS
+    )
   end
 
   def payment_request
