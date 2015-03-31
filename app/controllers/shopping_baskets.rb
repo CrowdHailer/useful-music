@@ -40,7 +40,7 @@ class ShoppingBasketsController < UsefulMusic::App
 
   def shopping_basket_not_found(id)
     flash['error'] = 'Shopping Basket not found'
-    redirect request.referer
+    redirect (request.referer || '/').dup
   end
 
 end
