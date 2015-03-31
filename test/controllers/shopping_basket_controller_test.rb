@@ -12,6 +12,12 @@ class ShoppingBasketsControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_redirects_back_when_basket_not_found_to_show
+    get '/1', {}, {'HTTP_REFERER' => '/blah'.freeze}
+    assert last_response.redirect?
+    assert_equal '/blah', last_response.location
+  end
+
   def test_shows_shopping_basket_to_guest
     shopping_basket_record = create :shopping_basket_record
     assert_ok get("/#{shopping_basket_record.id}")
