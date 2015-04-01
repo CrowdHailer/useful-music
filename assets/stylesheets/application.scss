@@ -926,6 +926,12 @@ border: 0.07em solid #4a4a49;
   color: #4A4A49;
 }
 
+.licence-select p {
+  text-align: center;
+  line-height: 1.3;
+}
+
+
 .licence-select input {
   width: 4em;
   height: 3em;
@@ -1323,6 +1329,14 @@ footer a:hover {
 
   .licence-select p {
     font-size: 0.75em;
+  }
+
+  .total-box button {
+    float: right;
+    background: #e41f21;
+    padding: 0.7em 0.9em;
+    font-family: 'Montserrat';
+    font-size: 0.8em;
   }
 
 }
