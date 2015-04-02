@@ -93,6 +93,9 @@ http://yuml.me/bc67d93c
 > Test  
 > `rake test`
 
+> Remove unused baskets
+> ` basket_ids = Customers.all.map(&:shopping_basket).map(&:id)`
+> `ShoppingBaskets.new.dataset.exclude(id: basket_ids).destroy`
 
 ### Middleware
 
