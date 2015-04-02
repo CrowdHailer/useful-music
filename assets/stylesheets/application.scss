@@ -535,7 +535,7 @@ height: auto;
 
 .basket-main {
   background: #f7f7f9;
-  height: 15em;
+  height: 14.75em;
   margin-top: 2em;
   padding: 0.5em;
   border: 0.15em solid red;
@@ -788,7 +788,8 @@ input[type="checkbox"] {
 
 .clear-search-btn {
   padding: 0.5em;
-  float: right;
+  float: left;
+  color: white;
   font-family: 'Montserrat';
   text-transform: uppercase;
   font-size: 0.9em;
@@ -975,7 +976,7 @@ border: 0.07em solid #4a4a49;
 }
 
 .score-btn {
-  background: #e41f21;
+  background: #5fbef2;
   padding: 0.7em 2em;
   margin: 1em 0em;
   font-family: 'Montserrat';
@@ -1178,7 +1179,7 @@ footer a:hover {
   }
 
   .ud-search-wrap {
-    background: #f8f7f7;
+    background-color: #5fbef2;
     padding-left: 0.25em;
     padding-top: 0.75em;
     padding-right: 0.5em;
