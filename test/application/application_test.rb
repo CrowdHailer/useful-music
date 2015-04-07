@@ -7,7 +7,8 @@ module UsefulMusic
     attr_reader :app
 
     def test_csrf_protection
-      skip
+      @app = UsefulMusic::App
+      @app.config[:protect_from_csrf] = true
       assert_raises Rack::Csrf::InvalidCsrfToken do
         post '/customers'
       end
@@ -20,8 +21,8 @@ module UsefulMusic
     end
 
     def test_500_when_error
-      skip
       @app = UsefulMusic::App
+      @app.config[:show_exceptions] = true
       get '/test-error'
       assert_equal 500, last_response.status
     end
