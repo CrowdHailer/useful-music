@@ -16,6 +16,12 @@ class SessionsControllerTest < MyRecordTest
     'password'
   end
 
+  def test_responds_with_405
+    get '/'
+    assert_equal 'POST', last_response.headers['Allow']
+    assert_equal 405, last_response.status
+  end
+
   def test_new_page_is_available
     assert_ok get '/new'
   end

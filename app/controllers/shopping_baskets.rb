@@ -2,6 +2,11 @@ class ShoppingBasketsController < UsefulMusic::App
   include Scorched::Rest
   render_defaults[:dir] += '/shopping_baskets'
 
+  def index
+    response['Allow'] = 'POST'
+    halt 405
+  end
+
   def show(id)
     @basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
     render :show

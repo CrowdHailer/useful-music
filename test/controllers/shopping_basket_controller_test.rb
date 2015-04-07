@@ -7,6 +7,12 @@ class ShoppingBasketsControllerTest < MyRecordTest
     ShoppingBasketsController
   end
 
+  def test_responds_with_405_for_index
+    get '/'
+    assert_equal 'POST', last_response.headers['Allow']
+    assert_equal 405, last_response.status
+  end
+
   def test_redirects_when_basket_not_found_to_show
     get '/1'
     assert last_response.redirect?

@@ -8,6 +8,12 @@ class OrdersControllerTest < MyRecordTest
     OrdersController
   end
 
+  def test_responds_with_405_for_index
+    get '/'
+    assert_equal 'POST', last_response.headers['Allow']
+    assert_equal 405, last_response.status
+  end
+
   def test_redirect_from_create_when_not_signed_in
     post '/'
     assert_equal 'Please Sign in or Create account to checkout purchases', flash['error']
