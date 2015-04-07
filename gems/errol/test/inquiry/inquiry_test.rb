@@ -15,11 +15,6 @@ module Errol
       @inquiry = nil
     end
 
-    # def test_starts_with_paginate_true
-    #   skip
-    #   assert_equal true, inquiry.paginate?
-    # end
-
     def test_can_set_paginate_false
       inquiry_class.default :paginate, false
       assert_equal false, inquiry.paginate?
