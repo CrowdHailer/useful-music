@@ -65,16 +65,14 @@ class CustomersControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
-  def test_show_page_is_available_to_that_customer
-    skip
-    assert_ok get "/#{customer.id}", {}, {'rack.session' => {:user_id => customer.id}}
-    assert_includes last_response.body, customer.email
+  def test_orders_page_is_available_to_that_customer
+    assert_ok get "/#{customer.id}/orders", {}, {'rack.session' => {:user_id => customer.id}}
+    assert_includes last_response.body, customer.name
   end
 
-  def test_show_page_is_available_to_admin
-    skip
-    assert_ok get "/#{customer.id}", {}, {'rack.session' => {:user_id => admin.id}}
-    assert_includes last_response.body, customer.email
+  def test_orders_page_is_available_to_admin
+    assert_ok get "/#{customer.id}/orders", {}, {'rack.session' => {:user_id => admin.id}}
+    assert_includes last_response.body, customer.name
   end
 
   def test_edit_page_is_unavailable_when_no_customer

@@ -21,12 +21,14 @@ class CustomerMailerTest < MyRecordTest
   end
 
   def test_case_name
-    skip
+    # Duplicated as called for plain and HTML
+    customer.expect :name, 'Rodger Rabbit'
     customer.expect :name, 'Rodger Rabbit'
     customer.expect :email, 'test@example.com'
     customer.expect :id, 'some-unique-identifier'
+    customer.expect :id, 'some-unique-identifier'
     mailer.account_created
-    assert_includes last_message.body, 'Rodger Rabbit'
+    assert_includes last_message.text_part.body, 'Rodger Rabbit'
     assert_includes last_message.to, 'test@example.com'
   end
 end

@@ -4,6 +4,11 @@ class PasswordResetsController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/password_resets'
 
+  def index
+    response['Allow'] = 'POST'
+    halt 405
+  end
+
   def new
     @customer_email_unknown = false
     render :new

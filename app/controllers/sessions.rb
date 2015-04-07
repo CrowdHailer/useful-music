@@ -4,6 +4,11 @@ class SessionsController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/sessions'
 
+  def index
+    response['Allow'] = 'POST'
+    halt 405
+  end
+
   def new
     if current_customer.guest?
       render :new

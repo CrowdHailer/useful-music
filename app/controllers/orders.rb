@@ -5,6 +5,11 @@ class OrdersController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/orders'
 
+  def index
+    response['Allow'] = 'POST'
+    halt 405
+  end
+
   def create
     send_to_login if current_customer.guest?
     send_back('Checkout unavailable') unless ENV.fetch('SUSPEND_PAYMENTS', '').empty?
