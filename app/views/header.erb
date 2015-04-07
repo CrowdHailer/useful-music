@@ -121,11 +121,15 @@
 <div class="hide-for-large-up">
   <div class="row collapse">
     <div class="small-12 columns">
-      <div class="mob-menu-wrap" onclick="document.getElementById('mob-menu-display').style.display = 'inline'">
-        <h3 style="float: left; color: white;">
-          Menu
+      <div class="mob-menu-wrap">
+        <h3 style="float: left; color: white;" onclick="document.getElementById('mob-menu-display').style.display = 'inline'">
+          <i class="fa fa-reorder" style="float: left; color: white; font-size: 1.25em; margin-right: 0.25em;"></i>  Menu
         </h3>
-        <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+        <a href="/shopping_baskets/<%= shopping_basket.id %>">
+          <h6 style="float: right; color: white;">
+            BASKET
+          </h6>
+        </a>
       </div>
     </div>
   </div>
