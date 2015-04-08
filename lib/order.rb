@@ -12,7 +12,8 @@ class Transaction < Errol::Entity
                   :payer_company,
                   :payer_status,
                   :payer_identifier,
-                  :transaction_id
+                  :transaction_id,
+                  :completed_at
 
   PAYPAL_OPTIONS = {
     no_shipping: true, # if you want to disable shipping information
