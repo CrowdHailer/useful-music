@@ -58,8 +58,11 @@ class OrdersControllerTest < MyRecordTest
 
   def test_fail_cancels_order
     order_record = create :order_record
-    get "/#{order_record.id}/cancel"
+    DateTime.stub :now, DateTime.new(2000) do
+      get "/#{order_record.id}/cancel"
+    end
     assert_equal 'failed', order_record.reload.state
+    assert_equal DateTime.new(2000), order_record.completed_at
   end
 
   def test_redirects_for_used_discount

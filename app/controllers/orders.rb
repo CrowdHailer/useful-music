@@ -84,6 +84,7 @@ class OrdersController < UsefulMusic::App
   get '/:id/cancel' do |id|
     order = Orders.fetch(id)
     order.state = 'failed'
+    order.completed_at = DateTime.now
     Orders.save order
     flash['success'] = 'Order cancelled'
     redirect '/'
