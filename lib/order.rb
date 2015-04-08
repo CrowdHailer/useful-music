@@ -97,6 +97,7 @@ class Transaction < Errol::Entity
     self.transaction_id = express_response.payment_info[0].transaction_id
     # if 'Completed' == express_response.payment_info[0].payment_status
       self.state = 'succeded'
+      self.completed_at = DateTime.now
     # end
     record.save
   end
