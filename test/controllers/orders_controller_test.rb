@@ -56,6 +56,14 @@ class OrdersControllerTest < MyRecordTest
     assert_nil shopping_basket_record.reload.discount_record
   end
 
+  def test_fail_cancels_order
+    order_record = create :order_record
+    DateTime.stub :now, DateTime.new(2000) do
+      get "/#{order_record.id}/cancel"
+    end
+    assert_equal 'failed', order_record.reload.state
+    assert_equal DateTime.new(2000), order_record.completed_at
+  end
 
   def test_redirects_for_used_discount
     discount_record = create :discount_record,
@@ -127,9 +135,12 @@ class OrdersControllerTest < MyRecordTest
     shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
     shopping_basket_record.add_purchase_record create :purchase_record
     customer.record.update(:shopping_basket_record => shopping_basket_record)
-    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    DateTime.stub :now, DateTime.new(2015,4,5) do
+      post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    end
     order = Orders.last
-    # TODO test values
+    assert_equal 'succeded', order.state
+    assert_equal DateTime.new(2015,4,5), order.completed_at
   end
 
   # def test_success_story

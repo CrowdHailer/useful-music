@@ -151,9 +151,19 @@ class Order
       assert_equal 'pending', order.state
     end
 
-    def test_can_set_first_name
+    def test_can_set_state
       order.state = 'pending'
       assert_equal 'pending', record.state
+    end
+
+    def test_can_access_completed_at
+      record.completed_at = DateTime.new(2010,4,5)
+      assert_equal DateTime.new(2010,4,5), order.completed_at
+    end
+
+    def test_can_set_state
+      order.completed_at = DateTime.new(2010,4,5)
+      assert_equal DateTime.new(2010,4,5), record.completed_at
     end
   end
 end
