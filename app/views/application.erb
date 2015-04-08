@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UsefulMusic.com</title>
-  <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/foundation80emwitheverything.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="http://owlgraphic.com/owlcarousel/owl-carousel/owl.carousel.css">
-  <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/owlcarousel.css">
-  <link rel="stylesheet" href="/stylesheets/application.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>UsefulMusic.com</title>
+
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/foundation80emwitheverything.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://owlgraphic.com/owlcarousel/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/183581/owlcarousel.css">
+    <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
     <%= render File.expand_path('../header.erb', __FILE__).to_sym %>
-    <!-- <div class="row collapse">
-        <div class="large-12 columns flash" style="background-color:grey;">
-            <h2>
-                Site Under Construction
-            </h2>
-        </div>
-    </div> -->
 
     <% if flash['success'] %>
     <div class="row collapse">
@@ -29,6 +24,7 @@
         </div>
     </div>
     <% end %>
+
     <% if flash['error'] %>
     <div class="row collapse">
         <div class="large-12 columns flash error">
@@ -38,8 +34,11 @@
         </div>
     </div>
     <% end %>
-  <%= yield %>
-  <%= render File.expand_path('../footer.erb', __FILE__).to_sym %>
-  <script src="/scripts/close-flash.js"></script>
+
+    <%= yield %>
+
+    <%= render File.expand_path('../footer.erb', __FILE__).to_sym %>
+
+    <script src="/scripts/close-flash.js"></script>
 </body>
 </html>

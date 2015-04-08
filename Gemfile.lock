@@ -116,6 +116,8 @@ GEM
     rack-google-analytics (1.2.0)
       actionpack
       activesupport
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rack_csrf (2.5.0)
@@ -182,6 +184,7 @@ DEPENDENCIES
   pdfkit
   pg
   rack-google-analytics
+  rack-protection
   rack-test
   rack_csrf
   sass

@@ -12,7 +12,8 @@ class Transaction < Errol::Entity
                   :payer_company,
                   :payer_status,
                   :payer_identifier,
-                  :transaction_id
+                  :transaction_id,
+                  :completed_at
 
   PAYPAL_OPTIONS = {
     no_shipping: true, # if you want to disable shipping information
@@ -97,6 +98,7 @@ class Transaction < Errol::Entity
     self.transaction_id = express_response.payment_info[0].transaction_id
     # if 'Completed' == express_response.payment_info[0].payment_status
       self.state = 'succeded'
+      self.completed_at = DateTime.now
     # end
     record.save
   end
@@ -111,6 +113,7 @@ class Order < Errol::Entity
                   :payment_gross,
                   :tax_payment,
                   :payment_net,
+                  :completed_at,
                   :updated_at # TODO untested
 
   def initialize(*args)

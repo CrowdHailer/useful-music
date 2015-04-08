@@ -16,7 +16,7 @@
 <div class="row summary-padding">
     <div class="large-12 columns orders">
         <% @customer.orders.sort_by(&:updated_at).reverse.each do |order| %>
-            <% if order.succeded? && DateTime.now <= order.updated_at.+(4*3600*24) %>
+            <% if order.succeded? && DateTime.now <= order.completed_at.+(4*3600*24) %>
             <!-- repeat this bit-->
             <div class="row collapse">
                 <div class="order-title-wrap">
@@ -25,7 +25,7 @@
                             <h6 class="left-order"><%= order.updated_at.strftime('%d of %B %Y') %> |  Order ID: <%= order.id %></h6>
                         </div>
                         <div class="large-6 medium-6 small-12 columns">
-                            <h6 class="right-order">Order Expires on <%= order.updated_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+                            <h6 class="right-order">Order Expires on <%= order.completed_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                                 <h6 class="left-order"><%= order.updated_at.strftime('%d of %B %Y') %> |  Order ID: <%= order.id %></h6>
                             </div>
                             <div class="large-6 medium-6 small-12 columns">
-                                <h6 class="right-order">Order Expired on <%= order.updated_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+                                <h6 class="right-order">Order Expired on <%= order.completed_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
                             </div>
                         </div>
                     </div>

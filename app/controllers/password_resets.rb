@@ -45,7 +45,7 @@ class PasswordResetsController < UsefulMusic::App
     @form = PasswordReset::Update::Form.new request.POST['customer']
     begin
       @validator.validate! @form
-      # TODo add time validation
+      # TODO add time validation
       if customer && customer.password_reset_token == id
         customer.password = @form.password
         customer.record.save

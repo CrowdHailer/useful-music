@@ -34,6 +34,7 @@ class OrdersController < UsefulMusic::App
     Orders.save order
     if shopping_basket.free?
       order.state = 'succeded'
+      order.completed_at = DateTime.now
       order.record.save
       customer_mailer.order_successful
       current_customer.record.update :shopping_basket_record => nil
@@ -82,6 +83,10 @@ class OrdersController < UsefulMusic::App
   end
 
   get '/:id/cancel' do |id|
+    order = Orders.fetch(id)
+    order.state = 'failed'
+    order.completed_at = DateTime.now
+    Orders.save order
     flash['success'] = 'Order cancelled'
     redirect '/'
   end
