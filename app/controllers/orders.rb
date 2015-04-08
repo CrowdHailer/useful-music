@@ -34,6 +34,7 @@ class OrdersController < UsefulMusic::App
     Orders.save order
     if shopping_basket.free?
       order.state = 'succeded'
+      order.completed_at = DateTime.now
       order.record.save
       customer_mailer.order_successful
       current_customer.record.update :shopping_basket_record => nil

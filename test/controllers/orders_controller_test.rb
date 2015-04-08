@@ -135,9 +135,12 @@ class OrdersControllerTest < MyRecordTest
     shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
     shopping_basket_record.add_purchase_record create :purchase_record
     customer.record.update(:shopping_basket_record => shopping_basket_record)
-    post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    DateTime.stub :now, DateTime.new(2015,4,5) do
+      post '/', {}, {'rack.session' => {:user_id => customer.id}}
+    end
     order = Orders.last
-    # TODO test values
+    assert_equal 'succeded', order.state
+    assert_equal DateTime.new(2015,4,5), order.completed_at
   end
 
   # def test_success_story
