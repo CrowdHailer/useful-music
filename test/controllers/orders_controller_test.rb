@@ -56,6 +56,11 @@ class OrdersControllerTest < MyRecordTest
     assert_nil shopping_basket_record.reload.discount_record
   end
 
+  def test_fail_cancels_order
+    order_record = create :order_record
+    get "/#{order_record.id}/cancel"
+    assert_equal 'failed', order_record.reload.state
+  end
 
   def test_redirects_for_used_discount
     discount_record = create :discount_record,
