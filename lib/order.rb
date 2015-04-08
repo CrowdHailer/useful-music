@@ -111,6 +111,7 @@ class Order < Errol::Entity
                   :payment_gross,
                   :tax_payment,
                   :payment_net,
+                  :completed_at,
                   :updated_at # TODO untested
 
   def initialize(*args)
