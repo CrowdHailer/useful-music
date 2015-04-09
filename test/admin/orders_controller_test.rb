@@ -12,6 +12,11 @@ module UsefulMusic
       def test_index_page_is_available
         assert_ok get '/'
       end
+
+      def test_index_page_is_available_with_orders
+        create :order_record
+        assert_ok get '/'
+      end
     end
   end
 end
