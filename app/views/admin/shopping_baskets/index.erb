@@ -1,0 +1,55 @@
+<main class="archive">
+    <header class="admin">
+        <h2 class="left" id="menu-title">
+            Discounts
+            <ul class="dropdown menu-container">
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/customers">Customers</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/pieces">Pieces</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/discounts">Discounts</a>
+                </li>
+            </ul>
+        </h2>
+        <span class="right">
+            <a class="approve" href="#" disabled>baskets</a>
+        </span>
+    </header>
+    <header class="admin">
+        <form class="right" action="/admin/discounts" method="get">
+            <button class="action" name="page" value="1" <%= 'disabled' unless @shopping_baskets.previous_page %>>First Page</button>
+            <button class="action" name="page" value="<%= @shopping_baskets.previous_page %>" <%= 'disabled' unless @shopping_baskets.previous_page %>>Previous</button>
+            <select class="action" name="page_size">
+                <option <%= 'selected' if @shopping_baskets.page_size == 10 %>>10</option>
+                <option <%= 'selected' if @shopping_baskets.page_size == 15 %>>15</option>
+                <option <%= 'selected' if @shopping_baskets.page_size == 20 %>>20</option>
+            </select>
+            <button class="action" name="page" value="1">Refresh</button>
+            <button class="action" name="page" value="<%= @shopping_baskets.next_page %>" <%= 'disabled' unless @shopping_baskets.next_page %>>Next</button>
+            <button class="action" name="page" value="<%= @shopping_baskets.page_count %>" <%= 'disabled' unless @shopping_baskets.next_page %>>Last Page</button>
+        </form>
+    </header>
+    <table class="index">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Value</th>
+                <th>Allocation</th>
+                <th>Per Customer</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @shopping_baskets.each do |discount| %>
+                <tr>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</main>
