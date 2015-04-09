@@ -44,10 +44,18 @@ module UsefulMusic
         assert_equal 'NEW21', discount_record.reload.code
       end
 
-      def test_can_destroy_as_admin
+      def test_can_destroy_discount_record
         discount_record = create :discount_record
         delete "/#{discount_record.id}"
         assert_empty Discounts
+      end
+
+      def test_cannot_distroy_used_discount
+        shopping_basket_record = create :shopping_basket_record, :discount_record => create(:discount_record)
+        order_record = create :order_record, :shopping_basket_record => shopping_basket_record
+        delete "/#{order_record.discount_record.id}"
+        refute_empty Discounts
+        assert_equal 'Discount could not be delete, it has been used', flash['error']
       end
 
     end

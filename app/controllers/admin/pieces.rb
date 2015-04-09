@@ -25,7 +25,7 @@ module UsefulMusic
           flash['error'] = "Piece UD#{form.id} already exists and may be edited"
           redirect "/admin/pieces/UD#{form.id}/edit"
         rescue Sequel::NotNullConstraintViolation => err
-          Bugsnag.notify(err)
+          # Bugsnag.notify(err)
           flash['error'] = 'Could not create invalid piece'
           redirect '/admin/pieces/new'
         end

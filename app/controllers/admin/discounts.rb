@@ -38,9 +38,14 @@ module UsefulMusic
 
       def destroy(id)
         discount = Discounts[id]
-        Discounts.remove(discount)
-        flash['success'] = 'Discount Deleted'
-        redirect '/admin/discounts'
+        begin
+          Discounts.remove(discount)
+          flash['success'] = 'Discount Deleted'
+          redirect '/admin/discounts'
+        rescue Sequel::ForeignKeyConstraintViolation => err
+          flash['error'] = 'Discount could not be delete, it has been used'
+          redirect '/admin/discounts'
+        end
       end
 
     end
