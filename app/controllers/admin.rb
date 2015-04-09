@@ -19,6 +19,7 @@ module UsefulMusic
     controller '/discounts', Admin::DiscountsController
     controller '/pieces', Admin::PiecesController
     controller '/items', Admin::ItemsController
+    controller '/shopping_baskets', Admin::ShoppingBasketsController
 
     get '/' do
       render :index
