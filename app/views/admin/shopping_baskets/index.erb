@@ -1,0 +1,88 @@
+<main class="archive">
+    <header class="admin">
+        <h2 class="left" id="menu-title">
+            Shopping Baskets
+            <ul class="dropdown menu-container">
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/customers">Customers</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/pieces">Pieces</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/discounts">Discounts</a>
+                </li>
+            </ul>
+        </h2>
+        <span class="right">
+            <a class="approve" href="#" disabled>baskets</a>
+        </span>
+    </header>
+    <header class="admin">
+        <form class="right" action="/admin/discounts" method="get">
+            <button class="action" name="page" value="1" <%= 'disabled' unless @shopping_baskets.previous_page %>>First Page</button>
+            <button class="action" name="page" value="<%= @shopping_baskets.previous_page %>" <%= 'disabled' unless @shopping_baskets.previous_page %>>Previous</button>
+            <select class="action" name="page_size">
+                <option <%= 'selected' if @shopping_baskets.page_size == 10 %>>10</option>
+                <option <%= 'selected' if @shopping_baskets.page_size == 15 %>>15</option>
+                <option <%= 'selected' if @shopping_baskets.page_size == 20 %>>20</option>
+            </select>
+            <button class="action" name="page" value="1">Refresh</button>
+            <button class="action" name="page" value="<%= @shopping_baskets.next_page %>" <%= 'disabled' unless @shopping_baskets.next_page %>>Next</button>
+            <button class="action" name="page" value="<%= @shopping_baskets.page_count %>" <%= 'disabled' unless @shopping_baskets.next_page %>>Last Page</button>
+        </form>
+    </header>
+    <table class="index">
+        <thead>
+            <tr>
+                <th>Last update</th>
+                <th>Number of Purchases</th>
+                <th>Number of Licences</th>
+                <th>Price of Purchases</th>
+                <th>Discount Value</th>
+                <th>Order attempts</th>
+                <th>Checked out?</th>
+                <th>Customer</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @shopping_baskets.each do |shopping_basket| %>
+                <tr>
+                    <th>
+                        <%= shopping_basket.last_revision_at.strftime('%Y-%m-%d %H:%M') %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.number_of_purchases %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.number_of_licences %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.purchases_price.format %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.discount_value.format %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.orders.count %>
+                    </th>
+                    <th>
+                        <%= !shopping_basket.modifiable? %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.customer_name || shopping_basket.order_name %>
+                    </th>
+                    <th>
+                        <form class="button" id="form_id" action="/admin/shopping_baskets/<%= shopping_basket.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy shopping basket)">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input class="destroy" type="submit" value="Destroy" <%= 'disabled' if shopping_basket.referenced? %>>
+                        </form>
+                    </th>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</main>
