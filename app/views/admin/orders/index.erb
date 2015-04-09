@@ -35,13 +35,12 @@
     <table class="index">
         <thead>
             <tr>
-                <th>Code</th>
-                <th>Value</th>
-                <th>Allocation</th>
-                <th>Per Customer</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Action</th>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>State</th>
+                <th>Gross</th>
+                <th>Net</th>
+                <th>Completed at</th>
             </tr>
         </thead>
 
@@ -49,7 +48,22 @@
             <% @orders.each do |order| %>
                 <tr>
                     <th>
-                        <%= order %>
+                        <%= order.id %>
+                    </th>
+                    <th>
+                        <%= order.customer.name %>
+                    </th>
+                    <th>
+                        <%= order.state %>
+                    </th>
+                    <th>
+                        <%= order.payment_gross.format %>
+                    </th>
+                    <th>
+                        <%= order.payment_net.format %>
+                    </th>
+                    <th>
+                        <%= order.completed_at %>
                     </th>
                 </tr>
             <% end %>
