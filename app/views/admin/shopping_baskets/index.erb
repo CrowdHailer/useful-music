@@ -35,19 +35,48 @@
     <table class="index">
         <thead>
             <tr>
-                <th>Code</th>
-                <th>Value</th>
-                <th>Allocation</th>
-                <th>Per Customer</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Last update</th>
+                <th>Number of Purchases</th>
+                <th>Number of Licences</th>
+                <th>Price of Purchases</th>
+                <th>Discount Value</th>
+                <th>Checked out?</th>
+                <th>Customer</th>
                 <th>Action</th>
             </tr>
         </thead>
 
         <tbody>
-            <% @shopping_baskets.each do |discount| %>
+            <% @shopping_baskets.each do |shopping_basket| %>
                 <tr>
+                    <th>
+                        <%= shopping_basket.last_revision_at.strftime('%Y-%m-%d %H:%M') %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.number_of_purchases %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.number_of_licences %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.purchases_price.format %>
+                    </th>
+                    <th>
+                        <%= shopping_basket.discount_value.format %>
+                    </th>
+                    <th>
+                        <%= !shopping_basket.modifiable? %>
+                    </th>
+                    <th>
+                        <%= 'unknown' %>
+                    </th>
+                    <th>
+                        <form class="button" id="form_id" action="/admin/shopping_baskets/<%= shopping_basket.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy shopping basket)">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input class="destroy" type="submit" name="some_name" value="Destroy">
+                        </form>
+                    </th>
                 </tr>
             <% end %>
         </tbody>

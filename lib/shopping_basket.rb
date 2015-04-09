@@ -65,6 +65,6 @@ class ShoppingBasket < Errol::Entity
   end
 
   def last_revision_at
-    purchases.map(&:updated_at).max
+    purchases.map(&:updated_at).max || record.created_at
   end
 end
