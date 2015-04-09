@@ -20,6 +20,7 @@ module UsefulMusic
     controller '/pieces', Admin::PiecesController
     controller '/items', Admin::ItemsController
     controller '/shopping_baskets', Admin::ShoppingBasketsController
+    controller '/orders', Admin::OrdersController
 
     get '/' do
       render :index
