@@ -67,4 +67,27 @@ class ShoppingBasket < Errol::Entity
   def last_revision_at
     purchases.map(&:updated_at).max || record.created_at
   end
+
+  def customer
+    # TODO test
+    ap record
+    customer_record = Customer::Record.first(:shopping_basket_record => record)
+    Customer.new customer_record if customer_record
+  end
+
+  def order_name
+    # TODO test
+    order = orders.first
+    order.customer.name if order
+  end
+
+  def customer_name
+    # TODO test
+    customer && customer.name
+  end
+
+  def referenced?
+    # TODO test
+    order_name || customer_name
+  end
 end
