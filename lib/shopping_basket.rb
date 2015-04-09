@@ -70,7 +70,6 @@ class ShoppingBasket < Errol::Entity
 
   def customer
     # TODO test
-    ap record
     customer_record = Customer::Record.first(:shopping_basket_record => record)
     Customer.new customer_record if customer_record
   end
