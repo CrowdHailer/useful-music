@@ -19,7 +19,7 @@
         </span>
     </header>
     <header class="admin">
-        <form class="right" action="/admin/discounts" method="get">
+        <form class="right" action="/admin/shopping_baskets" method="get">
             <button class="action" name="page" value="1" <%= 'disabled' unless @shopping_baskets.previous_page %>>First Page</button>
             <button class="action" name="page" value="<%= @shopping_baskets.previous_page %>" <%= 'disabled' unless @shopping_baskets.previous_page %>>Previous</button>
             <select class="action" name="page_size">
