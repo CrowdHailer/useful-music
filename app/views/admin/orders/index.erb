@@ -1,0 +1,72 @@
+<main class="archive">
+    <header class="admin">
+        <h2 class="left" id="menu-title">
+            Discounts
+            <ul class="dropdown menu-container">
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/customers">Customers</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/pieces">Pieces</a>
+                </li>
+                <li class="menu-option">
+                  <a class="menu-link" href="/admin/discounts">Discounts</a>
+                </li>
+            </ul>
+        </h2>
+        <span class="right">
+            <a class="approve" href="/admin/orders/new">New Discount</a>
+        </span>
+    </header>
+    <header class="admin">
+        <form class="right" action="/admin/orders" method="get">
+            <button class="action" name="page" value="1" <%= 'disabled' unless @orders.previous_page %>>First Page</button>
+            <button class="action" name="page" value="<%= @orders.previous_page %>" <%= 'disabled' unless @orders.previous_page %>>Previous</button>
+            <select class="action" name="page_size">
+                <option <%= 'selected' if @orders.page_size == 10 %>>10</option>
+                <option <%= 'selected' if @orders.page_size == 15 %>>15</option>
+                <option <%= 'selected' if @orders.page_size == 20 %>>20</option>
+            </select>
+            <button class="action" name="page" value="1">Refresh</button>
+            <button class="action" name="page" value="<%= @orders.next_page %>" <%= 'disabled' unless @orders.next_page %>>Next</button>
+            <button class="action" name="page" value="<%= @orders.page_count %>" <%= 'disabled' unless @orders.next_page %>>Last Page</button>
+        </form>
+    </header>
+    <table class="index">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>State</th>
+                <th>Gross</th>
+                <th>Net</th>
+                <th>Completed at</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @orders.each do |order| %>
+                <tr>
+                    <th>
+                        <%= order.id %>
+                    </th>
+                    <th>
+                        <%= order.customer.name %>
+                    </th>
+                    <th>
+                        <%= order.state %>
+                    </th>
+                    <th>
+                        <%= order.payment_gross.format %>
+                    </th>
+                    <th>
+                        <%= order.payment_net.format %>
+                    </th>
+                    <th>
+                        <%= order.completed_at %>
+                    </th>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</main>
