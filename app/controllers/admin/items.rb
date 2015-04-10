@@ -50,7 +50,7 @@ module UsefulMusic
       def destroy(id)
         item = Items.fetch(id, &method(:item_not_found))
         item.destroy
-        redirect "/pieces/#{item.piece.catalogue_number}/edit"
+        redirect "admin/pieces/#{item.piece.catalogue_number}/edit"
       end
 
       def item_not_found(id)

@@ -15,6 +15,11 @@
     </aside>
     <article class="col col-4-5">
         <h2>Edit Item</h2>
+        <form class="button" id="form_id" action="/admin/items/<%= @item.id %>" method="post" onsubmit="return confirm('Are you sure you want to remove \'<%= @item.name %>\' from \'<%= @item.piece.title %>\'')">
+            <%= csrf_tag %>
+            <input type="hidden" name="_method" value="DELETE">
+            <input class="destroy" type="submit" name="some_name" value="Remove Item">
+        </form>
         <p>
           Edit item '<%= @item.name %>'. Which belongs to piece <em>'<%= @item.piece.product_name %>'</em>, Catalogue number '<%= @item.piece.catalogue_number %>'
         </p>
