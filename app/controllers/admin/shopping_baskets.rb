@@ -12,9 +12,9 @@ module UsefulMusic
       end
 
       def destroy(id)
-        discount = ShoppingBaskets[id]
+        shopping_basket = ShoppingBaskets[id]
         begin
-          ShoppingBaskets.remove(discount)
+          ShoppingBaskets.remove(shopping_basket)
           flash['success'] = 'Discount Deleted'
           redirect '/admin/shopping_baskets'
         rescue Sequel::ForeignKeyConstraintViolation => err
