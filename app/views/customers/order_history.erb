@@ -153,6 +153,14 @@ ga('ecommerce:addTransaction', {
     'tax': <%= @order.tax_payment %> // Tax.
 });
 
+ga('ecommerce:addItem', {
+    'id': <%= @order.id %>, // Transaction ID. Required.
+    'name': 'purchases', // Product name. Required.
+    // 'sku': OrderDetails[i][2], // SKU/code.
+    // 'price': OrderDetails[i][5], // Unit price.
+    // 'quantity': OrderDetails[i][6] // Quantity.
+});
+}
 ga('ecommerce:send')
 </script>
 <% end %>
