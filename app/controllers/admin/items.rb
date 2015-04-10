@@ -49,8 +49,14 @@ module UsefulMusic
 
       def destroy(id)
         item = Items.fetch(id, &method(:item_not_found))
-        item.destroy
-        redirect "/pieces/#{item.piece.catalogue_number}/edit"
+        begin
+          item.destroy
+          flash['success'] = 'Item removed'
+          redirect "admin/pieces/#{item.piece.catalogue_number}/edit"
+        rescue Sequel::ForeignKeyConstraintViolation => err
+          flash['error'] = 'Item could not be deleted, it is still referenced'
+          redirect "admin/pieces/#{item.piece.catalogue_number}/edit"
+        end
       end
 
       def item_not_found(id)

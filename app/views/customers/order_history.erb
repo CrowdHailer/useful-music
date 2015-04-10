@@ -143,3 +143,26 @@
         <% end %>
     </div>
 </div>
+<% @order = @customer.orders.select(&:succeded?).sort_by(&:updated_at).reverse.first %>
+<% if @order %>
+<script charset="utf-8">
+ga('ecommerce:addTransaction', {
+    'id': '<%= @order.id %>', // Transaction ID. Required.
+    'revenue': <%= @order.payment_net %>, // Grand Total.
+    'shipping': 0, // Shipping.
+    'tax': <%= @order.tax_payment %>, // Tax.
+    'currency': 'GBP'
+});
+
+<% @order.shopping_basket.purchases.each do |purchase| %>
+ga('ecommerce:addItem', {
+    'id': <%= @order.id %>, // Transaction ID. Required.
+    'name': '<%= "#{purchase.item.piece.title}: #{purchase.item.name}" %>', // Product name. Required.
+    'sku': '<%= purchase.item.id %>', // SKU/code.
+    // 'price': OrderDetails[i][5], // Unit price.
+    'quantity': <%= purchase.quantity %> // Quantity.
+});
+<% end %>
+ga('ecommerce:send')
+</script>
+<% end %>
