@@ -143,3 +143,16 @@
         <% end %>
     </div>
 </div>
+<% @order = @customer.orders.select(&:succeded?).sort_by(&:updated_at).reverse.first %>
+<% if @order %>
+<script charset="utf-8">
+ga('ecommerce:addTransaction', {
+    'id': <%= @order.id %>, // Transaction ID. Required.
+    'revenue': <%= @order.payment_net %>, // Grand Total.
+    'shipping': Order[5], // Shipping.
+    'tax': <%= @order.tax_payment %> // Tax.
+});
+
+ga('ecommerce:send')
+</script>
+<% end %>
