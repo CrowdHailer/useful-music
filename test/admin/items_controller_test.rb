@@ -70,6 +70,14 @@ module UsefulMusic
         assert_match /pieces\/UD\d{3}/, last_response.location
       end
 
+      def test_cannot_delete_used_item
+        item_record = create :item_record
+        purchase_record = create :purchase_record, :item_record => item_record
+        delete "/#{item_record.id}"
+        refute_empty Item::Record
+        assert_equal 'Item could not be deleted, it is still referenced', flash['error']
+      end
+
       def test_redirected_from_delete_if_no_item
         delete "/0"
         assert_equal 'Item not found', flash['error']
