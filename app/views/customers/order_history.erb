@@ -156,8 +156,8 @@ ga('ecommerce:addTransaction', {
 
 ga('ecommerce:addItem', {
     'id': <%= @order.id %>, // Transaction ID. Required.
-    'name': 'purchases' // Product name. Required.
-    // 'sku': OrderDetails[i][2], // SKU/code.
+    'name': 'purchases', // Product name. Required.
+    'sku': 'random-sku' // SKU/code.
     // 'price': OrderDetails[i][5], // Unit price.
     // 'quantity': OrderDetails[i][6] // Quantity.
 });
