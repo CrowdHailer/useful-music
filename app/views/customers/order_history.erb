@@ -149,7 +149,7 @@
 ga('ecommerce:addTransaction', {
     'id': <%= @order.id %>, // Transaction ID. Required.
     'revenue': <%= @order.payment_net %>, // Grand Total.
-    'shipping': Order[5], // Shipping.
+    // 'shipping': Order[5], // Shipping.
     'tax': <%= @order.tax_payment %> // Tax.
 });
 
