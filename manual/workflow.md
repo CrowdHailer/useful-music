@@ -37,7 +37,7 @@ At the bottom of the page you can add a commit message e.g. 'Updated header.erb'
 > Descriptive names are helpful, A branch contains one or more commits. Your branch would normally be named something like 'new-header' while your commits would be 'added social icon' and 'fixed typo'
 
 #### 5. Create pull request
-Check that the base is to development and compaire is set to your new branch. Most times all the defaults here are fine, click create pull request.
+Check that the base is to development and compare is set to your new branch. Most times all the defaults here are fine, click create pull request.
 
 > **Pull Requests**
 > These consist of a selection of changes you would like to apply to one specific version(branch) of the code base. By this point github will have automatically checked if these changes can be applied without conflicting destructivly with anyone elses work. We have also set up testing which check that the codebase with the changes in place passes all of our automated tests. If there is a fail at this point slack will be notified.
@@ -55,7 +55,7 @@ Click the green merge pull request button. Confirm the merge. Finally if you wer
 When a pull request to make changes to development is closed the code is deployed to staging.
 
 #### 9. Open master pull request
-Go to the [repository homepage](https://github.com/CrowdHailer/useful-music) on github. On the menu on the right under issues click pull requests. Click new pull request. set the base as master and the compair as development. Click create new pull request. create pull request. You can then review and close this request as in steps #6 and #7. (This time dont delete the branch) Once closed the changes will automatically be deployed to production.
+Go to the [repository homepage](https://github.com/CrowdHailer/useful-music) on github. On the menu on the right under issues click pull requests. Click new pull request. set the base as master and the compare as development. Click create new pull request. Create pull request. You can then review and close this request as in steps #6 and #7. (This time dont delete the branch) Once closed the changes will automatically be deployed to production.
 
 > Cautiousness
 > The second pull request from development to master will be all the same changes as when we were pulling from the feature branch to development. Most of the time reviewing this pull request will not be necessary but it is worth having as it will notify of failure.
