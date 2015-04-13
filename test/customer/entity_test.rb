@@ -115,6 +115,14 @@ class Customer
       assert_equal shopping_basket.record, record.shopping_basket_record
     end
 
+    def test_can_set_shopping_basket_nil
+      shopping_basket_record = create(:shopping_basket_record)
+      record.shopping_basket_record = shopping_basket_record
+      customer.shopping_basket = nil
+      assert_equal nil, customer.shopping_basket
+
+    end
+
 
     ################# Archive #####################
 
