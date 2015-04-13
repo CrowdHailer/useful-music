@@ -6,7 +6,7 @@ class Guest
   attr_reader :session
 
   def shopping_basket
-    shopping_basket = ShoppingBaskets[session['guest.shopping_basket']]
+    ShoppingBaskets[session['guest.shopping_basket']]
   end
 
   def shopping_basket=(shopping_basket)
