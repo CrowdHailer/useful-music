@@ -1,0 +1,3 @@
+Heroku
+Bugsnag
+Google Analytics
