@@ -138,6 +138,16 @@ class Customer
       assert_equal 'Roy', record.last_name
     end
 
+    def test_can_access_admin
+      record.admin = true
+      assert_equal true, customer.admin?
+    end
+
+    def test_can_set_admin
+      customer.admin = false
+      assert_equal false, record.admin
+    end
+
     def test_can_access_email
       record.email = 'test@example.com'
       assert_equal 'test@example.com', customer.email

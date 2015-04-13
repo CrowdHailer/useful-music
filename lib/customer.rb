@@ -5,13 +5,14 @@ class Customer < Errol::Entity
                   :email,
                   :password,
                   :country,
-                  :admin, # TODO untested
                   :question_1,
                   :question_2,
                   :question_3,
                   :last_login_at,
                   :password_reset_token,
                   :password_reset_created_at
+
+  boolean_accessor :admin
 
   def correct_password?(candidate_password)
     password == candidate_password
@@ -31,10 +32,6 @@ class Customer < Errol::Entity
 
   def customer?
     true
-  end
-
-  def admin?
-    record.admin
   end
 
   def orders
