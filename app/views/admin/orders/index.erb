@@ -47,6 +47,8 @@
                 <th>Gross</th>
                 <th>Net</th>
                 <th>Completed at</th>
+                <th>reminder sent</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -70,6 +72,16 @@
                     </th>
                     <th>
                         <%= order.completed_at %>
+                    </th>
+                    <th>
+                        <%= order.reminded_at %>
+                    </th>
+                    <th>
+                        <form class="button" id="form_id" action="/admin/orders/<%= order.id %>/remind" method="post">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="PATCH">
+                            <input class="approve" type="submit" value="Send Reminder">
+                        </form>
                     </th>
                 </tr>
             <% end %>
