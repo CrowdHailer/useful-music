@@ -187,28 +187,28 @@ class Customer
     end
 
     def test_can_access_question_1
-      record.question_1 = :uk
-      assert_equal :uk, customer.question_1
+      record.question_1 = 'Clean text'
+      assert_equal 'Clean text', customer.question_1
     end
 
     def test_can_set_question_1
-      customer.question_1 = :uk
-      assert_equal :uk, record.question_1
+      customer.question_1 = 'Clean text'
+      assert_equal 'Clean text', record.question_1
     end
 
     def test_can_access_question_2
-      record.question_2 = :uk
-      assert_equal :uk, customer.question_2
+      record.question_2 = 'Clean text'
+      assert_equal 'Clean text', customer.question_2
     end
 
     def test_can_set_question_2
-      customer.question_2 = :uk
-      assert_equal :uk, record.question_2
+      customer.question_2 = 'Clean text'
+      assert_equal 'Clean text', record.question_2
     end
 
     def test_can_access_question_3
-      record.question_3 = :uk
-      assert_equal :uk, customer.question_3
+      record.question_3 = 'Clean text'
+      assert_equal 'Clean text', customer.question_3
     end
 
     def test_can_set_question_3

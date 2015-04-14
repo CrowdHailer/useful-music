@@ -23,7 +23,23 @@ class Customer < Errol::Entity
   end
 
   def name
-    "#{first_name} #{last_name}"
+    Rack::Utils.escape_html "#{first_name} #{last_name}"
+  end
+
+  def email
+    Rack::Utils.escape_html record.email
+  end
+
+  def question_1
+    Rack::Utils.escape_html record.question_1
+  end
+
+  def question_2
+    Rack::Utils.escape_html record.question_2
+  end
+
+  def question_3
+    Rack::Utils.escape_html record.question_3
   end
 
   def guest?
