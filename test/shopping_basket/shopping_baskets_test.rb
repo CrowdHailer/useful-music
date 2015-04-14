@@ -27,4 +27,34 @@ class ShoppingBasketsTest < MyRecordTest
       ShoppingBaskets.save shopping_basket
     end
   end
+
+  def test_clearing_shopping_baskets
+    old_basket = ShoppingBasket.new create(:shopping_basket_record)
+    old_basket.record.update :created_at => DateTime.now - 2
+    old_basket.record.refresh
+
+    guest_basket = ShoppingBasket.new create(:shopping_basket_record)
+
+    customer_basket = ShoppingBasket.new create(:shopping_basket_record)
+    customer = Customer.new create(:customer_record,
+      :shopping_basket_record => customer_basket.record
+    )
+
+    checked_out_basket = ShoppingBasket.new create(:shopping_basket_record)
+    order = create :order_record,
+      :shopping_basket_record => checked_out_basket.record
+
+
+    inactive_baskets = ShoppingBaskets.inactive
+    assert_includes inactive_baskets, guest_basket
+    assert_includes inactive_baskets, old_basket
+    assert_equal 2, inactive_baskets.count
+
+    yesterday = Date.yesterday
+    old_inactive_baskets = ShoppingBaskets.inactive(:since => (yesterday))
+    refute_includes old_inactive_baskets, guest_basket
+    assert_includes old_inactive_baskets, old_basket
+    assert_equal 1, old_inactive_baskets.count
+
+  end
 end

@@ -23,6 +23,11 @@ class ShoppingBaskets < Errol::Repository
     def receive(entity)
       entity.record
     end
+
+    def inactive(options={})
+      cutoff = options.fetch(:since) { DateTime.now }
+      all.select{|b| b.orders.empty? && b.customer.nil? && b.last_revision_at < cutoff}
+    end
   end
 
   def dataset
