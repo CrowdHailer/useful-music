@@ -27,14 +27,14 @@ class CustomersController < UsefulMusic::App
       customer = Customers.create form
       log_in customer
       if guest.shopping_basket && !guest.shopping_basket.empty?
-        # TODO test transfer of basket
+        # test transfer of basket
         customer.shopping_basket = guest.shopping_basket
         Customers.save customer
       end
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
       redirect success_path || "/customers/#{customer.id}"
-      # TODO untested failure cases, usecase or leave in entity layer
+      # untested failure cases, usecase or leave in entity layer
     rescue Veto::InvalidEntity => err
       @form = form
       @validator = validator
@@ -80,7 +80,7 @@ class CustomersController < UsefulMusic::App
       Customers.save customer
       flash['success'] = "Update successful"
       redirect "/customers/#{customer.id}"
-      # TODO untested failure cases, usecase or leave in entity layer
+      # untested failure cases, usecase or leave in entity layer
     rescue Veto::InvalidEntity => err
       @customer = customer
       @form = form
