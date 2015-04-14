@@ -58,7 +58,6 @@ class Purchase
     end
 
     def test_it_saves_time_of_creation
-      # TODO generalise test
       Time.stub :now, ->(){ Time.at(0) } do
         record = create :purchase_record
         assert_equal Time.at(0), record.created_at

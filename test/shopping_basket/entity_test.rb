@@ -104,5 +104,6 @@ class ShoppingBasket
         assert_equal Time.new(4000), shopping_basket.last_revision_at
       end
     end
+
   end
 end

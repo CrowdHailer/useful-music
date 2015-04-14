@@ -95,7 +95,6 @@ class Item
       assert_equal full_price, record.discounted_price
     end
 
-    # TODO consider appropriate file type for testing
     def test_can_access_asset
       record.asset = :asset
       assert_equal :asset, item.asset

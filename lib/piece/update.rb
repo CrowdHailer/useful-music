@@ -1,7 +1,7 @@
 class Piece
   class Update
     class Form
-      # TODO untested because admin control only
+      # untested because admin control only
       include Virtus.model
 
       attribute :title, String

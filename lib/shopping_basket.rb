@@ -69,24 +69,24 @@ class ShoppingBasket < Errol::Entity
   end
 
   def customer
-    # TODO test
+    # without unit-test
     customer_record = Customer::Record.first(:shopping_basket_record => record)
     Customer.new customer_record if customer_record
   end
 
   def order_name
-    # TODO test
+    # without unit-test
     order = orders.first
     order.customer.name if order
   end
 
   def customer_name
-    # TODO test
+    # without unit-test
     customer && customer.name
   end
 
   def referenced?
-    # TODO test
+    # without unit-test
     order_name || customer_name
   end
 end
