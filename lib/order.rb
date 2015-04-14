@@ -113,7 +113,8 @@ class Order < Errol::Entity
                   :tax_payment,
                   :payment_net,
                   :completed_at,
-                  :updated_at # TODO untested
+                  :reminded_at,
+                  :updated_at
 
   def initialize(*args)
     super
