@@ -22,9 +22,9 @@ module UsefulMusic
       def test_sends_reminder
         clear_mail
         order_record = create :order_record
+        order = Order.new order_record
         patch "/#{order_record.id}/remind"
-        ap last_message
-        assert last_message
+        assert_includes last_message.to, order.customer.email
       end
 
       def test_cant_send_reminder_to_missing_order
