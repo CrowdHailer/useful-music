@@ -39,7 +39,7 @@ class Discount < Errol::Entity
     start_datetime > DateTime.now
   end
 
-  def number_of_redemptions
+  def number_redeemed
     ShoppingBaskets.count(:checked_out => true, :discount => self)
   end
 end
