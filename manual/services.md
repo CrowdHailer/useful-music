@@ -15,7 +15,12 @@ costs
 ### Amazon Web Services (AWS)
 Stores pdfs and audio. Account owner 'daisy@usefulmusic.com'
 costs
-Based on folder size. 
+Based on folder size.
+
+### Mandrill
+Email sending serivce. Account owner 'daisy@usefulmusic.com'
+costs
+- **Free** for up to 12,000 emails per month
 
 ### Google Analytics
 Account owner 'daisy@usefulmusic.com'
