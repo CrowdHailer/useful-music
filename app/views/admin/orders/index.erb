@@ -84,12 +84,14 @@
                     <th>
                         <%= order.reminded_at %>
                     </th>
-                    <th>
+                        <th>
+                        <% if order.completed_at %>
                         <form class="button" id="form_id" action="/admin/orders/<%= order.id %>/remind" method="post">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="PATCH">
                             <input class="approve" type="submit" value="Send Reminder">
                         </form>
+                        <% end %>
                     </th>
                 </tr>
             <% end %>

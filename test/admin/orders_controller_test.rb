@@ -45,6 +45,7 @@ module UsefulMusic
         DateTime.stub :now, today do
           patch '/remind'
         end
+        assert_equal 1, Mail::TestMailer.deliveries.count
         assert_includes last_message.to, to_remind.customer.email
       end
     end
