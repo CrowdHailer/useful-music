@@ -35,6 +35,8 @@ module UsefulMusic
             mailer.order_reminder(order)
             order.reminder_sent
           end
+        flash['success'] = 'reminders sent'
+        redirect '/admin/orders'
       end
     end
   end

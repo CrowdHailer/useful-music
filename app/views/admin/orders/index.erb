@@ -40,9 +40,9 @@
     </header>
     <div class="" style="padding:0.5em;">
         <form action="/admin/orders/remind" method="post">
-            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_method" value="PATCH">
             <%= csrf_tag %>
-            <input class="action" type="number" name="since" value="24">
+            <!-- <input class="action" type="number" name="since" value="24"> -->
             <button class="approve">send reminders</button>
         </form>
     </div>
