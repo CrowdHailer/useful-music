@@ -43,7 +43,6 @@ class Transaction < Errol::Entity
   end
 
   def succeded?
-    # TODO test
     state == 'succeded'
   end
 

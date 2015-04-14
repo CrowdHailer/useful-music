@@ -18,7 +18,6 @@ class SessionsController < UsefulMusic::App
   end
 
   def create
-    # TODO clean old baskets task
     form = Session::Create::Form.new request.POST['session']
     validator = Session::Create::Validator.new
 

@@ -19,27 +19,19 @@ module UsefulMusic
       current_customer.admin? && request.GET['incognito'] != 'on'
     end
 
-    # def incognito_uri
-    #   current_uri = request.env['REQUEST_URI']
-    #   current_uri.include?('?') ? current_uri + '&incognito=on' : current_uri + '?incognito=on'
-    # end
-
     def csrf_tag
       Rack::Csrf.csrf_tag(env)
     end
 
-    # Return the anti-CSRF token
     def csrf_token
       Rack::Csrf.csrf_token(env)
     end
 
-    # Return the field name which will be looked for in the requests.
     def csrf_field
       Rack::Csrf.csrf_field
     end
 
     def current_customer
-      # TODO memoissation
       Customers.fetch(session[:user_id]) { Guest.new(session) }
     end
 
@@ -69,7 +61,6 @@ module UsefulMusic
   end
 end
 
-# Load all controllers
 Dir[File.expand_path('app/controllers/*.rb', APP_ROOT)].each { |file| require file}
 Dir[File.expand_path('app/mailers/*.rb', APP_ROOT)].each { |file| require file}
 

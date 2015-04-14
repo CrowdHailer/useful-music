@@ -5,13 +5,14 @@ class Customer < Errol::Entity
                   :email,
                   :password,
                   :country,
-                  :admin, # TODO untested
                   :question_1,
                   :question_2,
                   :question_3,
                   :last_login_at,
                   :password_reset_token,
                   :password_reset_created_at
+
+  boolean_accessor :admin
 
   def correct_password?(candidate_password)
     password == candidate_password
@@ -33,10 +34,6 @@ class Customer < Errol::Entity
     true
   end
 
-  def admin?
-    record.admin
-  end
-
   def orders
     record.order_records.map{ |r| Order.new r }
   end
@@ -47,11 +44,10 @@ class Customer < Errol::Entity
   end
 
   def shopping_basket=(shopping_basket)
-    unless shopping_basket.nil?
-      record.shopping_basket_record = shopping_basket.record
-    else
-      # TODO test else case
+    if shopping_basket.nil?
       record.shopping_basket_record = nil
+    else
+      record.shopping_basket_record = shopping_basket.record
     end
   end
 

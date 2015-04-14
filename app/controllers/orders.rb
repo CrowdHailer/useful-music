@@ -66,7 +66,6 @@ class OrdersController < UsefulMusic::App
   end
 
   def show(id)
-    # TODO check access
     @order = Order.new(Order::Record[id])
     html = render :show, :layout => nil
     kit = PDFKit.new(html)

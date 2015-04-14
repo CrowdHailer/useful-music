@@ -37,7 +37,6 @@ class PiecesController < UsefulMusic::App
   end
 
   def index_path
-    # TODO generalise this to scorched rest
     File.join *request.breadcrumb[0...-1].map(&:path)
   end
 

@@ -1,7 +1,7 @@
 class Piece
   class Create
     class Form
-      # TODO untested because admin control only
+      # untested because admin control only
       include Virtus.model
 
       attribute :id, Integer

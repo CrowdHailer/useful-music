@@ -38,6 +38,16 @@ class Customer
         assert_equal '', form.password
       end
 
+      def test_password_not_confirmed_if_different
+        form = Form.new :password => 'Password', :password_confirmation => 'other'
+        assert_equal false, form.password_confirmed?
+      end
+
+      def test_password_confirmed_when_same
+        form = Form.new :password => 'password', :password_confirmation => 'password'
+        assert_equal true, form.password_confirmed?
+      end
+
     end
   end
 end

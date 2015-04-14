@@ -115,6 +115,14 @@ class Customer
       assert_equal shopping_basket.record, record.shopping_basket_record
     end
 
+    def test_can_set_shopping_basket_nil
+      shopping_basket_record = create(:shopping_basket_record)
+      record.shopping_basket_record = shopping_basket_record
+      customer.shopping_basket = nil
+      assert_equal nil, customer.shopping_basket
+
+    end
+
 
     ################# Archive #####################
 
@@ -136,6 +144,16 @@ class Customer
     def test_can_set_last_name
       customer.last_name = 'Roy'
       assert_equal 'Roy', record.last_name
+    end
+
+    def test_can_access_admin
+      record.admin = true
+      assert_equal true, customer.admin?
+    end
+
+    def test_can_set_admin
+      customer.admin = false
+      assert_equal false, record.admin
     end
 
     def test_can_access_email

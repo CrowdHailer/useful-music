@@ -11,11 +11,6 @@ class Piece
     plugin :association_dependencies, :item_records => :delete
 
     plugin :serialization
-    # TODO catalogue_number class throw error when providing bad value
-    # serialize_attributes [
-    #   lambda{|v| v.match(/UD(\d{4})/)[1].to_i},
-    #   lambda{|v| "UD%04d" % v}
-    # ], :catalogue_number
     mount_uploader :cover_image, CoverImageUploader
     mount_uploader :audio_preview, AudioPreviewUploader
     mount_uploader :notation_preview, NotationPreviewUploader

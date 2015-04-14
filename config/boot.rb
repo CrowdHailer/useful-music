@@ -22,29 +22,6 @@ Dotenv.load
 # requires all other configuration
 Dir[File.dirname(__FILE__) + '/*.rb'].each {|file| require file }
 
-########################################
-
-## Belongs in a config/warden.rb file
-
-########################################
-Warden::Manager.before_failure do |env, opts|
-  env['REQUEST_METHOD'] = 'POST'
-end
-
-Warden::Strategies.add(:password) do
-  def valid?
-    request.POST['email'] && request.POST['password']
-  end
-
-  def authenticate!
-    owner = Customers.authenticate(request.POST['email'], request.POST['password'])
-    owner ? success!(owner, "Welcome back: #{owner.email}") : fail!('no luck jimmey')
-  end
-end
-
-######### END ###########
-
-# # require the lib directory
-# TODO either move entities into namespace module or set requirements as tree
+# require the lib directory
 Dir[APP_ROOT + '/lib/*.rb'].each {|file| require file }
 Dir[APP_ROOT + '/lib/**/*.rb'].each {|file| require file }
