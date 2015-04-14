@@ -15,8 +15,6 @@ class CatalogueTest < MyRecordTest
     assert Catalogue.empty?(:title => 'A Good tune')
   end
 
-  # TODO count on page/query
-
   def test_delegates_count_to_record
     assert_equal 0, Catalogue.count
     create :piece_record

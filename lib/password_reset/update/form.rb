@@ -15,7 +15,6 @@ class PasswordReset
       end
 
       def password_confirmed?
-        # TODO not used
         password == password_confirmation
       end
 

@@ -5,13 +5,14 @@ class Customer < Errol::Entity
                   :email,
                   :password,
                   :country,
-                  :admin, # TODO untested
                   :question_1,
                   :question_2,
                   :question_3,
                   :last_login_at,
                   :password_reset_token,
                   :password_reset_created_at
+
+  boolean_accessor :admin
 
   def correct_password?(candidate_password)
     password == candidate_password
@@ -22,7 +23,23 @@ class Customer < Errol::Entity
   end
 
   def name
-    "#{first_name} #{last_name}"
+    Rack::Utils.escape_html "#{first_name} #{last_name}"
+  end
+
+  def email
+    Rack::Utils.escape_html record.email
+  end
+
+  def question_1
+    Rack::Utils.escape_html record.question_1
+  end
+
+  def question_2
+    Rack::Utils.escape_html record.question_2
+  end
+
+  def question_3
+    Rack::Utils.escape_html record.question_3
   end
 
   def guest?
@@ -31,10 +48,6 @@ class Customer < Errol::Entity
 
   def customer?
     true
-  end
-
-  def admin?
-    record.admin
   end
 
   def orders
@@ -47,11 +60,10 @@ class Customer < Errol::Entity
   end
 
   def shopping_basket=(shopping_basket)
-    unless shopping_basket.nil?
-      record.shopping_basket_record = shopping_basket.record
-    else
-      # TODO test else case
+    if shopping_basket.nil?
       record.shopping_basket_record = nil
+    else
+      record.shopping_basket_record = shopping_basket.record
     end
   end
 

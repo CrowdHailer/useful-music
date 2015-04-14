@@ -59,6 +59,16 @@ class Piece
       assert_equal 'oboe and keyboard', record.sub_heading
     end
 
+    def test_can_access_level_overview
+      record.level_overview = 'level 1-3'
+      assert_equal 'level 1-3', piece.level_overview
+    end
+
+    def test_can_set_level_overview
+      piece.level_overview = 'level 1-3'
+      assert_equal 'level 1-3', record.level_overview
+    end
+
     def test_can_access_description
       record.description = 'Lots of interesting information'
       assert_equal 'Lots of interesting information', piece.description

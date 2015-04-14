@@ -1,7 +1,6 @@
 class Purchase
   class Create
     class Batch
-      # TODO Dependency inject Form can reuse
       def initialize(raw_forms)
         @forms = raw_forms.map{ |raw| Form.new raw }.reject(&:empty?)
       end

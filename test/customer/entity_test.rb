@@ -115,6 +115,14 @@ class Customer
       assert_equal shopping_basket.record, record.shopping_basket_record
     end
 
+    def test_can_set_shopping_basket_nil
+      shopping_basket_record = create(:shopping_basket_record)
+      record.shopping_basket_record = shopping_basket_record
+      customer.shopping_basket = nil
+      assert_equal nil, customer.shopping_basket
+
+    end
+
 
     ################# Archive #####################
 
@@ -136,6 +144,16 @@ class Customer
     def test_can_set_last_name
       customer.last_name = 'Roy'
       assert_equal 'Roy', record.last_name
+    end
+
+    def test_can_access_admin
+      record.admin = true
+      assert_equal true, customer.admin?
+    end
+
+    def test_can_set_admin
+      customer.admin = false
+      assert_equal false, record.admin
     end
 
     def test_can_access_email
@@ -169,28 +187,28 @@ class Customer
     end
 
     def test_can_access_question_1
-      record.question_1 = :uk
-      assert_equal :uk, customer.question_1
+      record.question_1 = 'Clean text'
+      assert_equal 'Clean text', customer.question_1
     end
 
     def test_can_set_question_1
-      customer.question_1 = :uk
-      assert_equal :uk, record.question_1
+      customer.question_1 = 'Clean text'
+      assert_equal 'Clean text', record.question_1
     end
 
     def test_can_access_question_2
-      record.question_2 = :uk
-      assert_equal :uk, customer.question_2
+      record.question_2 = 'Clean text'
+      assert_equal 'Clean text', customer.question_2
     end
 
     def test_can_set_question_2
-      customer.question_2 = :uk
-      assert_equal :uk, record.question_2
+      customer.question_2 = 'Clean text'
+      assert_equal 'Clean text', record.question_2
     end
 
     def test_can_access_question_3
-      record.question_3 = :uk
-      assert_equal :uk, customer.question_3
+      record.question_3 = 'Clean text'
+      assert_equal 'Clean text', customer.question_3
     end
 
     def test_can_set_question_3

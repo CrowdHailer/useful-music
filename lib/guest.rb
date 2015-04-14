@@ -1,5 +1,4 @@
 class Guest
-  # TODO untested
   def initialize(session)
     @session = session
   end
@@ -7,11 +6,7 @@ class Guest
   attr_reader :session
 
   def shopping_basket
-    shopping_basket = ShoppingBaskets[session['guest.shopping_basket']]
-    # return shopping_basket if shopping_basket
-    # shopping_basket = ShoppingBaskets.create
-    # session['guest.shopping_basket'] = shopping_basket.id
-    # shopping_basket
+    ShoppingBaskets[session['guest.shopping_basket']]
   end
 
   def shopping_basket=(shopping_basket)

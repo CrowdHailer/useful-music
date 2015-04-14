@@ -83,9 +83,3 @@ CarrierWave.configure do |config|
   config.store_dir = 'tmp'
   config.root = 'tmp'
 end
-# TODO runs everytime
-# class MyRecordTest
-#   def test_lint_factories
-#     FactoryGirl.lint
-#   end
-# end

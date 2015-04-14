@@ -15,7 +15,6 @@ class HomeController < UsefulMusic::App
   end
 
   get '/my-shopping-basket' do
-    # TODO test
     redirect "/shopping_baskets/#{shopping_basket.id}"
   end
 

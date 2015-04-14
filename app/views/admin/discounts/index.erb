@@ -45,6 +45,7 @@
                 <th>Value</th>
                 <th>Allocation</th>
                 <th>Per Customer</th>
+                <th>Redeemed</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Action</th>
@@ -65,6 +66,9 @@
                     </th>
                     <th>
                         <%= discount.customer_allocation %>
+                    </th>
+                    <th>
+                        <%= discount.number_redeemed %>
                     </th>
                     <th>
                         <%= discount.start_datetime.strftime('%Y-%m-%d') %>

@@ -27,15 +27,13 @@ module UsefulMusic
         post '/', {:discount => attributes_for(:discount_record)}
         assert_equal 'Discount Created', flash['success']
         assert last_response.redirect?
-        # TODO change to repository
-        refute_empty Discount::Record
+        refute_empty Discounts
       end
 
 
       def test_edit_page_is_available
         discount_record = create :discount_record
         assert_ok get "/#{discount_record.id}/edit"
-        # assert_includes last_response.body, admin.email
       end
 
       def test_can_update
