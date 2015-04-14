@@ -156,6 +156,11 @@ class Order
       assert_equal 'pending', record.state
     end
 
+    def test_can_access_updated_at
+      record.updated_at = DateTime.new(2010,3,5)
+      assert_equal DateTime.new(2010,3,5), order.updated_at
+    end
+
     def test_can_access_completed_at
       record.completed_at = DateTime.new(2010,4,5)
       assert_equal DateTime.new(2010,4,5), order.completed_at
@@ -164,6 +169,16 @@ class Order
     def test_can_set_state
       order.completed_at = DateTime.new(2010,4,5)
       assert_equal DateTime.new(2010,4,5), record.completed_at
+    end
+
+    def test_can_access_reminded_at
+      record.reminded_at = DateTime.new(2010,4,7)
+      assert_equal DateTime.new(2010,4,7), order.reminded_at
+    end
+
+    def test_can_set_state
+      order.reminded_at = DateTime.new(2010,4,7)
+      assert_equal DateTime.new(2010,4,7), record.reminded_at
     end
   end
 end
