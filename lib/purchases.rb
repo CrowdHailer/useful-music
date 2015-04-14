@@ -21,7 +21,6 @@ class Purchases < Errol::Repository
   end
 
   def dataset
-    # TODO test
     filtered = raw_dataset
     filtered = filtered.where(:shopping_basket_record => inquiry.shopping_basket.record) if inquiry.shopping_basket
     filtered = filtered.where(:item_record => inquiry.item.record) if inquiry.item
