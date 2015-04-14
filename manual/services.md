@@ -10,6 +10,7 @@ costs
 - **Free** 1 Dyno (2nd $34.50 pm)
 - **Free** Hobby dev database (next tiers $9/$50 pm)
 - **Free** Database backup
+- **$34.50pm pro rata** Scheduled tasks 
 
 ### Amazon Web Services (AWS)
 Stores pdfs and audio. Account owner 'daisy@usefulmusic.com'
