@@ -28,6 +28,12 @@ class ShoppingBaskets < Errol::Repository
       cutoff = options.fetch(:since) { DateTime.now }
       all.select{|b| b.orders.empty? && b.customer.nil? && b.last_revision_at < cutoff}
     end
+
+    def clear_inactive(options={})
+      inactive(options).each do |basket|
+        basket.record.destroy
+      end
+    end
   end
 
   def dataset
