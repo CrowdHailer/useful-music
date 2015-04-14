@@ -1,6 +1,7 @@
 module UsefulMusic
   module Admin
     class OrdersController < UsefulMusic::App
+      patch('/:id/remind') { |id| send :remind, id }
       include Scorched::Rest
 
       render_defaults[:dir] += '/admin/orders'
@@ -9,6 +10,11 @@ module UsefulMusic
       def index
         @orders = Orders.new request.GET
         render :index
+      end
+
+      def remind(id)
+        order = Orders.fetch(id)
+        ap order
       end
     end
   end
