@@ -16,6 +16,8 @@ module UsefulMusic
         order = Orders.fetch(id)
         mailer = CustomerMailer.new order.customer , :application_url => url
         mailer.order_reminder(order)
+        flash['success'] = "Order reminder delivered to #{order.customer.email}"
+        redirect '/admin/orders'
       end
     end
   end
