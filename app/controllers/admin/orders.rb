@@ -14,7 +14,8 @@ module UsefulMusic
 
       def remind(id)
         order = Orders.fetch(id)
-        ap order
+        mailer = CustomerMailer.new order.customer
+        mailer.order_reminder(order)
       end
     end
   end

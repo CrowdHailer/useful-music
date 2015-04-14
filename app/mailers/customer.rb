@@ -69,6 +69,28 @@ class CustomerMailer
     mail.deliver
   end
 
+  def order_reminder(order)
+    mail = Mail.new
+    mail.from 'info@usefulmusic.com'
+    mail.to @customer.email
+    mail.subject 'Your Order at Useful Music'
+
+    text_body = render __method__
+    text_part = Mail::Part.new do
+      body text_body
+    end
+
+    html_body = render __method__, :extension => 'html'
+    html_part = Mail::Part.new do
+      content_type 'text/html; charset=UTF-8'
+      body html_body
+    end
+
+    mail.text_part = text_part
+    mail.html_part = html_part
+    mail.deliver
+  end
+
   def locals
     OpenStruct.new(:customer => customer, :account_url => account_url, :application_url => options.fetch(:application_url))
   end

@@ -20,7 +20,6 @@ module UsefulMusic
       end
 
       def test_sends_reminder
-        skip
         clear_mail
         order_record = create :order_record
         patch "/#{order_record.id}/remind"
