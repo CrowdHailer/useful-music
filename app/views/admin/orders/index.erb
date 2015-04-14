@@ -38,6 +38,14 @@
             <button class="action" name="page" value="<%= @orders.page_count %>" <%= 'disabled' unless @orders.next_page %>>Last Page</button>
         </form>
     </header>
+    <div class="" style="padding:0.5em;">
+        <form action="/admin/orders/remind" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <%= csrf_tag %>
+            <input class="action" type="number" name="since" value="24">
+            <button class="approve">send reminders</button>
+        </form>
+    </div>
     <table class="index">
         <thead>
             <tr>
