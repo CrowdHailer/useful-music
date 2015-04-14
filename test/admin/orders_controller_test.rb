@@ -26,6 +26,7 @@ module UsefulMusic
         patch "/#{order_record.id}/remind"
         assert_includes last_message.to, order.customer.email
         assert last_response.redirect?
+        assert order.record.reload.reminded_at
       end
 
       def test_cant_send_reminder_to_missing_order

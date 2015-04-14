@@ -182,4 +182,9 @@ class Order < Errol::Entity
       record.customer_record = customer.record
     end
   end
+
+  def reminder_sent
+    self.reminded_at = DateTime.now
+    self.record.save
+  end
 end
