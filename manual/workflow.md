@@ -3,7 +3,7 @@
 
 ## Overview/Glossary
 
-The **Application** is built on a core of Ruby backend code, with Erb templates, This is the code that makes up this **Repository**. A **repository** is a collection of files which have all changes to them tracked, in this case the version control software is git. This **repository** is stored on Github, like dropbox but for git tracked files. The **Application** is deployed to a **Cloud Server** where it can run and answer requests, Heroku provides our cloud server.
+The **Application** is built on a core of Ruby backend code with Erb templates, This is the code that makes up the files of this **Repository**. A **repository** is a collection of files which have all changes to them tracked and creating versions, in this case the version control software is called [git](http://code.tutsplus.com/tutorials/git-succinctly-introduction--net-33591). This **repository** is stored on Github, like dropbox but for git tracked files. The **Application** files are deployed to a **Cloud Server** where they run  as the application program. This is what answers when a url is visited, Heroku provides our cloud server.
 
 ## Git
 This is the core of our workflow, we use git because it is extremely powerful. It allows several people to make changes to a single project, even single file, without knowing about other peoples intentions, each works on a separate branch before merging. Any previously committed version of the files call be accessed by rolling back. New work can be kept out of the main codebase before it is ready, on a separate branch. When it can then be submitted and reviewed in a pull request. This last point is summarised [here](https://guides.github.com/introduction/flow/).
