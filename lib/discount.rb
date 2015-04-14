@@ -38,4 +38,8 @@ class Discount < Errol::Entity
   def pending?
     start_datetime > DateTime.now
   end
+
+  def number_of_redemptions
+    ShoppingBaskets.count(:checked_out => true, :discount => self)
+  end
 end

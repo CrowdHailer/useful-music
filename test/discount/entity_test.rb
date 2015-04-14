@@ -78,5 +78,27 @@ class Discount
       discount.end_datetime = DateTime.new(2015)
       assert_equal DateTime.new(2015), record.end_datetime
     end
+
+    def test_can_count_no_redemptions
+      @record = Discount::Record.create attributes_for(:discount_record)
+      assert_equal 0, discount.number_of_redemptions
+    end
+
+    def test_can_count_1_redemption
+      @record = Discount::Record.create attributes_for(:discount_record)
+      shopping_basket_record = create :shopping_basket_record, :discount_record => record
+      order_record = create :order_record, :shopping_basket_record => shopping_basket_record
+      order_record.update :state => 'succeded'
+      assert_equal 1, discount.number_of_redemptions
+    end
+
+    def test_ingnores_not_checked_out
+      @record = Discount::Record.create attributes_for(:discount_record)
+      create :shopping_basket_record, :discount_record => record
+      shopping_basket_record = create :shopping_basket_record, :discount_record => record
+      order_record = create :order_record, :shopping_basket_record => shopping_basket_record
+      order_record.update :state => 'succeded'
+      assert_equal 1, discount.number_of_redemptions
+    end
   end
 end
