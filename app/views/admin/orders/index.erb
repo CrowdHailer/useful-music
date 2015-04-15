@@ -38,6 +38,14 @@
             <button class="action" name="page" value="<%= @orders.page_count %>" <%= 'disabled' unless @orders.next_page %>>Last Page</button>
         </form>
     </header>
+    <div class="" style="padding:0.5em;">
+        <form action="/admin/orders/remind" method="post">
+            <input type="hidden" name="_method" value="PATCH">
+            <%= csrf_tag %>
+            <!-- <input class="action" type="number" name="since" value="24"> -->
+            <button class="approve">send reminders</button>
+        </form>
+    </div>
     <table class="index">
         <thead>
             <tr>
@@ -47,6 +55,8 @@
                 <th>Gross</th>
                 <th>Net</th>
                 <th>Completed at</th>
+                <th>reminder sent</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -70,6 +80,18 @@
                     </th>
                     <th>
                         <%= order.completed_at %>
+                    </th>
+                    <th>
+                        <%= order.reminded_at %>
+                    </th>
+                        <th>
+                        <% if order.completed_at %>
+                        <form class="button" id="form_id" action="/admin/orders/<%= order.id %>/remind" method="post">
+                            <%= csrf_tag %>
+                            <input type="hidden" name="_method" value="PATCH">
+                            <input class="approve" type="submit" value="Send Reminder">
+                        </form>
+                        <% end %>
                     </th>
                 </tr>
             <% end %>

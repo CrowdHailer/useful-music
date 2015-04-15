@@ -113,7 +113,8 @@ class Order < Errol::Entity
                   :tax_payment,
                   :payment_net,
                   :completed_at,
-                  :updated_at # TODO untested
+                  :reminded_at,
+                  :updated_at
 
   def initialize(*args)
     super
@@ -180,5 +181,10 @@ class Order < Errol::Entity
     else
       record.customer_record = customer.record
     end
+  end
+
+  def reminder_sent
+    self.reminded_at = DateTime.now
+    self.record.save
   end
 end

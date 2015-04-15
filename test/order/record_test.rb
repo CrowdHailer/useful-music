@@ -156,6 +156,11 @@ class Order
       assert_equal DateTime.new(2000,12,1), record.completed_at
     end
 
+    def test_can_have_reminded_at
+      record = create :order_record, :reminded_at => DateTime.new(2000,12,1)
+      assert_equal DateTime.new(2000,12,1), record.reminded_at
+    end
+
     def test_requires_customer_record
       err = assert_raises Sequel::NotNullConstraintViolation do
         create :order_record, :customer_record => nil
