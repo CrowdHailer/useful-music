@@ -31,7 +31,7 @@ Most of the time you will changing content. Content is stored in template files 
 In the top right of the file page the is an edit icon(pencil). Make your changes to the file.
 
 #### 4. Commit changes
-At the bottom of the page you can add a commit message e.g. 'Updated header.erb'. Then select the option ' Create a new branch for this commit and start a pull request'. Finally enter a name for your branch and propose the changes.
+At the bottom of the page you can add a commit message e.g. 'Updated header.erb'. Then select the option ' Create a new branch for this commit and start a pull request'. Finally enter a name for your branch and propose the changes. Small changes can be merged straight to development without a pull request.
 
 > **Naming**
 > Descriptive names are helpful, A branch contains one or more commits. Your branch would normally be named something like 'new-header' while your commits would be 'added social icon' and 'fixed typo'
