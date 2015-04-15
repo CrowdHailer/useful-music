@@ -5,6 +5,10 @@ class Guest
 
   attr_reader :session
 
+  def save
+    true
+  end
+
   def shopping_basket
     ShoppingBaskets[session['guest.shopping_basket']]
   end
