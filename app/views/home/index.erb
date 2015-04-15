@@ -42,7 +42,14 @@
             <h3>BASKET</h3>
             <h4>
                 <!-- TODO reinstate money -->
-                <!-- <a href="">£</a><a href=""> $</a><a href=""> ¥</a><a href=""> €</a> -->
+                <%= current_customer.currency_preference || 'none' %>
+                <form action="/currency" method="post">
+                    <%= csrf_tag %>
+                    <button type="submit" name="preference" value="USD">$</button>
+                    <button type="submit" name="preference" value="GBP">£</button>
+                    <button type="submit" name="preference" value="EUR">€</button>
+                </form>
+                <a href="">£</a><a href=""> $</a><a href=""> ¥</a><a href=""> €</a>
             </h4>
             <hr>
             <div class="row">
@@ -56,7 +63,7 @@
             </div>
             <hr>
             <div class="total-contain">
-                <h4>TOTAL: <%= shopping_basket.price.format %></h4>
+                <h4>TOTAL: <%= local_price(shopping_basket.price).format %></h4>
                 <a href="/shopping_baskets/<%= shopping_basket.id %>"><h4 class="checkout">CHECKOUT <i class="fa fa-shopping-cart" style="line-height: 0.5;"></i></h4></a>
             </div>
         </div>

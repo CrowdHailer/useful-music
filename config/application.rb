@@ -58,6 +58,11 @@ module UsefulMusic
     def customer_mailer
       CustomerMailer.new(current_customer, :application_url => url)
     end
+
+    def local_price(amount)
+      currency = current_customer.currency_preference || Money::Currency.new('GBP')
+      amount.exchange_to(currency)
+    end
   end
 end
 
