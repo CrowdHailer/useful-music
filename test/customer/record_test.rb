@@ -120,9 +120,12 @@ class Customer
       assert_equal true, record.admin
     end
 
+    USD = Money::Currency.new('USD')
+
     def test_can_have_currency_preference
-      record = create :customer_record, :currency_preference => 'USD'
-      assert_equal 'USD', record.currency_preference
+      record = create :customer_record, :currency_preference => USD
+      assert_equal USD, record.currency_preference
+      assert_equal USD.class, record.currency_preference.class
     end
 
     def test_it_saves_time_of_creation
