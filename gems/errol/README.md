@@ -217,3 +217,4 @@ Submits itself to the declared repository to be refreshed
 1. separate repository save method to insert and replace
 2. method missing bang methods call normal method then save
 3. raise error if entity initialised with nil?
+4. Protect record access method. Problem is access is require by repository to run sql filtering
