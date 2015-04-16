@@ -50,7 +50,7 @@ module UsefulMusic
       if customer.guest?
         customer.shopping_basket ||= ShoppingBaskets.create
       else
-        customer.record.update :shopping_basket_record => ShoppingBaskets.create.record
+        customer.set! :shopping_basket => ShoppingBaskets.create
       end
       customer.shopping_basket
     end
