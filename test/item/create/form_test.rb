@@ -6,7 +6,7 @@ class Item
       def test_obtains_piece
         piece_record = create :piece_record
         form = Form.new :piece => piece_record.id
-        assert_equal piece_record, form.piece.record
+        assert_equal Piece.new(piece_record), form.piece
       end
 
       def test_nil_if_piece_does_not_exist
