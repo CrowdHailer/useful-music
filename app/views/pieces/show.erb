@@ -100,7 +100,7 @@
                 <div class="large-5 medium-5 small-12 columns">
                     <img src="<%= @piece.cover_image.url %>" alt="Piece Cover image">
                     <a href="<%= @piece.notation_preview.url %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
-                    <h6 style="color:#222222;">LISTEN TO AUDIO PREVIEW</h6>
+                    <h6>LISTEN TO AUDIO PREVIEW</h6>
                     <audio preload="auto" controls <%= 'autoplay' if request.GET['autoplay'] %>>
                         <source src="<%= @piece.audio_preview.url %>" type="audio/mpeg">
                         Your browser does not support the audio element.
@@ -143,17 +143,7 @@
                             </div> -->
                         </form>
                     </div>
-                    <div class="piece-print-link">
-                      <div class="row collapse">
-                        <div class="large-4 medium-4 hide-for-small-only columns">
-                          <img src="/images/um-book-04.svg" style="padding: 0.5em;">
-                        </div>
-                        <div class="large-8 medium-8 small-12 columns">
-                          <p>This piece of music also appears in print.</p>
-                          <a href="[[TODO]]"><button>Click here to buy the book</button></a>
-                        </div>
-                      </div>
-                    </div>
+
                 </div>
             </div>
         </div>
