@@ -71,9 +71,9 @@ class CustomerMailer
 
   def order_reminder(order)
     mail = Mail.new
-    mail.from 'info@usefulmusic.com'
+    mail.from 'orders@usefulmusic.com'
     mail.to @customer.email
-    mail.subject 'Your Order at Useful Music'
+    mail.subject 'Your recent sheet music order - a reminder'
 
     text_body = render __method__
     text_part = Mail::Part.new do
