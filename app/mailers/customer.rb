@@ -50,7 +50,7 @@ class CustomerMailer
 
   def order_successful
     mail = Mail.new
-    mail.from '<UsefulMusic>orders@usefulmusic.com'
+    mail.from 'orders@usefulmusic.com'
     mail.to @customer.email
     mail.subject 'Your Order at Useful Music'
     text_body = render __method__
@@ -71,7 +71,7 @@ class CustomerMailer
 
   def order_reminder(order)
     mail = Mail.new
-    mail.from '<UsefulMusic>orders@usefulmusic.com'
+    mail.from 'orders@usefulmusic.com'
     mail.to @customer.email
     mail.subject 'Your recent sheet music order - a reminder'
 
