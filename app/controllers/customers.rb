@@ -19,12 +19,32 @@ class CustomersController < UsefulMusic::App
   end
 
   def create
+    # usecase = Customer::Create.(self, request.POST['customer'])
+    #
+    # usecase.created do |customer| # 201: created
+    #   customer.update_basket! current_customer.shopping_basket
+    #   log_in customer
+    #   flash['success'] = 'Welcome to Useful Music'
+    #   redirect success_path || "/customers/#{customer.id}", 201
+    # end
+    #
+    # usecase.invalid_details do |form| # 400: bad request
+    #   status = 400
+    #   render :new, :locals => {:form => form}
+    # end
+    #
+    # usecase.email_taken do form # 409: conflict
+    #   status = 400
+    #   render :new, :locals => {:form => form}
+    # end
+
     begin
       guest = current_customer
       form = Customer::Create::Form.new request.POST['customer']
       validator = Customer::Create::Validator.new
       validator.validate! form
       customer = Customers.create form
+      # log_in should handle guest basket
       log_in customer
       if guest.shopping_basket && !guest.shopping_basket.empty?
         # test transfer of basket
@@ -71,6 +91,28 @@ class CustomersController < UsefulMusic::App
   end
 
   def update(id)
+    # usecase = Customer::Update.new(self, 1, request.POST['customer'])
+    #
+    # usecase.updated do |customer| # 204: No Content
+    #   redirect customer_page customer, 204
+    # end
+    # usecase.unknown_account do |customer| # 404: Not found
+    # end
+    #
+    # usecase.unknow_user do |variable| # 401: Unauthenticated
+    #   status = 401
+    #   redirect login
+    # end
+    #
+    # usecase.not_permitted do |variable| # 403: Forbidden
+    #   redirect back, 403
+    # end
+    #
+    # usecase.invalid_details do |form| # 400: bad request
+    #   status = 400
+    #   render :new, :locals => {:form => form}
+    # end
+
     begin
       customer = check_access!(id)
       form = Customer::Update::Form.new request.POST['customer']
