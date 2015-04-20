@@ -22,7 +22,7 @@ class PasswordResetsController < UsefulMusic::App
       customer.save
       # Set customer on mailer after creation?
       CustomerMailer.new(customer, :application_url => url).password_reset_created
-      flash['success'] = 'A password reset as been sent to your email'
+      flash['success'] = 'A password reset has been sent to your email'
       redirect '/sessions/new'
     else
       @customer_email_unknown = true
