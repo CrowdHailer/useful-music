@@ -1,4 +1,7 @@
-class Customer::Create
+class Customerz
+
+end
+class Customerz::Create
   def initialize(context, params)
     @context = context
     @params = params
@@ -45,7 +48,7 @@ class Customer::Create
   end
 end
 
-class Customer::Update
+class Customerz::Update
   def initialize(context, id, params)
     @context = context
     @id = id
