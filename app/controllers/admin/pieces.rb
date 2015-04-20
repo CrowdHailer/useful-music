@@ -46,7 +46,7 @@ module UsefulMusic
 
       def destroy(catalogue_number)
         piece = Catalogue.fetch(catalogue_number, &method(:piece_not_found))
-        piece.record.destroy
+        piece.destroy
         flash['success'] = 'Piece deleted'
         redirect "/admin/pieces"
       end

@@ -11,7 +11,6 @@ class HomeController < UsefulMusic::App
   post '/currency' do
     customer = current_customer
     currency = request.POST['preference']
-    ap currency
     customer.currency_preference = Money::Currency.new(currency) if ['USD', 'GBP', 'EUR'].include?(currency)
     customer.save
     redirect request.referer
