@@ -19,31 +19,10 @@ class CustomersController < UsefulMusic::App
   end
 
   def create
-    # usecase = Customer::Create.(self, request.POST['customer'])
-    #
-    # usecase.created do |customer| # 201: created
-    #   customer.update_basket! current_customer.shopping_basket
-    #   log_in customer
-    #   flash['success'] = 'Welcome to Useful Music'
-    #   redirect success_path || "/customers/#{customer.id}", 201
-    # end
-    #
-    # usecase.invalid_details do |form| # 400: bad request
-    #   status = 400
-    #   render :new, :locals => {:form => form}
-    # end
-    #
-    # usecase.email_taken do form # 409: conflict
-    #   status = 400
-    #   render :new, :locals => {:form => form}
-    # end
+    usecase = Customer::Create.new(self, request.POST['customer'])
 
-    begin
+    usecase.created do |customer| # 201: created
       guest = current_customer
-      form = Customer::Create::Form.new request.POST['customer']
-      validator = Customer::Create::Validator.new
-      validator.validate! form
-      customer = Customers.create form
       # log_in should handle guest basket
       log_in customer
       if guest.shopping_basket && !guest.shopping_basket.empty?
@@ -53,17 +32,24 @@ class CustomersController < UsefulMusic::App
       end
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
-      redirect success_path || "/customers/#{customer.id}"
-      # untested failure cases, usecase or leave in entity layer
-    rescue Veto::InvalidEntity => err
+      redirect success_path || "/customers/#{customer.id}", 201
+    end
+
+    usecase.invalid_details do |form| # 400: bad request
+      # TODO untested
+      status = 400
       @form = form
-      @validator = validator
-      render :new
-    rescue Sequel::UniqueConstraintViolation => err
+      @validator = form
+      return render :new
+      # render :new, :locals => {:form => form}
+    end
+
+    usecase.email_taken do form # 409: conflict
+      status = 409
       @form = form
-      validator.errors.add(:email, 'is already taken')
-      @validator = validator
-      render :new
+      @validator = form
+      return render :new
+      # render :new, :locals => {:form => form}
     end
   end
 
