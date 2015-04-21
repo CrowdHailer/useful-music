@@ -2,6 +2,7 @@ require_relative '../test_config'
 
 class Customer
   class CreateTest < MyRecordTest
+    include MailerTesting
     def valid_params
       {
         :first_name => "Mike",
@@ -21,11 +22,14 @@ class Customer
     # Reports
 
     def test_successful_creation
+      clear_mail
       usecase = Create.new({}, params)
       customer, = usecase.output
       assert usecase.created?
       assert_equal 'Mike Wasozki', customer.name
       assert_equal Customers.last, customer
+      # TODO move mailer in context
+      # assert_includes last_message.to, customer.email
     end
 
     def test_invalid_details_reports_form
