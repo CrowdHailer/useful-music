@@ -16,6 +16,8 @@ gem 'rack-protection', :require => 'rack/protection'
 # gem 'usecase', :path => './gems/usecase', :branch => 'master'
 gem 'warden'
 
+gem 'usecase', :path => './gems/usecase', :branch => 'option-1'
+
 gem 'mail'
 
 gem 'pg'
