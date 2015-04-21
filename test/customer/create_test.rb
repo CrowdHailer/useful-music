@@ -19,31 +19,28 @@ class Customer
     end
 
     # Reports
+    #
+    # def test_successful_creation
+    #   usecase = Create.new({}, valid_params)
+    #   assert_equal :created, usecase.outcome
+    #   assert_equal 'Mike Wasozki', usecase.output.first.name
+    # end
 
-    def test_case_name
-
-    end
-
-    def test_reports_created_for_valid_details
-      usecase = Create.new({}, valid_params)
-      assert_equal :created, usecase.outcome
-    end
-
-    def test_doesnt_call_invalid_details_for_valid_params
-      usecase = Create.new({}, valid_params)
-      usecase.invalid_details do |form|
-        flunk 'Should not action invalid details'
-      end
-    end
-
-    def test_reports_invalid_details_when_email_invalid
-      usecase = Create.new({}, params(:email => 'bad'))
-      assert_equal :invalid_details, usecase.outcome
-      assert_equal 'bad', usecase.form.email
-      usecase.invalid_details do |form|
-        assert_equal form, usecase.form
-      end
-    end
+    # def test_doesnt_call_invalid_details_for_valid_params
+    #   usecase = Create.new({}, valid_params)
+    #   usecase.invalid_details do |form|
+    #     flunk 'Should not action invalid details'
+    #   end
+    # end
+    #
+    # def test_reports_invalid_details_when_email_invalid
+    #   usecase = Create.new({}, params(:email => 'bad'))
+    #   assert_equal :invalid_details, usecase.outcome
+    #   assert_equal 'bad', usecase.form.email
+    #   usecase.invalid_details do |form|
+    #     assert_equal form, usecase.form
+    #   end
+    # end
 
     # def test_reports_email_taken
     #   create :customer_record, :email => 'conflict@example.com'
