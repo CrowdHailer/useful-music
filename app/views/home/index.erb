@@ -68,6 +68,13 @@
                 <a href="/shopping_baskets/<%= shopping_basket.id %>"><h4 class="checkout">CHECKOUT <i class="fa fa-shopping-cart" style="line-height: 0.5;"></i></h4></a>
             </div>
         </div>
+        [[TODO]]
+        <form action="/currency" method="post">
+                    <button class="currency-convert" type="submit" name="preference" value="USD">$</button>
+                    <button class="currency-convert" type="submit" name="preference" value="GBP">£</button>
+                    <button class="currency-convert" type="submit" name="preference" value="EUR">€</button>
+        </form>
+
     </div>
 </div>
 

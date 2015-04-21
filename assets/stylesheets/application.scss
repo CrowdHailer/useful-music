@@ -235,6 +235,19 @@ p {
   font-family: 'Montserrat';
   color: white;
   font-size: 0.85em;
+  line-height: 1;
+}
+
+.currency-convert {
+  background: red;
+  padding: 0.25em 0.5em;
+}
+
+.currency-convert-head {
+  background: none;
+  padding: 0.05em 0.5em;
+  float: right;
+  margin: 0em !important;
 }
 
 .mob-menu-wrap {
