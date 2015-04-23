@@ -67,6 +67,7 @@ class OrdersController < UsefulMusic::App
 
   def show(id)
     @order = Order.new(Order::Record[id])
+    redirect @order.record.licence.url if @order.record.licence
     html = render :show, :layout => nil
     kit = PDFKit.new(html)
     kit.stylesheets << File.expand_path('./public/stylesheets/licence.css', APP_ROOT)
