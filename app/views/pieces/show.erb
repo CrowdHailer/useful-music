@@ -128,8 +128,8 @@
                                     <input type="number" min="0" name="purchases[][quantity]" value="0">
                                     <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
                                     <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
-                                    <p><%= item.initial_price.format %> first licence</p>
-                                    <p><%= item.subsequent_price.format %> additional</p>
+                                    <p><%= local_price(item.initial_price).format %> first licence</p>
+                                    <p><%= local_price(item.subsequent_price).format %> additional</p>
                                 </div>
                               <% end %>
                             </div>

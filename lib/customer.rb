@@ -88,7 +88,7 @@ class Customer < Errol::Entity
   end
 
   def working_currency
-    currency_preference || 'GBP'
+    currency_preference || Money::Currency.new('GBP')
   end
 
   private
