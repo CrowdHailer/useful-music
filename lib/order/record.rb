@@ -60,6 +60,26 @@ class Order
       Money.new(super, currency)
     end
 
+    def payment_net=(amount)
+      super amount.fractional
+    end
+
+    def basket_total=(amount)
+      super amount.fractional
+    end
+
+    def tax_payment=(amount)
+      super amount.fractional
+    end
+
+    def discount_value=(amount)
+      super amount.fractional
+    end
+
+    def payment_gross=(amount)
+      super amount.fractional
+    end
+
     serialize_attributes [
       lambda{ |currency| currency.iso_code },
       lambda{ |iso_code| Money::Currency.new(iso_code) }
