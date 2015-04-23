@@ -5,6 +5,7 @@ class Transaction < Errol::Entity
                   :discount_value,
                   :payment_gross,
                   :payment_net,
+                  :currency,
                   :token,
                   :payer_email,
                   :payer_first_name,
@@ -112,6 +113,7 @@ class Order < Errol::Entity
                   :payment_gross,
                   :tax_payment,
                   :payment_net,
+                  :currency,
                   :completed_at,
                   :reminded_at,
                   :updated_at
@@ -127,6 +129,8 @@ class Order < Errol::Entity
   end
 
   def calculate_payment
+    currency = customer.working_currency
+    self.currency = currency
     self.basket_total = shopping_basket.purchases_price
     self.discount_value = shopping_basket.discount_value
     self.payment_gross = shopping_basket.price
