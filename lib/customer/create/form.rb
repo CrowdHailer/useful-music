@@ -1,3 +1,4 @@
+require_relative './validator'
 class Customer
   class Create < Usecase::Interactor
     class Form
