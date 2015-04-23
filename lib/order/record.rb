@@ -35,10 +35,30 @@ class Order
 
     plugin :serialization
 
-    serialize_attributes [
-      lambda{ |money| money.fractional },
-      lambda{ |fractional| Money.new(fractional) }
-    ], :basket_total, :tax_payment, :discount_value, :payment_gross, :payment_net
+    # serialize_attributes [
+    #   lambda{ |money| money.fractional },
+    #   lambda{ |fractional| Money.new(fractional) }
+    # ], :basket_total, :tax_payment, :discount_value, :payment_gross, :payment_net
+
+    def payment_net
+      Money.new(super, currency)
+    end
+
+    def basket_total
+      Money.new(super, currency)
+    end
+
+    def tax_payment
+      Money.new(super, currency)
+    end
+
+    def discount_value
+      Money.new(super, currency)
+    end
+
+    def payment_gross
+      Money.new(super, currency)
+    end
 
     serialize_attributes [
       lambda{ |currency| currency.iso_code },

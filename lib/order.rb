@@ -58,7 +58,7 @@ class Transaction < Errol::Entity
 
   def payment_request
     Paypal::Payment::Request.new(
-      :currency_code => :GBP,
+      :currency_code => currency.iso_code,
       :quantity      => 1,
       :amount => payment_net.to_f,
       :tax_amount => tax_payment.to_f,
@@ -131,11 +131,11 @@ class Order < Errol::Entity
   def calculate_payment
     currency = customer.working_currency
     self.currency = currency
-    self.basket_total = shopping_basket.purchases_price
-    self.discount_value = shopping_basket.discount_value
-    self.payment_gross = shopping_basket.price
-    self.tax_payment = customer.vat_rate * payment_gross
-    self.payment_net = payment_gross + tax_payment
+    self.basket_total = shopping_basket.purchases_price.exchange_to(currency)
+    self.discount_value = shopping_basket.discount_value.exchange_to(currency)
+    self.payment_gross = shopping_basket.price.exchange_to(currency)
+    self.tax_payment = (customer.vat_rate * payment_gross).exchange_to(currency)
+    self.payment_net = (payment_gross + tax_payment).exchange_to(currency)
   end
   # TODO untested
   delegate :setup, :fetch_details, :checkout, :succeded?, :to => :transaction
