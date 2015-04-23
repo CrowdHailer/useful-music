@@ -58,11 +58,6 @@
             </div>
         </div>
         <form action="/currency" method="post">
-            <style media="screen">
-                .currency-convert.live {
-                    color: black;
-                }
-            </style>
             <%= csrf_tag %>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" type="submit" name="preference" value="USD">$</button>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'GBP' %>" type="submit" name="preference" value="GBP">£</button>
