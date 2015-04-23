@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/CrowdHailer/usecase
+  revision: 265e824f72475886ee522eec65bcfdc9128f98e2
+  tag: 0.1.0
+  specs:
+    usecase (0.1.0)
+
 PATH
   remote: ./gems/errol
   specs:
@@ -193,6 +200,7 @@ DEPENDENCIES
   sequel
   shotgun
   thin
+  usecase!
   veto
   virtus
   warden

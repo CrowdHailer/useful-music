@@ -29,14 +29,10 @@ module Errol
     def self.boolean_query(*entries)
       entries.each do |entry|
         define_method "#{entry}?" do
-          record.public_send entry
+          !!(record.public_send entry)
         end
       end
     end
-
-    # boolean_writer is entry writer
-    # query uses !!
-    # reader adds ? but does not use !!
 
     def self.entry_accessor(*entries)
       entry_reader *entries
@@ -49,16 +45,12 @@ module Errol
     end
 
     def initialize(record)
-      raise NilRecord, "Tried to initialise #{self.class.name} with nil record" if record.nil?
-      # TODO test
+      # raise NilRecord, "Tried to initialise #{self.class.name} with nil record" if record.nil?
       @record = record
     end
 
-    def repository
-      self.class.repository
-    end
-
     attr_reader :record
+    # protected :record
     entry_reader :id
 
     def set(**attributes)
@@ -68,36 +60,34 @@ module Errol
       self
     end
 
-    def ==(other)
-      other.class == self.class && other.record == record
-    end
-    alias_method :eql?, :==
-
-    # #################################
-    # #
-    # #    helper methods, might belong in module
-    # #
-    # ##################################
-    #
-    def save
-      repository.save self
-    end
-
-    def destroy
-      repository.remove self
-    end
-    #
-    # def reload
-    #   repository.reload self
-    # end
-
-    ############ End ########################
-    #
-
     def set!(*args)
       set(*args)
       save
     end
+
+    def repository
+      self.class.repository
+    end
+
+    def save
+      repository.save self
+      self
+    end
+
+    def destroy
+      repository.remove self
+      self
+    end
+
+    def refresh
+      repository.refresh self
+      self
+    end
+
+    def ==(other)
+      other.class == self.class && other.record == record
+    end
+    alias_method :eql?, :==
     # def method_missing(method_name, *args, &block)
     #   if method_name.to_s =~ /^(.+)!$/
     #     self.public_send($1, *args, &block)

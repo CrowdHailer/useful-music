@@ -26,7 +26,7 @@ class Purchase
       def test_obtains_item
         item_record = create :item_record
         form = Form.new :item => item_record.id
-        assert_equal item_record, form.item.record
+        assert_equal Item.new(item_record), form.item
       end
 
       def test_nil_if_item_does_not_exist
@@ -42,7 +42,7 @@ class Purchase
       def test_obtains_shopping_basket
         shopping_basket_record = create :shopping_basket_record
         form = Form.new :shopping_basket => shopping_basket_record.id
-        assert_equal shopping_basket_record, form.shopping_basket.record
+        assert_equal ShoppingBasket.new(shopping_basket_record), form.shopping_basket
       end
 
       def test_nil_if_shopping_basket_does_not_exist

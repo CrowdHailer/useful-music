@@ -29,13 +29,13 @@ class PurchaseTest < MyRecordTest
     item = Item.new(create :item_record)
     @record = create :purchase_record
     purchase.item = item
-    assert_equal item.record, purchase.record.item_record
+    assert_equal item, purchase.item
   end
 
   def test_sets_nil_if_setting_nil_item
     @record = create :purchase_record
     purchase.item = nil
-    assert_nil purchase.record.item_record
+    assert_nil record.item_record
   end
 
   def test_has_shopping_basket
@@ -51,13 +51,13 @@ class PurchaseTest < MyRecordTest
     shopping_basket = ShoppingBasket.new(create :shopping_basket_record)
     @record = create :purchase_record
     purchase.shopping_basket = shopping_basket
-    assert_equal shopping_basket.record, purchase.record.shopping_basket_record
+    assert_equal shopping_basket, purchase.shopping_basket
   end
 
   def test_sets_nil_if_setting_nil_shopping_basket
     @record = create :purchase_record
     purchase.shopping_basket = nil
-    assert_nil purchase.record.shopping_basket_record
+    assert_nil record.shopping_basket_record
   end
 
   ################# Archive #####################

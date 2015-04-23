@@ -16,6 +16,8 @@ gem 'rack-protection', :require => 'rack/protection'
 # gem 'usecase', :path => './gems/usecase', :branch => 'master'
 gem 'warden'
 
+gem 'usecase', :git => 'https://github.com/CrowdHailer/usecase', :tag => '0.1.0'
+
 gem 'mail'
 
 gem 'pg'

@@ -1,7 +1,8 @@
 class Customer
-  class Create
+  class Create < Usecase::Interactor
     class Form
       include Virtus.model
+      include Veto.model(Validator.new)
 
       attribute :first_name, String
       attribute :last_name, String

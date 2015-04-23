@@ -23,5 +23,6 @@ Dotenv.load
 Dir[File.dirname(__FILE__) + '/*.rb'].each {|file| require file }
 
 # require the lib directory
+# TODO cascade require
 Dir[APP_ROOT + '/lib/*.rb'].each {|file| require file }
 Dir[APP_ROOT + '/lib/**/*.rb'].each {|file| require file }

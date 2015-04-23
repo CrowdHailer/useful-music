@@ -230,20 +230,24 @@
                 </nav>
             </div>
             <div class="large-2 columns basket-nav">
-                  <div class="row collapse">
+                <div class="row collapse">
                     <div class="large-6 columns">
-                      <a href="/shopping_baskets/<%= shopping_basket.id %>"><label>BASKET</label></a>
+                        <a href="/shopping_baskets/<%= shopping_basket.id %>"><label>BASKET</label></a>
                     </div>
                     <div class="large-6 columns">
-                      <form action="/currency" method="post">
-                        [[TODO]]
-                                  <button class="currency-convert-head" type="submit" name="preference" value="USD">$</button>
-                                  <button class="currency-convert-head" type="submit" name="preference" value="GBP">£</button>
-                                  <button class="currency-convert-head" type="submit" name="preference" value="EUR">€</button>
-                      </form>
+                        <form action="/currency" method="post">
+                            <%= csrf_tag %>
+                            <button class="currency-convert-head <%= 'live' if current_customer.working_currency == 'USD' %>" type="submit" name="preference" value="USD">$</button>
+                            <button class="currency-convert-head <%= 'live' if current_customer.working_currency == 'GBP' %>" type="submit" name="preference" value="GBP">£</button>
+                            <button class="currency-convert-head <%= 'live' if current_customer.working_currency == 'EUR' %>" type="submit" name="preference" value="EUR">€</button>
+                        </form>
                     </div>
-                  </div>
-                    <a href="/shopping_baskets/<%= shopping_basket.id %>"><label class="basket-label"><%= shopping_basket.number_of_purchases %> ITEM(S) | <%= shopping_basket.price.format %> <i class="fa fa-shopping-cart"></i></label></a>
+                </div>
+                <a href="/shopping_baskets/<%= shopping_basket.id %>">
+                    <label class="basket-label">
+                        <%= shopping_basket.number_of_purchases %> ITEM(S) | <%= local_price(shopping_basket.price).format %> <i class="fa fa-shopping-cart"></i>
+                    </label>
+                </a>
             </div>
         </div>
     </div>

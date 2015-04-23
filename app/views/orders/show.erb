@@ -71,7 +71,7 @@
                             <%= purchase.quantity %>
                         </td>
                         <td>
-                            <%= purchase.price.format %>
+                            <%= local_price(purchase.price).format %>
                         </td>
                     </tr>
                 <% end %>

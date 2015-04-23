@@ -1,5 +1,5 @@
 class Customer
-  class Create
+  class Create < Usecase::Interactor
     class Validator
       include Veto.validator
 

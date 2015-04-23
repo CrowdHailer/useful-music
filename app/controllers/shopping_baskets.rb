@@ -36,7 +36,7 @@ class ShoppingBasketsController < UsefulMusic::App
     basket = ShoppingBaskets.fetch(id, &method(:shopping_basket_not_found))
     customer = current_customer
     unless customer.guest?
-      customer.record.update :shopping_basket_record => nil
+      customer.set! :shopping_basket => nil
     end
     ShoppingBaskets.remove basket
     flash['success'] = 'Shopping basket cleared'

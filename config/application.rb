@@ -50,13 +50,18 @@ module UsefulMusic
       if customer.guest?
         customer.shopping_basket ||= ShoppingBaskets.create
       else
-        customer.record.update :shopping_basket_record => ShoppingBaskets.create.record
+        customer.set! :shopping_basket => ShoppingBaskets.create
       end
       customer.shopping_basket
     end
 
     def customer_mailer
       CustomerMailer.new(current_customer, :application_url => url)
+    end
+
+    def local_price(amount)
+      currency = current_customer.currency_preference || Money::Currency.new('GBP')
+      amount.exchange_to(currency)
     end
   end
 end
