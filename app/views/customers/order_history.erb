@@ -159,7 +159,7 @@ ga('ecommerce:addTransaction', {
     'revenue': <%= @order.payment_net %>, // Grand Total.
     'shipping': 0, // Shipping.
     'tax': <%= @order.tax_payment %>, // Tax.
-    'currency': 'GBP'
+    'currency': '<%= @order.currency %>'
 });
 
 <% @order.shopping_basket.purchases.each do |purchase| %>
