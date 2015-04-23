@@ -22,7 +22,7 @@ class Guest
   end
 
   def working_currency
-    currency_preference || 'GBP'
+    currency_preference || Money::Currency.new('GBP')
   end
 
   def currency_preference=(currency)
