@@ -36,7 +36,7 @@
                   </form>
                 </td>
                 <td>
-                  <%= purchase.price.format %>
+                  <%= local_price(purchase.price).format %>
                 </td>
               </tr>
               <% end %>
@@ -88,7 +88,7 @@
                         <%= purchase.item.subsequent_price.format %>
                     </td>
                     <td>
-                        <%= purchase.price.format %>
+                        <%= local_price(purchase.price).format %>
                     </td>
                     <td>
                         <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
@@ -145,7 +145,7 @@
                           <%= current_customer.vat_rate.to_s %>
                       </th>
                       <th>
-                          <%= (current_customer.vat_rate * @basket.price).format %>
+                          <%= local_price((current_customer.vat_rate * @basket.price)).format %>
                       </th>
                     </tr>
                     <tr>
@@ -155,7 +155,7 @@
                             Total
                         </th>
                         <th>
-                            <%= ((current_customer.vat_rate * @basket.price) + @basket.price).format %>
+                            <%= local_price(((current_customer.vat_rate * @basket.price) + @basket.price)).format %>
                         </th>
                     </tr>
                 </thead>

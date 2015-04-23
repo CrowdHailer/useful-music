@@ -46,7 +46,7 @@
                 <div class="large-12 columns basket-contain">
                     <% shopping_basket.purchases.each do |purchase| %>
                     <div class="basket-item">
-                        <p><%= purchase.item.piece.title %> - <%= purchase.item.name %> -  <%= purchase.price.format %></p>
+                        <p><%= purchase.item.piece.title %> - <%= purchase.item.name %> -  <%= local_price(purchase.price).format %></p>
                     </div>
                     <% end %>
                 </div>
