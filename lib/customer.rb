@@ -87,6 +87,10 @@ class Customer < Errol::Entity
     Country::EUVAT.new(self.country)
   end
 
+  def working_currency
+    currency_preference || 'GBP'
+  end
+
   private
 
   def record_login
