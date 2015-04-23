@@ -97,6 +97,13 @@ class Order
       # assert_match(/discount_value_limit/, err.message)
     end
 
+    DOLLARS = Money::Currency.new('USD')
+    def test_can_have_a_currency
+      record = create :order_record, :currency => DOLLARS
+      assert_equal DOLLARS,  record.currency
+      assert_equal DOLLARS.class, record.currency.class
+    end
+
     def test_can_have_a_discount_record
       discount_record = create :discount_record
       shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record

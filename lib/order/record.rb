@@ -40,6 +40,11 @@ class Order
       lambda{ |fractional| Money.new(fractional) }
     ], :basket_total, :tax_payment, :discount_value, :payment_gross, :payment_net
 
+    serialize_attributes [
+      lambda{ |currency| currency.iso_code },
+      lambda{ |iso_code| Money::Currency.new(iso_code) }
+    ], :currency
+
     mount_uploader :licence, LicenceUploader
   end
 end
