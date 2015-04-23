@@ -18,4 +18,10 @@ namespace :schedule do
         order.reminder_sent
       end
   end
+
+  desc "seed database"
+  task :clear_shopping_baskets do
+    require './config/application'
+    ShoppingBaskets.clear_inactive(:since => Date.yesterday)
+  end
 end
