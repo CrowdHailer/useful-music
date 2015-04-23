@@ -56,6 +56,11 @@ class Order
       # assert_match(/basket_total_limit/, err.message)
     end
 
+    def test_basket_total_can_be_in_dollars
+      record = create :order_record, :basket_total => Money.new(1000, 'EUR'), :currency => Money::Currency.new('EUR')
+      assert_equal Money.new(1000, 'EUR'), record.basket_total
+    end
+
     def test_can_have_zero_tax_payment
       record = create :order_record, :tax_payment => zero_pounds
       assert_equal zero_pounds, record.tax_payment

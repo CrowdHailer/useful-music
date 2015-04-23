@@ -26,7 +26,7 @@ class Order
     end
 
     def dummy_customer(vat_rate=0)
-      Struct.new(:vat_rate, :record).new(vat_rate, :customer)
+      Struct.new(:vat_rate, :record, :working_currency).new(vat_rate, :customer, Money::Currency.new('GBP'))
     end
 
     def dummy_basket(purchases_price:, discount_value: FREE)
