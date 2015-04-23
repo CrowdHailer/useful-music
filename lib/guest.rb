@@ -21,6 +21,10 @@ class Guest
     session['guest.currency_preference']
   end
 
+  def working_currency
+    currency_preference || 'GBP'
+  end
+
   def currency_preference=(currency)
     # session['guest.currency_preference'] = currency.iso_code
     session['guest.currency_preference'] = currency
