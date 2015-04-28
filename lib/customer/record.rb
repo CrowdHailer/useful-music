@@ -24,5 +24,10 @@ class Customer
       lambda{ |alpha2| Country.new(alpha2) }
     ], :country
 
+    serialize_attributes [
+      lambda{ |currency| currency.iso_code },
+      lambda{ |iso_code| Money::Currency.new(iso_code) }
+    ], :currency_preference
+
   end
 end

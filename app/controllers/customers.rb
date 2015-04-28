@@ -19,12 +19,11 @@ class CustomersController < UsefulMusic::App
   end
 
   def create
-    begin
+    usecase = Customer::Create.new(self, request.POST['customer'])
+
+    usecase.created do |customer| # 201: created
       guest = current_customer
-      form = Customer::Create::Form.new request.POST['customer']
-      validator = Customer::Create::Validator.new
-      validator.validate! form
-      customer = Customers.create form
+      # log_in should handle guest basket
       log_in customer
       if guest.shopping_basket && !guest.shopping_basket.empty?
         # test transfer of basket
@@ -33,17 +32,24 @@ class CustomersController < UsefulMusic::App
       end
       customer_mailer.account_created
       flash['success'] = 'Welcome to Useful Music'
-      redirect success_path || "/customers/#{customer.id}"
-      # untested failure cases, usecase or leave in entity layer
-    rescue Veto::InvalidEntity => err
+      redirect success_path || "/customers/#{customer.id}", 201
+    end
+
+    usecase.invalid_details do |form| # 400: bad request
+      # TODO untested
+      # self.status = 400
       @form = form
-      @validator = validator
-      render :new
-    rescue Sequel::UniqueConstraintViolation => err
+      @validator = form
+      return render :new
+      # render :new, :locals => {:form => form}
+    end
+
+    usecase.email_taken do |form| # 409: conflict
+      # self.status = 409
       @form = form
-      validator.errors.add(:email, 'is already taken')
-      @validator = validator
-      render :new
+      @validator = form
+      return render :new
+      # render :new, :locals => {:form => form}
     end
   end
 
@@ -71,6 +77,28 @@ class CustomersController < UsefulMusic::App
   end
 
   def update(id)
+    # usecase = Customer::Update.new(self, 1, request.POST['customer'])
+    #
+    # usecase.updated do |customer| # 204: No Content
+    #   redirect customer_page customer, 204
+    # end
+    # usecase.unknown_account do |customer| # 404: Not found
+    # end
+    #
+    # usecase.unknow_user do |variable| # 401: Unauthenticated
+    #   status = 401
+    #   redirect login
+    # end
+    #
+    # usecase.not_permitted do |variable| # 403: Forbidden
+    #   redirect back, 403
+    # end
+    #
+    # usecase.invalid_details do |form| # 400: bad request
+    #   status = 400
+    #   render :new, :locals => {:form => form}
+    # end
+
     begin
       customer = check_access!(id)
       form = Customer::Update::Form.new request.POST['customer']

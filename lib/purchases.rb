@@ -16,7 +16,7 @@ class Purchases < Errol::Repository
     end
 
     def receive(entity)
-      entity.record
+      entity.send :record
     end
   end
 

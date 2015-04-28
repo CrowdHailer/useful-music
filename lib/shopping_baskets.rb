@@ -21,7 +21,7 @@ class ShoppingBaskets < Errol::Repository
     end
 
     def receive(entity)
-      entity.record
+      entity.send :record
     end
 
     def inactive(options={})
@@ -31,7 +31,7 @@ class ShoppingBaskets < Errol::Repository
 
     def clear_inactive(options={})
       inactive(options).each do |basket|
-        basket.record.destroy
+        remove basket
       end
     end
   end

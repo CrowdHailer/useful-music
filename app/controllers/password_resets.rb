@@ -19,7 +19,7 @@ class PasswordResetsController < UsefulMusic::App
     customer = Customers.find_by_email(form.email)
     if customer
       customer.create_password_reset
-      customer.record.save
+      customer.save
       # Set customer on mailer after creation?
       CustomerMailer.new(customer, :application_url => url).password_reset_created
       flash['success'] = 'A password reset has been sent to your email'
@@ -48,7 +48,7 @@ class PasswordResetsController < UsefulMusic::App
       # TODO add time validation
       if customer && customer.password_reset_token == id
         customer.password = @form.password
-        customer.record.save
+        customer.save
         flash['success'] = 'Password changed'
         redirect '/sessions/new'
       else

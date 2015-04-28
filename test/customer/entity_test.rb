@@ -212,8 +212,18 @@ class Customer
     end
 
     def test_can_set_question_3
-      customer.question_3 = :uk
-      assert_equal :uk, record.question_3
+      customer.question_3 = 'Clean text'
+      assert_equal 'Clean text', record.question_3
+    end
+
+    def test_can_access_currency_preference
+      record.currency_preference = Money::Currency.new('USD')
+      assert_equal Money::Currency.new('USD'), customer.currency_preference
+    end
+
+    def test_can_set_currency_preference
+      customer.currency_preference = Money::Currency.new('USD')
+      assert_equal Money::Currency.new('USD'), record.currency_preference
     end
 
     def test_can_access_last_login_at

@@ -60,7 +60,7 @@ class Item
       piece = Piece.new(create :piece_record)
       @record = create :item_record
       item.piece = piece
-      assert_equal piece.record, item.record.piece_record
+      assert_equal piece, item.piece
     end
 
     ################# Archive #####################

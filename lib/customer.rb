@@ -5,6 +5,7 @@ class Customer < Errol::Entity
                   :email,
                   :password,
                   :country,
+                  :currency_preference,
                   :question_1,
                   :question_2,
                   :question_3,
@@ -13,6 +14,10 @@ class Customer < Errol::Entity
                   :password_reset_created_at
 
   boolean_accessor :admin
+
+  def repository
+    Customers
+  end
 
   def correct_password?(candidate_password)
     password == candidate_password
@@ -80,6 +85,10 @@ class Customer < Errol::Entity
 
   def vat_rate
     Country::EUVAT.new(self.country)
+  end
+
+  def working_currency
+    currency_preference || Money::Currency.new('GBP')
   end
 
   private

@@ -36,7 +36,7 @@
                   </form>
                 </td>
                 <td>
-                  <%= purchase.price.format %>
+                  <%= local_price(purchase.price).format %>
                 </td>
               </tr>
               <% end %>
@@ -82,13 +82,13 @@
                         </form>
                     </td>
                     <td>
-                        <%= purchase.item.initial_price.format %>
+                        <%= local_price(purchase.item.initial_price).format %>
                     </td>
                     <td>
-                        <%= purchase.item.subsequent_price.format %>
+                        <%= local_price(purchase.item.subsequent_price).format %>
                     </td>
                     <td>
-                        <%= purchase.price.format %>
+                        <%= local_price(purchase.price).format %>
                     </td>
                     <td>
                         <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
@@ -119,7 +119,7 @@
                             Total
                         </th>
                         <th>
-                            <%= @basket.purchases_price.format %>
+                            <%= local_price(@basket.purchases_price).format %>
                         </th>
                     </tr>
                     <% unless @basket.discount.nil? %>
@@ -145,7 +145,7 @@
                           <%= current_customer.vat_rate.to_s %>
                       </th>
                       <th>
-                          <%= (current_customer.vat_rate * @basket.price).format %>
+                          <%= local_price((current_customer.vat_rate * @basket.price)).format %>
                       </th>
                     </tr>
                     <tr>
@@ -155,11 +155,17 @@
                             Total
                         </th>
                         <th>
-                            <%= ((current_customer.vat_rate * @basket.price) + @basket.price).format %>
+                            <%= local_price(((current_customer.vat_rate * @basket.price) + @basket.price)).format %>
                         </th>
                     </tr>
                 </thead>
             </table>
+            <form action="/currency" method="post">
+                <%= csrf_tag %>
+                <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" style="float: right;" type="submit" name="preference" value="USD">$</button>
+                <button class="currency-convert <%= 'live' if current_customer.working_currency == 'GBP' %>" style="float: right;" type="submit" name="preference" value="GBP">£</button>
+                <button class="currency-convert <%= 'live' if current_customer.working_currency == 'EUR' %>" style="float: right;" type="submit" name="preference" value="EUR">€</button>
+            </form>
             </div>
         </div>
     </div>

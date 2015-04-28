@@ -5,6 +5,10 @@ class Guest
 
   attr_reader :session
 
+  def save
+    true
+  end
+
   def shopping_basket
     ShoppingBaskets[session['guest.shopping_basket']]
   end
@@ -15,6 +19,10 @@ class Guest
 
   def currency_preference
     session['guest.currency_preference']
+  end
+
+  def working_currency
+    currency_preference || Money::Currency.new('GBP')
   end
 
   def currency_preference=(currency)
