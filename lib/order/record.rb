@@ -12,7 +12,7 @@ class LicenceUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    "#{model.id}.pdf" if file
+    "useful-licence-#{model.id}.pdf" if file
   end
 
 end
