@@ -37,15 +37,15 @@ class CustomersController < UsefulMusic::App
 
     usecase.invalid_details do |form| # 400: bad request
       # TODO untested
-      status = 400
+      self.status = 400
       @form = form
       @validator = form
       return render :new
       # render :new, :locals => {:form => form}
     end
 
-    usecase.email_taken do form # 409: conflict
-      status = 409
+    usecase.email_taken do |form| # 409: conflict
+      self.status = 409
       @form = form
       @validator = form
       return render :new
