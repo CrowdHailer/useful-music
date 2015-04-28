@@ -37,7 +37,7 @@ class CustomersController < UsefulMusic::App
 
     usecase.invalid_details do |form| # 400: bad request
       # TODO untested
-      self.status = 400
+      # self.status = 400
       @form = form
       @validator = form
       return render :new
@@ -45,7 +45,7 @@ class CustomersController < UsefulMusic::App
     end
 
     usecase.email_taken do |form| # 409: conflict
-      self.status = 409
+      # self.status = 409
       @form = form
       @validator = form
       return render :new
