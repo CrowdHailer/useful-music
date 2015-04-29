@@ -81,7 +81,7 @@
 
     <!-- SEARCH RESULTS RIGHT -->
 
-    <div class="large-9 columns">
+<div class="large-9 columns">
         <div class="row collapse white-section section-bottom-margin">
             <div class="large-6 medium-6 small-12 columns piece-title">
                 <h1><%= @piece.title %></h1>
@@ -119,7 +119,8 @@
                           <%= csrf_tag %>
                             <div class="row collapse">
                               <% @piece.items.each do |item| %>
-                                <div class="licence-select" style="float:left;width:50%;">
+                              <div class="large-6 medium-6 small-12 columns">
+                                <div class="licence-select">
                                     <h6>
                                       <%= item.name %>
                                     </h6>
@@ -131,6 +132,7 @@
                                     <p><%= local_price(item.initial_price).format %> first licence</p>
                                     <p><%= local_price(item.subsequent_price).format %> additional</p>
                                 </div>
+                              </div>
                               <% end %>
                             </div>
                             <div class="total-box">
@@ -143,11 +145,9 @@
                             </div> -->
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
     <!-- END SEARCH RESULTS -->
 </div>
