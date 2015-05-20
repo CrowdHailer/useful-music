@@ -25,6 +25,12 @@ module UsefulMusic
         assert_includes last_response.location, '123'
       end
 
+      def test_can_search_for_piece_from_catalogue_number
+        create :piece_record, :id => '123'
+        get '/search', {search: 'UD123'}
+        assert_includes last_response.location, '123'
+      end
+
       def test_redirects_when_no_piece
         get '/search', {search: '123'}
         assert_equal 'Could not find piece', flash['error']
