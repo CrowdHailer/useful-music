@@ -34,8 +34,7 @@
                         :saxophone,
                         :trumpet,
                         :violin,
-                        :viola,
-                        :percussion].each do |instrument| %>
+                        :viola].each do |instrument| %>
                             <label class="pure-checkbox">
                                 <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= 'checked' if @search.public_send instrument %>>
                                 <%= instrument.capitalize %>
