@@ -18,7 +18,7 @@ module UsefulMusic
           redirect "/admin/pieces/#{piece.catalogue_number}/edit"
         else
           flash['error'] = 'Could not find piece'
-          redirect "/admin/pieces", 404
+          redirect "/admin/pieces"
         end
       end
 
