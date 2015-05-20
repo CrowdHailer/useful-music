@@ -42,8 +42,8 @@
         <form action="/admin/pieces/search" method="get">
             <input class="action" type="text" name="search" placeholder="e.g. UD123" list="all-pieces">
             <datalist id="all-pieces">
-                <% @pieces.each do |piece| %>
-                    <option value="<%= piece.id %>">
+                <% Catalogue.each do |piece| %>
+                    <option value="<%= piece.catalogue_number %>">
                 <% end %>
             </datalist>
             <button class="submit">Find Piece</button>
