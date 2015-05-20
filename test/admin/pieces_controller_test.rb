@@ -19,6 +19,24 @@ module UsefulMusic
         assert_includes last_response.body, 'UD123'
       end
 
+      def test_can_search_for_piece
+        create :piece_record, :id => '123'
+        get '/search', {search: '123'}
+        assert_includes last_response.location, '123'
+      end
+
+      def test_can_search_for_piece_from_catalogue_number
+        create :piece_record, :id => '123'
+        get '/search', {search: 'UD123'}
+        assert_includes last_response.location, '123'
+      end
+
+      def test_redirects_when_no_piece
+        get '/search', {search: '123'}
+        assert_equal 'Could not find piece', flash['error']
+        assert_equal last_response.location, '/admin/pieces'
+      end
+
       def test_new_page_is_available
         assert_ok get '/new'
       end

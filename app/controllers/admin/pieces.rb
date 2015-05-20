@@ -1,6 +1,7 @@
 module UsefulMusic
   module Admin
     class PiecesController < UsefulMusic::App
+      get('/search') { send :search }
       include Scorched::Rest
 
       render_defaults[:dir] += '/admin/pieces'
@@ -9,6 +10,16 @@ module UsefulMusic
       def index
         @pieces = Catalogue.new request.GET
         render :index
+      end
+
+      def search
+        piece = Catalogue[request.GET.fetch('search') { '' }]
+        if piece
+          redirect "/admin/pieces/#{piece.catalogue_number}/edit"
+        else
+          flash['error'] = 'Could not find piece'
+          redirect "/admin/pieces"
+        end
       end
 
       def new

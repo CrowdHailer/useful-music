@@ -38,6 +38,17 @@
             <button class="action" name="page" value="<%= @pieces.page_count %>" <%= 'disabled' unless @pieces.next_page %>>Last Page</button>
         </form>
     </header>
+    <div class="" style="padding:0.5em;">
+        <form action="/admin/pieces/search" method="get">
+            <input class="action" type="text" name="search" placeholder="e.g. UD123" list="all-pieces">
+            <datalist id="all-pieces">
+                <% @pieces.each do |piece| %>
+                    <option value="<%= piece.id %>">
+                <% end %>
+            </datalist>
+            <button class="submit">Find Piece</button>
+        </form>
+    </div>
     <table class="index">
         <thead>
             <tr>
