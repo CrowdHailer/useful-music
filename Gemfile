@@ -13,10 +13,10 @@ gem 'scorched'
 gem 'scorched-rest', :path => './gems/scorched-rest', :require => 'scorched/rest', :branch => 'master'
 gem 'rack_csrf', :require => 'rack/csrf'
 gem 'rack-protection', :require => 'rack/protection'
-# gem 'usecase', :path => './gems/usecase', :branch => 'master'
 gem 'warden'
+gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 
-gem 'usecase', :git => 'https://github.com/CrowdHailer/usecase', :tag => '0.1.0'
+gem 'all_systems', '~> 0.2.1'
 
 gem 'mail'
 

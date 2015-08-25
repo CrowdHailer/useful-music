@@ -1,6 +1,6 @@
 require_relative './validator'
 class Customer
-  class Create < Usecase::Interactor
+  class Create < AllSystems::Interactor
     class Form
       include Virtus.model
       include Veto.model(Validator.new)

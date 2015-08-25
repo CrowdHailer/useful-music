@@ -76,6 +76,7 @@ class UsefulMusic::App
   config[:protect_from_csrf] = !(RACK_ENV == 'test')
 
   middleware << proc do |app|
+    use Rack::SslEnforcer, :only => [], :strict => true
     use Bugsnag::Rack
     use Rack::GoogleAnalytics, :tracker => ENV['GOOGLE_ANALYTICS_CODE'], :ecommerce => true if RACK_ENV == 'production' || RACK_ENV == 'staging'
     use Rack::Session::Cookie, secret: ENV.fetch('SESSION_SECRET_KEY')
