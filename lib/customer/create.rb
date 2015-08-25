@@ -1,5 +1,5 @@
 class Customer
-  class Create < Usecase::Interactor
+  class Create < AllSystems::Interactor
     def initialize(context, params)
       @context = context
       @params = params
@@ -11,7 +11,7 @@ class Customer
       [:created, :invalid_details, :email_taken]
     end
 
-    def run!
+    def go!
       begin
         report_invalid_details form unless form.valid?
         customer = Customers.create form

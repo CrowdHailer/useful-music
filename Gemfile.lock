@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/CrowdHailer/usecase
-  revision: 265e824f72475886ee522eec65bcfdc9128f98e2
-  tag: 0.1.0
-  specs:
-    usecase (0.1.0)
-
 PATH
   remote: ./gems/errol
   specs:
@@ -41,6 +34,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    all_systems (0.2.1)
     ansi (1.5.0)
     attr_required (1.0.0)
     awesome_print (1.6.1)
@@ -171,6 +165,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  all_systems (~> 0.2.1)
   awesome_print
   bcrypt
   better_errors
@@ -200,8 +195,10 @@ DEPENDENCIES
   sequel
   shotgun
   thin
-  usecase!
   veto
   virtus
   warden
   wkhtmltopdf-heroku-edge (~> 0.12.2.1b)
+
+BUNDLED WITH
+   1.10.6
