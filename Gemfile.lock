@@ -119,6 +119,7 @@ GEM
       activesupport
     rack-protection (1.5.3)
       rack
+    rack-ssl-enforcer (0.2.9)
     rack-test (0.6.3)
       rack (>= 1.0)
     rack_csrf (2.5.0)
@@ -187,6 +188,7 @@ DEPENDENCIES
   pg
   rack-google-analytics
   rack-protection
+  rack-ssl-enforcer
   rack-test
   rack_csrf
   sass

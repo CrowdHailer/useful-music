@@ -14,6 +14,7 @@ gem 'scorched-rest', :path => './gems/scorched-rest', :require => 'scorched/rest
 gem 'rack_csrf', :require => 'rack/csrf'
 gem 'rack-protection', :require => 'rack/protection'
 gem 'warden'
+gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 
 gem 'all_systems', '~> 0.2.1'
 
