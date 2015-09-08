@@ -39,8 +39,12 @@
         </a>
     </div>
     <div class="large-4 columns hide-for-small-only hide-for-medium-only">
+
+      <!-- This is the beginning of the code that looks after the video on the home page. -->
+
       <div class="vid-wrap">
-          <iframe width="290" height="200" src="https://www.youtube.com/embed/9FRbhRrn9DM?rel=0" frameborder="0" allowfullscreen></iframe>
+        <!-- This is the line that governs which YouTube video is shown.  To change the video, replace the URL in this iframe tag making sure you maintain the ?relO and quotation marks-->
+         <iframe width="430" height="220" src="https://www.youtube.com/embed/9FRbhRrn9DM?rel=0" frameborder="0" allowfullscreen></iframe>
           <h5>Papillons de Nuit by Graham Lyons</h5>
       </div>
 
@@ -61,13 +65,13 @@
                 <h4>TOTAL: <%= local_price(shopping_basket.price).format %></h4>
                 <a href="/shopping_baskets/<%= shopping_basket.id %>"><h4 class="checkout">CHECKOUT <i class="fa fa-shopping-cart" style="line-height: 0.5;"></i></h4></a>
             </div>
-        </div> -->
+        </div>
         <form action="/currency" method="post">
             <%= csrf_tag %>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" type="submit" name="preference" value="USD">$</button>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'GBP' %>" type="submit" name="preference" value="GBP">£</button>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'EUR' %>" type="submit" name="preference" value="EUR">€</button>
-        </form>
+        </form> END BASKET-->
 
     </div>
 </div>
@@ -125,26 +129,27 @@
                 </div>
             </div>
         </div>
-        <div class="promo-wrap">
-            <div class="row collapse">
-                <div class="large-6 columns clarineo">
-                    <h3>Clarineo Sheet Music</h3>
-                    <p>Exclusive digital sheet music by Graham Lyons.</p>
-                    <a href="/clarineo">
-                        <button style="margin-top: 1em; float: left;">BROWSE CLARINEO SHEET MUSIC</button>
-                    </a>
-                </div>
-                <div class="large-6 columns">
-                    <div class="clarineo-img">
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="large-6 medium-6 columns slider hide-for-small-only">
-        <h3>Useful Videos</h3>
+      <div class="promo-wrap">
+          <div class="row collapse">
+              <div class="large-6 columns clarineo">
+                  <h3>Clarineo Sheet Music</h3>
+                  <p>Exclusive digital sheet music by Graham Lyons.</p>
+                  <a href="/clarineo">
+                      <button style="margin-top: 1em; float: left;">BROWSE CLARINEO SHEET MUSIC</button>
+                  </a>
+              </div>
+              <div class="large-6 columns">
+                  <div class="clarineo-img">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!--OLD VIDEO CAROUSEL <h3>Useful Videos</h3>
         <div id="owl-demo" class="owl-carousel">
-            <!-- Slide 1 -->
+
             <div class="row collapse">
                 <div class="large-6 columns">
                     <div class="vid-wrap">
@@ -161,7 +166,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Slide 2 -->
+
             <div class="row collapse">
                 <div class="large-6 columns">
                     <div class="vid-wrap">
@@ -179,6 +184,6 @@
                 </div>
             </div>
 
-        </div>
+        </div>-->
     </div>
 </div>
