@@ -39,7 +39,12 @@
         </a>
     </div>
     <div class="large-4 columns hide-for-small-only hide-for-medium-only">
-        <div class="basket-main">
+      <div class="vid-wrap">
+          <iframe width="290" height="200" src="https://www.youtube.com/embed/9FRbhRrn9DM?rel=0" frameborder="0" allowfullscreen></iframe>
+          <h5>Papillons de Nuit by Graham Lyons</h5>
+      </div>
+
+      <!-- START BASKET <div class="basket-main">
             <h3>BASKET</h3>
             <hr>
             <div class="row">
@@ -56,7 +61,7 @@
                 <h4>TOTAL: <%= local_price(shopping_basket.price).format %></h4>
                 <a href="/shopping_baskets/<%= shopping_basket.id %>"><h4 class="checkout">CHECKOUT <i class="fa fa-shopping-cart" style="line-height: 0.5;"></i></h4></a>
             </div>
-        </div>
+        </div> -->
         <form action="/currency" method="post">
             <%= csrf_tag %>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" type="submit" name="preference" value="USD">$</button>
