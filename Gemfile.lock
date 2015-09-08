@@ -201,6 +201,3 @@ DEPENDENCIES
   virtus
   warden
   wkhtmltopdf-heroku-edge (~> 0.12.2.1b)
-
-BUNDLED WITH
-   1.10.6
