@@ -413,7 +413,7 @@ height: auto;
   background-image: url('/images/ensemble-main.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  height: 15em;
+  height: 15.5em;
   min-height: 15em;
   margin-top: 2em;
   margin-right: 0.5em;
@@ -478,7 +478,7 @@ height: auto;
 
 .promo-wrap {
   background: #f8f7f7;
-  height: auto;
+  height: 12em;
   margin: 1em;
   padding: 0.5em;
 }
@@ -536,15 +536,10 @@ height: auto;
   background-size: cover;
 }
 
-.slider h3{
-  text-align: center;
-  color: #005a86;
-  padding-top: 0.5em;
-}
-
 .vid-wrap {
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 0em;
+  padding-right: 0.5em;
+  padding-top: 2em;
 }
 
 /*Basket CSS*/

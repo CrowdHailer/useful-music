@@ -23,11 +23,11 @@
 </div>
 
 <div class="row collapse white-section">
-    <div class="large-4 columns cstm-narrow hide-for-small-only hide-for-medium-only">
+    <div class="large-3 columns hide-for-small-only hide-for-medium-only">
         <div class="ensemble-pic">
         </div>
     </div>
-    <div class="large-4 columns ensemble">
+    <div class="large-3 columns ensemble">
         <h2>Playing in an Ensemble?</h2>
         <p>Do you play in a group, conduct ensembles, or are you looking for a group festival piece? Useful Music has a great selection of ensemble pieces for all sorts of instruments and levels.</p>
         <a href="/pieces?catalogue_search%5Btrio%5D=on&catalogue_search%5Bquartet%5D=on&catalogue_search%5Blarger_ensembles%5D=on">
@@ -38,8 +38,28 @@
             </button>
         </a>
     </div>
-    <div class="large-4 columns hide-for-small-only hide-for-medium-only">
-        <div class="basket-main">
+    <div class="large-3 columns hide-for-small-only hide-for-medium-only">
+
+      <!-- This is the beginning of the code that looks after the video on the home page. -->
+
+      <div class="vid-wrap">
+        <!-- This is the line that governs which YouTube video is shown.  To change the video, replace the URL in this iframe tag making sure you maintain the ?relO and quotation marks-->
+         <iframe width="100%" height="190" src="https://www.youtube.com/embed/9FRbhRrn9DM?rel=0" frameborder="0" allowfullscreen></iframe>
+          <h5>Papillons de Nuit by Graham Lyons</h5>
+      </div>
+    </div>
+    <div class="large-3 columns hide-for-small-only hide-for-medium-only">
+
+      <!-- This is the beginning of the code that looks after the video on the home page. -->
+
+      <div class="vid-wrap">
+        <!-- This is the line that governs which YouTube video is shown.  To change the video, replace the URL in this iframe tag making sure you maintain the ?relO and quotation marks-->
+        <iframe width="100%" height="190" src="https://www.youtube.com/embed/cCLE_k33R54?rel=0" frameborder="0" allowfullscreen></iframe>
+        <h5>Useful Music Studio Sessions: Fanfare by Graham Lyons</h5>
+      </div>
+    </div>
+
+      <!-- START BASKET <div class="basket-main">
             <h3>BASKET</h3>
             <hr>
             <div class="row">
@@ -62,9 +82,9 @@
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" type="submit" name="preference" value="USD">$</button>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'GBP' %>" type="submit" name="preference" value="GBP">£</button>
             <button class="currency-convert <%= 'live' if current_customer.working_currency == 'EUR' %>" type="submit" name="preference" value="EUR">€</button>
-        </form>
+        </form> END BASKET-->
 
-    </div>
+
 </div>
 
 <div class="row collapse white-section">
@@ -99,13 +119,13 @@
 
 <div class="row collapse">
     <div class="large-12 columns promo-banner">
-        <h2>Features & Promotions</h2>
+        <h2>Features &amp; Promotions</h2>
     </div>
 </div>
 
 <div class="row collapse white-section">
     <div class="large-6 medium-6 small-12 columns">
-        <div class="promo-wrap top-promo">
+        <div class="promo-wrap">
             <div class="row collapse">
                 <div class="large-4 columns">
                     <div class="hand-img">
@@ -120,26 +140,27 @@
                 </div>
             </div>
         </div>
-        <div class="promo-wrap">
-            <div class="row collapse">
-                <div class="large-6 columns clarineo">
-                    <h3>Clarineo Sheet Music</h3>
-                    <p>Exclusive digital sheet music by Graham Lyons.</p>
-                    <a href="/clarineo">
-                        <button style="margin-top: 1em; float: left;">BROWSE CLARINEO SHEET MUSIC</button>
-                    </a>
-                </div>
-                <div class="large-6 columns">
-                    <div class="clarineo-img">
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="large-6 medium-6 columns slider hide-for-small-only">
-        <h3>Useful Videos</h3>
+      <div class="promo-wrap">
+          <div class="row collapse">
+              <div class="large-6 columns clarineo">
+                  <h3>Clarineo Sheet Music</h3>
+                  <p>Exclusive digital sheet music by Graham Lyons.</p>
+                  <a href="/clarineo">
+                      <button style="margin-top: 1em; float: left;">BROWSE CLARINEO SHEET MUSIC</button>
+                  </a>
+              </div>
+              <div class="large-6 columns">
+                  <div class="clarineo-img">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!--OLD VIDEO CAROUSEL <h3>Useful Videos</h3>
         <div id="owl-demo" class="owl-carousel">
-            <!-- Slide 1 -->
+
             <div class="row collapse">
                 <div class="large-6 columns">
                     <div class="vid-wrap">
@@ -156,7 +177,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Slide 2 -->
+
             <div class="row collapse">
                 <div class="large-6 columns">
                     <div class="vid-wrap">
@@ -174,6 +195,6 @@
                 </div>
             </div>
 
-        </div>
+        </div>-->
     </div>
 </div>
