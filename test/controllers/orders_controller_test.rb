@@ -46,7 +46,7 @@ class OrdersControllerTest < MyRecordTest
   end
 
   def test_redirect_with_pending_discount
-    discount_record = create :discount_record, :end_datetime => DateTime.new(2016), :start_datetime => DateTime.new(2016)
+    discount_record = create :discount_record, :end_datetime => DateTime.new(2116), :start_datetime => DateTime.new(2116)
     shopping_basket_record = create :shopping_basket_record, :discount_record => discount_record
     shopping_basket_record.add_purchase_record create :purchase_record
     customer.record.update(:shopping_basket_record => shopping_basket_record)
