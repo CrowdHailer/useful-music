@@ -82,6 +82,10 @@ http://yuml.me/edit/668b5dff
 http://yuml.me/edit/230cf55f
 http://yuml.me/bc67d93c
 
+### Scheduled Tasks
+
+use `rake schedule:clear_shopping_baskets` to clear all inactive shopping baskets
+
 ### Commands
 
 > Migrate up  
