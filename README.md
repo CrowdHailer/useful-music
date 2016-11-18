@@ -3,28 +3,38 @@ Useful Music
 
 Application to sell sheet music and associated audio tracks.
 
+## Services
+
+- The staging application is running at http://wks14007-staging.herokuapp.com/
+
 ## Usage
 
 #### Clone the app
+
 
 ```
 git clone git@github.com:CrowdHailer/useful-music.git
 cd useful-music
 ```
 
-#### Install PDF Kit extension
+#### Provision VM
 
-*This extension is used to translate HTML to PDF documents*
+```sh
+vagrant up
 
-```
-sudo apt-get install wkhtmltopdf
+vagrant ssh
 ```
 
 #### Install Ruby Gem Dependencies
 
+```sh
+sudo apt-get install libxslt-dev libxml2-dev -y && export NOKOGIRI_USE_SYSTEM_LIBRARIES=1 && sudo gem install --verbose nokogiri
+
+bundle
 ```
-bundle install
-```
+http://stackoverflow.com/questions/11663499/unable-to-install-nokogiri-in-ubuntu-12-04
+
+http://www.nokogiri.org/tutorials/installing_nokogiri.html
 
 #### Add Enviroment Variable
 
@@ -36,15 +46,17 @@ touch .env
 
 required
 
-- SESSION_SECRET_KEY
-- S3_BUCKET_NAME
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
-- PAYPAL_USERNAME
-- PAYPAL_PASSWORD
-- PAYPAL_SIGNATURE
-- MANDRILL_USERNAME
-- MANDRILL_APIKEY
+```
+SESSION_SECRET_KEY=DUMMY
+S3_BUCKET_NAME=DUMMY
+AWS_ACCESS_KEY_ID=DUMMY
+AWS_SECRET_ACCESS_KEY=DUMMY
+PAYPAL_USERNAME=DUMMY
+PAYPAL_PASSWORD=DUMMY
+PAYPAL_SIGNATURE=DUMMY
+MANDRILL_USERNAME=DUMMY
+MANDRILL_APIKEY=DUMMY
+```
 
 #### Create Databases
 
