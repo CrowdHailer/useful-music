@@ -22,7 +22,8 @@ defmodule UM.Web.Mixfile do
   defp deps do
     [
       {:ace, "~> 0.7.0"},
-      {:raxx, "~> 0.4.2"}
+      {:raxx, "~> 0.4.2"},
+      {:mime, "~> 1.0"}
     ]
   end
 end

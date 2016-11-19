@@ -1,2 +1,3 @@
 %{"ace": {:hex, :ace, "0.7.0", "da8774c9da21dea09c87e825355657d6a431cce5dcbc17704f0c74153f519a59", [:mix], []},
+  "mime": {:hex, :mime, "1.0.1", "05c393850524767d13a53627df71beeebb016205eb43bfbd92d14d24ec7a1b51", [:mix], []},
   "raxx": {:hex, :raxx, "0.4.2", "5afeae1a0eb0ca562cdbd6540242c3bec0e2e576676b0b2202d61ef083c0b95e", [:mix], []}}
