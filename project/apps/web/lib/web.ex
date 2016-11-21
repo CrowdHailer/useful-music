@@ -41,6 +41,9 @@ defmodule UM.Web do
   defp endpoint(request = %{path: ["customers" | rest]}, env) do
     UM.Web.Customers.handle_request(%{request| path: rest}, env)
   end
+  defp endpoint(request = %{path: ["admin" | rest]}, env) do
+    UM.Web.Admin.handle_request(%{request| path: rest}, env)
+  end
 
   defp endpoint(%{path: []} ,_env) do
     body = "Useful music"
@@ -48,7 +51,6 @@ defmodule UM.Web do
   end
 
   defp endpoint(%{path: ["login"], method: :GET, headers: headers}, _) do
-    IO.inspect(headers)
     body = """
       <h1>login</h1>
       <form action="/login" method="post">

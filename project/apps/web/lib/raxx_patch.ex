@@ -1,3 +1,11 @@
+defmodule Raxx.Patch do
+  def get_header(request, key) do
+    # check {:ok value} semantics
+    {^key, value} = List.keyfind(request.headers, key, 0)
+    value
+  end
+end
+
 defmodule Raxx.Session do
   # Plug sessions always use a cookie.
   # take sid(from_cookies) -> store -> sesson data

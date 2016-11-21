@@ -41,6 +41,5 @@ defmodule UM.WebTest do
       headers: [{"content-type", "application/x-www-form-urlencoded"}]
     }
     response = UM.Web.handle_request(request, :no_state)
-    IO.inspect(response)
   end
 end
