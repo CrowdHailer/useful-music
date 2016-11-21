@@ -1,3 +1,4 @@
 %{"ace": {:hex, :ace, "0.7.0", "da8774c9da21dea09c87e825355657d6a431cce5dcbc17704f0c74153f519a59", [:mix], []},
   "mime": {:hex, :mime, "1.0.1", "05c393850524767d13a53627df71beeebb016205eb43bfbd92d14d24ec7a1b51", [:mix], []},
+  "plug": {:hex, :plug, "1.2.2", "cfbda521b54c92ab8ddffb173fbaabed8d8fc94bec07cd9bb58a84c1c501b0bd", [:mix], [{:cowboy, "~> 1.0", [hex: :cowboy, optional: true]}, {:mime, "~> 1.0", [hex: :mime, optional: false]}]},
   "raxx": {:hex, :raxx, "0.4.3", "ffbf4a687155ba0f38f464b5f84b731cb71d9b738c3951ac93c48c1c2d16e978", [:mix], [{:mime, "~> 1.0", [hex: :mime, optional: false]}]}}
