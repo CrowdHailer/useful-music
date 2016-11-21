@@ -14,13 +14,6 @@ defmodule UM.Web do
     Supervisor.start_link(children, opts)
   end
 
-  defmodule Assets do
-    require Raxx.Static
-
-    dir = "./assets"
-    Raxx.Static.serve_dir(dir)
-  end
-
   def handle_request(request = %{path: ["assets" | rest]}, env) do
     UM.Web.Assets.handle_request(%{request| path: rest}, env)
   end
