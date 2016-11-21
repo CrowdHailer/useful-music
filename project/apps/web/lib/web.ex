@@ -20,16 +20,12 @@ defmodule UM.Web do
   end
 
   # This should end up as part of a Raxx Stack
+  # Do handling form mapping here
   def handle_request(request, env) do
-    # Do handling form mapping here
-    headers = request.headers
-    {"cookie", cookie_string} = List.keyfind(headers, "cookie", 0, {"cookie", ""})
-    # TODO pass in a single string
-    id = Raxx.Cookie.parse([cookie_string]) |> Map.get("user.id", "")
-
+    {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
     # Maybe this should be x-user-id
-    headers = headers ++ [{"um-user-id", id}]
-    request = %{request| headers: headers}
+    {:ok, request} = Raxx.Session.set_header(request, "um-user-id", session)
+
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 
     headers = if !List.keymember?(headers, "content-length", 0) do
@@ -39,7 +35,6 @@ defmodule UM.Web do
     end
 
     headers = headers ++ [{"server", "workshop 14 limited"}]
-
     %Raxx.Response{status: status, headers: headers, body: body}
   end
 
@@ -63,16 +58,13 @@ defmodule UM.Web do
     """
     Raxx.Response.ok(body)
   end
-  defp endpoint(%{path: ["login"], method: :POST, headers: headers}, _) do
-    set_cookie_string = Raxx.Cookie.new("user.id", "hi")
-    |> Raxx.Cookie.set_cookie_string
-    |> IO.inspect
-    Raxx.Response.see_other("", [
-      {"set-cookie", set_cookie_string},
-      {"location", "/login"}])
-    # TODO redirect is broken
-    # Raxx.Response.redirect("body")
-    # |> Raxx.Response.set_cookie("user.id", "hi")
+
+  defp endpoint(%{path: ["login"], method: :POST, headers: headers, body: body}, _) do
+    credentials = Plug.Conn.Query.decode(body)
+    session = credentials["email"]
+
+    response = Raxx.Response.see_other("", [{"location", "/login"}])
+    Raxx.Session.Open.overwrite(session, response, %{})
   end
 
   defp endpoint(_, _) do

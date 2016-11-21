@@ -30,4 +30,17 @@ defmodule UM.WebTest do
     response = UM.Web.handle_request(request, :no_state)
     assert response.status == 201
   end
+
+  test "login will add user id to session" do
+    request = %Raxx.Request{
+      path: ["login"],
+      method: :POST,
+      body: Plug.Conn.Query.encode(%{
+        email: "bill@usa.com",
+      }),
+      headers: [{"content-type", "application/x-www-form-urlencoded"}]
+    }
+    response = UM.Web.handle_request(request, :no_state)
+    IO.inspect(response)
+  end
 end
