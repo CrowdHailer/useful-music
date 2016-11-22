@@ -1,3 +1,10 @@
+# Gateway
+maybe best to rename web to gateway but probably not gateway will be for API endpoint and www for web backend for front end
+
+- https://github.com/TykTechnologies/tyk/blob/master/README.md
+- https://auth0.com/blog/an-introduction-to-microservices-part-2-API-gateway/
+- https://www.youtube.com/watch?v=ZYSOSYg6rT0&t=1206s
+
 # Sessions
 This might not be a separate app but live in the API gateway.
 I like the idea of writing the session to headers which are then passed downstream,
