@@ -6,7 +6,7 @@ defmodule UM.Web.AdminTest do
   test "index page is available to admin" do
     request = %Raxx.Request{
       path: [],
-      headers: [{"um-user-id", "admin"}]
+      headers: [{"um-user-id", "dummy-admin-id"}]
     }
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 200
@@ -15,7 +15,7 @@ defmodule UM.Web.AdminTest do
   test "index page is forbidden to customer" do
     request = %Raxx.Request{
       path: [],
-      headers: [{"um-user-id", "customer"}]
+      headers: [{"um-user-id", "dummy-customer-id"}]
     }
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 403

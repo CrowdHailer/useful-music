@@ -4,9 +4,9 @@ defmodule UM.Web.Admin do
   def handle_request(request, env) do
     user_id = Raxx.Patch.get_header(request, @identifier_header)
     case user_id do
-      "admin" ->
+      "dummy-admin-id" ->
         Raxx.Response.ok
-      "customer" ->
+      "dummy-customer-id" ->
         Raxx.Response.forbidden
     end
   end
