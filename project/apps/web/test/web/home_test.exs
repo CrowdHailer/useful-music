@@ -18,7 +18,7 @@ defmodule UM.Web.HomeTest do
     }
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 302
-    assert "/pieces?catalogue_search[piano]=on"
+    assert "/pieces?catalogue_search[piano]=on" == Raxx.Patch.response_location(response)
   end
 
   test "redirects to the correct search for flute page" do
@@ -28,7 +28,7 @@ defmodule UM.Web.HomeTest do
     }
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 302
-    assert "/pieces?catalogue_search[flute]=on"
+    assert "/pieces?catalogue_search[flute]=on" == Raxx.Patch.response_location(response)
   end
 
   # TODO write test without page_size redirection
@@ -40,5 +40,24 @@ defmodule UM.Web.HomeTest do
   #   response = UM.Web.Home.handle_request(request, %{})
   #   assert response.status == 302
   # end
+
+  # FIXME check guest vs logged in
+  test "sets currency preference" do
+    request = %Raxx.Request{
+      method: :POST,
+      path: ["currency"],
+      headers: [
+        {"um-user-id", "dummy-guest-id"},
+        {"content-type", "application/x-www-form-urlencoded"}],
+      body: Plug.Conn.Query.encode(%{
+        preference: "USD",
+      })
+    }
+    response = UM.Web.Home.handle_request(request, %{})
+    assert response.status == 302
+    assert "/" == Raxx.Patch.response_location(response)
+    assert {"set-cookie", "um.currency_preference=USD"} == List.keyfind(response.headers, "set-cookie", 0)
+  end
+
 
 end

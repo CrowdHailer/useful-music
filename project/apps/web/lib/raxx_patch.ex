@@ -4,6 +4,15 @@ defmodule Raxx.Patch do
     {^key, value} = List.keyfind(request.headers, key, 0)
     value
   end
+
+  def response_location(%{headers: headers}) do
+    case List.keyfind(headers, "location", 0) do
+      {"location", location} ->
+        location
+      _ ->
+        nil
+    end
+  end
 end
 
 defmodule Raxx.Session do
