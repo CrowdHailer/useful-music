@@ -33,7 +33,7 @@ class OrdersController < UsefulMusic::App
     order.calculate_payment
     Orders.save order
     if shopping_basket.free?
-      order.state = 'succeded'
+      order.state = 'succeded' # pretty sure that should happen after callback
       order.completed_at = DateTime.now
       order.record.save
       customer_mailer.order_successful
