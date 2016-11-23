@@ -5,29 +5,29 @@ defmodule UM.Catalogue.Piece do
     sub_heading: "", # String
     level_overview: "", # String
     description: "", # String
-    solo: "", # String, think this is a lie and these are booleans
-    solo_with_accompaniment: "", # String
-    duet: "", # String
-    trio: "", # String
-    quartet: "", # String
-    larger_ensembles: "", # String
-    collection: "", # String
-    beginner: "", # Boolean
-    intermediate: "", # Boolean
-    advanced: "", # Boolean
-    professional: "", # Boolean
-    piano: "", # Boolean
-    recorder: "", # Boolean
-    flute: "", # Boolean
-    oboe: "", # Boolean
-    clarineo: "", # Boolean
-    clarinet: "", # Boolean
-    bassoon: "", # Boolean
-    saxophone: "", # Boolean
-    trumpet: "", # Boolean
-    violin: "", # Boolean
-    viola: "", # Boolean
-    percussion: "", # Boolean
+    solo: false,
+    solo_with_accompaniment: false,
+    duet: false,
+    trio: false,
+    quartet: false,
+    larger_ensembles: false,
+    collection: false,
+    beginner: false,
+    intermediate: false,
+    advanced: false,
+    professional: false,
+    piano: false,
+    recorder: false,
+    flute: false,
+    oboe: false,
+    clarineo: false,
+    clarinet: false,
+    bassoon: false,
+    saxophone: false,
+    trumpet: false,
+    violin: false,
+    viola: false,
+    percussion: false,
     notation_preview: "", # Hash
     audio_preview: "", # Hash
     cover_image: "", # Hash
@@ -40,5 +40,49 @@ defmodule UM.Catalogue.Piece do
 
   def catalogue_number(%{id: id}) do
     "UM#{id}"
+  end
+
+  def product_name(%{title: title, sub_heading: sub_heading}) do
+    "#{title} - #{sub_heading}"
+  end
+
+  def categories(piece) do
+    Enum.filter([:solo,
+    :solo_with_accompaniment,
+    :duet,
+    :trio,
+    :quartet,
+    :larger_ensembles], fn (key) ->
+      {:ok, bool} = Map.fetch(piece, key)
+      bool
+    end)
+  end
+
+  def instruments(piece) do
+    Enum.filter([:piano,
+    :recorder,
+    :flute,
+    :oboe,
+    :clarineo,
+    :clarinet,
+    :bassoon,
+    :saxophone,
+    :trumpet,
+    :violin,
+    :viola,
+    :percussion], fn (key) ->
+      {:ok, bool} = Map.fetch(piece, key)
+      bool
+    end)
+  end
+
+  def levels(piece) do
+    Enum.filter([:beginner,
+    :intermediate,
+    :advanced,
+    :professional], fn (key) ->
+      {:ok, bool} = Map.fetch(piece, key)
+      bool
+    end)
   end
 end
