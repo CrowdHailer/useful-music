@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>UsefulMusic.com</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/stylesheets/admin.css">
+</head>
+<body>
+
+  <div class="content flash success">
+    some query string success <i class="fa fa-times right"></i>
+  </div>
+  <div class="content flash error">
+    some query string error <i class="fa fa-times right"></i>
+  </div>
+
+  <%= content %>
+  <script charset="utf-8">
+  var $$ = document.querySelectorAll
+
+  var flash = document.querySelectorAll('.flash')
+
+  function slideUp(evt){
+    evt.target.classList.add('read');
+  }
+  flash[0].addEventListener("click", slideUp);
+  flash[1].addEventListener("click", slideUp);
+  // This should also replace the query string
+
+  </script>
+</body>
+</html>
