@@ -8,4 +8,11 @@ defmodule UM.Web.Admin.PiecesTest do
     assert 200 == status
     assert String.contains?(body, "UM100")
   end
+
+  test "can visit new piece page" do
+    request = %Raxx.Request{path: ["new"]}
+    %{status: status, body: body} = Pieces.handle_request(request, %{})
+    assert 200 == status
+    assert String.contains?(body, "New Piece")
+  end
 end
