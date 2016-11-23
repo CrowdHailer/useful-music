@@ -20,6 +20,16 @@ defmodule UM.Web.AdminTest do
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 403
   end
+
+  test "pieces page is available to admin" do
+    request = %Raxx.Request{
+      path: ["pieces"],
+      headers: [{"um-user-id", "dummy-admin-id"}]
+    }
+    response = UM.Web.Admin.handle_request(request, %{})
+    # Check that the correct page is served
+    assert response.status == 200
+  end
 end
 
 # Left to expand Raxx.Test with similar semantics
