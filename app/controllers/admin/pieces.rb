@@ -8,10 +8,11 @@ module UsefulMusic
       render_defaults[:layout] = File.expand_path('app/views/admin/application', APP_ROOT).to_sym
 
       def index
-        @pieces = Catalogue.new request.GET # Dont think this line is used
+        @pieces = Catalogue.new request.GET
         render :index
       end
 
+      # This can just be a redirect as the edit page does the redirect
       def search
         piece = Catalogue[request.GET.fetch('search') { '' }]
         if piece
