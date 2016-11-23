@@ -11,6 +11,14 @@ defmodule UM.CatalogueTest do
     assert "UM101" == Catalogue.Piece.catalogue_number(piece)
   end
 
+  test "can not create a piece with duplicate id" do
+    assert {:error, :id_already_used} = Catalogue.create_piece(%{id: 100})
+  end
+
+  test "will not create an invalid piece" do
+    assert {:error, :invalid_piece} = Catalogue.create_piece(%{id: nil})
+  end
+
   test "can fetch a piece by id" do
     {:ok, piece} = Catalogue.fetch_piece(100)
     assert "First Piece" == piece.title
