@@ -14,9 +14,9 @@ defmodule UM.Web do
     Supervisor.start_link(children, opts)
   end
 
-  def handle_request(request = %{path: ["assets" | rest]}, env) do
+  def handle_request(request = %{path: ["stylesheets" | rest]}, env) do
     # NOTE assets controller returns content-length etc
-    UM.Web.Assets.handle_request(%{request| path: rest}, env)
+    UM.Web.Stylesheets.handle_request(%{request| path: rest}, env)
   end
 
   # This should end up as part of a Raxx Stack
