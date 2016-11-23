@@ -8,6 +8,16 @@ defmodule UM.Web.Admin.Pieces do
     Raxx.Response.ok("All pieces TODO show UM100")
   end
 
+  def handle_request(%{path: ["search"], query: query}, _env) do
+    search = Map.get(query, "search")
+    id = case search do
+      "UD" <> id ->
+        id
+      id -> id
+    end
+    Raxx.Response.found("", [{"location", "/admin/pieces/UD#{id}/edit"}])
+  end
+
   def handle_request(%{path: ["new"]}, _env) do
     Raxx.Response.ok(UM.Web.Admin.layout_page(new_page_content))
   end
