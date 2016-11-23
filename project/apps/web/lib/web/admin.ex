@@ -3,6 +3,9 @@ defmodule UM.Web.Admin do
   layout_file = String.replace_suffix(__ENV__.file, ".ex", "/layout.html.eex")
   EEx.function_from_file :def, :layout_page, layout_file, [:content]
 
+  index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
+  EEx.function_from_file :def, :index_page_content, index_file, []
+
   @identifier_header "um-user-id"
 
   def handle_request(request, env) do
@@ -16,7 +19,7 @@ defmodule UM.Web.Admin do
   end
 
   def endpoint(%{path: []}, _env) do
-    Raxx.Response.ok(layout_page("Index page"))
+    Raxx.Response.ok(layout_page(index_page_content))
   end
 
   def endpoint(request = %{path: ["pieces" | rest]}, env) do
