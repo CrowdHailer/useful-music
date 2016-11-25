@@ -118,6 +118,11 @@ class HomeControllerTest < MyRecordTest
     assert last_response.redirect?
   end
 
+  def test_redirects_to_jazz_head_search
+    get '/jazz_head'
+    assert last_response.redirect?
+  end
+
   def test_redirects_to_larger_ensembles_search
     get '/larger_ensembles'
     assert last_response.redirect?

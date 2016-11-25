@@ -92,6 +92,10 @@ class HomeController < UsefulMusic::App
     redirect '/pieces?catalogue_search[quartet]=on'
   end
 
+  get '/jazz_head' do
+    redirect '/pieces?catalogue_search[jazz_head]=on'
+  end
+
   get '/larger_ensembles' do
     redirect '/pieces?catalogue_search[larger_ensembles]=on'
   end

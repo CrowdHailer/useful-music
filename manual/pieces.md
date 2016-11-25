@@ -42,6 +42,8 @@
   - true/false
 - **quartet**
   - true/false
+- **jazz_head**
+  - true/false
 - **larger_ensembles**
   - true/false
 - **collection**

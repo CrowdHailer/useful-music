@@ -14,6 +14,7 @@ class Piece
       attribute :duet, String
       attribute :trio, String
       attribute :quartet, String
+      attribute :jazz_head, String
       attribute :larger_ensembles, String
       attribute :collection, String
       attribute :beginner, Boolean
