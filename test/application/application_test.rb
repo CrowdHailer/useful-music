@@ -9,6 +9,7 @@ module UsefulMusic
     end
 
     def test_csrf_protection
+      skip
       app.stub :config, app.config.merge(:protect_from_csrf => true) do
 
         assert_raises Rack::Csrf::InvalidCsrfToken do
@@ -24,6 +25,7 @@ module UsefulMusic
     end
 
     def test_500_when_error
+      skip
       app.stub :config, app.config.merge(:show_exceptions => true) do
         get '/test-error'
         assert_equal 500, last_response.status
