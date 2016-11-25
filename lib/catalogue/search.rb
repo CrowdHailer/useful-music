@@ -10,6 +10,7 @@ class Catalogue
     attribute :duet, Boolean
     attribute :trio, Boolean
     attribute :quartet, Boolean
+    attribute :jazz_head, Boolean
     attribute :larger_ensembles, Boolean
     attribute :beginner, Boolean
     attribute :intermediate, Boolean
@@ -35,6 +36,7 @@ class Catalogue
       :duet,
       :trio,
       :quartet,
+      :jazz_head,
       :larger_ensembles].each do |category|
         result = result << category if public_send category
       end

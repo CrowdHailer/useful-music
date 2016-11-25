@@ -65,6 +65,7 @@
                     :duet,
                     :trio,
                     :quartet,
+                    :jazz_head,
                     :larger_ensembles].each do |category| %>
                         <label class="pure-checkbox">
                             <input type="checkbox" name="catalogue_search[<%= category %>]" <%= 'checked' if @search.public_send category %>>

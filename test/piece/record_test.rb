@@ -72,6 +72,11 @@ class Piece
       assert record.quartet
     end
 
+    def test_can_be_for_jazz_head
+      record = create :piece_record, :jazz_head => true
+      assert record.jazz_head
+    end
+
     def test_can_be_for_larger_ensembles
       record = create :piece_record, :larger_ensembles => true
       assert record.larger_ensembles

@@ -133,7 +133,7 @@ class Piece
       end
     end
 
-    [:solo, :solo_with_accompaniment, :duet, :trio, :quartet, :larger_ensembles, :collection].each do |bool_entry|
+    [:solo, :solo_with_accompaniment, :duet, :trio, :quartet, :jazz_head, :larger_ensembles, :collection].each do |bool_entry|
       define_method "test_can_access_#{bool_entry}" do
         record.public_send "#{bool_entry}=", true
         assert piece.public_send "#{bool_entry}?"

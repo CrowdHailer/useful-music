@@ -28,6 +28,7 @@ class Piece < Errol::Entity
                     :duet,
                     :trio,
                     :quartet,
+                    :jazz_head,
                     :larger_ensembles,
                     :collection,
                     :piano,
@@ -61,6 +62,7 @@ class Piece < Errol::Entity
     :duet,
     :trio,
     :quartet,
+    :jazz_head,
     :larger_ensembles].select do |category|
       public_send "#{category}?"
     end
