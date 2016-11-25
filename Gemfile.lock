@@ -92,6 +92,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.5.1)
@@ -114,6 +115,10 @@ GEM
       rest-client
     pdfkit (0.6.2)
     pg (0.18.1)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (1.6.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -151,6 +156,7 @@ GEM
     sequel (4.19.0)
     shotgun (0.9)
       rack (>= 1.0)
+    slop (3.6.0)
     thin (1.7.0)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -193,6 +199,7 @@ DEPENDENCIES
   paypal-express
   pdfkit
   pg
+  pry
   rack-google-analytics
   rack-protection
   rack-ssl-enforcer

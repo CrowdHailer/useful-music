@@ -37,6 +37,7 @@ module UsefulMusic
           redirect "/admin/pieces/UD#{form.id}/edit"
         rescue Sequel::NotNullConstraintViolation => err
           # Bugsnag.notify(err)
+          puts err
           flash['error'] = 'Could not create invalid piece'
           redirect '/admin/pieces/new'
         end
