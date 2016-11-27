@@ -22,7 +22,7 @@ defmodule UM.Web.Mixfile do
   defp deps do
     [
       {:ace, "~> 0.7.0"},
-      {:raxx, "~> 0.4.3"},
+      {:raxx, "~> 0.5.1"},
       {:plug, "~> 1.2.2"} # TODO remove; currently used for query strings etc
     ]
   end

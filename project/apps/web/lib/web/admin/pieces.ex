@@ -48,15 +48,15 @@ defmodule UM.Web.Admin.Pieces do
   end
 
   def handle_request(request = %{path: [], method: :POST}, _env) do
-    form = Plug.Conn.Query.decode(request.body) |> Map.get("piece")
+    {:ok, form} = Raxx.Request.content(request)
     piece = Enum.map(@piece_types, fn
       ({key, :boolean}) ->
-        case Map.get(form, "#{key}", "") do
+        case Map.get(form, "piece[#{key}]", "") do
           "on" -> {key, true}
           "" -> {key, false}
         end
       ({key, :integer}) ->
-        case Map.get(form, "#{key}", "") |> Integer.parse do
+        case Map.get(form, "piece[#{key}]", "") |> Integer.parse do
           {i, ""} -> {key, i}
           _ -> {key, nil}
         end
