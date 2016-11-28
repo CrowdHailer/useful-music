@@ -10,10 +10,12 @@ defmodule UM.Web.Home do
   EEx.function_from_file :def, :header_partial, header_file, [:shopping_basket, :current_customer]
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
-  EEx.function_from_file :def, :index_page_content, index_file, []
+  EEx.function_from_file :def, :index_page_content, index_file, [:pieces]
 
   def handle_request(request = %{path: []}, _env) do
-    Raxx.Response.ok(layout_page(index_page_content, %{
+    Raxx.Response.ok(layout_page(index_page_content([
+      %{title: "hello", sub_heading: "sub heading", catalogue_number: "UD100", level_overview: "hello", notation_preview: %{url: "hi"}}
+      ]), %{
       shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
       customer: %{id: "TODO-", guest?: true, working_currency: "GBP"}
       }))
@@ -59,9 +61,5 @@ defmodule UM.Web.Home do
     Raxx.Response.not_found()
     # TODO make this work
     # UM.Web.not_found()
-  end
-
-  def pieces do
-    []
   end
 end

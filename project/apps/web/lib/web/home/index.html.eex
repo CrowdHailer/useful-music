@@ -61,15 +61,14 @@
 </div>
 
 <div class="row collapse white-section">
-    TODO pieces
-    <% for piece <- pieces do %>
+    <%= for piece <- pieces do %>
     <div class="large-3 medium-3 small-12 columns">
         <div class="product-wrap">
             <div class="title-wrap">
                 <h4><%= piece.title %></h4>
             </div>
             <div class="product-info-wrap">
-                <p><%= piece.sub_heading.upcase %></p>
+                <p><%= piece.sub_heading |> String.upcase %></p>
             </div>
             <div class="row collapse">
                 <div class="large-6 small-12 columns product-main">
