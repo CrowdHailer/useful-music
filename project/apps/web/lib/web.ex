@@ -18,6 +18,10 @@ defmodule UM.Web do
     # NOTE assets controller returns content-length etc
     UM.Web.Stylesheets.handle_request(%{request| path: rest}, env)
   end
+  def handle_request(request = %{path: ["images" | rest]}, env) do
+    # NOTE assets controller returns content-length etc
+    UM.Web.Images.handle_request(%{request| path: rest}, env)
+  end
 
   # This should end up as part of a Raxx Stack
   # Do handling form mapping here
