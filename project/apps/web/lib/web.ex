@@ -50,7 +50,7 @@ defmodule UM.Web do
   }
   defp endpoint(request = %{path: ["customers" | rest]}, env) do
     case UM.Web.Customers.handle_request(%{request| path: rest}, env) do
-      r = %{status: 200, body: content} ->
+      r = %{status: _, body: content} ->
         %{r | body: UM.Web.Home.layout_page(content, @session)}
     end
   end

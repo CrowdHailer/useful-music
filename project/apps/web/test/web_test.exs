@@ -16,24 +16,6 @@ defmodule UM.WebTest do
     assert response.status == 200
   end
 
-  # TODO move
-  @tag :skip
-  test "can create new customer" do
-    request = post("/customers/create", form_data(%{
-      customer: %{
-        first_name: "Bill",
-        last_name: "Kennedy",
-        email: "bill@usa.com",
-        password: "password",
-        password_confirmation: "password",
-        country: "TODO",
-        terms_agreement: "on"
-      }
-    }))
-    response = UM.Web.handle_request(request, :no_state)
-    assert response.status == 201
-  end
-
   test "login will add user id to session" do
     request = post("/login", form_data(%{email: "bill@usa.com"}))
     response = UM.Web.handle_request(request, :no_state)
