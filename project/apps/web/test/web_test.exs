@@ -17,6 +17,7 @@ defmodule UM.WebTest do
   end
 
   # TODO move
+  @tag :skip
   test "can create new customer" do
     request = post("/customers/create", form_data(%{
       customer: %{

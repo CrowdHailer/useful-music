@@ -2,6 +2,7 @@ defmodule UM.Web.Customers do
   # Rename SignUpForm
   defmodule CreateForm do
     # All of these fields are required
+    # extra fields are not necessary a problem but might clash with db rows, unlikely
     defstruct [
       first_name: nil,
       last_name: nil,
@@ -9,8 +10,41 @@ defmodule UM.Web.Customers do
       password: nil,
       password_confirmation: nil, # hmmm
       country: nil,
-      terms_agreement: nil
+      terms_agreement: nil # hmmm
     ]
+
+    def validate(form) do
+      data = %{}
+      errors = %{}
+
+      {data, errors} = case validate_name(Map.get(form, "first_name")) do
+        {:ok, first_name} ->
+          {Map.merge(data, %{first_name: first_name}), Map.merge(errors, %{first_name: nil})}
+        {:error, reason} ->
+          {Map.merge(data, %{first_name: nil}), Map.merge(errors, %{first_name: reason})}
+      end
+
+      {data, errors} = case validate_name(Map.get(form, "last_name")) do
+        {:ok, last_name} ->
+          {Map.merge(data, %{last_name: last_name}), Map.merge(errors, %{last_name: nil})}
+        {:error, reason} ->
+          {Map.merge(data, %{last_name: nil}), Map.merge(errors, %{last_name: reason})}
+      end
+    end
+
+    def validate_name(nil) do
+      # This is an odd error because it should not be part of the validator
+      {:error, "name is required"}
+    end
+    def validate_name(text) do
+      name = String.strip(text) |> String.capitalize
+      case String.length(name) >= 2 do
+        true ->
+          {:ok, name}
+        false ->
+          {:error, "name is too short"}
+      end
+    end
 
     def populate(raw) do
       {:ok, email} = Map.get(raw, "email") |> validate_email
@@ -34,38 +68,7 @@ defmodule UM.Web.Customers do
           {:error, "not a vail email address"}
       end
     end
-    # defmodule CreateForm do
-    #   require Heimdall
-    #   attribute :email, :vaildate_email, required: true, from: "email"
-    # end
-    #
-    # %CreateForm{
-    #   email: Heimdall.required(coerce: :coerce_email, from: "email")
-    #   terms_agreement: Heimdall.checkbox
-    # }
-    #
-    # case Webform.validate(CreateForm, raw) do
-    #   {:ok, data} ->
-    #     next
-    #   {:error, form_with_errors} ->
-    #     back
-    # end
-    #
-    # # Put customers in dir, have a create function
-    # defmodule Customers do
-    #   defmodule CreateForm do
-    #     defstruct [email: :required, question_1: ""]
-    #   end
-    #
-    #   def create(data, repository) do
-    #     case a do
-    #       1 ->
-    #         {:ok, customer}
-    #       2 ->
-    #         {:error, :invalid}
-    #     end
-    #   end
-    # end
+
   end
 
   require EEx
