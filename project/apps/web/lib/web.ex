@@ -44,6 +44,9 @@ defmodule UM.Web do
   defp endpoint(request = %{path: ["admin" | rest]}, env) do
     UM.Web.Admin.handle_request(%{request| path: rest}, env)
   end
+  defp endpoint(request = %{path: ["about" | rest]}, env) do
+    UM.Web.About.handle_request(%{request| path: rest}, env)
+  end
 
   defp endpoint(%{path: []} ,_env) do
     body = "Useful music"

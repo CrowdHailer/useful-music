@@ -10,6 +10,13 @@ defmodule UM.WebTest do
     assert response.status == 200
   end
 
+  test "about controller is mounted" do
+    request = get("/about")
+    response = UM.Web.handle_request(request, :no_state)
+    assert response.status == 200
+  end
+
+  # TODO move
   test "can create new customer" do
     request = post("/customers/create", form_data(%{
       customer: %{
