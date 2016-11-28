@@ -2,44 +2,33 @@ defmodule UM.WebTest do
   use ExUnit.Case
   doctest UM.Web
 
+  import Raxx.Test
+
   test "The sites stylesheets are served" do
-    request = %Raxx.Request{
-      path: ["stylesheets", "admin.css"]
-    }
+    request = get("/stylesheets/admin.css")
     response = UM.Web.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "can create new customer" do
-    request = %Raxx.Request{
-      path: ["customers", "create"],
-      method: :POST,
-      body: Plug.Conn.Query.encode(%{
-        customer: %{
-          first_name: "Bill",
-          last_name: "Kennedy",
-          email: "bill@usa.com",
-          password: "password",
-          password_confirmation: "password",
-          country: "TODO",
-          terms_agreement: "on"
-        }
-      }),
-      headers: [{"content-type", "application/x-www-form-urlencoded"}]
-    }
+    request = post("/customers/create", form_data(%{
+      customer: %{
+        first_name: "Bill",
+        last_name: "Kennedy",
+        email: "bill@usa.com",
+        password: "password",
+        password_confirmation: "password",
+        country: "TODO",
+        terms_agreement: "on"
+      }
+    }))
     response = UM.Web.handle_request(request, :no_state)
     assert response.status == 201
   end
 
   test "login will add user id to session" do
-    request = %Raxx.Request{
-      path: ["login"],
-      method: :POST,
-      body: Plug.Conn.Query.encode(%{
-        email: "bill@usa.com",
-      }),
-      headers: [{"content-type", "application/x-www-form-urlencoded"}]
-    }
+    request = post("/login", form_data(%{email: "bill@usa.com"}))
     response = UM.Web.handle_request(request, :no_state)
+    # TODO assert
   end
 end
