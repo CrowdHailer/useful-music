@@ -58,7 +58,7 @@
                         <%= customer.email %>
                     </th>
                     <th>
-                        <% if customer.admin do %>
+                        <%= if customer.admin do %>
                         <form class="button" id="form_id" action="/admin/customers/<%= customer.id %>/admin" method="post" onsubmit="return confirm('Are you sure you want to remove <%= customer.name %> from admin')">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
