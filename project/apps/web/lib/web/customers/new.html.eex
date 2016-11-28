@@ -9,70 +9,70 @@
             <%= csrf_tag %>
             <fieldset>
                 <div class="row">
-                    <div class="large-4 columns large-offset-2 <%= 'error' if @validator.errors.on(:first_name) %>">
+                    <div class="large-4 columns large-offset-2 <%= if errors.first_name, do: "error" %>">
                         <label>First Name
                             <input
                                 id="customer_first_name"
                                 name="customer[first_name]"
                                 type="text"
-                                value="<%= @form.first_name %>"
+                                value="<%= form.first_name %>"
                                 required
                                 placeholder="">
                         </label>
-                        <% if @validator.errors.on(:first_name) %>
-                            <small class="error"><%= @validator.errors.on(:first_name) %></small>
+                        <%= if errors.first_name do %>
+                            <small class="error"><%= errors.first_name %></small>
                         <% end %>
                     </div>
-                    <div class="large-4 columns end <%= 'error' if @validator.errors.on(:last_name) %>">
+                    <div class="large-4 columns end <%= if errors.last_name, do: "error" %>">
                         <label>Last Name
                             <input
                                 id="customer_last_name"
                                 name="customer[last_name]"
                                 type="text"
-                                value="<%= @form.last_name %>"
+                                value="<%= form.last_name %>"
                                 required
                                 placeholder="">
                         </label>
-                        <% if @validator.errors.on(:last_name) %>
-                            <small class="error"><%= @validator.errors.on(:last_name) %></small>
+                        <%= if errors.last_name do %>
+                            <small class="error"><%= errors.last_name %></small>
                         <% end %>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="large-4 columns large-offset-2 <%= 'error' if @validator.errors.on(:email) %>">
+                    <div class="large-4 columns large-offset-2 <%= if errors.email, do: "error" %>">
                         <label>Email
                             <input
                                 id="customer_email"
                                 name="customer[email]"
                                 type="email"
-                                value="<%= @form.email %>"
+                                value="<%= form.email %>"
                                 required
                                 placeholder="">
                         </label>
-                        <% if @validator.errors.on(:email) %>
-                            <small class="error"><%= @validator.errors.on(:email) %></small>
+                        <%= if errors.email do %>
+                            <small class="error"><%= errors.email %></small>
                         <% end %>
                     </div>
-                    <div class="large-4 columns end <%= 'error' if @validator.errors.on(:country) %>">
+                    <div class="large-4 columns end <%= if errors.country, do: "error" %>">
                         <label>Country
                             <select
                                 id="customer_country"
                                 name="customer[country]"
                                 required>
                                 <option value>-- country --</option>
-                                <% Country.all.sort_by!{ |c| c.first.downcase }.each do |name, code| %>
-                                    <option value="<%= code %>" <%= 'selected' if @form.country && code == @form.country.alpha2 %>><%= name %></option>
-                                <% end %>
+                                < Country.all.sort_by!{ |c| c.first.downcase }.each do |name, code|>
+                                    <option value="<= code >" < 'selected' if form.country && code == form.country.alpha2 >< name ></option>
+                                < end >
                             </select>
                         </label>
-                        <% if @validator.errors.on(:country) %>
-                            <small class="error"><%= @validator.errors.on(:country) %></small>
+                        <%= if errors.country do %>
+                            <small class="error"><%= errors.country %></small>
                         <% end %>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="large-4 columns large-offset-2 <%= 'error' if @validator.errors.on(:password) %>">
+                    <div class="large-4 columns large-offset-2 <%= if errors.password, do: "error" %>">
                         <label>Password
                             <input
                                 id="customer_password"
@@ -81,11 +81,11 @@
                                 required
                                 placeholder="">
                         </label>
-                        <% if @validator.errors.on(:password) %>
-                            <small class="error"><%= @validator.errors.on(:password) %></small>
+                        <%= if errors.password do %>
+                            <small class="error"><%= errors.password %></small>
                         <% end %>
                     </div>
-                    <div class="large-4 columns end <%= 'error' if @validator.errors.on(:password_confirmation) %>">
+                    <div class="large-4 columns end <%= if errors.password_confirmation, do: "error" %>">
                         <label>Password confirmation
                             <input
                                 id="customer_password_confirmation"
@@ -94,8 +94,8 @@
                                 required
                                 placeholder="">
                         </label>
-                        <% if @validator.errors.on(:password_confirmation) %>
-                            <small class="error"><%= @validator.errors.on(:password_confirmation) %></small>
+                        <%= if errors.password_confirmation do %>
+                            <small class="error"><%= errors.password_confirmation %></small>
                         <% end %>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ defmodule UM.Web.Customers do
       last_name: nil,
       email: nil,
       password: nil,
+      password_confirmation: nil, # hmmm
       country: nil,
       terms_agreement: nil
     ]
@@ -65,6 +66,19 @@ defmodule UM.Web.Customers do
     #     end
     #   end
     # end
+  end
+
+  require EEx
+
+  new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
+  EEx.function_from_file :def, :new_page_content, new_file, [:form, :errors, :success_path]
+
+  def handle_request(request = %{method: :GET, path: ["new"]}, _) do
+    Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
+  end
+
+  def csrf_tag do
+# TODO
   end
 
   def handle_request(request = %{path: ["create"]}, _env) do
