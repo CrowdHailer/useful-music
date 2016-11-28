@@ -58,37 +58,11 @@
         <h5>Useful Music Studio Sessions: Fanfare by Graham Lyons</h5>
       </div>
     </div>
-
-      <!-- START BASKET <div class="basket-main">
-            <h3>BASKET</h3>
-            <hr>
-            <div class="row">
-                <div class="large-12 columns basket-contain">
-                    <% shopping_basket.purchases.each do |purchase| %>
-                    <div class="basket-item">
-                        <p><%= purchase.item.piece.title %> - <%= purchase.item.name %> -  <%= local_price(purchase.price).format %></p>
-                    </div>
-                    <% end %>
-                </div>
-            </div>
-            <hr>
-            <div class="total-contain">
-                <h4>TOTAL: <%= local_price(shopping_basket.price).format %></h4>
-                <a href="/shopping_baskets/<%= shopping_basket.id %>"><h4 class="checkout">CHECKOUT <i class="fa fa-shopping-cart" style="line-height: 0.5;"></i></h4></a>
-            </div>
-        </div>
-        <form action="/currency" method="post">
-            <%= csrf_tag %>
-            <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" type="submit" name="preference" value="USD">$</button>
-            <button class="currency-convert <%= 'live' if current_customer.working_currency == 'GBP' %>" type="submit" name="preference" value="GBP">£</button>
-            <button class="currency-convert <%= 'live' if current_customer.working_currency == 'EUR' %>" type="submit" name="preference" value="EUR">€</button>
-        </form> END BASKET-->
-
-
 </div>
 
 <div class="row collapse white-section">
-    <% @pieces.each do |piece| %>
+    TODO pieces
+    <% for piece <- pieces do %>
     <div class="large-3 medium-3 small-12 columns">
         <div class="product-wrap">
             <div class="title-wrap">

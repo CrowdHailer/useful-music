@@ -48,11 +48,6 @@ defmodule UM.Web do
     UM.Web.About.handle_request(%{request| path: rest}, env)
   end
 
-  defp endpoint(%{path: []} ,_env) do
-    body = "Useful music"
-    Raxx.Response.ok(body, [{"content-length", "#{:erlang.iolist_size(body)}"}])
-  end
-
   defp endpoint(%{path: ["login"], method: :GET, headers: headers}, _) do
     body = """
       <h1>login</h1>
@@ -72,7 +67,8 @@ defmodule UM.Web do
     Raxx.Session.Open.overwrite(session, response, %{})
   end
 
-  defp endpoint(_, _) do
-    Raxx.Response.not_found("not found")
+  defp endpoint(request, env) do
+    UM.Web.Home.handle_request(request, env)
   end
+
 end

@@ -14,31 +14,18 @@
     <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
-    <%= render File.expand_path('../header.erb', __FILE__).to_sym %>
+  TODO HEADER
 
-    <% if flash['success'] %>
-    <div class="row collapse">
-        <div class="large-12 columns flash success">
-            <h2>
-                <%= flash['success'] %>
-            </h2>
-        </div>
+    <div class="content flash success">
+      some query string success <i class="fa fa-times right"></i>
     </div>
-    <% end %>
-
-    <% if flash['error'] %>
-    <div class="row collapse">
-        <div class="large-12 columns flash error">
-            <h2>
-                <%= flash['error'] %>
-            </h2>
-        </div>
+    <div class="content flash error">
+      some query string error <i class="fa fa-times right"></i>
     </div>
-    <% end %>
 
-    <%= yield %>
+    <%= content %>
 
-    <%= render File.expand_path('../footer.erb', __FILE__).to_sym %>
+    TODO FOOTER
 
     <script src="/scripts/close-flash.js"></script>
 </body>

@@ -1,6 +1,13 @@
 defmodule UM.Web.Home do
+  require EEx
+  layout_file = String.replace_suffix(__ENV__.file, ".ex", "/layout.html.eex")
+  EEx.function_from_file :def, :layout_page, layout_file, [:content]
+
+  index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
+  EEx.function_from_file :def, :index_page_content, index_file, []
+
   def handle_request(request = %{path: []}, _env) do
-    Raxx.Response.ok()
+    Raxx.Response.ok(layout_page(index_page_content))
   end
 
   instruments = [
@@ -35,5 +42,9 @@ defmodule UM.Web.Home do
     Raxx.Response.not_found()
     # TODO make this work
     # UM.Web.not_found()
+  end
+
+  def pieces do
+    []
   end
 end
