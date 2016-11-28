@@ -23,6 +23,13 @@ defmodule UM.Web.AdminTest do
     # Check that the correct page is served
     assert response.status == 200
   end
+
+  test "customers page is available to admin" do
+    request = get("/customers", [{"um-user-id", "dummy-admin-id"}])
+    response = UM.Web.Admin.handle_request(request, %{})
+    # Check that the correct page is served
+    assert response.status == 200
+  end
 end
 
 # Left to expand Raxx.Test with similar semantics

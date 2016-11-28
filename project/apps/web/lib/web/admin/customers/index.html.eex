@@ -23,16 +23,16 @@
     </header>
     <header class="admin">
         <form class="right" action="/admin/customers" method="get">
-            <button class="action" name="page" value="1" <%= 'disabled' unless @customers.previous_page %>>First Page</button>
-            <button class="action" name="page" value="<%= @customers.previous_page %>" <%= 'disabled' unless @customers.previous_page %>>Previous</button>
+            <button class="action" name="page" value="1" <%= if !page.previous, do: "disabled" %>>First Page</button>
+            <button class="action" name="page" value="<%= page.previous %>" <%= if !page.previous, do: "disabled" %>>Previous</button>
             <select class="action" name="page_size">
-                <option <%= 'selected' if @customers.page_size == 10 %>>10</option>
-                <option <%= 'selected' if @customers.page_size == 15 %>>15</option>
-                <option <%= 'selected' if @customers.page_size == 20 %>>20</option>
+                <option <%= if page.size == 10, do: "selected" %>>10</option>
+                <option <%= if page.size == 15, do: "selected" %>>15</option>
+                <option <%= if page.size == 20, do: "selected" %>>20</option>
             </select>
             <button class="action" name="page" value="1">Refresh</button>
-            <button class="action" name="page" value="<%= @customers.next_page %>" <%= 'disabled' unless @customers.next_page %>>Next</button>
-            <button class="action" name="page" value="<%= @customers.page_count %>" <%= 'disabled' unless @customers.next_page %>>Last Page</button>
+            <button class="action" name="page" value="<%= page.next %>" <%= if !page.next, do: "disabled" %>>Next</button>
+            <button class="action" name="page" value="<%= page.last %>" <%= if !page.next, do: "disabled" %>>Last Page</button>
         </form>
     </header>
     <table class="index">
@@ -46,8 +46,8 @@
         </thead>
 
         <tbody>
-            <% @customers.each_with_index do |customer, i| %>
-                <tr class="<%= i % 2 == 0 ? 'odd' : 'even' %>">
+            <% for customer <- page.customers do %>
+                <tr class="<%= if true, do: "odd" %>">
                     <th>
                         <a href="/customers/<%= customer.id %>"><%= customer.id %></a>
                     </th>
@@ -58,7 +58,7 @@
                         <%= customer.email %>
                     </th>
                     <th>
-                        <% if customer.admin? %>
+                        <% if customer.admin? do %>
                         <form class="button" id="form_id" action="/admin/customers/<%= customer.id %>/admin" method="post" onsubmit="return confirm('Are you sure you want to remove <%= customer.name %> from admin')">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
