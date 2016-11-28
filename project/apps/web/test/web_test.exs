@@ -38,4 +38,18 @@ defmodule UM.WebTest do
     response = UM.Web.handle_request(request, :no_state)
     # TODO assert
   end
+
+  import Moebius.Query
+  test "database access" do
+    IO.inspect("hello")
+    {:ok, pid} = Moebius.Db.start_link(Moebius.get_connection)
+
+    q = db(:pieces) |> insert(id: 100, title: "first song", sub_heading: "more details", description: "billy gene", notation_preview: "2", level_overview: "123")
+    Moebius.Db.run(q)
+    |> IO.inspect
+
+    q = Moebius.Query.db(:pieces)
+    Moebius.Db.run(q)
+    |> IO.inspect
+  end
 end

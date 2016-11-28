@@ -28,3 +28,12 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :moebius, connection: [
+  hostname: System.get_env("PGHOST"),
+  username: System.get_env("PGUSER"),
+  password: System.get_env("PGPASSWORD"),
+  database: "useful_music_#{Mix.env}",
+  pool_mod: DBConnection.Poolboy
+],
+scripts: "test/db"

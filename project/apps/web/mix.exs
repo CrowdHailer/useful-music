@@ -15,7 +15,7 @@ defmodule UM.Web.Mixfile do
   end
 
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :moebius],
      mod: {UM.Web, []}]
   end
 
@@ -23,6 +23,7 @@ defmodule UM.Web.Mixfile do
     [
       {:ace, "~> 0.7.0"},
       {:raxx, "~> 0.5.1"},
+      {:moebius, "~> 2.0.0"},
       {:plug, "~> 1.2.2"} # TODO remove; currently used for query strings etc
     ]
   end
