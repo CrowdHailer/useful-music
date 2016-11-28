@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/stylesheets/application.css">
 </head>
 <body>
-  TODO HEADER
+    <%= header_partial(session.shopping_basket, session.customer) %>
 
     <div class="content flash success">
       some query string success <i class="fa fa-times right"></i>
