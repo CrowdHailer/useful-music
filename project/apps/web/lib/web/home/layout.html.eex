@@ -40,7 +40,6 @@
     <%= footer_partial %>
 
     <script type="text/javascript">
-    // TODO adjust query string if we use that.
     var $$ = document.querySelectorAll
 
       var flash = document.querySelectorAll('.flash')
