@@ -17,7 +17,9 @@ defmodule UM.Web.Home do
       %{title: "hello", sub_heading: "sub heading", catalogue_number: "UD100", level_overview: "hello", notation_preview: %{url: "hi"}}
       ]), %{
       shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
-      customer: %{id: "TODO-", guest?: true, working_currency: "GBP"}
+      customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
+      error: "Do this now TODO",
+      success: nil
       }))
   end
 

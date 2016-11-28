@@ -16,20 +16,24 @@
 <body>
     <%= header_partial(session.shopping_basket, session.customer) %>
 
+    <%= if Map.get(session, :success) do %>
     <div class="row collapse">
         <div class="large-12 columns flash success">
             <h2>
-                some query string success
+                <%= session.success %>
             </h2>
         </div>
     </div>
+    <% end %>
+    <%= if Map.get(session, :error) do %>
     <div class="row collapse">
        <div class="large-12 columns flash error">
            <h2>
-               some error from query string
+               <%= session.error %>
            </h2>
        </div>
     </div>
+    <% end %>
 
     <%= content %>
 
