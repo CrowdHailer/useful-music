@@ -49,7 +49,12 @@ defmodule UM.Web do
     UM.Web.Admin.handle_request(%{request| path: rest}, env)
   end
   defp endpoint(request = %{path: ["about" | rest]}, env) do
-    UM.Web.About.handle_request(%{request| path: rest}, env)
+    UM.Web.About.handle_request(%{request| path: rest}, %{
+    shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
+    customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
+    error: "Do this now TODO",
+    success: nil
+    })
   end
 
   defp endpoint(%{path: ["login"], method: :GET, headers: headers}, _) do
