@@ -16,17 +16,49 @@
 <body>
     <%= header_partial(session.shopping_basket, session.customer) %>
 
-    <div class="content flash success">
-      some query string success <i class="fa fa-times right"></i>
+    <div class="row collapse">
+        <div class="large-12 columns flash success">
+            <h2>
+                some query string success
+            </h2>
+        </div>
     </div>
-    <div class="content flash error">
-      some query string error <i class="fa fa-times right"></i>
+    <div class="row collapse">
+       <div class="large-12 columns flash error">
+           <h2>
+               some error from query string
+           </h2>
+       </div>
     </div>
 
     <%= content %>
 
     <%= footer_partial %>
 
-    <script src="/scripts/close-flash.js"></script>
+    <script type="text/javascript">
+    // TODO adjust query string if we use that.
+    var $$ = document.querySelectorAll
+
+      var flash = document.querySelectorAll('.flash')
+      function getClosest(el, tag) {
+        // this is necessary since nodeName is always in upper case
+        tag = tag.toUpperCase();
+        do {
+          if (el.nodeName === tag) {
+            // tag name is found! let's return it. :)
+            return el;
+          }
+        } while (el = el.parentNode);
+
+        // not found :(
+        return null;
+      }
+
+      function slideUp(evt){
+        getClosest(evt.target, 'div').classList.add('read');
+      }
+      flash[0].addEventListener("click", slideUp);
+      flash[1].addEventListener("click", slideUp);
+    </script>
 </body>
 </html>
