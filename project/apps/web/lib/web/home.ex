@@ -3,6 +3,9 @@ defmodule UM.Web.Home do
   layout_file = String.replace_suffix(__ENV__.file, ".ex", "/layout.html.eex")
   EEx.function_from_file :def, :layout_page, layout_file, [:content]
 
+  footer_file = String.replace_suffix(__ENV__.file, ".ex", "/footer.html.eex")
+  EEx.function_from_file :def, :footer_partial, footer_file, []
+
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, []
 
