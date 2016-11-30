@@ -1,5 +1,6 @@
 defmodule UM.Web.CustomersTest do
-  use ExUnit.Case, async: true
+  #not async untill removed reverence to db
+  use ExUnit.Case
 
   import Raxx.Test
 
@@ -11,7 +12,12 @@ defmodule UM.Web.CustomersTest do
     assert 200 == response.status
   end
 
+  @tag :skip
   test "can create new customer" do
+    # This is crud
+    customers = UM.Customers.all
+    Moebius.Query.db(:customers) |> Moebius.Query.delete |> Moebius.Db.run
+
     request = post("/", form_data(%{
       customer: %{
         first_name: "Bill",
@@ -24,6 +30,11 @@ defmodule UM.Web.CustomersTest do
       }
     }))
     response = Controller.handle_request(request, :no_state)
+    location = Raxx.Patch.response_location(response)
+    |> IO.inspect
     assert response.status == 303
+    customers = UM.Customers.all
+    |> IO.inspect
+
   end
 end

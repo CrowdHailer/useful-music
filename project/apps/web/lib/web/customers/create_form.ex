@@ -13,6 +13,39 @@ defmodule UM.Web.Customers.CreateForm do
   ]
 
   def validate(form) do
+    validator = %{
+      first_name: {:required, &validate_name/1}
+    }
+    validated = Enum.map(validator, fn
+      {key, {:required, fun}} ->
+        case Map.get(form, "#{key}", "") do
+          "" ->
+            {key, {:error, :required, ""}}
+          name ->
+            case fun.(name) do
+              {:ok, validated} ->
+                {key, {:ok, validated}}
+            end
+        end
+    end)
+    |> Enum.into(%{})
+    case Enum.all?(validated, fn
+      ({k, {:ok, _value}}) -> true
+      _ -> false
+    end) do
+      true ->
+        {:ok, Enum.map(validated, fn({k, {:ok, v}}) -> {k, v} end) |> Enum.into(%{})}
+      false ->
+        {form, errors} = Enum.reduce(validated, {%__MODULE__{}, %__MODULE__{}}, fn
+          ({key, {:ok, value}}, {form, errors}) ->
+            {%{form | key => value}, errors}
+          ({key, {:error, reason, raw}}, {form, errors}) ->
+            {%{form | key => raw}, %{errors| key => reason}}
+        end)
+        {:error, {form, errors}}
+    end
+  end
+  def validate(form) do
     data = %__MODULE__{} # should be action struct signup not signupform
     errors = %__MODULE__{}
 
@@ -36,6 +69,16 @@ defmodule UM.Web.Customers.CreateForm do
       {:error, reason} ->
         {Map.merge(data, %{email: nil}), Map.merge(errors, %{email: reason})}
     end
+    {data, errors} = case Map.get(form, "terms_agreement", "off") do
+      "on" ->
+        {Map.merge(data, %{terms_agreement: true}), Map.merge(errors, %{terms_agreement: nil})}
+      _ ->
+        {Map.merge(data, %{terms_agreement: nil}), Map.merge(errors, %{terms_agreement: "must say yes"})}
+    end
+
+    # TODO fix these merges
+    data = %{data | password: "hello", country: "GB"}
+    {data, errors}
   end
 
   # TODO validate contains letters only

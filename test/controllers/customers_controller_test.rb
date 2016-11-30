@@ -8,17 +8,6 @@ class CustomersControllerTest < MyRecordTest
     CustomersController
   end
 
-  def test_index_redirects_to_admin
-    get '/'
-    assert last_response.redirect?
-    assert_equal 301, last_response.status
-    assert_equal '/admin/customers', last_response.location
-  end
-
-  def test_new_page_is_available
-    assert_ok get '/new'
-  end
-
   def test_new_page_keeps_success_path
     assert_ok get '/new?success_path=/shopping_baskets/1'
     assert_includes last_response.body, 'action="/customers?success_path=/shopping_baskets/1"'
