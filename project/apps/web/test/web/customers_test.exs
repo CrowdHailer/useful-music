@@ -6,6 +6,12 @@ defmodule UM.Web.CustomersTest do
 
   alias UM.Web.Customers, as: Controller
 
+  setup do
+    Moebius.Query.db(:customers) |> Moebius.Query.delete |> Moebius.Db.run
+    assert [] == UM.Customers.all
+    :ok
+  end
+
   test "new page is available" do
     request = get("/new")
     response = Controller.handle_request(request, :nostate)
@@ -13,11 +19,6 @@ defmodule UM.Web.CustomersTest do
   end
 
   test "can create new customer" do
-    # This is crud
-    Moebius.Db.start_link(Moebius.get_connection)
-    Moebius.Query.db(:customers) |> Moebius.Query.delete |> Moebius.Db.run
-    assert [] == UM.Customers.all
-
     request = post("/", form_data(%{
       customer: %{
         first_name: "Bill",
@@ -36,11 +37,6 @@ defmodule UM.Web.CustomersTest do
   end
 
   test "rerenders form for bad password" do
-    # This is crud
-    Moebius.Db.start_link(Moebius.get_connection)
-    Moebius.Query.db(:customers) |> Moebius.Query.delete |> Moebius.Db.run
-    assert [] == UM.Customers.all
-
     request = post("/", form_data(%{
       customer: %{
         first_name: "Bill",
