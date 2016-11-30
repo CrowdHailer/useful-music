@@ -12,12 +12,12 @@ defmodule UM.Web.CustomersTest do
     assert 200 == response.status
   end
 
-  @tag :skip
   test "can create new customer" do
     # This is crud
     customers = UM.Customers.all
     Moebius.Query.db(:customers) |> Moebius.Query.delete |> Moebius.Db.run
-
+    customers = UM.Customers.all
+    |> IO.inspect
     request = post("/", form_data(%{
       customer: %{
         first_name: "Bill",
