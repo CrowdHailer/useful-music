@@ -43,8 +43,22 @@ defmodule UM.Web.Admin.Pieces do
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
   EEx.function_from_file :def, :new_page_content, new_file, []
 
+  index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
+  EEx.function_from_file :def, :index_page_content, index_file, [:page]
+
   def handle_request(%{path: [], method: :GET}, _env) do
-    Raxx.Response.ok("All pieces TODO show UM100")
+    Raxx.Response.ok(UM.Web.Admin.layout_page(index_page_content(%{
+      previous: 0,
+      next: 0,
+      last: 0,
+      size: 10,
+      pieces: [{%{
+        id: 100,
+        title: "some stuff",
+        sub_heading: "boo",
+        description: "lorem lorem lorem"
+        }, 1}]
+      })))
   end
 
   def handle_request(request = %{path: [], method: :POST}, _env) do
