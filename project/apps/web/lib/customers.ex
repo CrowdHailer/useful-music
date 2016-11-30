@@ -3,8 +3,11 @@ defmodule UM.Customers do
   # rename search
 
   def all do
-    _ = Moebius.Db.start_link(Moebius.get_connection)
     db(:customers) |> Moebius.Db.run
+  end
+
+  def fetch(id) do
+    db(:customers) |> filter(id: id) |> Moebius.Db.first
   end
   def find_by_email(emails) do
 
@@ -14,7 +17,6 @@ defmodule UM.Customers do
     customer = Map.merge(%{id: random_string(16)}, customer)
     customer = Enum.map(customer, fn(x) -> x end)
     q = db(:customers) |> insert(customer)
-    IO.inspect(q)
     Moebius.Db.run(q)
   end
 
