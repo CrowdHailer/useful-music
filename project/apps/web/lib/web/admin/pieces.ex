@@ -8,25 +8,13 @@ defmodule UM.Web.Admin.Pieces do
   EEx.function_from_file :def, :index_page_content, index_file, [:page]
 
   def handle_request(%{path: [], method: :GET}, _env) do
-    Raxx.Response.ok(UM.Web.Admin.layout_page(index_page_content(%{
-      previous: 0,
-      next: 0,
-      last: 0,
-      size: 10,
-      pieces: [{%{
-        id: 100,
-        title: "some stuff",
-        sub_heading: "boo",
-        description: "lorem lorem lorem"
-        }, 1}]
-      })))
+    {:ok, pieces} = UM.Catalogue.search_pieces
+    Raxx.Response.ok(UM.Web.Admin.layout_page(index_page_content(paginate_pieces(pieces))))
   end
 
   def handle_request(%{path: ["search"], method: :GET, query: query}, _env) do
-    search = Map.get(query, "search")
-    id = case search do
-      "UD" <> id ->
-        id
+    id = case Map.get(query, "search") do
+      "UD" <> id -> id
       id -> id
     end
     Raxx.Response.found("", [{"location", "/admin/pieces/UD#{id}/edit"}])
@@ -38,12 +26,7 @@ defmodule UM.Web.Admin.Pieces do
 
   def handle_request(request = %{path: [], method: :POST}, _env) do
     {:ok, form} = Raxx.Request.content(request)
-    form = Enum.map(form, fn
-      ({key, value}) ->
-        %{"attr" => attribute} =Regex.named_captures(~r/piece\[(?<attr>[^\]]*)\]/, key)
-        {attribute, value}
-    end)
-    |> Enum.into(%{})
+    form = Utils.sub_form(form, "piece")
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
         case UM.Catalogue.create_piece(data) do
@@ -58,12 +41,20 @@ defmodule UM.Web.Admin.Pieces do
         end
       {:error, _stuff} ->
         Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
-
     end
   end
 
-
   defp csrf_tag do
     "TODO create a real tag"
+  end
+
+  defp paginate_pieces(array) do
+    %{
+      previous: 0,
+      next: 0,
+      last: 0,
+      size: 10,
+      pieces: Enum.zip(Enum.take(array, 10), 1..10)
+      }
   end
 end
