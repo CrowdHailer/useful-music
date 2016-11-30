@@ -51,7 +51,7 @@ defmodule UM.Sales do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Moebius.Db, [Moebius.get_connection]),
+      # worker(Moebius.Db, [Moebius.get_connection]),
     ]
 
     opts = [strategy: :one_for_one, name: UM.Sales.Supervisor]

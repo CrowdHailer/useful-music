@@ -7,7 +7,6 @@ defmodule UM.Web do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Moebius.Db, [Moebius.get_connection]),
       worker(Ace.TCP, [{Raxx.Adapters.Ace.Handler, @raxx_app}, [port: 8080]])
     ]
 
