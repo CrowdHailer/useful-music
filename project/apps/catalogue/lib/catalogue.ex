@@ -41,6 +41,11 @@ defmodule UM.Catalogue do
     end
   end
 
+  def search_pieces() do
+    # TODO this should load all the items as well
+    {:ok, Moebius.Db.run(db(:pieces))}
+  end
+
   def create_item(item) do
     # DEBT insert requires a keyword list
     item = %{item | id: random_string(16)}

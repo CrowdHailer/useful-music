@@ -57,6 +57,13 @@ defmodule UM.CatalogueTest do
     {:error, :invalid_piece} = Catalogue.update_piece(piece)
   end
 
+  # TODO delete piece
+
+  test "fetch a list of all pieces" do
+    {:ok, [piece]} = Catalogue.search_pieces()
+    assert 101 = piece.id
+  end
+
   # TODO start catalogue with a few items
   test "can create a new item", %{id: piece_id} do
     # alternative signature (%{id: piece_id}, item)
