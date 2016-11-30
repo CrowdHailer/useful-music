@@ -33,13 +33,15 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can create a new piece" do
+    # can post file using httpoison
     request = post("/", form_data(%{
       piece: %{
         id: "123",
         title: "A piece of music",
         sub_heading: "flute and claranet",
         level_overview: "1 to 3",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu",
+        notation_preview: "TODO"
       }
     }))
     %{status: status, headers: headers} = Pieces.handle_request(request, %{})

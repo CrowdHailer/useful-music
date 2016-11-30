@@ -15,12 +15,13 @@ defmodule UM.Web.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :moebius],
+    [applications: [:logger, :moebius, :catalogue],
      mod: {UM.Web, []}]
   end
 
   defp deps do
     [
+      {:catalogue, in_umbrella: true},
       {:ace, "~> 0.7.0"},
       {:raxx, "~> 0.5.2"},
       {:moebius, "~> 2.0.0"},
