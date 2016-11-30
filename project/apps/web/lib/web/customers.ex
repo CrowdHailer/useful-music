@@ -5,6 +5,9 @@ defmodule UM.Web.Customers do
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
   EEx.function_from_file :def, :new_page_content, new_file, [:form, :errors, :success_path]
 
+  order_history_file = String.replace_suffix(__ENV__.file, ".ex", "/order_history.html.eex")
+  EEx.function_from_file :def, :order_history_content, order_history_file, [:customer]
+
   def handle_request(request = %{method: :GET, path: ["new"]}, _) do
     Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
   end
@@ -30,6 +33,12 @@ defmodule UM.Web.Customers do
             Raxx.Response.see_other("", [{"location", "/customers/#{id}"}])
         end
     end
+  end
+
+  def handle_request(%{path: [id], method: :GET}, _) do
+    customer = UM.Customers.fetch(id)
+    |> IO.inspect
+    Raxx.Response.ok(order_history_content(customer))
   end
   def csrf_tag do
 # TODO

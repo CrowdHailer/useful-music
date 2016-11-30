@@ -52,4 +52,17 @@ defmodule UM.Web.CustomersTest do
       assert response.status == 400
       assert String.contains?(response.body, "too short")
   end
+
+  test "user page shows orders" do
+    %{id: id} = UM.Customers.insert(%{
+      first_name: "Dan",
+      last_name: "Dare",
+      email: "dan@example.com",
+      password: "password",
+      country: "GB"
+    })
+    request = get("/#{id}", [{"um-user-id", id}])
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 200
+  end
 end
