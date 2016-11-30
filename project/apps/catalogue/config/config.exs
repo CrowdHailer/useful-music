@@ -28,3 +28,18 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+# Need this for interop with ruby sequel
+env_name = case Mix.env do
+  :test -> :test
+  :dev -> :development
+end
+
+config :moebius, connection: [
+  hostname: System.get_env("PGHOST"),
+  username: System.get_env("PGUSER"),
+  password: System.get_env("PGPASSWORD"),
+  database: "useful_music_#{env_name}",
+  pool_mod: DBConnection.Poolboy
+],
+scripts: "test/db"

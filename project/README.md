@@ -38,6 +38,8 @@ add discount
 
 remove discount
 
+If session user has basket overrides session basket. 
+dont do this.
 merge baskets, needed when a user with items in session basket logs in.
 
 start paypal checkout, paypal existing as a kind of billing domain. refunds need to be marked manually.
