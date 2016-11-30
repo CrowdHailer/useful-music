@@ -15,8 +15,10 @@
 
 <div class="row summary-padding">
     <div class="large-12 columns orders">
-        <% @customer.orders.sort_by(&:updated_at).reverse.each do |order| %>
-            <% if order.succeded? && DateTime.now <= order.completed_at.+(4*3600*24) %>
+        <%= for order <- customer.orders do %>
+            <!-- TODO -->
+            <!-- order.succeded? && DateTime.now <= order.completed_at.+(4*3600*24) -->
+            <% if true do %>
             <!-- repeat this bit-->
             <div class="row collapse">
                 <div class="order-title-wrap">
@@ -57,7 +59,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% order.shopping_basket.purchases.each do |purchase| %>
+                                <%= for purchase <- order.shopping_basket.purchases do %>
                                 <tr>
                                     <th>
                                         <%= purchase.item.piece.title %>
@@ -73,13 +75,12 @@
                                     </th>
                                 </tr>
                                 <% end %>
-
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <% elsif order.succeded? %>
+            <%= true %>
                 <div class="row collapse">
                     <div class="order-title-wrap expired">
                         <div class="row collapse">
@@ -116,7 +117,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% order.shopping_basket.purchases.each do |purchase| %>
+                                    <%= for purchase <- order.shopping_basket.purchases do %>
                                     <tr>
                                         <th>
                                             <%= purchase.item.piece.title %>
@@ -143,26 +144,3 @@
         <% end %>
     </div>
 </div>
-<% @order = @customer.orders.select(&:succeded?).sort_by(&:completed_at).reverse.first %>
-<% if @order %>
-<script charset="utf-8">
-ga('ecommerce:addTransaction', {
-    'id': '<%= @order.id %>', // Transaction ID. Required.
-    'revenue': <%= @order.payment_net %>, // Grand Total.
-    'shipping': 0, // Shipping.
-    'tax': <%= @order.tax_payment %>, // Tax.
-    'currency': '<%= @order.currency %>'
-});
-
-<% @order.shopping_basket.purchases.each do |purchase| %>
-ga('ecommerce:addItem', {
-    'id': <%= @order.id %>, // Transaction ID. Required.
-    'name': '<%= "#{purchase.item.piece.title}: #{purchase.item.name}" %>', // Product name. Required.
-    'sku': '<%= purchase.item.id %>', // SKU/code.
-    // 'price': OrderDetails[i][5], // Unit price.
-    'quantity': <%= purchase.quantity %> // Quantity.
-});
-<% end %>
-ga('ecommerce:send')
-</script>
-<% end %>

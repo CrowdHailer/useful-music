@@ -38,9 +38,12 @@ defmodule UM.Web.Customers do
   def handle_request(%{path: [id], method: :GET}, _) do
     customer = UM.Customers.fetch(id)
     |> IO.inspect
-    Raxx.Response.ok(order_history_content(customer))
+    Raxx.Response.ok("order_history_content(customer)")
   end
   def csrf_tag do
 # TODO
+  end
+  def render(_) do
+    "TODO"
   end
 end
