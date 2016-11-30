@@ -11,9 +11,13 @@ defmodule UM.CatalogueTest do
     notation_preview: "A link which I don't yet have"}
 
   setup do
+    Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
+    # |> IO.inspect
     Moebius.Query.db(:items) |> Moebius.Query.delete |> Moebius.Db.run
+    # |> IO.inspect
     Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
-    {:ok, %{id: id}} = Catalogue.create_piece(@canonical_piece)
+    # |> IO.inspect
+    {:ok, %{id: _id}} = Catalogue.create_piece(@canonical_piece)
   end
 
 
@@ -48,7 +52,7 @@ defmodule UM.CatalogueTest do
   test "can update a piece", %{id: id} do
     {:ok, piece} = Catalogue.fetch_piece(id)
     piece = %{piece | advanced: true}
-    {:ok, piece} = Catalogue.update_piece(piece)
+    {:ok, _piece} = Catalogue.update_piece(piece)
   end
 
   test "cannot update a piece to be invalid", %{id: id} do
@@ -90,11 +94,11 @@ defmodule UM.CatalogueTest do
     })
     {:ok, item} = Catalogue.fetch_item(item.id)
     item = %{item | initial_price: 100}
-    {:ok, item} = Catalogue.update_item(item)
+    {:ok, _item} = Catalogue.update_item(item)
   end
 
   test "can load the items associated with a piece", %{id: piece_id} do
-    {:ok, item} = Catalogue.create_item(%{
+    {:ok, _item} = Catalogue.create_item(%{
       # make item struct
       id: nil,
       name: "violin piece",
@@ -102,7 +106,7 @@ defmodule UM.CatalogueTest do
       asset: "link I dont have again",
       piece_id: piece_id
       })
-    {:ok, item} = Catalogue.create_item(%{
+    {:ok, _item} = Catalogue.create_item(%{
       # make item struct
       id: nil,
       name: "violin piece",

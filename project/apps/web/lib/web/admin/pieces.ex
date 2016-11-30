@@ -44,12 +44,10 @@ defmodule UM.Web.Admin.Pieces do
         {attribute, value}
     end)
     |> Enum.into(%{})
-    IO.inspect(form)
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
-        IO.inspect(data)
         case UM.Catalogue.create_piece(data) do
-          {:ok, piece} ->
+          {:ok, _piece} ->
             Raxx.Response.found("", [{"location", "/admin/pieces"}])
           {:error, :invalid_piece} ->
             # loose all data but thats just ok on the admin side, at the moment
@@ -58,6 +56,9 @@ defmodule UM.Web.Admin.Pieces do
             # TODO change to sending to the edit page
             Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
         end
+      {:error, _stuff} ->
+        Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
+
     end
   end
 

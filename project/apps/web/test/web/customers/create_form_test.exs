@@ -13,9 +13,10 @@ defmodule UM.Web.Customers.CreateFormTest do
     "terms_agreement" => "on"
   }
 
+  # TODO something useful
   test "sandbox" do
-    {:ok, data} = CreateForm.validate(@valid_form)
-    |> IO.inspect
+    {:ok, _data} = CreateForm.validate(@valid_form)
+    # |> IO.inspect
   end
 
   test "requires a first name" do
@@ -36,7 +37,7 @@ defmodule UM.Web.Customers.CreateFormTest do
   end
 
   test "long name is invalid" do
-    {:error, {data, errors}} = CreateForm.validate(%{"first_name" => "1111111111111111111111111111"})
+    {:error, {_data, errors}} = CreateForm.validate(%{"first_name" => "1111111111111111111111111111"})
     assert errors.first_name == "name is too long"
   end
 
@@ -63,17 +64,17 @@ defmodule UM.Web.Customers.CreateFormTest do
   end
 
   test "requires a password confirmation" do
-    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "password_confirmation" => "other"})
+    {:error, {_form, errors}} = CreateForm.validate(%{@valid_form | "password_confirmation" => "other"})
     assert errors.password_confirmation == :does_not_match
   end
 
   test "requires a country" do
-    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "country" => ""})
+    {:error, {_form, errors}} = CreateForm.validate(%{@valid_form | "country" => ""})
     assert errors.country == :required
   end
 
   test "requires aggreement" do
-    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "terms_agreement" => "off"})
+    {:error, {_form, errors}} = CreateForm.validate(%{@valid_form | "terms_agreement" => "off"})
     assert errors.terms_agreement == :checkbox_needs_accepting
   end
 end

@@ -1,5 +1,5 @@
 defmodule UM.Web.AdminTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   import Raxx.Test
 

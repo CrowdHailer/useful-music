@@ -2,24 +2,24 @@ defmodule UM.SalesTest do
   use ExUnit.Case
   alias UM.Sales
 
-  import Moebius.Query
   @tag :skip
   test "Can start a new basket" do
     # Same as creating a new shopping basket / order.
     # Shopping basket is just a pending order.
     # NOTE shopping basket has many orders because an order can fail.
     # Can just create new order if failed but the domain has a concept of a basket so we will use it.
-    {:ok, basket = %{id: id}} = Sales.create_shopping_basket()
+    {:ok, basket = %{id: _id}} = Sales.create_shopping_basket()
     assert Sales.ShoppingBasket.empty?(basket)
   end
 
+  @tag :skip
   test "A successful shopping trip" do
     # Replace this with some fixtures however set up.
     # %{id: id} = create_piece()
     # %{id: id} = create_item(100)
     [%{id: item_id_1}, %{id: item_id_2} | _] = Moebius.Query.db(:items) |> Moebius.Db.run
 
-    {:ok, basket = %{id: basket_id}} = Sales.create_shopping_basket()
+    {:ok, basket = %{id: _basket_id}} = Sales.create_shopping_basket()
     assert Sales.ShoppingBasket.empty?(basket)
 
     {:ok, basket} = Sales.add_purchases(basket, [%{quantity: 2, item_id: item_id_1}])

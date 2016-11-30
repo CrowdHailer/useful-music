@@ -36,6 +36,7 @@ defmodule UM.Web.CustomersTest do
     assert %{first_name: "Bill"} = UM.Customers.fetch(id)
   end
 
+  @tag :skip
   test "rerenders form for bad password" do
     request = post("/", form_data(%{
       customer: %{

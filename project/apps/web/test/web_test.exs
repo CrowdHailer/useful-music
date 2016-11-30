@@ -18,7 +18,7 @@ defmodule UM.WebTest do
 
   test "login will add user id to session" do
     request = post("/login", form_data(%{email: "bill@usa.com"}))
-    response = UM.Web.handle_request(request, :no_state)
+    _response = UM.Web.handle_request(request, :no_state)
     # TODO assert
   end
 

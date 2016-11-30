@@ -1,5 +1,5 @@
 defmodule UM.Web.Admin.CustomersTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias UM.Web.Admin.Customers
 
   import Raxx.Test

@@ -42,7 +42,7 @@
         <form action="/admin/pieces/search" method="get">
             <input class="action" type="text" name="search" placeholder="e.g. UD123" list="all-pieces">
             <datalist id="all-pieces">
-                <%= for {piece, i} <- page.pieces do %>
+                <%= for {piece, _i} <- page.pieces do %>
                     <option value="<%= UM.Catalogue.Piece.catalogue_number(piece) %>">
                 <% end %>
             </datalist>
