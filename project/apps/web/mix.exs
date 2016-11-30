@@ -22,6 +22,7 @@ defmodule UM.Web.Mixfile do
   defp deps do
     [
       {:catalogue, in_umbrella: true},
+      {:utils, in_umbrella: true},
       {:ace, "~> 0.7.0"},
       {:raxx, "~> 0.5.2"},
       {:moebius, "~> 2.0.0"},
