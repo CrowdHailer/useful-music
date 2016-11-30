@@ -7,6 +7,9 @@ defmodule UM.Web.Admin.Pieces do
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, [:page]
 
+  edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
+  EEx.function_from_file :def, :edit_page_content, edit_file, [:piece]
+
   def handle_request(%{path: [], method: :GET}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
     Raxx.Response.ok(UM.Web.Admin.layout_page(index_page_content(paginate_pieces(pieces))))
@@ -44,8 +47,21 @@ defmodule UM.Web.Admin.Pieces do
     end
   end
 
+  def handle_request(_request = %{path: ["UD" <> id, "edit"], method: :GET}, _) do
+    {id, ""} = Integer.parse(id)
+    case UM.Catalogue.fetch_piece(id) do
+      {:ok, piece} ->
+        {:ok, piece} = UM.Catalogue.load_items(piece)
+        Raxx.Response.ok(UM.Web.Admin.layout_page(edit_page_content(piece)))
+    end
+  end
+
   defp csrf_tag do
     "TODO create a real tag"
+  end
+
+  defp url(_file) do
+    "TODO"
   end
 
   # TODO fix this

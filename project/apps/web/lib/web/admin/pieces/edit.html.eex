@@ -5,10 +5,10 @@
                 <a class="menu-link" href="/admin/pieces">Back to pieces</a>
             </li>
             <li class="menu-option">
-                <a class="menu-link" href="/admin/items/new?piece_id=<%= @piece.id %>">Add Item</a>
+                <a class="menu-link" href="/admin/items/new?piece_id=<%= piece.id %>">Add Item</a>
             </li>
             <hr>
-            <% @piece.items.each do |item| %>
+            <%= for item <- piece.items do %>
             <li class="menu-option">
                 <a class="menu-link" href="/admin/items/<%= item.id %>/edit"><%= item.name %></a>
             </li>
@@ -17,9 +17,9 @@
     </aside>
     <article class="col col-4-5">
 
-        <h2>Edit Piece: <%= @piece.catalogue_number %></h2>
+        <h2>Edit Piece: <%= UM.Catalogue.Piece.catalogue_number(piece) %></h2>
 
-        <form class="pure-form pure-form-aligned" action="/admin/pieces/<%= @piece.catalogue_number %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form class="pure-form pure-form-aligned" action="/admin/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
@@ -31,7 +31,7 @@
                     type="number"
                     autofocus
                     required
-                    value="<%= @piece.id %>"
+                    value="<%= piece.id %>"
                     disabled
                     placeholder="XXX">
                 </div>
@@ -43,7 +43,7 @@
                     name="piece[title]"
                     type="text"
                     required
-                    value="<%= @piece.title %>"
+                    value="<%= piece.title %>"
                     placeholder="">
                 </div>
 
@@ -54,7 +54,7 @@
                     name="piece[sub_heading]"
                     type="text"
                     required
-                    value="<%= @piece.sub_heading %>"
+                    value="<%= piece.sub_heading %>"
                     placeholder="e.g. Flute and keyboard">
                 </div>
 
@@ -74,7 +74,7 @@
                         name="piece[level_overview]"
                         type="text"
                         required
-                        value="<%= @piece.level_overview %>"
+                        value="<%= piece.level_overview %>"
                         placeholder="e.g. 1 to 3">
                 </div>
 
@@ -84,7 +84,7 @@
                     id="piece_description"
                     name="piece[description]"
                     required
-                    placeholder="product description"><%= @piece.description %></textarea>
+                    placeholder="product description"><%= piece.description %></textarea>
                 </div>
 
                 <hr>
@@ -95,7 +95,7 @@
                     id="piece_solo"
                     name="piece[solo]"
                     type="checkbox"
-                    <%= 'checked' if @piece.solo? %>>
+                    <%= if piece.solo, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -104,7 +104,7 @@
                     id="piece_solo_with_accompaniment"
                     name="piece[solo_with_accompaniment]"
                     type="checkbox"
-                    <%= 'checked' if @piece.solo_with_accompaniment? %>>
+                    <%= if piece.solo_with_accompaniment, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -113,7 +113,7 @@
                     id="piece_duet"
                     name="piece[duet]"
                     type="checkbox"
-                    <%= 'checked' if @piece.duet? %>>
+                    <%= if piece.duet, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -122,7 +122,7 @@
                     id="piece_trio"
                     name="piece[trio]"
                     type="checkbox"
-                    <%= 'checked' if @piece.trio? %>>
+                    <%= if piece.trio, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -131,7 +131,7 @@
                     id="piece_quartet"
                     name="piece[quartet]"
                     type="checkbox"
-                    <%= 'checked' if @piece.quartet? %>>
+                    <%= if piece.quartet, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -140,7 +140,7 @@
                     id="piece_larger_ensembles"
                     name="piece[larger_ensembles]"
                     type="checkbox"
-                    <%= 'checked' if @piece.larger_ensembles? %>>
+                    <%= if piece.larger_ensembles, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -149,7 +149,7 @@
                     id="piece_collection"
                     name="piece[collection]"
                     type="checkbox"
-                    <%= 'checked' if @piece.collection? %>>
+                    <%= if piece.collection, do: "checked" %>>
                 </div>
 
                 <hr>
@@ -160,7 +160,7 @@
                     id="piece_beginner"
                     name="piece[beginner]"
                     type="checkbox"
-                    <%= 'checked' if @piece.beginner? %>>
+                    <%= if piece.beginner, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -169,7 +169,7 @@
                     id="piece_intermediate"
                     name="piece[intermediate]"
                     type="checkbox"
-                    <%= 'checked' if @piece.intermediate? %>>
+                    <%= if piece.intermediate, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -178,7 +178,7 @@
                     id="piece_advanced"
                     name="piece[advanced]"
                     type="checkbox"
-                    <%= 'checked' if @piece.advanced? %>>
+                    <%= if piece.advanced, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -187,7 +187,7 @@
                     id="piece_professional"
                     name="piece[professional]"
                     type="checkbox"
-                    <%= 'checked' if @piece.professional? %>>
+                    <%= if piece.professional, do: "checked" %>>
                 </div>
 
                 <hr>
@@ -198,7 +198,7 @@
                     id="piece_piano"
                     name="piece[piano]"
                     type="checkbox"
-                    <%= 'checked' if @piece.piano? %>>
+                    <%= if piece.piano, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -207,7 +207,7 @@
                     id="piece_recorder"
                     name="piece[recorder]"
                     type="checkbox"
-                    <%= 'checked' if @piece.recorder? %>>
+                    <%= if piece.recorder, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -216,7 +216,7 @@
                     id="piece_flute"
                     name="piece[flute]"
                     type="checkbox"
-                    <%= 'checked' if @piece.flute? %>>
+                    <%= if piece.flute, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -225,7 +225,7 @@
                     id="piece_oboe"
                     name="piece[oboe]"
                     type="checkbox"
-                    <%= 'checked' if @piece.oboe? %>>
+                    <%= if piece.oboe, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -234,7 +234,7 @@
                     id="piece_clarineo"
                     name="piece[clarineo]"
                     type="checkbox"
-                    <%= 'checked' if @piece.clarineo? %>>
+                    <%= if piece.clarineo, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -243,7 +243,7 @@
                     id="piece_clarinet"
                     name="piece[clarinet]"
                     type="checkbox"
-                    <%= 'checked' if @piece.clarinet? %>>
+                    <%= if piece.clarinet, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -252,7 +252,7 @@
                     id="piece_bassoon"
                     name="piece[bassoon]"
                     type="checkbox"
-                    <%= 'checked' if @piece.bassoon? %>>
+                    <%= if piece.bassoon, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -261,7 +261,7 @@
                     id="piece_saxophone"
                     name="piece[saxophone]"
                     type="checkbox"
-                    <%= 'checked' if @piece.saxophone? %>>
+                    <%= if piece.saxophone, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -270,7 +270,7 @@
                     id="piece_trumpet"
                     name="piece[trumpet]"
                     type="checkbox"
-                    <%= 'checked' if @piece.trumpet? %>>
+                    <%= if piece.trumpet, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -279,7 +279,7 @@
                     id="piece_violin"
                     name="piece[violin]"
                     type="checkbox"
-                    <%= 'checked' if @piece.violin? %>>
+                    <%= if piece.violin, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -288,7 +288,7 @@
                     id="piece_viola"
                     name="piece[viola]"
                     type="checkbox"
-                    <%= 'checked' if @piece.viola? %>>
+                    <%= if piece.viola, do: "checked" %>>
                 </div>
 
                 <div class="pure-control-group">
@@ -297,7 +297,7 @@
                     id="piece_percussion"
                     name="piece[percussion]"
                     type="checkbox"
-                    <%= 'checked' if @piece.percussion? %>>
+                    <%= if piece.percussion, do: "checked" %>>
                 </div>
 
                 <hr>
@@ -312,7 +312,7 @@
 
                 <div class="pure-control-group">
                     <label></label>
-                    <span><a href="<%= @piece.notation_preview.url %>">existing asset</a></span>
+                    <span><a href="<%= url(piece.notation_preview) %>">existing asset</a></span>
                 </div>
 
                 <div class="pure-control-group">
@@ -326,8 +326,8 @@
                 <div class="pure-control-group">
                     <label></label>
                     <span>
-                        <% if @piece.audio_preview.url %>
-                        <a href="<%= @piece.audio_preview.url %>">existing asset</a>
+                        <%= if url(piece.audio_preview) do %>
+                        <a href="<%= url(piece.audio_preview) %>">existing asset</a>
                         <% else %>
                         No Audio Preview
                         <% end %>
@@ -345,8 +345,8 @@
                 <div class="pure-control-group">
                     <label></label>
                     <span>
-                        <% if @piece.cover_image.url %>
-                        <a href="<%= @piece.cover_image.url %>">existing asset</a>
+                        <% if url(piece.cover_image) do %>
+                        <a href="<%= url(piece.cover_image) %>">existing asset</a>
                         <% else %>
                         No Audio Preview
                         <% end %>
@@ -360,7 +360,7 @@
                     name="piece[print_link]"
                     type="text"
                     placeholder="Add link"
-                    value="<%= @piece.print_link %>">
+                    value="<%= piece.print_link %>">
                 </div>
 
                 <div class="pure-control-group">
@@ -370,7 +370,7 @@
                     name="piece[print_title]"
                     type="text"
                     placeholder="Add title"
-                    value="<%= @piece.print_title %>">
+                    value="<%= piece.print_title %>">
                 </div>
 
                 <div class="pure-control-group">
@@ -380,7 +380,7 @@
                     name="piece[weezic_link]"
                     type="text"
                     placeholder="Add link"
-                    value="<%= @piece.weezic_link %>">
+                    value="<%= piece.weezic_link %>">
                 </div>
 
                 <div class="pure-control-group">
@@ -389,7 +389,7 @@
                     id="piece_meta_description"
                     name="piece[meta_description]"
                     type="text"
-                    value="<%= @piece.meta_description %>"
+                    value="<%= piece.meta_description %>"
                     placeholder="">
                 </div>
 
@@ -399,7 +399,7 @@
                     id="piece_meta_keywords"
                     name="piece[meta_keywords]"
                     type="text"
-                    value="<%= @piece.meta_keywords %>"
+                    value="<%= piece.meta_keywords %>"
                     placeholder="">
                 </div>
 

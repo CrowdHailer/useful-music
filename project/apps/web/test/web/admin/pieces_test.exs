@@ -72,12 +72,18 @@ defmodule UM.Web.Admin.PiecesTest do
     assert "/admin/pieces/new" == Raxx.Patch.response_location(response)
   end
 
-  test "cant create a piece with existing id" do
+  test "cant create a piece with existing id (redirects to piece)" do
     request = post("/", form_data(%{
       piece: @canonical_piece
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
     assert "/admin/pieces/UD101/edit" == Raxx.Patch.response_location(response)
+  end
+
+  test "can visit a pieces edit page" do
+    request = get("/UD#{@canonical_piece.id}/edit")
+    response = Pieces.handle_request(request, %{})
+    assert 200 == response.status
   end
 end
