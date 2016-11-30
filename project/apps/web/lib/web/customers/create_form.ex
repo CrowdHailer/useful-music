@@ -14,18 +14,40 @@ defmodule UM.Web.Customers.CreateForm do
 
   def validate(form) do
     validator = %{
-      first_name: {:required, &validate_name/1}
+      first_name: {:required, &validate_name/1},
+      last_name: {:required, &validate_name/1},
+      email: {:required, &validate_email/1},
+      password: {:required, &validate_password/1},
+      password_confirmation: {:confirmation, "password"},
+      country: {:required, fn(x) -> {:ok, x} end},
+      terms_agreement: :required_checkbox
     }
     validated = Enum.map(validator, fn
       {key, {:required, fun}} ->
         case Map.get(form, "#{key}", "") do
           "" ->
             {key, {:error, :required, ""}}
-          name ->
-            case fun.(name) do
+          value ->
+            case fun.(value) do
               {:ok, validated} ->
                 {key, {:ok, validated}}
+              {:error, reason} ->
+                {key, {:error, reason, value}}
             end
+        end
+      {key, {:confirmation, checks}} ->
+        case Map.get(form, checks, "") == Map.get(form, "#{key}", "") do
+          true ->
+            {key, {:ok, :match}}
+          false ->
+            {key, {:error, :does_not_match, ""}}
+        end
+      {key, :required_checkbox} ->
+        case Map.get(form, "#{key}", "off") do
+          "on" ->
+            {key, {:ok, :checked}}
+          _ ->
+            {key, {:error, :checkbox_needs_accepting, ""}}
         end
     end)
     |> Enum.into(%{})
@@ -45,47 +67,8 @@ defmodule UM.Web.Customers.CreateForm do
         {:error, {form, errors}}
     end
   end
-  def validate(form) do
-    data = %__MODULE__{} # should be action struct signup not signupform
-    errors = %__MODULE__{}
-
-    {data, errors} = case validate_name(Map.get(form, "first_name", "")) do
-      {:ok, first_name} ->
-        {Map.merge(data, %{first_name: first_name}), Map.merge(errors, %{first_name: nil})}
-      {:error, reason} ->
-        {Map.merge(data, %{first_name: nil}), Map.merge(errors, %{first_name: reason})}
-    end
-
-    {data, errors} = case validate_name(Map.get(form, "last_name", "")) do
-      {:ok, last_name} ->
-        {Map.merge(data, %{last_name: last_name}), Map.merge(errors, %{last_name: nil})}
-      {:error, reason} ->
-        {Map.merge(data, %{last_name: nil}), Map.merge(errors, %{last_name: reason})}
-    end
-
-    {data, errors} = case validate_email(Map.get(form, "email", "")) do
-      {:ok, email} ->
-        {Map.merge(data, %{email: email}), Map.merge(errors, %{email: nil})}
-      {:error, reason} ->
-        {Map.merge(data, %{email: nil}), Map.merge(errors, %{email: reason})}
-    end
-    {data, errors} = case Map.get(form, "terms_agreement", "off") do
-      "on" ->
-        {Map.merge(data, %{terms_agreement: true}), Map.merge(errors, %{terms_agreement: nil})}
-      _ ->
-        {Map.merge(data, %{terms_agreement: nil}), Map.merge(errors, %{terms_agreement: "must say yes"})}
-    end
-
-    # TODO fix these merges
-    data = %{data | password: "hello", country: "GB"}
-    {data, errors}
-  end
 
   # TODO validate contains letters only
-  def validate_name("") do
-    # This is an odd error because it should not be part of the validator
-    {:error, "name is required"}
-  end
   def validate_name(text) do
     name = String.strip(text) |> String.capitalize
     case String.length(name) >= 2 do
@@ -100,11 +83,20 @@ defmodule UM.Web.Customers.CreateForm do
         end
     end
   end
-
-  defp validate_email("") do
-    # This is an odd error because it should not be part of the validator
-    {:error, "email is required"}
+  def validate_password(text) do
+    case String.length(text) >= 8 do
+      false ->
+        {:error, "text is too short"}
+      true ->
+        case String.length(text) <= 55 do
+          false ->
+            {:error, "text is too long"}
+          true ->
+            {:ok, text}
+        end
+    end
   end
+
   defp validate_email(raw) do
     case String.split(raw, "@") do
       [_, _] ->

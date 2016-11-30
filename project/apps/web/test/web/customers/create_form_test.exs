@@ -25,50 +25,55 @@ defmodule UM.Web.Customers.CreateFormTest do
   end
 
   test "coerces first name" do
-    {:ok, data} = CreateForm.validate(%{"first_name" => "  will"})
+    {:ok, data} = CreateForm.validate(%{@valid_form | "first_name" => "  will"})
     assert data.first_name == "Will"
   end
 
-  @tag :skip
   test "short name is invalid" do
-    {data, errors} = CreateForm.validate(%{"first_name" => "I"})
-    assert data.first_name == nil
+    {:error, {data, errors}} = CreateForm.validate(%{"first_name" => "I"})
+    assert data.first_name == "I"
     assert errors.first_name == "name is too short"
   end
 
-  @tag :skip
   test "long name is invalid" do
-    {data, errors} = CreateForm.validate(%{"first_name" => "1111111111111111111111111111"})
-    assert data.first_name == nil
+    {:error, {data, errors}} = CreateForm.validate(%{"first_name" => "1111111111111111111111111111"})
     assert errors.first_name == "name is too long"
   end
 
-
-  @tag :skip
   test "cleans valid last name" do
-    {data, errors} = CreateForm.validate(%{"last_name" => " Smith  "})
+    {:ok, data} = CreateForm.validate(%{@valid_form | "last_name" => " Smith  "})
     assert data.last_name == "Smith"
-    assert errors.last_name == nil
   end
 
-  @tag :skip
-  test "requires a last name" do
-    {data, errors} = CreateForm.validate(%{"last_name" => ""})
-    assert data.last_name == nil
-    assert errors.last_name == "name is required"
-  end
-
-    @tag :skip
   test "cleans email" do
-    {data, errors} = CreateForm.validate(%{"email" => " Dummy@ExamplE.com  "})
+    {:ok, data} = CreateForm.validate(%{@valid_form | "email" => " Dummy@ExamplE.com  "})
     assert data.email == "dummy@example.com"
-    assert errors.email == nil
   end
 
-  @tag :skip
   test "requires an email" do
-    {data, errors} = CreateForm.validate(%{"email" => ""})
-    assert data.email == nil
-    assert errors.email == "email is required"
+    {:error, {data, errors}} = CreateForm.validate(%{@valid_form | "email" => ""})
+    assert data.email == ""
+    assert errors.email == :required
+  end
+
+  test "requires a password" do
+    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "password" => ""})
+    assert form.password == ""
+    assert errors.password == :required
+  end
+
+  test "requires a password confirmation" do
+    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "password_confirmation" => "other"})
+    assert errors.password_confirmation == :does_not_match
+  end
+
+  test "requires a country" do
+    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "country" => ""})
+    assert errors.country == :required
+  end
+
+  test "requires aggreement" do
+    {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "terms_agreement" => "off"})
+    assert errors.terms_agreement == :checkbox_needs_accepting
   end
 end
