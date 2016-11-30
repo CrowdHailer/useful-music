@@ -33,16 +33,16 @@ defmodule UM.Web.Admin.PiecesTest do
 
   test "can search for a piece by id" do
     request = get({"/search", %{"search" => "123"}})
-    %{status: status, headers: headers} = Pieces.handle_request(request, %{})
-    assert 302 == status
-    assert {"location", "/admin/pieces/UD123/edit"} == List.keyfind(headers, "location", 0)
+    response = Pieces.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/admin/pieces/UD123/edit" == Raxx.Patch.response_location(response)
   end
 
   test "can search for a piece by catalogue_number" do
     request = get({"/search", %{"search" => "UD123"}})
-    %{status: status, headers: headers} = Pieces.handle_request(request, %{})
-    assert 302 == status
-    assert {"location", "/admin/pieces/UD123/edit"} == List.keyfind(headers, "location", 0)
+    response = Pieces.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/admin/pieces/UD123/edit" == Raxx.Patch.response_location(response)
   end
 
   test "can visit new piece page" do
@@ -52,53 +52,32 @@ defmodule UM.Web.Admin.PiecesTest do
     assert String.contains?(body, "New Piece")
   end
 
-  @tag :skip
   test "can create a new piece" do
     # can post file using httpoison
     request = post("/", form_data(%{
-      piece: %{
-        id: "123",
-        title: "A piece of music",
-        sub_heading: "flute and claranet",
-        level_overview: "1 to 3",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu",
-        notation_preview: "TODO"
-      }
+      piece: %{@canonical_piece | id: "123"}
     }))
-    %{status: status, headers: headers} = Pieces.handle_request(request, %{})
-    assert 302 == status
-    # TODO this is afailure
-    assert {"location", "/admin/pieces/new"} == List.keyfind(headers, "location", 0)
+    response = Pieces.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/admin/pieces" == Raxx.Patch.response_location(response)
+    assert {:ok, _piece} = Catalogue.fetch_piece(123)
   end
 
   test "cant create a piece without id" do
     request = post("/", form_data(%{
-      piece: %{
-        id: "",
-        title: "A piece of music",
-        sub_heading: "flute and claranet",
-        level_overview: "1 to 3",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      }
+      piece: %{@canonical_piece | id: ""}
     }))
-    %{status: status, headers: headers} = Pieces.handle_request(request, %{})
-    assert 302 == status
-    assert {"location", "/admin/pieces/new"} == List.keyfind(headers, "location", 0)
+    response = Pieces.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/admin/pieces/new" == Raxx.Patch.response_location(response)
   end
 
-  @tag :skip
   test "cant create a piece with existing id" do
     request = post("/", form_data(%{
-      piece: %{
-        id: "100",
-        title: "A piece of music",
-        sub_heading: "flute and claranet",
-        level_overview: "1 to 3",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      }
+      piece: @canonical_piece
     }))
-    %{status: status, headers: headers} = Pieces.handle_request(request, %{})
-    assert 302 == status
-    assert {"location", "/admin/pieces/new"} == List.keyfind(headers, "location", 0)
+    response = Pieces.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/admin/pieces/UD101/edit" == Raxx.Patch.response_location(response)
   end
 end

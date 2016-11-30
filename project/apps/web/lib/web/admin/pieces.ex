@@ -37,7 +37,7 @@ defmodule UM.Web.Admin.Pieces do
             Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
           {:error, :id_already_used} ->
             # TODO change to sending to the edit page
-            Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
+            Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
         end
       {:error, _stuff} ->
         Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
@@ -48,6 +48,7 @@ defmodule UM.Web.Admin.Pieces do
     "TODO create a real tag"
   end
 
+  # TODO fix this
   defp paginate_pieces(array) do
     %{
       previous: 0,
