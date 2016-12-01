@@ -18,10 +18,6 @@ defmodule UM.Web.Customers do
       {:error, {form, errors}} ->
         Raxx.Response.bad_request(new_page_content(form, errors, ""))
       {:ok, customer} ->
-        # In the future use the struct method to pull values into a Customer struct
-        # Downside this makes the concept of a customer escape bounded context,
-        # however it is aggregate route.
-        # More boiler plate but perhaps create a Accounts.CreateCustomer  Struct
         customer = Map.drop(customer, [:password_confirmation, :terms_agreement])
         case UM.Customers.insert(customer) do
           # test is email taken
@@ -35,9 +31,27 @@ defmodule UM.Web.Customers do
     end
   end
 
-  def handle_request(%{path: [id], method: :GET}, _) do
-    customer = UM.Customers.fetch(id)
+  def handle_request(request = %{path: [id | rest]}, _) do
+    authority = Raxx.Patch.get_header(request, "um-user-id")
+    case has_permission?(authority, id) do
+      true ->
+        customer = UM.Customers.fetch(id)
+        customer_endpoint(%{request | path: rest}, customer)
+      false ->
+        Raxx.Response.not_found("")
+    end
+  end
+
+  def customer_endpoint(%{path: []}, customer) do
     Raxx.Response.ok("order_history_content(customer)")
+  end
+
+  def has_permission?(authority, id) do
+    case {authority, id} do
+      {id, id} -> true
+      {"dummy-admin-id", _} -> true
+      _ -> false
+    end
   end
   def csrf_tag do
 # TODO

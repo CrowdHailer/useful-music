@@ -55,7 +55,7 @@ defmodule WebForm do
       false ->
         {form, errors} = Enum.reduce(validated, {validator, validator}, fn
           ({key, {:ok, value}}, {form, errors}) ->
-            {%{form | key => value}, errors}
+            {%{form | key => value}, %{errors| key => nil}}
           ({key, {:error, reason, raw}}, {form, errors}) ->
             {%{form | key => raw}, %{errors| key => reason}}
         end)
