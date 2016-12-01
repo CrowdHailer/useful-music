@@ -86,4 +86,24 @@ defmodule UM.Web.Admin.PiecesTest do
     response = Pieces.handle_request(request, %{})
     assert 200 == response.status
   end
+
+  test "trying to edit a non existant piece results in a 404" do
+    request = get("/UD999/edit")
+    response = Pieces.handle_request(request, %{})
+    assert 404 == response.status
+    assert String.contains?(response.body, "UD999")
+  end
+
+  test "can update a piece" do
+    request = post("/UD101", form_data(%{
+      piece: %{@canonical_piece | title: "The new hotness"}
+    }))
+    response = Pieces.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/admin/pieces/UD101/edit" == Raxx.Patch.response_location(response)
+  end
+
+  # DEBT Flash messages on Create and update
+  # DEBT Lost information on failed form submission
+  # DEBT Do not have the ability to delete pieces
 end

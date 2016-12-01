@@ -1,5 +1,6 @@
 # UM.Web
 
+- Have Admin and public domains for application.
 - TODO, generate styles from asset files
 - TODO, use relative links in templates
 

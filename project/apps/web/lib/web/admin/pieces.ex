@@ -53,6 +53,27 @@ defmodule UM.Web.Admin.Pieces do
       {:ok, piece} ->
         {:ok, piece} = UM.Catalogue.load_items(piece)
         Raxx.Response.ok(UM.Web.Admin.layout_page(edit_page_content(piece)))
+      {:error, :piece_not_found} ->
+        Raxx.Response.not_found("Could not find piece UD#{id}")
+    end
+  end
+
+  def handle_request(request = %{path: ["UD" <> id], method: :POST}, _) do
+    {:ok, form} = Raxx.Request.content(request)
+    form = Utils.sub_form(form, "piece")
+    {id, ""} = Integer.parse(id)
+    case __MODULE__.CreateForm.validate(form) do
+      {:ok, data} ->
+        data = %{data | id: id}
+        case UM.Catalogue.update_piece(data) do
+          {:ok, _piece} ->
+            Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
+          {:error, :invalid_piece} ->
+            # loose all data but thats just ok on the admin side, at the moment
+            Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
+        end
+      {:error, _stuff} ->
+        Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
     end
   end
 
