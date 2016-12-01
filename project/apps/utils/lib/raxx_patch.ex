@@ -30,7 +30,7 @@ defmodule Raxx.Session do
     end
 
     # stash
-    def overwrite(session, response, options) do
+    def overwrite(session, response, options \\ []) do
       set_cookie_string = Raxx.Cookie.new("raxx.session", session)
       |> Raxx.Cookie.set_cookie_string
       {:ok, response} = Raxx.Session.set_header(response, "set-cookie", set_cookie_string)

@@ -5,11 +5,13 @@ defmodule Utils do
 
   def sub_form(form, top_key) do
     regex = ~r/#{top_key}\[(?<attr>[^\]]*)\]/
-    form = Enum.map(form, fn
+    form = Enum.flat_map(form, fn
       ({key, value}) ->
         case Regex.named_captures(regex, key) do
           %{"attr" => attribute} ->
-            {attribute, value}
+            [{attribute, value}]
+          nil ->
+            []
         end
     end)
     |> Enum.into(%{})
