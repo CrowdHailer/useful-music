@@ -15,19 +15,14 @@ defmodule UM.Web do
   end
 
   def handle_request(request = %{path: ["stylesheets" | rest]}, env) do
-    # NOTE assets controller returns content-length etc
     UM.Web.Stylesheets.handle_request(%{request| path: rest}, env)
   end
   def handle_request(request = %{path: ["images" | rest]}, env) do
-    # NOTE assets controller returns content-length etc
     UM.Web.Images.handle_request(%{request| path: rest}, env)
   end
 
-  # This should end up as part of a Raxx Stack
-  # Do handling form mapping here
   def handle_request(request, env) do
     {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
-    # Maybe this should be x-user-id
     {:ok, request} = Raxx.Session.set_header(request, "um-user-id", session)
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
@@ -57,6 +52,9 @@ defmodule UM.Web do
   defp endpoint(request = %{path: ["admin" | rest]}, env) do
     UM.Web.Admin.handle_request(%{request| path: rest}, env)
   end
+  defp endpoint(request = %{path: ["sessions" | rest]}, env) do
+    UM.Web.SessionsController.handle_request(%{request| path: rest}, env)
+  end
   defp endpoint(request = %{path: ["about" | rest]}, env) do
     UM.Web.About.handle_request(%{request| path: rest}, %{
     shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
@@ -64,25 +62,6 @@ defmodule UM.Web do
     error: "Do this now TODO",
     success: nil
     })
-  end
-
-  defp endpoint(%{path: ["login"], method: :GET, headers: headers}, _) do
-    body = """
-      <h1>login</h1>
-      <form action="/login" method="post">
-        <input name="email">
-        <button type="submit">login</button>
-      </form>
-    """
-    Raxx.Response.ok(body)
-  end
-
-  defp endpoint(%{path: ["login"], method: :POST, headers: headers, body: body}, _) do
-    credentials = Plug.Conn.Query.decode(body)
-    session = credentials["email"]
-
-    response = Raxx.Response.see_other("", [{"location", "/login"}])
-    Raxx.Session.Open.overwrite(session, response, %{})
   end
 
   defp endpoint(request, env) do

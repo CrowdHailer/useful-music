@@ -1,4 +1,5 @@
 defmodule Raxx.Test do
+  # TODO stringify query keys
   def get(url, body \\ "", headers \\ []) do
     build(:GET, url, body, headers)
   end

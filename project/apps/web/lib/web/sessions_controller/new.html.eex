@@ -5,9 +5,9 @@
 </div>
 <div class="row collapse">
     <div class="large-12 columns">
-        <form class="" action="/sessions" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form action="/sessions" accept-charset="UTF-8" method="post">
             <%= csrf_tag %>
-            <input type="hidden" name="requested_path" value="<%= requested_path %>">
+            <input type="hidden" name="requested_path" value="<%= target %>">
             <fieldset>
                 <div class="row">
                     <div class="large-4 columns large-offset-2">

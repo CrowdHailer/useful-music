@@ -47,9 +47,4 @@ class SessionsController < UsefulMusic::App
     path.empty? ? nil : path
   end
 
-  def requested_path
-    path = request.GET.fetch('requested_path') { '' }
-    path.empty? ? nil : path
-  end
-
 end

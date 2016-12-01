@@ -60,7 +60,7 @@ defmodule UM.Web.Home do
   end
 
   def handle_request(_, _) do
-    Raxx.Response.not_found()
+    Raxx.Response.not_found("HOME not found")
     # TODO make this work
     # UM.Web.not_found()
   end
