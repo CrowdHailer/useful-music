@@ -27,9 +27,24 @@ defmodule UM.Web do
 
   def handle_request(request, env) do
     {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
-    {:ok, request} = Raxx.Session.set_header(request, "um-user-id", session)
+    session = case Poison.decode(session) do
+      {:ok, %{"customer" => %{"id" => id}}} ->
+        struct(Session, %{customer: %{id: id}})
+      {:error, invalid} ->
+        %Session{}
+    end
+
+    {:ok, request} = Raxx.Session.set_header(request, "um-session", session)
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
+
+    headers = case List.keytake(headers, "um-set-session", 0) do
+      {{"um-set-session", session}, headers} ->
+        headers ++ [{"set-cookie", Raxx.Cookie.new("raxx.session", Poison.encode!(session))
+        |> Raxx.Cookie.set_cookie_string}]
+      nil ->
+        headers
+    end
 
     headers = if !List.keymember?(headers, "content-length", 0) do
       headers ++ [{"content-length", "#{:erlang.iolist_size(body)}"}]

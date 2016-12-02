@@ -26,8 +26,10 @@ defmodule UM.Web.SessionsController do
       {:ok, data} ->
         case UM.Accounts.authenticate(data) do
           {:ok, customer} ->
-            response = Raxx.Response.see_other("", [{"location", target || "/customers/#{customer.id}"}])
-            Raxx.Session.Open.overwrite(customer.id, response)
+            response = Raxx.Response.see_other("", [
+              {"location", target || "/customers/#{customer.id}"},
+              {"um-set-session", %{customer: %{id: customer.id}}}
+            ])
           {:error, :invalid_credentials} ->
             Raxx.Response.see_other("", [{"location", "/sessions/new?error=Invalid login details"}])
         end

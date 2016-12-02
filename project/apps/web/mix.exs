@@ -27,6 +27,7 @@ defmodule UM.Web.Mixfile do
       {:ace, "~> 0.7.0"},
       {:raxx, "~> 0.5.2"},
       {:moebius, "~> 2.0.0"},
+      {:poison, "~> 2.0.1"},
       {:plug, "~> 1.2.2"} # TODO remove; currently used for query strings etc
     ]
   end

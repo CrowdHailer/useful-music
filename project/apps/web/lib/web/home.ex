@@ -23,13 +23,7 @@ defmodule UM.Web.Home do
       }))
   end
 
-  def csrf_tag do
-    "" #TODO
-  end
 
-  def local_price(_) do
-    %{format: "TODO"}
-  end
 
   instruments = [
     "piano",
@@ -63,5 +57,13 @@ defmodule UM.Web.Home do
     Raxx.Response.not_found("HOME not found")
     # TODO make this work
     # UM.Web.not_found()
+  end
+
+  def csrf_tag do
+    "" #TODO
+  end
+
+  def local_price(_) do
+    %{format: "TODO"}
   end
 end
