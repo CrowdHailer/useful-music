@@ -35,9 +35,11 @@ defmodule UM.Accounts do
 
   def authenticate(%{email: email, password: password}) do
     customer = db(:customers) |> filter(email: email) |> Db.first
-    case customer.password do
+    case customer && customer.password do
       ^password ->
         {:ok, customer}
+      _ ->
+        {:error, :invalid_credentials}
     end
   end
 end

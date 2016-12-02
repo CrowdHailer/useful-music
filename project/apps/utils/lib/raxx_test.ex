@@ -17,7 +17,7 @@ defmodule Raxx.Test do
 
   defp build(method, url, body, headers) when is_binary(url) do
     # TODO check url string for query
-    build(method, url, nil, body, headers)
+    build(method, url, %{}, body, headers)
   end
   defp build(method, {url, query}, body, headers) do
     build(method, url, query, body, headers)

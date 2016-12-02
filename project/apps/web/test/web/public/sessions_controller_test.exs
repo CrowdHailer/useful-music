@@ -24,7 +24,14 @@ defmodule UM.Web.SessionsControllerTest do
     assert String.contains?(response.body, "name=\"requested_path\" value=\"/admin\"")
   end
 
-  test "logging in", %{customer: customer} do
+  test "redirects to account page if already logged it", %{customer: customer} do
+    request = get("/new", [{"um-user-id", customer.id}])
+    response = SessionsController.handle_request(request, :nostate)
+    assert 303 == response.status
+    assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
+  end
+
+  test "logging in sends user to their orders page", %{customer: customer} do
     request = post("/", form_data(%{
       session: %{email: customer.email, password: customer.password}
     }))
@@ -32,5 +39,38 @@ defmodule UM.Web.SessionsControllerTest do
     assert 303 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
     # DEBT test encoded session.
+  end
+
+  test "loggin in will redirect to the target if given", %{customer: customer} do
+    request = post("/", form_data(%{
+      session: %{email: customer.email, password: customer.password},
+      target: "/admin"
+    }))
+    response = SessionsController.handle_request(request, :nostate)
+    assert 303 == response.status
+    assert "/admin" == Raxx.Patch.response_location(response)
+  end
+
+  test "redirect to login page if invalid credentials" do
+    request = post("/", form_data(%{
+      session: %{email: "bob@g.co", password: "not a password"}
+    }))
+    response = SessionsController.handle_request(request, :nostate)
+    assert 303 == response.status
+    assert "/sessions/new?error=Invalid login details" == Raxx.Patch.response_location(response)
+  end
+
+  test "log out will destroy session", %{customer: customer} do
+    request = post("/logout", [{"um-user-id", customer.id}])
+    response = SessionsController.handle_request(request, :nostate)
+    assert 303 == response.status
+    assert "/" = Raxx.Patch.response_location(response)
+    set_cookies(response)
+    # |> IO.inspect
+  end
+
+  def set_cookies(_response = %{headers: headers}) do
+    headers
+    # DEBT expire cookies
   end
 end

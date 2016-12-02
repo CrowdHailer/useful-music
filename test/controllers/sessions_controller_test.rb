@@ -16,26 +16,6 @@ class SessionsControllerTest < MyRecordTest
     'password'
   end
 
-  def test_responds_with_405
-    get '/'
-    assert_equal 'POST', last_response.headers['Allow']
-    assert_equal 405, last_response.status
-  end
-
-  def test_new_page_is_available
-    assert_ok get '/new'
-  end
-
-  def test_new_page_includes_redirection_field
-    assert_ok get '/new?requested_path=/admin'
-    assert_includes last_response.body, 'name="requested_path" value="/admin"'
-  end
-
-  def test_redirect_to_account_if_logged_in
-    customer_record = create :customer_record
-    get '/new', {}, {'rack.session' => { :user_id => customer_record.id }}
-    assert_includes last_response.location, customer_record.id
-  end
 
   def test_render_login_form_when_credentials_invalid
     post '/'

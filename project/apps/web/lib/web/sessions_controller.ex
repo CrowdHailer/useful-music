@@ -6,12 +6,18 @@ defmodule UM.Web.SessionsController do
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
   EEx.function_from_file :def, :new_page_content, new_file, [:target]
 
-  def handle_request(_request = %{path: ["new"], query: query, method: :GET}, _) do
-    target = Map.get(query, "target", "")
-    Raxx.Response.ok(new_page_content(target))
+  def handle_request(request = %{path: ["new"], query: query, method: :GET}, _) do
+    case List.keyfind(request.headers, "um-user-id", 0) do
+      {"um-user-id", id} ->
+        # trusted environment assume real id
+        Raxx.Response.see_other("", [{"location", "/customers/#{id}"}])
+      nil ->
+        target = Map.get(query, "target", "")
+        Raxx.Response.ok(new_page_content(target))
+    end
   end
 
-  def handle_request(request, _env) do
+  def handle_request(request = %{path: []}, _env) do
     {:ok, form} = Raxx.Request.content(request)
     target = Map.get(form, "target")
     form = Utils.sub_form(form, "session")
@@ -21,14 +27,16 @@ defmodule UM.Web.SessionsController do
           {:ok, customer} ->
             response = Raxx.Response.see_other("", [{"location", target || "/customers/#{customer.id}"}])
             Raxx.Session.Open.overwrite(customer.id, response)
+          {:error, :invalid_credentials} ->
+            Raxx.Response.see_other("", [{"location", "/sessions/new?error=Invalid login details"}])
         end
     end
   end
 
-  # def handle_request(message, state) do
-  #   # state includes config and session
-  #   {state, [{client: response}]}
-  # end
+  def handle_request(_request = %{path: ["logout"]}, _) do
+    response = Raxx.Response.see_other("", [{"location", "/"}])
+    Raxx.Session.Open.overwrite(nil, response)
+  end
 
   defp csrf_tag do
     "TODO"
