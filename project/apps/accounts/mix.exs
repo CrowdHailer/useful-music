@@ -1,8 +1,8 @@
-defmodule UM.Sales.Mixfile do
+defmodule UM.Accounts.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :sales,
+    [app: :accounts,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -16,7 +16,7 @@ defmodule UM.Sales.Mixfile do
 
   def application do
     [applications: [:logger, :moebius],
-     mod: {UM.Sales, []}]
+     mod: {UM.Accounts, []}]
   end
 
   defp deps do
