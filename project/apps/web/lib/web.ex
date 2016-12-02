@@ -1,3 +1,7 @@
+# TODO namespace
+defmodule Session do
+  defstruct [customer: nil]
+end
 defmodule UM.Web do
   use Application
 

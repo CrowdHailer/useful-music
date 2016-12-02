@@ -7,11 +7,12 @@ defmodule UM.Web.SessionsController do
   EEx.function_from_file :def, :new_page_content, new_file, [:target]
 
   def handle_request(request = %{path: ["new"], query: query, method: :GET}, _) do
-    case List.keyfind(request.headers, "um-user-id", 0) do
-      {"um-user-id", id} ->
+    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
+    case session do
+      %{customer: %{id: id}} ->
         # trusted environment assume real id
         Raxx.Response.see_other("", [{"location", "/customers/#{id}"}])
-      nil ->
+      %{customer: nil} ->
         target = Map.get(query, "target", "")
         Raxx.Response.ok(new_page_content(target))
     end

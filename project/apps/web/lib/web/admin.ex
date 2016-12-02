@@ -6,14 +6,17 @@ defmodule UM.Web.Admin do
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, []
 
-  @identifier_header "um-user-id"
-
   def handle_request(request, env) do
-    user_id = Raxx.Patch.get_header(request, @identifier_header)
-    case user_id do
-      "dummy-admin-id" ->
-        endpoint(request, env)
-      "dummy-customer-id" ->
+    case get_session(request) do
+      %{customer: %{id: id}} ->
+        %{admin: admin} = UM.Accounts.fetch_customer(id)
+        case admin do
+          true ->
+            endpoint(request, env)
+          false ->
+            Raxx.Response.forbidden
+        end
+      nil ->
         Raxx.Response.forbidden
     end
   end
@@ -28,5 +31,10 @@ defmodule UM.Web.Admin do
 
   def endpoint(request = %{path: ["customers" | rest]}, env) do
     UM.Web.Admin.Customers.handle_request(%{request | path: rest}, env)
+  end
+
+  def get_session(request) do
+    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
+    session
   end
 end
