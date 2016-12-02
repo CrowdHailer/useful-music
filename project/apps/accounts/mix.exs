@@ -21,7 +21,8 @@ defmodule UM.Accounts.Mixfile do
 
   defp deps do
     [
-      {:moebius, "~> 2.0.0"},
+      {:utils, in_umbrella: true},
+      {:moebius, "~> 2.0.0"}
     ]
   end
 end

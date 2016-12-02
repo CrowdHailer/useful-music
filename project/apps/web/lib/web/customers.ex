@@ -19,7 +19,7 @@ defmodule UM.Web.Customers do
         Raxx.Response.bad_request(new_page_content(form, errors, ""))
       {:ok, customer} ->
         customer = Map.drop(customer, [:password_confirmation, :terms_agreement])
-        case UM.Customers.insert(customer) do
+        case UM.Accounts.signup_customer(customer) do
           # test is email taken
           {:error, reason} ->
             IO.inspect(reason)
@@ -35,7 +35,7 @@ defmodule UM.Web.Customers do
     authority = Raxx.Patch.get_header(request, "um-user-id")
     case has_permission?(authority, id) do
       true ->
-        customer = UM.Customers.fetch(id)
+        customer = UM.Accounts.fetch_customer(id)
         customer_endpoint(%{request | path: rest}, customer)
       false ->
         Raxx.Response.not_found("")

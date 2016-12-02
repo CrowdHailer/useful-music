@@ -15,4 +15,21 @@ defmodule UM.Accounts do
     opts = [strategy: :one_for_one, name: UM.Accounts.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  import Moebius.Query
+
+  def all_customers do
+    db(:customers) |> Db.run
+  end
+
+  def signup_customer(customer) do
+    customer = Map.merge(%{id: Utils.random_string(16)}, customer)
+    customer = Enum.map(customer, fn(x) -> x end)
+    q = db(:customers) |> insert(customer)
+    Db.run(q)
+  end
+
+  def fetch_customer(id) do
+    db(:customers) |> filter(id: id) |> Db.first
+  end
 end

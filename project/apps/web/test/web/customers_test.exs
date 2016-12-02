@@ -7,9 +7,9 @@ defmodule UM.Web.CustomersTest do
   alias UM.Web.Customers, as: Controller
 
   setup do
-    Moebius.Query.db(:customers) |> Moebius.Query.delete |> Moebius.Db.run
-    assert [] == UM.Customers.all
-    %{id: id} = UM.Customers.insert(%{
+    Moebius.Query.db(:customers) |> Moebius.Query.delete |> UM.Accounts.Db.run
+    assert [] == UM.Accounts.all_customers
+    %{id: id} = UM.Accounts.signup_customer(%{
       first_name: "Dan",
       last_name: "Dare",
       email: "dan@example.com",
@@ -40,7 +40,7 @@ defmodule UM.Web.CustomersTest do
     response = Controller.handle_request(request, :no_state)
     assert "/customers/" <> id = Raxx.Patch.response_location(response)
     assert response.status == 303
-    assert %{first_name: "Bill"} = UM.Customers.fetch(id)
+    assert %{first_name: "Bill"} = UM.Accounts.fetch_customer(id)
     # TODO test the flash message
     # TODO check the last email sent
   end
