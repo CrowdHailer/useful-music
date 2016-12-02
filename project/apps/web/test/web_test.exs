@@ -45,7 +45,18 @@ defmodule UM.WebTest do
     assert 303 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
   end
-  # TODO delete session 
+  # TODO delete session
+
+  test "login with invalid credentials" do
+    request = post("/sessions", form_data(%{
+      session: %{email: "interloper@example.com", password: "bad_password"}
+    }))
+    response = UM.Web.handle_request(request, :no_state)
+    location = Raxx.Patch.response_location(response)
+    request = get(location)
+    response = UM.Web.handle_request(request, :no_state)
+    assert String.contains?(response.body, "Invalid login details")
+  end
 
   def external_session(data) do
     [{"cookie", "raxx.session="<>(struct(Session, data) |> Poison.encode!)}]

@@ -16,10 +16,17 @@ defmodule Raxx.Test do
   end
 
   defp build(method, url, body, headers) when is_binary(url) do
-    # TODO check url string for query
-    build(method, url, %{}, body, headers)
+    {url, query} = case String.split(url, "?") do
+      [url, qs] ->
+        query = URI.decode_query(qs)
+        {url, query}
+      [url] ->
+        {url, %{}}
+    end
+    build(method, url, query, body, headers)
   end
   defp build(method, {url, query}, body, headers) do
+    # TODO check url string for query
     build(method, url, query, body, headers)
   end
   defp build(method, url, query, body, headers) when is_list(body) do

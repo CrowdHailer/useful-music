@@ -33,8 +33,15 @@ defmodule UM.Web do
       {:error, invalid} ->
         %Session{}
     end
-
     {:ok, request} = Raxx.Session.set_header(request, "um-session", session)
+
+    {flash, query} = Map.pop(request.query, "flash", Poison.encode!(%{}))
+    flash = Poison.decode!(flash)
+    flash = for {k, nil} <- [error: nil, success: nil], into: %{}  do
+      {k, Map.get(flash, "#{k}")}
+    end
+    request = %{request | query: query}
+    {:ok, request} = Raxx.Session.set_header(request, "um-flash", flash)
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 
@@ -42,6 +49,18 @@ defmodule UM.Web do
       {{"um-set-session", session}, headers} ->
         headers ++ [{"set-cookie", Raxx.Cookie.new("raxx.session", Poison.encode!(session))
         |> Raxx.Cookie.set_cookie_string}]
+      nil ->
+        headers
+    end
+
+    headers = case List.keytake(headers, "um-flash", 0) do
+      {{"um-flash", flash}, headers} ->
+        # TODO pull location from headers
+        location = Raxx.Patch.response_location(%{headers: headers})
+        qs = flash |> Poison.encode! |> URI.encode
+        # TODO location with existing query
+        location = location <> "?flash=" <> qs
+        List.keyreplace(headers, "location", 0, {"location", location})
       nil ->
         headers
     end
