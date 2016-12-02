@@ -30,7 +30,7 @@ defmodule UM.Web do
     session = case Poison.decode(session) do
       {:ok, %{"customer" => %{"id" => id}}} ->
         struct(Session, %{customer: %{id: id}})
-      {:error, invalid} ->
+      {:error, :invalid} ->
         %Session{}
     end
     {:ok, request} = Raxx.Session.set_header(request, "um-session", session)

@@ -33,7 +33,7 @@ defmodule UM.Web.Home do
     "flute"
   ]
   for instrument <- instruments do
-    def handle_request(request = %{path: [unquote(instrument)]}, _env) do
+    def handle_request(_request = %{path: [unquote(instrument)]}, _env) do
       Raxx.Response.found("", [{"location", "/pieces?catalogue_search[#{unquote(instrument)}]=on"}])
     end
   end
