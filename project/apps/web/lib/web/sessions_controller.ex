@@ -1,10 +1,5 @@
 defmodule UM.Web.SessionsController do
   # alias UM.Web.Customers.CreateForm
-  defmodule UM.Accounts do
-    def authenticate(_form) do
-      {:ok, %{id: "dummy-customer-id"}}
-    end
-  end
 
   require EEx
 
@@ -20,7 +15,7 @@ defmodule UM.Web.SessionsController do
     {:ok, form} = Raxx.Request.content(request)
     target = Map.get(form, "target")
     form = Utils.sub_form(form, "session")
-    case {:ok, form} do
+    case {:ok, %{email: form["email"], password: form["password"]}} do
       {:ok, data} ->
         case UM.Accounts.authenticate(data) do
           {:ok, customer} ->

@@ -32,4 +32,12 @@ defmodule UM.Accounts do
   def fetch_customer(id) do
     db(:customers) |> filter(id: id) |> Db.first
   end
+
+  def authenticate(%{email: email, password: password}) do
+    customer = db(:customers) |> filter(email: email) |> Db.first
+    case customer.password do
+      ^password ->
+        {:ok, customer}
+    end
+  end
 end
