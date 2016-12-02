@@ -32,8 +32,8 @@ defmodule UM.Web.Customers do
   end
 
   def handle_request(request = %{path: [id | rest]}, _) do
-    authority = Raxx.Patch.get_header(request, "um-user-id")
-    case has_permission?(authority, id) do
+    session = UM.Web.get_session(request)
+    case has_permission?(session, id) do
       true ->
         customer = UM.Accounts.fetch_customer(id)
         customer_endpoint(%{request | path: rest}, customer)
@@ -48,8 +48,10 @@ defmodule UM.Web.Customers do
 
   def has_permission?(authority, id) do
     case {authority, id} do
-      {id, id} -> true
-      {"dummy-admin-id", _} -> true
+      {%{customer: %{id: id}}, id} -> true
+      {%{customer: %{id: auth}}, id} ->
+        %{admin: admin} = UM.Accounts.fetch_customer(auth)
+        admin
       _ -> false
     end
   end

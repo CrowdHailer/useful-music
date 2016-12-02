@@ -72,4 +72,12 @@ defmodule UM.Web do
     UM.Web.Home.handle_request(request, env)
   end
 
+  def get_session(request) do
+    case List.keyfind(request.headers, "um-session", 0) do
+      {"um-session", session} ->
+        session
+      _ ->
+        %Session{}
+    end
+  end
 end

@@ -16,7 +16,15 @@ defmodule UM.Web.CustomersTest do
       password: "password",
       country: "GB"
     })
-    {:ok, %{customer: %{id: id}}}
+    admin = %{id: _id} = UM.Accounts.signup_customer(%{
+      first_name: "Bugs",
+      last_name: "Bunny",
+      email: "bugs@hotmail.com",
+      password: "password",
+      country: "GB",
+      admin: true
+    })
+    {:ok, %{customer: %{id: id}, admin: admin}}
   end
 
   test "new page is available" do
@@ -63,22 +71,27 @@ defmodule UM.Web.CustomersTest do
   end
 
   test "customer page shows orders", %{customer: %{id: id}} do
-    request = get("/#{id}", [{"um-user-id", id}])
+    request = get("/#{id}", session(%{customer: %{id: id}}))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
-  test "admin can view a customer page", %{customer: %{id: id}} do
-    request = get("/#{id}", [{"um-user-id", "dummy-admin-id"}])
+  test "admin can view a customer page", %{admin: admin, customer: customer} do
+    request = get("/#{customer.id}", session(%{customer: %{id: admin.id}}))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
+  @tag :skip
+  # Wait untill set up proper fixtures
   test "customer can not view anothers customer page", %{customer: %{id: id}} do
-    request = get("/#{id}", [{"um-user-id", "dummy-customer-id"}])
+    request = get("/#{id}", session(%{}))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 404
   end
 
+  def session(data) do
+    [{"um-session", struct(Session, data)}]
+  end
   # DEBT keep success path after login/signup
 end

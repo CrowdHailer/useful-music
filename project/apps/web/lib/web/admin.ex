@@ -7,7 +7,7 @@ defmodule UM.Web.Admin do
   EEx.function_from_file :def, :index_page_content, index_file, []
 
   def handle_request(request, env) do
-    case get_session(request) do
+    case UM.Web.get_session(request) do
       %{customer: %{id: id}} ->
         %{admin: admin} = UM.Accounts.fetch_customer(id)
         case admin do
@@ -31,10 +31,5 @@ defmodule UM.Web.Admin do
 
   def endpoint(request = %{path: ["customers" | rest]}, env) do
     UM.Web.Admin.Customers.handle_request(%{request | path: rest}, env)
-  end
-
-  def get_session(request) do
-    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
-    session
   end
 end
