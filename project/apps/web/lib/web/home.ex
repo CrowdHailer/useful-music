@@ -13,19 +13,10 @@ defmodule UM.Web.Home do
   EEx.function_from_file :def, :index_page_content, index_file, [:pieces]
 
   def handle_request(request = %{path: []}, _env) do
-    {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
-
-    Raxx.Response.ok(layout_page(index_page_content([
+    Raxx.Response.ok(index_page_content([
       %{title: "hello", sub_heading: "sub heading", catalogue_number: "UD100", level_overview: "hello", notation_preview: %{url: "hi"}}
-      ]), Map.merge(%{
-      shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
-      customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
-      error: "Do this now TODO",
-      success: nil
-      }, flash)))
+      ]))
   end
-
-
 
   instruments = [
     "piano",

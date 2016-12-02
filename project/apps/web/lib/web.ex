@@ -75,34 +75,39 @@ defmodule UM.Web do
     %Raxx.Response{status: status, headers: headers, body: body}
   end
 
-  @session %{
-  shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
-  customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
-  error: "Do this now TODO",
-  success: nil
-  }
-  defp endpoint(request = %{path: ["customers" | rest]}, env) do
-    case UM.Web.Customers.handle_request(%{request| path: rest}, env) do
-      r = %{status: _, body: content} ->
-        %{r | body: UM.Web.Home.layout_page(content, @session)}
-    end
-  end
   defp endpoint(request = %{path: ["admin" | rest]}, env) do
     UM.Web.Admin.handle_request(%{request| path: rest}, env)
   end
-  defp endpoint(request = %{path: ["sessions" | rest]}, env) do
-    UM.Web.SessionsController.handle_request(%{request| path: rest}, env)
-  end
-  defp endpoint(request = %{path: ["about" | rest]}, env) do
-    UM.Web.About.handle_request(%{request| path: rest}, %{
+  
+  @session %{
     shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
     customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
-    error: "Do this now TODO",
+    error: nil,
     success: nil
-    })
-  end
+  }
 
   defp endpoint(request, env) do
+    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
+    {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
+    session = Map.merge(@session, flash)
+    case public_endpoint(request, env) do
+      r = %{status: _, body: content} ->
+        %{r | body: UM.Web.Home.layout_page(content, session)}
+    end
+  end
+
+  defp public_endpoint(request = %{path: ["about" | rest]}, env) do
+    UM.Web.About.handle_request(%{request| path: rest}, env)
+  end
+
+  defp public_endpoint(request = %{path: ["customers" | rest]}, env) do
+    UM.Web.Customers.handle_request(%{request| path: rest}, env)
+  end
+  defp public_endpoint(request = %{path: ["sessions" | rest]}, env) do
+    UM.Web.SessionsController.handle_request(%{request| path: rest}, env)
+  end
+
+  defp public_endpoint(request, env) do
     UM.Web.Home.handle_request(request, env)
   end
 
