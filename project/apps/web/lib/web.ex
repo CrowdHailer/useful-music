@@ -32,6 +32,8 @@ defmodule UM.Web do
         struct(Session, %{customer: %{id: id}})
       {:error, :invalid} ->
         %Session{}
+      _ ->
+        %Session{}
     end
     {:ok, request} = Raxx.Session.set_header(request, "um-session", session)
 
@@ -78,7 +80,7 @@ defmodule UM.Web do
   defp endpoint(request = %{path: ["admin" | rest]}, env) do
     UM.Web.Admin.handle_request(%{request| path: rest}, env)
   end
-  
+
   @session %{
     shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
     customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
@@ -89,10 +91,18 @@ defmodule UM.Web do
   defp endpoint(request, env) do
     {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
-    session = Map.merge(@session, flash)
+
+    customer = case Map.get(session, :customer) do
+      %{id: id} ->
+        %{id: id, working_currency: "GBP", name: "billy"}
+      nil ->
+        %{id: nil, working_currency: "GBP", name: ""}
+    end
+    page = Map.merge(@session, flash)
+    page = Map.merge(page, %{customer: customer})
     case public_endpoint(request, env) do
       r = %{status: _, body: content} ->
-        %{r | body: UM.Web.Home.layout_page(content, session)}
+        %{r | body: UM.Web.Home.layout_page(content, page)}
     end
   end
 

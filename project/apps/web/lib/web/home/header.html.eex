@@ -20,7 +20,7 @@
     <div class="row">
       <div class="customer-info-wrap">
       <div class="medium-6 small-12 columns">
-    <%= if current_customer.guest? do %>
+    <%= if guest?(current_customer) do %>
     <li>
         <a href="/sessions/new">Login</a>
     </li>
@@ -206,7 +206,7 @@
                                     <li><a href="http://blog.usefulmusic.com">Blog</a></li>
                                 </ul>
                             </li>
-                            <%= if current_customer.guest? do %>
+                            <%= if guest?(current_customer) do %>
                             <li>
                                 <a href="/sessions/new">Login</a>
                             </li>

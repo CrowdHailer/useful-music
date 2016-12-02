@@ -40,7 +40,7 @@ defmodule UM.Web.HomeTest do
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)
-    assert {"set-cookie", "um.currency_preference=USD"} == List.keyfind(response.headers, "set-cookie", 0)
+    assert {"um-set-session", %{currency_preference: "USD"}} == List.keyfind(response.headers, "um-set-session", 0)
   end
 
   def session(data) do

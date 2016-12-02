@@ -12,6 +12,15 @@ defmodule UM.Web.Home do
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, [:pieces]
 
+  defp guest?(customer) do
+    case customer do
+      %{id: nil} ->
+        true
+      _ ->
+        false
+    end
+  end
+
   def handle_request(request = %{path: []}, _env) do
     Raxx.Response.ok(index_page_content([
       %{title: "hello", sub_heading: "sub heading", catalogue_number: "UD100", level_overview: "hello", notation_preview: %{url: "hi"}}
@@ -39,10 +48,13 @@ defmodule UM.Web.Home do
       _ -> "GBP"
     end
     # TODO send to referer
-    set_cookie_string = Raxx.Cookie.new("um.currency_preference", currency)
-    |> Raxx.Cookie.set_cookie_string
-    response = Raxx.Response.found("", [{"location", "/"}])
-    {:ok, response} = Raxx.Session.set_header(response, "set-cookie", set_cookie_string)
+    # set_cookie_string = Raxx.Cookie.new("um.currency_preference", currency)
+    # |> Raxx.Cookie.set_cookie_string
+    response = Raxx.Response.found("", [
+      {"location", "/"},
+      {"um-set-session", %{currency_preference: currency}}
+    ])
+    # {:ok, response} = Raxx.Session.set_header(response, "set-cookie", set_cookie_string)
     response
   end
 
