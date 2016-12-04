@@ -18,7 +18,7 @@ defmodule UM.Web.SessionsController do
     end
   end
 
-  def handle_request(request = %{path: []}, _env) do
+  def handle_request(request = %{path: [], method: :POST}, _env) do
     {:ok, form} = Raxx.Request.content(request)
     target = Map.get(form, "target")
     form = Utils.sub_form(form, "session")

@@ -45,7 +45,6 @@ defmodule UM.WebTest do
     assert 303 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
   end
-  # TODO delete session
 
   test "login with invalid credentials shows flash" do
     request = post("/sessions", form_data(%{
@@ -56,6 +55,15 @@ defmodule UM.WebTest do
     request = get(location)
     response = UM.Web.handle_request(request, :no_state)
     assert String.contains?(response.body, "Invalid login details")
+  end
+
+  @tag :skip
+  test "logout will delete session", %{customer: customer} do
+    request = post("/sessions", form_data(%{
+      _method: "DELETE"
+    }), external_session(%{customer: %{id: customer.id}}))
+    response = UM.Web.handle_request(request, :no_state)
+    |> IO.inspect
   end
 
   def external_session(data) do
