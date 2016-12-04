@@ -2,6 +2,7 @@
 defmodule Session do
   defstruct [customer: nil]
 end
+
 defmodule UM.Web do
   use Application
 
@@ -35,15 +36,10 @@ defmodule UM.Web do
       _ ->
         %Session{}
     end
-    {:ok, request} = Raxx.Session.set_header(request, "um-session", session)
+    {:ok, request} = Raxx.Patch.set_header(request, "um-session", session)
 
-    {flash, query} = Map.pop(request.query, "flash", Poison.encode!(%{}))
-    flash = Poison.decode!(flash)
-    flash = for {k, nil} <- [error: nil, success: nil], into: %{}  do
-      {k, Map.get(flash, "#{k}")}
-    end
-    request = %{request | query: query}
-    {:ok, request} = Raxx.Session.set_header(request, "um-flash", flash)
+    {flash, request} = UM.Web.Flash.from_request(request)
+    {:ok, request} = Raxx.Patch.set_header(request, "um-flash", flash)
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 

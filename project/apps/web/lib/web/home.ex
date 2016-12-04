@@ -54,7 +54,7 @@ defmodule UM.Web.Home do
       {"location", "/"},
       {"um-set-session", %{currency_preference: currency}}
     ])
-    # {:ok, response} = Raxx.Session.set_header(response, "set-cookie", set_cookie_string)
+    # {:ok, response} = Raxx.Patch.set_header(response, "set-cookie", set_cookie_string)
     response
   end
 

@@ -37,6 +37,8 @@ defmodule Raxx.Test do
   end
   defp build(method, url, query, body, headers) do
     path = Raxx.Request.split_path(url)
+    # Done to stringify keys
+    query = query |> Plug.Conn.Query.encode |> Plug.Conn.Query.decode
     %Raxx.Request{
       method: method,
       path: path,

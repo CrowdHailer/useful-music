@@ -47,7 +47,7 @@ defmodule UM.WebTest do
   end
   # TODO delete session
 
-  test "login with invalid credentials" do
+  test "login with invalid credentials shows flash" do
     request = post("/sessions", form_data(%{
       session: %{email: "interloper@example.com", password: "bad_password"}
     }))

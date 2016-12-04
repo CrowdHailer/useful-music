@@ -13,6 +13,15 @@ defmodule Raxx.Patch do
         nil
     end
   end
+  # FIXME delegate to request/response
+  def set_header(request = %{headers: headers}, key, value) do
+    # downcase
+    false = List.keymember?(headers, key, 0)
+
+    headers = headers ++ [{key, value}]
+    request = %{request| headers: headers}
+    {:ok, request}
+  end
 end
 
 defmodule Raxx.Session do
@@ -33,7 +42,7 @@ defmodule Raxx.Session do
     def overwrite(session, response, options \\ []) do
       set_cookie_string = Raxx.Cookie.new("raxx.session", session)
       |> Raxx.Cookie.set_cookie_string
-      {:ok, response} = Raxx.Session.set_header(response, "set-cookie", set_cookie_string)
+      {:ok, response} = Raxx.Patch.set_header(response, "set-cookie", set_cookie_string)
       response
     end
   end
@@ -45,15 +54,6 @@ defmodule Raxx.Session do
     cookies = Raxx.Cookie.parse([cookie_string])
   end
 
-  # FIXME delegate to request/response
-  def set_header(request = %{headers: headers}, key, value) do
-    # downcase
-    false = List.keymember?(headers, key, 0)
-
-    headers = headers ++ [{key, value}]
-    request = %{request| headers: headers}
-    {:ok, request}
-  end
 
   # TODO redirect is broken
   # Raxx.Response.redirect("body")
