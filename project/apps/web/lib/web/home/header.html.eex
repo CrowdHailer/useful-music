@@ -29,7 +29,7 @@
     </li>
     <% else %>
     <li>
-        <a href="/customers/<%= current_customer.id %>">Hello <%= current_customer.name %></a>
+        <a href="/customers/<%= current_customer.id %>">Hello <%= name(current_customer) %></a>
     </li>
   </div>
   <div class="medium-6 small-12 columns">
@@ -215,7 +215,7 @@
                             </li>
                             <% else %>
                             <li>
-                                <a href="/customers/<%= current_customer.id %>"><%= current_customer.name %></a>
+                                <a href="/customers/<%= current_customer.id %>"><%= name(current_customer) %></a>
                             </li>
                             <li>
                                 <form class="logout-form" id="form_id" action="/sessions" method="post">

@@ -71,4 +71,8 @@ defmodule UM.Web.Home do
   def local_price(_) do
     %{format: "TODO"}
   end
+
+  def name(%{first_name: f, last_name: l}) do
+    "#{f} #{l}"
+  end
 end

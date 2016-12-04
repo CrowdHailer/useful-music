@@ -90,7 +90,8 @@ defmodule UM.Web do
 
     customer = case Map.get(session, :customer) do
       %{id: id} ->
-        %{id: id, working_currency: "GBP", name: "billy"}
+        user = UM.Accounts.fetch_customer(id)
+        Map.merge(user, %{working_currency: "GBP"})
       nil ->
         %{id: nil, working_currency: "GBP", name: ""}
     end
