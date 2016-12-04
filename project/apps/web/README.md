@@ -15,6 +15,14 @@
 - create piece tests, generalise form, push upload content to db.
 - improve session api, note response will overwrite session if it lives in a single location.
 
+- WebForm
+  - put hidden inputs for all checkboxes, just use on and off
+  - use struct(UM.Accounts.Customer, data) |> UM.Accounts.create_customer
+  - create form should be a struct but won't be because it needs enumeration.
+  - Field.check(requirement, form)
+  - %ContentField{}
+  - %ConfirmationField{}
+  - Don't think about multipart date fields I don't have one.
 
 - Have Admin and public domains for application.
 - TODO, generate styles from asset files
