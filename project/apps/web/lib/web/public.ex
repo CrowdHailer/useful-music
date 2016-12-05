@@ -25,8 +25,10 @@ defmodule UM.Web.Public do
     session = Map.merge(%{}, flash)
     session = Map.merge(session, %{customer: customer, shopping_basket: %{id: "TODO"}})
     case public_endpoint(request, env) do
-      r = %{status: _, body: content} ->
-        %{r | body: layout_page(content, session)}
+      request = %{body: ""} ->
+        request
+      request = %{status: _, body: content} ->
+        %{request | body: layout_page(content, session)}
         # TODO adjust content length?
     end
   end

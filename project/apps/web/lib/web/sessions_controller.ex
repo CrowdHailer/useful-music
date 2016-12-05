@@ -40,7 +40,7 @@ defmodule UM.Web.SessionsController do
     end
   end
 
-  def handle_request(_request = %{path: ["logout"]}, _) do
+  def handle_request(_request = %{path: [], method: :DELETE}, _) do
     response = Raxx.Response.see_other("", [{"location", "/"}])
     Raxx.Session.Open.overwrite(nil, response)
   end

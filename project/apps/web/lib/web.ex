@@ -41,18 +41,17 @@ defmodule UM.Web do
     {flash, request} = UM.Web.Flash.from_request(request)
     {:ok, request} = Raxx.Patch.set_header(request, "um-flash", flash)
 
-    # Needs to make Raxx.Request.content/1 a never failing function
-    # request = case Raxx.Request.content(request) do
-    #   {:ok, form} ->
-    #     case Map.get(form, "_method") do
-    #       "DELETE" ->
-    #         %{request | method: :DELETE}
-    #       _ ->
-    #         request
-    #     end
-    #   _ ->
-    #     request
-    # end
+    request = case Raxx.Patch.form_content(request) do
+      {:ok, form} ->
+        case Map.get(form, "_method") do
+          "DELETE" ->
+            %{request | method: :DELETE}
+          _ ->
+            request
+        end
+      _ ->
+        request
+    end
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 

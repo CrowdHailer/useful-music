@@ -57,7 +57,6 @@ defmodule UM.WebTest do
     assert String.contains?(response.body, "Invalid login details")
   end
 
-  @tag :skip
   test "logout will delete session", %{customer: customer} do
     request = post("/sessions", form_data(%{
       _method: "DELETE"

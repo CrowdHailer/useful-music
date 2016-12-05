@@ -61,7 +61,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "log out will destroy session", %{customer: customer} do
-    request = post("/logout", session(%{customer: %{id: customer.id}}))
+    request = delete("/", session(%{customer: %{id: customer.id}}))
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
     assert "/" = Raxx.Patch.response_location(response)
