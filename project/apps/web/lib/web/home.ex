@@ -1,25 +1,8 @@
 defmodule UM.Web.Home do
   require EEx
-  layout_file = String.replace_suffix(__ENV__.file, ".ex", "/layout.html.eex")
-  EEx.function_from_file :def, :layout_page, layout_file, [:content, :session]
-
-  footer_file = String.replace_suffix(__ENV__.file, ".ex", "/footer.html.eex")
-  EEx.function_from_file :def, :footer_partial, footer_file, []
-
-  header_file = String.replace_suffix(__ENV__.file, ".ex", "/header.html.eex")
-  EEx.function_from_file :def, :header_partial, header_file, [:shopping_basket, :current_customer]
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, [:pieces]
-
-  defp guest?(customer) do
-    case customer do
-      %{id: nil} ->
-        true
-      _ ->
-        false
-    end
-  end
 
   def handle_request(request = %{path: []}, _env) do
     Raxx.Response.ok(index_page_content([
@@ -62,17 +45,5 @@ defmodule UM.Web.Home do
     Raxx.Response.not_found("HOME not found")
     # TODO make this work
     # UM.Web.not_found()
-  end
-
-  def csrf_tag do
-    "" #TODO
-  end
-
-  def local_price(_) do
-    %{format: "TODO"}
-  end
-
-  def name(%{first_name: f, last_name: l}) do
-    "#{f} #{l}"
   end
 end

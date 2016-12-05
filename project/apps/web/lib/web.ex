@@ -41,7 +41,7 @@ defmodule UM.Web do
     {flash, request} = UM.Web.Flash.from_request(request)
     {:ok, request} = Raxx.Patch.set_header(request, "um-flash", flash)
 
-    # Needs to make Raxx.Request.content/1 a never failing function 
+    # Needs to make Raxx.Request.content/1 a never failing function
     # request = case Raxx.Request.content(request) do
     #   {:ok, form} ->
     #     case Map.get(form, "_method") do
@@ -89,46 +89,8 @@ defmodule UM.Web do
   defp endpoint(request = %{path: ["admin" | rest]}, env) do
     UM.Web.Admin.handle_request(%{request| path: rest}, env)
   end
-
-  @session %{
-    shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
-    customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
-    error: nil,
-    success: nil
-  }
-
   defp endpoint(request, env) do
-    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
-    {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
-
-    customer = case Map.get(session, :customer) do
-      %{id: id} ->
-        user = UM.Accounts.fetch_customer(id)
-        Map.merge(user, %{working_currency: "GBP"})
-      nil ->
-        %{id: nil, working_currency: "GBP", name: ""}
-    end
-    page = Map.merge(@session, flash)
-    page = Map.merge(page, %{customer: customer})
-    case public_endpoint(request, env) do
-      r = %{status: _, body: content} ->
-        %{r | body: UM.Web.Home.layout_page(content, page)}
-    end
-  end
-
-  defp public_endpoint(request = %{path: ["about" | rest]}, env) do
-    UM.Web.About.handle_request(%{request| path: rest}, env)
-  end
-
-  defp public_endpoint(request = %{path: ["customers" | rest]}, env) do
-    UM.Web.Customers.handle_request(%{request| path: rest}, env)
-  end
-  defp public_endpoint(request = %{path: ["sessions" | rest]}, env) do
-    UM.Web.SessionsController.handle_request(%{request| path: rest}, env)
-  end
-
-  defp public_endpoint(request, env) do
-    UM.Web.Home.handle_request(request, env)
+    UM.Web.Public.handle_request(request, env)
   end
 
   def get_session(request) do
