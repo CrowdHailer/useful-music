@@ -7,7 +7,7 @@ defmodule UM.Web.Public do
   EEx.function_from_file :def, :footer_partial, footer_file, []
 
   header_file = String.replace_suffix(__ENV__.file, ".ex", "/header.html.eex")
-  EEx.function_from_file :def, :header_partial, header_file, [:shopping_basket, :current_customer]
+  EEx.function_from_file :def, :header_partial, header_file, [:shopping_basket, :session]
 
   @session %{
     shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
@@ -24,15 +24,17 @@ defmodule UM.Web.Public do
     customer = case Map.get(session, :customer) do
       %{id: id} ->
         user = UM.Accounts.fetch_customer(id)
-        Map.merge(user, %{working_currency: "GBP"})
+        Map.merge(user, %{currency_preference: "GBP"})
       nil ->
-        %{id: nil, working_currency: "GBP", name: ""}
+        %{id: nil, currency_preference: "GBP", name: ""}
     end
-    page = Map.merge(@session, flash)
-    page = Map.merge(page, %{customer: customer})
+    |> IO.inspect
+    session = Map.merge(@session, flash)
+    session = Map.merge(session, %{customer: customer})
     case public_endpoint(request, env) do
       r = %{status: _, body: content} ->
-        %{r | body: layout_page(content, page)}
+        %{r | body: layout_page(content, session)}
+        # TODO adjust content length?
     end
   end
 
@@ -53,12 +55,22 @@ defmodule UM.Web.Public do
 
   ## HELPERS
 
-  defp guest?(customer) do
-    case customer do
-      %{id: nil} ->
+  # FIXME Change to logged_in? / authenticated?
+  defp guest_session?(%{customer: %{id: id}}) do
+    case id do
+      nil ->
         true
-      _ ->
+      id when is_binary(id) ->
         false
+    end
+  end
+
+  defp customer_account_url(%{customer: %{id: id}}) do
+    case id do
+      nil ->
+        "#" # FIXME some sensible default but never comes up
+      id when is_binary(id) ->
+        "/customers/#{id}"
     end
   end
 
@@ -70,7 +82,11 @@ defmodule UM.Web.Public do
     %{format: "TODO"}
   end
 
-  def name(%{first_name: f, last_name: l}) do
+  def customer_name(%{customer: %{first_name: f, last_name: l}}) do
     "#{f} #{l}"
+  end
+
+  def preferred_currency(session = %{customer: %{currency_preference: preference}}) do
+    preference || "GBP"
   end
 end

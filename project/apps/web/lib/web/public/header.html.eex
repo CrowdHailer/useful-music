@@ -20,7 +20,7 @@
     <div class="row">
       <div class="customer-info-wrap">
       <div class="medium-6 small-12 columns">
-    <%= if guest?(current_customer) do %>
+    <%= if guest_session?(session) do %>
     <li>
         <a href="/sessions/new">Login</a>
     </li>
@@ -29,7 +29,7 @@
     </li>
     <% else %>
     <li>
-        <a href="/customers/<%= current_customer.id %>">Hello <%= name(current_customer) %></a>
+        <a href="<%= customer_account_url(session) %>">Hello <%= customer_name(session) %></a>
     </li>
   </div>
   <div class="medium-6 small-12 columns">
@@ -206,7 +206,7 @@
                                     <li><a href="http://blog.usefulmusic.com">Blog</a></li>
                                 </ul>
                             </li>
-                            <%= if guest?(current_customer) do %>
+                            <%= if guest_session?(session) do %>
                             <li>
                                 <a href="/sessions/new">Login</a>
                             </li>
@@ -215,7 +215,7 @@
                             </li>
                             <% else %>
                             <li>
-                                <a href="/customers/<%= current_customer.id %>"><%= name(current_customer) %></a>
+                                <a href="<%= customer_account_url(session) %>"><%= customer_name(session) %></a>
                             </li>
                             <li>
                                 <form class="logout-form" id="form_id" action="/sessions" method="post">
@@ -237,9 +237,9 @@
                     <div class="large-6 columns">
                         <form action="/currency" method="post">
                             <%= csrf_tag %>
-                            <button class="currency-convert-head <%= if current_customer.working_currency == "USD", do: "live" %>" type="submit" name="preference" value="USD">$</button>
-                            <button class="currency-convert-head <%= if current_customer.working_currency == "GBP", do: "live" %>" type="submit" name="preference" value="GBP">£</button>
-                            <button class="currency-convert-head <%= if current_customer.working_currency == "EUR", do: "live" %>" type="submit" name="preference" value="EUR">€</button>
+                            <button class="currency-convert-head <%= if preferred_currency(session) == "USD", do: "live" %>" type="submit" name="preference" value="USD">$</button>
+                            <button class="currency-convert-head <%= if preferred_currency(session) == "GBP", do: "live" %>" type="submit" name="preference" value="GBP">£</button>
+                            <button class="currency-convert-head <%= if preferred_currency(session) == "EUR", do: "live" %>" type="submit" name="preference" value="EUR">€</button>
                         </form>
                     </div>
                 </div>

@@ -15,7 +15,7 @@
 </head>
 <body>
     <!-- TODO explicit reference of guest -->
-    <%= header_partial(session.shopping_basket, session.customer || %{id: nil, name: "", working_currency: "GBP"}) %>
+    <%= header_partial(session.shopping_basket, session) %>
 
     <%= if Map.get(session, :success) do %>
     <div class="row collapse">
