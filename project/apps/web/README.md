@@ -2,12 +2,7 @@
 
 - Generalise context object for public pages
   user %{id: maybe(string), currency_preference: "USD" | "GBP" | "EUR"}
-  guest as a function
-  name as a function
   shopping_basket %{id: string, number_of_purchases: number, price :number}
-  snapshot that is replaced in session on editing
-  error from flash
-  success from flash
   Would be nice to call these messages but don't care
 - Handle invalid content values or assume octet content. check RFC.
   make the parser return a `try` tuple

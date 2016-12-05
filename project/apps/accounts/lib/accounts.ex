@@ -42,4 +42,9 @@ defmodule UM.Accounts do
         {:error, :invalid_credentials}
     end
   end
+
+  # FIXME remove
+  def create_peter do
+    signup_customer(%{id: "100", admin: true, first_name: "Peter", last_name: "Saxton", email: "p@me.co", password: "password", country: "GB"})
+  end
 end
