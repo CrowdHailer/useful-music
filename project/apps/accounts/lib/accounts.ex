@@ -33,6 +33,21 @@ defmodule UM.Accounts do
     db(:customers) |> filter(id: id) |> Db.first
   end
 
+  def update_customer(customer = %{id: id}) when is_binary(id) do
+    # DEBT insert requires a keyword list
+    customer = Enum.map(customer, fn(x) -> x end)
+
+    action = db(:customers)
+    |> filter(id: id)
+    |> update(customer)
+    case Moebius.Db.run(action) do
+      record = %{id: ^id} ->
+        {:ok, record}
+      {:error, _reason} ->
+        {:error, :invalid_customer}
+    end
+  end
+
   def authenticate(%{email: email, password: password}) do
     customer = db(:customers) |> filter(email: email) |> Db.first
     case customer && customer.password do

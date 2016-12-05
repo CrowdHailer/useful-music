@@ -8,12 +8,16 @@
 </head>
 <body>
 
+  <%= if flash.success do %>
   <div class="content flash success">
-    some query string success <i class="fa fa-times right"></i>
+    <%= flash.success %> <i class="fa fa-times right"></i>
   </div>
+  <% end %>
+  <%= if flash.error do %>
   <div class="content flash error">
-    some query string error <i class="fa fa-times right"></i>
+    <%= flash.error %> <i class="fa fa-times right"></i>
   </div>
+  <% end %>
 
   <%= content %>
   <script charset="utf-8">
