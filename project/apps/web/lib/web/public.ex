@@ -7,14 +7,7 @@ defmodule UM.Web.Public do
   EEx.function_from_file :def, :footer_partial, footer_file, []
 
   header_file = String.replace_suffix(__ENV__.file, ".ex", "/header.html.eex")
-  EEx.function_from_file :def, :header_partial, header_file, [:shopping_basket, :session]
-
-  @session %{
-    shopping_basket: %{id: "TODO-basket", number_of_purchases: 2, price: 100},
-    customer: %{id: "TODO-", guest?: true, working_currency: "GBP"},
-    error: nil,
-    success: nil
-  }
+  EEx.function_from_file :def, :header_partial, header_file, [:session]
 
   def handle_request(request, env) do
     {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
@@ -29,8 +22,8 @@ defmodule UM.Web.Public do
         %{id: nil, currency_preference: "GBP", name: ""}
     end
     |> IO.inspect
-    session = Map.merge(@session, flash)
-    session = Map.merge(session, %{customer: customer})
+    session = Map.merge(%{}, flash)
+    session = Map.merge(session, %{customer: customer, shopping_basket: %{id: "TODO"}})
     case public_endpoint(request, env) do
       r = %{status: _, body: content} ->
         %{r | body: layout_page(content, session)}
@@ -74,19 +67,34 @@ defmodule UM.Web.Public do
     end
   end
 
+  defp customer_name(%{customer: %{first_name: f, last_name: l}}) do
+    "#{f} #{l}"
+  end
+
+  defp preferred_currency(%{customer: %{currency_preference: preference}}) do
+    preference || "GBP"
+  end
+
+  # DEBT will be order in the future
+  defp view_basket_url(%{shopping_basket: %{id: id}}) do
+    case id do
+      id when is_binary(id) ->
+        "/shopping_baskets/#{id}"
+    end
+  end
+
+  defp number_of_purchases(_session) do
+    # TODO
+    2
+  end
+
+  def current_basket_total(_session) do
+    "£4.25"
+  end
+
   def csrf_tag do
     "" #TODO
   end
 
-  def local_price(_) do
-    %{format: "TODO"}
-  end
 
-  def customer_name(%{customer: %{first_name: f, last_name: l}}) do
-    "#{f} #{l}"
-  end
-
-  def preferred_currency(session = %{customer: %{currency_preference: preference}}) do
-    preference || "GBP"
-  end
 end
