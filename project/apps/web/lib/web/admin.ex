@@ -7,16 +7,18 @@ defmodule UM.Web.Admin do
   EEx.function_from_file :def, :index_page_content, index_file, []
 
   def handle_request(request, env) do
-    case UM.Web.get_session(request) do
-      %{customer: %{id: id}} ->
-        %{admin: admin} = UM.Accounts.fetch_customer(id)
-        case admin do
-          true ->
-            endpoint(request, env)
-          false ->
-            Raxx.Response.forbidden
-        end
+    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
+    customer = case Map.get(session, :customer) do
+      %{id: id} ->
+        user = UM.Accounts.fetch_customer(id)
       nil ->
+        %{id: nil, admin: false}
+    end
+
+    case customer do
+      %{admin: true} ->
+        endpoint(request, env)
+      %{admin: false} ->
         Raxx.Response.forbidden
     end
   end

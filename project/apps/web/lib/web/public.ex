@@ -12,7 +12,6 @@ defmodule UM.Web.Public do
   def handle_request(request, env) do
     {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
-    IO.inspect(session)
 
     customer = case Map.get(session, :customer) do
       %{id: id} ->
@@ -21,10 +20,11 @@ defmodule UM.Web.Public do
       nil ->
         %{id: nil, currency_preference: "GBP", name: ""}
     end
-    |> IO.inspect
     session = Map.merge(%{}, flash)
     session = Map.merge(session, %{customer: customer, shopping_basket: %{id: "TODO"}})
     case public_endpoint(request, env) do
+      request = %{body: nil} ->
+        request
       request = %{body: ""} ->
         request
       request = %{status: _, body: content} ->

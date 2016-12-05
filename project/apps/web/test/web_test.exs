@@ -14,7 +14,15 @@ defmodule UM.WebTest do
       password: "password",
       country: "GB"
     })
-    {:ok, %{customer: customer}}
+    admin = %{id: _id} = UM.Accounts.signup_customer(%{
+      first_name: "Bugs",
+      last_name: "Bunny",
+      email: "bugs@hotmail.com",
+      password: "password",
+      country: "GB",
+      admin: true
+    })
+    {:ok, %{customer: customer, admin: admin}}
   end
 
   test "The sites stylesheets are served" do
@@ -62,7 +70,14 @@ defmodule UM.WebTest do
       _method: "DELETE"
     }), external_session(%{customer: %{id: customer.id}}))
     response = UM.Web.handle_request(request, :no_state)
-    |> IO.inspect
+    assert 303 == response.status
+    # TODO check cookies
+  end
+
+  test "can view the admin page", %{admin: admin} do
+    request = get("/admin/customers", external_session(%{customer: %{id: admin.id}}))
+    response = UM.Web.handle_request(request, :no_state)
+    assert 200 == response.status
   end
 
   def external_session(data) do
