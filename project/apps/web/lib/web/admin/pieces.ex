@@ -12,7 +12,7 @@ defmodule UM.Web.Admin.Pieces do
 
   def handle_request(%{path: [], method: :GET}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
-    Raxx.Response.ok(UM.Web.Admin.layout_page(index_page_content(paginate_pieces(pieces))))
+    Raxx.Response.ok(index_page_content(paginate_pieces(pieces)))
   end
 
   def handle_request(%{path: ["search"], method: :GET, query: query}, _env) do
@@ -24,7 +24,7 @@ defmodule UM.Web.Admin.Pieces do
   end
 
   def handle_request(%{path: ["new"]}, _env) do
-    Raxx.Response.ok(UM.Web.Admin.layout_page(new_page_content))
+    Raxx.Response.ok(new_page_content)
   end
 
   def handle_request(request = %{path: [], method: :POST}, _env) do
@@ -52,7 +52,7 @@ defmodule UM.Web.Admin.Pieces do
     case UM.Catalogue.fetch_piece(id) do
       {:ok, piece} ->
         {:ok, piece} = UM.Catalogue.load_items(piece)
-        Raxx.Response.ok(UM.Web.Admin.layout_page(edit_page_content(piece)))
+        Raxx.Response.ok(edit_page_content(piece))
       {:error, :piece_not_found} ->
         Raxx.Response.not_found("Could not find piece UD#{id}")
     end

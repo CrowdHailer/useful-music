@@ -8,7 +8,7 @@ defmodule UM.Web.Admin do
 
   def handle_request(request, env) do
     {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
-    {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
+    {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{success: nil, error: nil}})
 
     customer = case Map.get(session, :customer) do
       %{id: id} ->
