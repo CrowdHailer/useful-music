@@ -41,26 +41,24 @@ defmodule UM.Web do
     {flash, request} = UM.Web.Flash.from_request(request)
     {:ok, request} = Raxx.Patch.set_header(request, "um-flash", flash)
 
-    request = case Raxx.Patch.form_content(request) do
-      {:ok, form} ->
-        case Map.get(form, "_method") do
-          "DELETE" ->
-            %{request | method: :DELETE}
-          _ ->
-            request
-        end
-      _ ->
-        request
-    end
-
     {ok, body} = case Raxx.Request.content_type(request) do
       {"application/x-www-form-urlencoded", _} ->
         URI2.Query.decode(request.body)
+      {"multipart/form-data", "boundary=" <> boundary} ->
+        {:ok, kvs} = Raxx.Parsers.Multipart.parse_body(request.body, boundary)
+        URI2.Query.build_nested(kvs)
       :undefined ->
         {:ok, request.body}
     end
 
     request = %{request | body: body}
+
+    request = case request.body do
+      %{"_method" => "DELETE"} ->
+        %{request | method: :DELETE}
+      _ ->
+        request
+    end
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 

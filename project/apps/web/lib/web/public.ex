@@ -15,8 +15,12 @@ defmodule UM.Web.Public do
 
     customer = case Map.get(session, :customer) do
       %{id: id} ->
-        user = UM.Accounts.fetch_customer(id)
-        Map.merge(user, %{currency_preference: "GBP"})
+        case UM.Accounts.fetch_customer(id) do
+          nil ->
+            %{id: nil, currency_preference: "GBP", name: ""}
+          user ->
+            Map.merge(user, %{currency_preference: "GBP"})
+        end
       nil ->
         %{id: nil, currency_preference: "GBP", name: ""}
     end

@@ -5,8 +5,6 @@
   shopping_basket %{id: string, number_of_purchases: number, price :number}
   Would be nice to call these messages but don't care
 - Handle invalid content values or assume octet content. check RFC.
-  make the parser return a `try` tuple
-- Setup method overwrite middleware
 - create piece tests, generalise form, push upload content to db.
 - improve session api, note response will overwrite session if it lives in a single location.
 

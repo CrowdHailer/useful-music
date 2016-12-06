@@ -12,11 +12,16 @@ defmodule UM.Web.Admin do
 
     customer = case Map.get(session, :customer) do
       %{id: id} ->
-        user = UM.Accounts.fetch_customer(id)
+        user =
+        case UM.Accounts.fetch_customer(id) do
+          nil ->
+            %{id: nil, admin: false}
+          user ->
+            user
+        end
       nil ->
         %{id: nil, admin: false}
     end
-
     case customer do
       %{admin: true} ->
         case endpoint(request, env) do
