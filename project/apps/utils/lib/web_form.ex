@@ -29,6 +29,8 @@ defmodule WebForm do
         case Map.get(form, "#{key}") do
           :nil ->
             {key, {:ok, default}}
+          "on" ->
+            {key, {:ok, true}}
         end
       {key, {:confirmation, checks}} ->
         case Map.get(form, checks, "") == Map.get(form, "#{key}", "") do

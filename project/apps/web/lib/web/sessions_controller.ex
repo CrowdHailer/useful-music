@@ -18,10 +18,9 @@ defmodule UM.Web.SessionsController do
     end
   end
 
-  def handle_request(request = %{path: [], method: :POST}, _env) do
-    {:ok, form} = Raxx.Request.content(request)
+  def handle_request(%{path: [], method: :POST, body: form}, _env) do
     target = Map.get(form, "target")
-    form = Utils.sub_form(form, "session")
+    form = Map.get(form, "session")
     case {:ok, %{email: form["email"], password: form["password"]}} do
       {:ok, data} ->
         case UM.Accounts.authenticate(data) do

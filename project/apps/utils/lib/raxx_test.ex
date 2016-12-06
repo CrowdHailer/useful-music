@@ -13,9 +13,10 @@ defmodule Raxx.Test do
   end
 
   def form_data(data) do
+    # TODO stringify keys
     %{
       headers: [{"content-type", "application/x-www-form-urlencoded"}],
-      body: Plug.Conn.Query.encode(data)
+      body: data
     }
   end
 

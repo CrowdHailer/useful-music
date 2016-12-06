@@ -38,9 +38,10 @@ defmodule UM.WebTest do
   end
 
   test "login will add user id to session" do
-    request = post("/sessions", form_data(%{
-      session: %{email: "dan@example.com", password: "password"}
-    }))
+    request = post("/sessions", %{
+      headers: [{"content-type", "application/x-www-form-urlencoded"}],
+      body: "session[email]=dan@example.com&session[password]=password"
+    })
     response = UM.Web.handle_request(request, :no_state)
     assert delivered_cookies = :proplists.get_value("set-cookie", response.headers)
     assert "raxx.session=" <> _ = delivered_cookies
@@ -55,9 +56,11 @@ defmodule UM.WebTest do
   end
 
   test "login with invalid credentials shows flash" do
-    request = post("/sessions", form_data(%{
-      session: %{email: "interloper@example.com", password: "bad_password"}
-    }))
+    request = post("/sessions", %{
+      headers: [{"content-type", "application/x-www-form-urlencoded"}],
+      body: "session[email]=interloper@example.com&session[password]=bad_password"
+    })
+
     response = UM.Web.handle_request(request, :no_state)
     location = Raxx.Patch.response_location(response)
     request = get(location)
@@ -66,9 +69,10 @@ defmodule UM.WebTest do
   end
 
   test "logout will delete session", %{customer: customer} do
-    request = post("/sessions", form_data(%{
-      _method: "DELETE"
-    }), external_session(%{customer: %{id: customer.id}}))
+    request = post("/sessions", %{
+      body: "_method=DELETE",
+      headers: [{"content-type", "application/x-www-form-urlencoded"}]
+    }, external_session(%{customer: %{id: customer.id}}))
     response = UM.Web.handle_request(request, :no_state)
     assert 303 == response.status
     # TODO check cookies

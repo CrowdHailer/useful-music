@@ -21,8 +21,7 @@ defmodule UM.Web.Home do
     end
   end
 
-  def handle_request(request = %{path: ["currency"], method: :POST}, _env) do
-    form = Plug.Conn.Query.decode(request.body)
+  def handle_request(%{path: ["currency"], method: :POST, body: form}, _env) do
     currency = Map.get(form, "preference")
     currency = case currency do
       "USD" -> "USD"

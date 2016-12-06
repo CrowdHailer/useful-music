@@ -27,20 +27,19 @@ defmodule UM.Web.Admin.Pieces do
     Raxx.Response.ok(new_page_content)
   end
 
-  def handle_request(request = %{path: [], method: :POST}, _env) do
-    {:ok, form} = Raxx.Request.content(request)
-    form = Utils.sub_form(form, "piece")
+  def handle_request(%{path: [], method: :POST, body: %{"piece" => form}}, _env) do
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
         case UM.Catalogue.create_piece(data) do
           {:ok, _piece} ->
             Raxx.Response.found("", [{"location", "/admin/pieces"}])
-          {:error, :invalid_piece} ->
-            # loose all data but thats just ok on the admin side, at the moment
-            Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
           {:error, :id_already_used} ->
             # TODO change to sending to the edit page
             Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
+          {:error, reason} ->
+            flash = Poison.encode!(%{error: reason})
+            query = URI.encode_query(%{flash: flash})
+            Raxx.Response.found("", [{"location", "/admin/pieces/new?"<> query}])
         end
       {:error, _stuff} ->
         Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
@@ -58,9 +57,7 @@ defmodule UM.Web.Admin.Pieces do
     end
   end
 
-  def handle_request(request = %{path: ["UD" <> id], method: :POST}, _) do
-    {:ok, form} = Raxx.Request.content(request)
-    form = Utils.sub_form(form, "piece")
+  def handle_request(%{path: ["UD" <> id], method: :POST, body: %{"piece" => form}}, _) do
     {id, ""} = Integer.parse(id)
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->

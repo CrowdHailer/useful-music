@@ -36,7 +36,7 @@ defmodule UM.Web.HomeTest do
 
   # FIXME check guest vs logged in
   test "sets currency preference" do
-    request = post("/currency", form_data(%{preference: "USD"}), [{"um-user-id", "dummy-guest-id"}])
+    request = post("/currency", form_data(%{"preference" => "USD"}), [{"um-user-id", "dummy-guest-id"}])
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)

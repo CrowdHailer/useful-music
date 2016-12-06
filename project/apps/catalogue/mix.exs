@@ -15,12 +15,13 @@ defmodule UM.Catalogue.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :moebius],
+    [applications: [:logger, :moebius, :arc],
       mod: {UM.Catalogue, []}]
   end
 
   defp deps do
     [
+      {:arc, "~> 0.6.0-rc3"},
       {:moebius, "~> 2.0.0"}
     ]
   end

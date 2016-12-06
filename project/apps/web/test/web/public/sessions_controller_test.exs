@@ -32,9 +32,9 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "logging in sends user to their orders page", %{customer: customer} do
-    request = post("/", form_data(%{
-      session: %{email: customer.email, password: customer.password}
-    }))
+    request = post("/", %{
+      "session" => %{"email" => customer.email, "password" => customer.password}
+    })
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
@@ -42,10 +42,10 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "loggin in will redirect to the target if given", %{customer: customer} do
-    request = post("/", form_data(%{
-      session: %{email: customer.email, password: customer.password},
-      target: "/admin"
-    }))
+    request = post("/", %{
+      "session" => %{"email" => customer.email, "password" => customer.password},
+      "target" => "/admin"
+    })
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
     assert "/admin" == Raxx.Patch.response_location(response)
@@ -53,7 +53,7 @@ defmodule UM.Web.SessionsControllerTest do
 
   test "redirect to login page if invalid credentials" do
     request = post("/", form_data(%{
-      session: %{email: "bob@g.co", password: "not a password"}
+      "session" => %{"email" => "bob@g.co", "password" => "not a password"}
     }))
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status

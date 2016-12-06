@@ -1,3 +1,20 @@
+defmodule NotationPreview do
+  use Arc.Definition
+
+   def __storage, do: Arc.Storage.Local # Add this
+
+  def storage_dir(_version, {file, %{id: id}}) do
+    "uploads/pieces/UD#{id}"
+  end
+
+  def filename(version, rest) do
+    # IO.inspect(version)
+    # IO.inspect(rest)
+    "bob"
+  end
+
+end
+
 defmodule UM.Catalogue do
   # Also named Inventory
   alias UM.Catalogue.Piece
@@ -5,6 +22,25 @@ defmodule UM.Catalogue do
 
   def create_piece(piece = %{id: id}) do
     # DEBT insert requires a keyword list
+    piece = case Map.pop(piece, :notation_preview) do
+      {u = %Raxx.Upload{content: c}, piece} ->
+        # {:ok, filename} = Arc.Storage.Local.put(NotationPreview, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
+        # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
+        # take ext from upload
+        {:ok, filename} = NotationPreview.store({%{filename: "notation_preview.pdf", binary: c}, %{id: id}})
+        Map.merge(piece, %{notation_preview: filename})
+      {nil, piece} ->
+        piece
+    end
+    piece = case Map.pop(piece, :cover_image) do
+      {_, piece} ->
+        piece
+    end
+    piece = case Map.pop(piece, :audio_preview) do
+      {_, piece} ->
+        piece
+    end
+    # IO.inspect(piece)
     piece = Enum.map(piece, fn(x) -> x end)
     action = db(:pieces) |> insert(piece)
     case Moebius.Db.run(action) do
@@ -13,9 +49,10 @@ defmodule UM.Catalogue do
       # DEBT exatch matching
       {:error, "duplicate key value violates unique constraint \"pieces_pkey\""} ->
         {:error, :id_already_used}
-      {:error, _reason} ->
-        {:error, :invalid_piece}
+      {:error, reason} ->
+        {:error, reason}
     end
+    # |> IO.inspect
   end
 
   def fetch_piece(id) do

@@ -37,7 +37,7 @@ defmodule UM.Web.Admin.Pieces.CreateForm do
       violin: {:boolean, false},
       viola: {:boolean, false},
       percussion: {:boolean, false},
-      notation_preview: {:optional, fn(x) -> {:ok, x} end}, # Hash
+      notation_preview: {:required, fn(x) -> {:ok, x} end}, # Hash
       audio_preview: {:optional, fn(x) -> {:ok, x} end}, # Hash
       cover_image: {:optional, fn(x) -> {:ok, x} end}, # Hash
       print_link: {:optional, fn(x) -> {:ok, x} end}, # String

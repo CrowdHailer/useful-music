@@ -8,7 +8,7 @@ defmodule UM.CatalogueTest do
     sub_heading: "The very first piece",
     description: "I uses this piece for testing all the flipping time",
     level_overview: "not that easy",
-    notation_preview: "A link which I don't yet have"}
+    notation_preview: %Raxx.Upload{content: "Hello, World!", filename: "hello.txt"}}
 
   setup do
     Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
@@ -37,7 +37,7 @@ defmodule UM.CatalogueTest do
   end
 
   test "will not create an invalid piece" do
-    assert {:error, :invalid_piece} = Catalogue.create_piece(%{id: nil})
+    assert {:error, _} = Catalogue.create_piece(%{id: nil})
   end
 
   test "can fetch a piece by id", %{id: id} do

@@ -12,8 +12,7 @@ defmodule UM.Web.Customers do
     Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
   end
 
-  def handle_request(request = %{path: [], method: post}, _env) do
-    {:ok, form} = request.body |> Plug.Conn.Query.decode |> Map.fetch("customer")
+  def handle_request(%{path: [], method: post, body: %{"customer" => form}}, _env) do
     case CreateForm.validate(form) do
       {:error, {form, errors}} ->
         Raxx.Response.bad_request(new_page_content(form, errors, ""))

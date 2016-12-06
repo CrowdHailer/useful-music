@@ -53,6 +53,15 @@ defmodule UM.Web do
         request
     end
 
+    {ok, body} = case Raxx.Request.content_type(request) do
+      {"application/x-www-form-urlencoded", _} ->
+        URI2.Query.decode(request.body)
+      :undefined ->
+        {:ok, request.body}
+    end
+
+    request = %{request | body: body}
+
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 
     headers = case List.keytake(headers, "um-set-session", 0) do

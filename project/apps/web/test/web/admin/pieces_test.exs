@@ -12,7 +12,9 @@ defmodule UM.Web.Admin.PiecesTest do
     sub_heading: "The very first piece",
     description: "I uses this piece for testing all the flipping time",
     level_overview: "not that easy",
-    notation_preview: "A link which I don't yet have"}
+    notation_preview: %Raxx.Upload{
+      content: "My Upload document"
+    }}
 
   setup do
     Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
@@ -21,7 +23,8 @@ defmodule UM.Web.Admin.PiecesTest do
     # |> IO.inspect
     Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
     # |> IO.inspect
-    {:ok, %{id: _id}} = Catalogue.create_piece(@canonical_piece)
+    piece = @canonical_piece
+    {:ok, %{id: _id}} = Catalogue.create_piece(piece)
   end
 
   test "index page shows all pieces" do
@@ -54,8 +57,10 @@ defmodule UM.Web.Admin.PiecesTest do
 
   test "can create a new piece" do
     # can post file using httpoison
+    piece = %{@canonical_piece | id: "123", notation_preview: %Raxx.Upload{content: "Hello", filename: "blob.pdf"}}
+    piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
-      piece: %{@canonical_piece | id: "123"}
+      "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
@@ -64,8 +69,10 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "cant create a piece without id" do
+    piece = %{@canonical_piece | id: "", notation_preview: nil}
+    piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
-      piece: %{@canonical_piece | id: ""}
+      "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
@@ -73,8 +80,10 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "cant create a piece with existing id (redirects to piece)" do
+    piece = %{@canonical_piece | id: "101"}
+    piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
-      piece: @canonical_piece
+      "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
@@ -95,8 +104,10 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can update a piece" do
+    piece = %{@canonical_piece | title: "The new hotness", notation_preview: nil, id: "101"}
+    piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/UD101", form_data(%{
-      piece: %{@canonical_piece | title: "The new hotness"}
+      "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
