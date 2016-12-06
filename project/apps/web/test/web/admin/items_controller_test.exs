@@ -51,4 +51,17 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert String.contains?(location, UM.Catalogue.Piece.catalogue_number(piece))
     # DEBT better flash testing
   end
+
+  test "item edit page is available", %{piece: piece} do
+    {:ok, item} = UM.Catalogue.create_item(%{
+      piece_id: piece.id,
+      name: "This piece",
+      asset: "somefile.mp3",
+      initial_price: 40
+    })
+    request = get("/#{item.id}/edit")
+    response = Controller.handle_request(request, :nostate)
+    assert 200 == response.status
+    assert String.contains?(response.body, "value=\"This piece\"")
+  end
 end

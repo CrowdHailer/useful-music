@@ -85,7 +85,8 @@ defmodule UM.Catalogue do
 
   def create_item(item) do
     # DEBT insert requires a keyword list
-    item = %{item | id: random_string(16)}
+    nil = Map.get(item, :id)
+    item = Map.put(item, :id, random_string(16))
     item = Enum.map(item, fn(x) -> x end)
 
     action = db(:items) |> insert(item)

@@ -8,23 +8,23 @@
               <a class="menu-link" href="/admin/pieces">Back to Pieces</a>
           </li>
           <li class="menu-option">
-              <a class="menu-link" href="/admin/pieces/<%= @item.piece.catalogue_number %>/edit">Back to <%= @item.piece.catalogue_number %></a>
+              <a class="menu-link" href="/admin/pieces/<%= catalogue_number(piece) %>/edit">Back to <%= catalogue_number(piece) %></a>
           </li>
           <hr>
       </ul>
     </aside>
     <article class="col col-4-5">
         <h2>Edit Item</h2>
-        <form class="button" id="form_id" action="/admin/items/<%= @item.id %>" method="post" onsubmit="return confirm('Are you sure you want to remove \'<%= @item.name %>\' from \'<%= @item.piece.title %>\'')">
+        <form class="button" id="form_id" action="/admin/items/<%= item.id %>" method="post" onsubmit="return confirm('Are you sure you want to remove \'<%= item.name %>\' from \'<%= piece.title %>\'')">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="destroy" type="submit" name="some_name" value="Remove Item">
         </form>
         <p>
-          Edit item '<%= @item.name %>'. Which belongs to piece <em>'<%= @item.piece.product_name %>'</em>, Catalogue number '<%= @item.piece.catalogue_number %>'
+          Edit item '<%= item.name %>'. Which belongs to piece <em>'<%= product_name(piece) %>'</em>, Catalogue number '<%= catalogue_number(piece) %>'
         </p>
         <hr>
-        <form class="pure-form pure-form-aligned" action="/admin/items/<%= @item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
+        <form class="pure-form pure-form-aligned" action="/admin/items/<%= item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
@@ -36,7 +36,7 @@
                         name="item[name]"
                         type="text"
                         required
-                        value="<%= @item.name %>"
+                        value="<%= item.name %>"
                         placeholder="">
                 </div>
 
@@ -49,7 +49,7 @@
                         min="0"
                         step="0.01"
                         required
-                        value="<%= @item.initial_price %>"
+                        value="<%= item.initial_price %>"
                         placeholder="initial price">
                 </div>
 
@@ -61,7 +61,7 @@
                         type="number"
                         min="0"
                         step="0.01"
-                        value="<%= @item.discounted_price %>"
+                        value="<%= item.discounted_price %>"
                         placeholder="discounted price">
                 </div>
 
@@ -71,7 +71,7 @@
                   NB if changing name reupload asset as names are currently assigned on upload
                 </p>
                 <p>
-                  Leave blank to use <a href="<%= @item.asset.url %>" target="_blank">exisiting asset</a>
+                  Leave blank to use <a href="<%= asset_url(item) %>" target="_blank">exisiting asset</a>
                 </p>
                 <input type="file" name="[item][asset]" placeholder="asset">
             </fieldset>
