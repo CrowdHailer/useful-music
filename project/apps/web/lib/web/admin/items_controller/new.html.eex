@@ -8,7 +8,7 @@
               <a class="menu-link" href="/admin/pieces">Back to Pieces</a>
           </li>
           <li class="menu-option">
-              <a class="menu-link" href="/admin/pieces/<%= @piece.catalogue_number %>/edit">Back to <%= @piece.catalogue_number %></a>
+              <a class="menu-link" href="/admin/pieces/<%= catalogue_number(piece) %>/edit">Back to <%= catalogue_number(piece) %></a>
           </li>
           <hr>
       </ul>
@@ -16,12 +16,12 @@
     <article class="col col-4-5">
         <h2>Add Item</h2>
         <p>
-          Add item to piece <em>'<%= @piece.product_name %>'</em>, Catalogue number '<%= @piece.catalogue_number %>'
+          Add item to piece <em>'<%= product_name(piece) %>'</em>, Catalogue number '<%= catalogue_number(piece) %>'
         </p>
         <hr>
         <form class="pure-form pure-form-aligned" action="/admin/items/" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
             <%= csrf_tag %>
-            <input type="hidden" name="item[piece]" value="<%= @piece.id %>">
+            <input type="hidden" name="item[piece]" value="<%= piece.id %>">
             <fieldset>
 
                 <div class="pure-control-group">
