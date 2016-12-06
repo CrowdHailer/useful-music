@@ -3,7 +3,7 @@ defmodule UM.Catalogue.PieceTest do
   alias UM.Catalogue.Piece
 
   test "piece has catalogue_number" do
-    assert "UM213" == %Piece{id: 213} |> Piece.catalogue_number
+    assert "UD213" == %Piece{id: 213} |> Piece.catalogue_number
   end
 
   test "piece has a product name" do

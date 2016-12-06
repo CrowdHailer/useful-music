@@ -68,7 +68,7 @@
             <%= for {piece, i} <- page.pieces do %>
                 <tr class="<%= if rem(i, 2) == 0, do: "even", else: "odd" %>">
                     <th>
-                        <a href="/admin/pieces/<%= piece.id %>/edit"><%= UM.Catalogue.Piece.catalogue_number(piece) %></a>
+                        <a href="/admin/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>/edit"><%= UM.Catalogue.Piece.catalogue_number(piece) %></a>
                     </th>
                     <th>
                         <%= UM.Catalogue.Piece.product_name(piece) %>

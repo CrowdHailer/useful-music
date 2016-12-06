@@ -31,7 +31,7 @@ defmodule UM.Web.Admin.PiecesTest do
     request = get("/")
     %{status: status, body: body} = Pieces.handle_request(request, %{})
     assert 200 == status
-    assert String.contains?(body, "UM101")
+    assert String.contains?(body, "UD101")
   end
 
   test "can search for a piece by id" do

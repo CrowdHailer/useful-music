@@ -28,7 +28,7 @@ defmodule UM.CatalogueTest do
   test "can create a new piece" do
     {:ok, piece} = Catalogue.create_piece(%{@canonical_piece | id: 205, title: "Something new" })
 
-    assert "UM205" == Catalogue.Piece.catalogue_number(piece)
+    assert "UD205" == Catalogue.Piece.catalogue_number(piece)
     assert "Something new" == piece.title
   end
 

@@ -39,7 +39,7 @@ defmodule UM.Catalogue.Piece do
   ]
 
   def catalogue_number(%{id: id}) do
-    "UM#{id}"
+    "UD#{id}"
   end
 
   def product_name(%{title: title, sub_heading: sub_heading}) do
