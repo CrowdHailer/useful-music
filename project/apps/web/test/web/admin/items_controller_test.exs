@@ -34,4 +34,21 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert 200 == response.status
     assert String.contains?(response.body, "UD#{piece.id}")
   end
+
+  test "successful item creation", %{piece: piece} do
+    request = post("/", %{
+      "item" => %{
+        "name" => "Flute part",
+        "piece_id" => "#{piece.id}",
+        "initial_price" => "40",
+        "discounted_price" => "20",
+        "asset" => %Raxx.Upload{filename: "bob.png", content: "hello world"},
+    }})
+    response = Controller.handle_request(request, :nostate)
+    assert 302 == response.status
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "Item+created")
+    assert String.contains?(location, UM.Catalogue.Piece.catalogue_number(piece))
+    # DEBT better flash testing
+  end
 end

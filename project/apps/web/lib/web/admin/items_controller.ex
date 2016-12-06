@@ -12,6 +12,17 @@ defmodule UM.Web.Admin.ItemsController do
     end
   end
 
+  def handle_request(%{method: :POST, path: [], body: %{"item" => form}}, _) do
+    form_or_errors = UM.Web.Admin.ItemsController.ItemForm.validate(form)
+    case form_or_errors do
+      {:ok, data} ->
+        case UM.Catalogue.create_item(data) do
+          {:ok, item} ->
+            Raxx.Patch.redirect("/admin/pieces/UD#{item.piece_id}/edit", %{success: "Item created"})
+        end
+    end
+  end
+
   defp catalogue_number(piece) do
     UM.Catalogue.Piece.catalogue_number(piece)
   end

@@ -9,18 +9,6 @@ module UsefulMusic
         ItemsController
       end
 
-      def test_new_page_is_available
-        record = create :piece_record
-        assert_ok get "/new?piece_id=#{record.id}"
-        assert_includes last_response.body, "UD#{record.id}"
-      end
-
-      def test_no_new_page_for_missing_piece_to_admin
-        assert_raises Errol::Repository::RecordAbsent do
-          get "/new?piece_id=100"
-        end
-      end
-
       def test_can_create_item
         piece_record = create :piece_record
         post '/', {:item => attributes_for(:item_record).merge(:piece => piece_record.id)}

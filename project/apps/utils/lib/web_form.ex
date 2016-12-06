@@ -64,4 +64,17 @@ defmodule WebForm do
         {:error, {form, errors}}
     end
   end
+
+  def validate_integer(raw) do
+    case Integer.parse(raw) do
+      {i, ""} -> {:ok, i}
+      _ -> {:error, :not_and_integer, raw}
+    end
+  end
+  def validate_float(raw) do
+    case Float.parse(raw) do
+      {f, ""} -> {:ok, f}
+      _ -> {:error, :not_and_integer, raw}
+    end
+  end
 end
