@@ -11,134 +11,113 @@
 
 
 <div class="row collapse white-section section-bottom-margin">
-    <!-- FILTER FORM LEFT -->
-    <div class="large-3 medium-12 columns">
-          <div id="filter-display" class="filter-wrap">
-            <div class="hide-for-large-up">
-              <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
-            </div>
-            <h1>Search Filter</h1>
-            <p>Refine your search by selecting and<br> combining categories:</p>
-            <div class="filter-form">
-                <form id="search-form" action="/pieces" method="get">
-                    <div class="filter-head">
-                        <h2>SELECT INSTRUMENT(s)</h2>
-                    </div>
-                    <div class="row collapse">
-                        <%= for instrument <- instruments do %>
-                            <label class="pure-checkbox">
-                                <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= if search[instrument], do: "checked" %>>
-                                <%= String.capitalize("#{instrument}") %>
-                            </label>
-                        <% end %>
-                    </div>
-
-                    <div class="filter-head">
-                        <h2>SELECT LEVEL(s)</h2>
-                    </div>
-                    <div class="row collapse">
-                        <%= for level <- [:beginner,
-                        :intermediate,
-                        :advanced,
-                        :professional] do %>
-                            <label class="pure-checkbox">
-                                <input type="checkbox" name="catalogue_search[<%= level %>]" <%= if search[level], do: "checked" %>>
-                                <%= String.capitalize("#{level}") %>
-                            </label>
-                        <% end %>
-                    </div>
-                    <div class="filter-head">
-                        <h2>SELECT SCORE TYPE(s)</h2>
-                    </div>
-                    <%= for category <- [:solo,
-                    :solo_with_accompaniment,
-                    :duet,
-                    :trio,
-                    :quartet,
-                    :larger_ensembles] do %>
-                        <label class="pure-checkbox">
-                            <input type="checkbox" name="catalogue_search[<%= category %>]" <%= if search[category], do: "checked" %>>
-                            <%= stringify_option(category) %>
-                        </label>
-                    <% end %>
-                    <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
-                    <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- END OF FILTER FORM -->
-
-    <!-- SEARCH RESULTS RIGHT -->
-
-    <div class="large-9 small-12 columns">
-        <div class="search-bar-filter">
-            <div class="search-bar-filter-inner">
-                <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= if !page.previous, do: "disabled" %>>First Page</button>
-                <button form="search-form" name="catalogue_search[page]" value="<%= page.previous %>" <%= if !page.previous, do: "disabled" %>>Previous Page</button>
-                <select form="search-form" name="catalogue_search[page_size]" >
-                    <option <%= if page.size == 10, do: "selected" %>>10</option>
-                    <option <%= if page.size == 15, do: "selected" %>>15</option>
-                    <option <%= if page.size == 20, do: "selected" %>>20</option>
-                </select>
-                <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
-                <button form="search-form" name="catalogue_search[page]" value="<%= page.next %>" <%= if !page.next, do: "disabled" %>>Next Page</button>
-                <button form="search-form" name="catalogue_search[page]" value="<%= page.last %>" <%= if !page.next, do: "disabled" %>>Last Page</button>
-                <!-- <p>Results Per Page</p> -->
-                <p>
-                  Page <%= page.current %> of <%= page.last %>
-                </p>
-            </div>
-        </div>
-
-        <ul class="small-block-grid-1 large-block-grid-3 medium-block-grid-2">
-            <%= for {piece, i} <- page.pieces do %>
-            <li>
-                <div class="product-wrap">
-                    <div class="title-wrap">
-                        <h4><%= piece.title %></h4>
-                    </div>
-                    <div class="product-info-wrap">
-                        <!-- piece.sub_heading.upcase.gsub('é', 'E') # FIXME -->
-                        <p><%= piece.sub_heading %></p>
-                    </div>
-                    <div class="row collapse">
-                        <div class="large-6 medium-6 small-12 columns product-main">
-                            <p><%= UM.Catalogue.Piece.catalogue_number(piece) %></p>
-                            <p>LEVEL <%= piece.level_overview %></p>
-                            <hr class="prod-break">
-                            <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
-                            <a href="<%= piece.notation_preview %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                            <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>">
-                                <button class="piece-btn">Full Details</button>
-                            </a>
-                        </div>
-                        <div class="large-6 medium-6 columns hide-for-small-only product-main">
-                            <img src="/images/UD96-98x137.jpg">
-                        </div>
-                    </div>
-
-                </div>
-            </li>
+  <!-- FILTER FORM LEFT -->
+  <div class="large-3 medium-12 columns">
+    <div id="filter-display" class="filter-wrap">
+      <div class="hide-for-large-up">
+        <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
+      </div>
+      <h1>Search Filter</h1>
+      <p>Refine your search by selecting and<br> combining categories:</p>
+      <div class="filter-form">
+        <form id="search-form" action="/pieces" method="get">
+          <div class="filter-head">
+            <h2>SELECT INSTRUMENT(s)</h2>
+          </div>
+          <div class="row collapse">
+            <%= for instrument <- instruments do %>
+            <label class="pure-checkbox">
+              <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= if search[instrument], do: "checked" %>>
+              <%= stringify_option(instrument) %>
+            </label>
             <% end %>
-        </ul>
+          </div>
 
-        <div class="search-bar-filter">
-            <!-- <div class="search-bar-filter-inner">
-                <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">First Page</button>
-                <button form="search-form" name="catalogue_search[page]" value="" >Previous Page</button>
-                <select form="search-form" name="catalogue_search[page_size]" >
-                    <option selected="">10</option>
-                    <option>15</option>
-                    <option>20</option>
-                </select>
-                <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
-                <button form="search-form" name="catalogue_search[page]" value="2">Next Page</button>
-                <button form="search-form" name="catalogue_search[page]" value="4">Last Page</button>
-                <p>Results Per Page</p>
-            </div> -->
-        </div>
+          <div class="filter-head">
+            <h2>SELECT LEVEL(s)</h2>
+          </div>
+          <div class="row collapse">
+            <%= for level <- levels do %>
+            <label class="pure-checkbox">
+              <input type="checkbox" name="catalogue_search[<%= level %>]" <%= if search[level], do: "checked" %>>
+              <%= stringify_option(level) %>
+            </label>
+            <% end %>
+          </div>
+          <div class="filter-head">
+            <h2>SELECT SCORE TYPE(s)</h2>
+          </div>
+          <%= for category <- categories do %>
+          <label class="pure-checkbox">
+            <input type="checkbox" name="catalogue_search[<%= category %>]" <%= if search[category], do: "checked" %>>
+            <%= stringify_option(category) %>
+          </label>
+          <% end %>
+          <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+          <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- END OF FILTER FORM -->
+
+  <!-- SEARCH RESULTS RIGHT -->
+
+  <div class="large-9 small-12 columns">
+    <div class="search-bar-filter">
+      <div class="search-bar-filter-inner">
+        <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= if !page.previous, do: "disabled" %>>First Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= page.previous %>" <%= if !page.previous, do: "disabled" %>>Previous Page</button>
+        <select form="search-form" name="catalogue_search[page_size]" >
+          <option <%= if page.size == 10, do: "selected" %>>10</option>
+          <option <%= if page.size == 15, do: "selected" %>>15</option>
+          <option <%= if page.size == 20, do: "selected" %>>20</option>
+        </select>
+        <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= page.next %>" <%= if !page.next, do: "disabled" %>>Next Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= page.last %>" <%= if !page.next, do: "disabled" %>>Last Page</button>
+        <!-- <p>Results Per Page</p> -->
+        <p>
+          Page <%= page.current %> of <%= page.last %>
+        </p>
+      </div>
     </div>
 
-    <!-- END SEARCH RESULTS -->
+    <ul class="small-block-grid-1 large-block-grid-3 medium-block-grid-2">
+      <%= for {piece, i} <- page.pieces do %>
+      <li>
+        <div class="product-wrap">
+          <div class="title-wrap">
+            <h4><%= piece.title %></h4>
+          </div>
+          <div class="product-info-wrap">
+            <!-- piece.sub_heading.upcase.gsub('é', 'E') # FIXME -->
+            <p><%= piece.sub_heading %></p>
+          </div>
+          <div class="row collapse">
+            <div class="large-6 medium-6 small-12 columns product-main">
+              <p><%= UM.Catalogue.Piece.catalogue_number(piece) %></p>
+              <p>LEVEL <%= piece.level_overview %></p>
+              <hr class="prod-break">
+              <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
+              <a href="<%= piece.notation_preview %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
+              <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>">
+                <button class="piece-btn">Full Details</button>
+              </a>
+            </div>
+            <div class="large-6 medium-6 columns hide-for-small-only product-main">
+              <img src="/images/UD96-98x137.jpg">
+            </div>
+          </div>
+
+        </div>
+      </li>
+      <% end %>
+    </ul>
+
+    <div class="search-bar-filter">
+    </div>
+  </div>
+
+  <!-- END SEARCH RESULTS -->
 </div>

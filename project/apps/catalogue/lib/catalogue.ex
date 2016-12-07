@@ -92,9 +92,24 @@ defmodule UM.Catalogue do
     end
   end
 
-  def search_pieces() do
+  def search_pieces(tags \\ %{}) do
+    tags = Enum.flat_map(tags, fn
+      ({key, true}) ->
+        [{key, true}]
+      ({key, false}) ->
+        []
+    end)
+
+    query = case tags do
+      [] ->
+        db(:pieces)
+      tags ->
+        db(:pieces)
+        |> filter(tags)
+    end
+
     # TODO this should load all the items as well
-    {:ok, Moebius.Db.run(db(:pieces))}
+    {:ok, Moebius.Db.run(query)}
   end
 
   def create_item(item) do

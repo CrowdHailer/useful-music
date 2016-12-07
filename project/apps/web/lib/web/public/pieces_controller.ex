@@ -4,9 +4,15 @@ defmodule UM.Web.PiecesController do
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, [:page, :search]
 
-  def handle_request(%{path: [], method: :GET}, _env) do
-    {:ok, pieces} = UM.Catalogue.search_pieces
-    Raxx.Response.ok(index_page_content(paginate_pieces(pieces), %{}))
+  def handle_request(%{path: [], method: :GET, query: query}, _env) do
+    search = Map.get(query, "catalogue_search", %{})
+    # This should always produce a search
+    {:ok, tags} = WebForm.validate(Enum.into(Enum.map(
+      (instruments ++ levels ++ categories),
+      (fn(option) -> {option, {:boolean, false}} end)
+    ), %{}), search)
+    {:ok, pieces} = UM.Catalogue.search_pieces(tags)
+    Raxx.Response.ok(index_page_content(paginate_pieces(pieces), tags))
   end
 
   defp paginate_pieces(array) do
@@ -25,8 +31,25 @@ defmodule UM.Web.PiecesController do
     UM.Catalogue.Piece.all_instruments
   end
 
+  defp levels do
+    [:beginner,
+    :intermediate,
+    :advanced,
+    :professional]
+  end
+
+  defp categories do
+    [:solo,
+    :solo_with_accompaniment,
+    :duet,
+    :trio,
+    :quartet,
+    :larger_ensembles]
+  end
+
   defp stringify_option(term) do
-    # category.to_s.capitalize.gsub('_', ' ')
-    String.capitalize("#{term}")
+    "#{term}"
+    |> String.capitalize
+    |> String.replace("_", " ")
   end
 end

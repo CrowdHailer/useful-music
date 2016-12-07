@@ -118,4 +118,16 @@ defmodule UM.CatalogueTest do
     {:ok, piece} = Catalogue.load_items(piece)
     assert 2 = Enum.count(piece.items)
   end
+
+  test "searching" do
+    piece = Map.merge(@canonical_piece, %{id: 102, beginner: true, solo: true, trumpet: true})
+    {:ok, _} = Catalogue.create_piece(piece)
+    piece = Map.merge(@canonical_piece, %{id: 103, advanced: true, solo: true, trumpet: true})
+    {:ok, _} = Catalogue.create_piece(piece)
+    piece = Map.merge(@canonical_piece, %{id: 104, advanced: true, solo: true, violin: true})
+    {:ok, _} = Catalogue.create_piece(piece)
+    {:ok, [_,_,_,_]} = Catalogue.search_pieces
+    {:ok, [_, _]} = Catalogue.search_pieces(%{advanced: true})
+    {:ok, [_]} = Catalogue.search_pieces(%{advanced: true, violin: true})
+  end
 end
