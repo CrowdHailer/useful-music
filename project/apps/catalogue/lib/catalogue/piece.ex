@@ -85,4 +85,18 @@ defmodule UM.Catalogue.Piece do
       bool
     end)
   end
+
+  def all_instruments do
+    [:piano,
+    :recorder,
+    :flute,
+    :oboe,
+    :clarineo,
+    :clarinet,
+    :bassoon,
+    :saxophone,
+    :trumpet,
+    :violin,
+    :viola]
+  end
 end
