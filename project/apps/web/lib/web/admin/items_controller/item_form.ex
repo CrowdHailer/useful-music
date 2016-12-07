@@ -3,7 +3,10 @@ defmodule UM.Web.Admin.ItemsController.ItemForm do
     validator = %{
       piece_id: {:required, &WebForm.validate_integer/1},
       name: {:required, fn(x) -> {:ok, x} end},
-      asset: {:required, fn(x) -> {:ok, x.filename} end},
+      asset: {:required, fn
+        (%{content: ""}) -> {:ok, :file_not_provided}
+        (x) -> {:ok, x.filename}
+      end},
       initial_price: {:required, &validate_price/1},
       discounted_price: {:optional, &validate_price/1}
     }

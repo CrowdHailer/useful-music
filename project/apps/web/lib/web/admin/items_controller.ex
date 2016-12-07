@@ -23,6 +23,11 @@ defmodule UM.Web.Admin.ItemsController do
           {:ok, item} ->
             Raxx.Patch.redirect("/admin/pieces/UD#{item.piece_id}/edit", %{success: "Item created"})
         end
+      {:error, _error} ->
+        # DEBT send error to bugsnag or similar
+        error_message = "Could not create invalid item"
+        Raxx.Patch.redirect("/admin/pieces", %{error: error_message})
+
     end
   end
 
@@ -31,6 +36,26 @@ defmodule UM.Web.Admin.ItemsController do
       {:ok, item} ->
         {:ok, piece} = UM.Catalogue.fetch_piece(item.piece_id)
         Raxx.Response.ok(edit_page_content(item, piece))
+      # DEBT if manage to visit no item page
+    end
+  end
+
+  def handle_request(%{method: :POST, path: [id], body: %{"item" => form}}, _) do
+    form_or_errors = UM.Web.Admin.ItemsController.ItemForm.validate(form)
+    case form_or_errors do
+      {:ok, data} ->
+        case UM.Catalogue.update_item(Map.merge(%{id: id}, data)) do
+          {:ok, item} ->
+            Raxx.Patch.redirect("/admin/pieces/UD#{item.piece_id}/edit", %{success: "Item created"})
+          # DEBT if manage to visit no item page
+        end
+    end
+  end
+
+  def handle_request(%{method: :DELETE, path: [id]}, _) do
+    case UM.Catalogue.delete_item(id) do
+      {:ok, id} ->
+        Raxx.Patch.redirect("/admin/pieces", %{success: "Item removed"})
     end
   end
 

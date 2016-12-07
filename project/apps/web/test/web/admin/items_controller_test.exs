@@ -49,7 +49,22 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     location = Raxx.Patch.response_location(response)
     assert String.contains?(location, "Item+created")
     assert String.contains?(location, UM.Catalogue.Piece.catalogue_number(piece))
-    # DEBT better flash testing
+  end
+
+  test "item creation with missing data", %{piece: piece} do
+    request = post("/", %{
+      "item" => %{
+        "name" => "Flute part",
+        "piece_id" => "#{piece.id}",
+        "initial_price" => "",
+        "discounted_price" => "20",
+        "asset" => %Raxx.Upload{filename: "bob.png", content: "hello world"},
+    }})
+    response = Controller.handle_request(request, :nostate)
+    assert 302 == response.status
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces")
+    assert String.contains?(location, "invalid+item")
   end
 
   test "item edit page is available", %{piece: piece} do
@@ -63,5 +78,46 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     response = Controller.handle_request(request, :nostate)
     assert 200 == response.status
     assert String.contains?(response.body, "value=\"This piece\"")
+  end
+
+  test "can edit an item", %{piece: piece} do
+    {:ok, item} = UM.Catalogue.create_item(%{
+      piece_id: piece.id,
+      name: "This piece",
+      asset: "somefile.mp3",
+      initial_price: 40
+    })
+    # was previously a put
+    request = post("/#{item.id}", %{"item" => %{
+      "name" => "Flute part",
+      "piece_id" => "#{piece.id}",
+      "initial_price" => "90",
+      "discounted_price" => "20",
+      "asset" => %Raxx.Upload{filename: "", content: ""},
+    }})
+    response = Controller.handle_request(request, :nostate)
+    assert 302 == response.status
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces/UD101/edit")
+    assert String.contains?(location, "Item+created")
+    {:ok, updated_item} = UM.Catalogue.fetch_item(item.id)
+    assert "somefile.mp3" == updated_item.asset
+    assert 9000 == updated_item.initial_price
+  end
+
+  test "can delete an item", %{piece: piece} do
+    {:ok, item} = UM.Catalogue.create_item(%{
+      piece_id: piece.id,
+      name: "This piece",
+      asset: "somefile.mp3",
+      initial_price: 40
+    })
+    request = delete("/#{item.id}")
+    response = Controller.handle_request(request, :nostate)
+    assert {:ok, piece} = UM.Catalogue.load_items(%{id: piece.id})
+    assert [] == piece.items
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces")
+    assert String.contains?(location, "Item+removed")
   end
 end
