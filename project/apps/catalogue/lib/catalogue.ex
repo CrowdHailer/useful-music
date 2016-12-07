@@ -112,6 +112,13 @@ defmodule UM.Catalogue do
     {:ok, Moebius.Db.run(query)}
   end
 
+  def search_title(title) do
+    query = db(:pieces)
+    |> filter("title ILIKE $1", "%#{title}%")
+
+    {:ok, Moebius.Db.run(query)}
+  end
+
   def create_item(item) do
     # DEBT insert requires a keyword list
     nil = Map.get(item, :id)

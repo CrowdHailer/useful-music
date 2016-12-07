@@ -130,4 +130,14 @@ defmodule UM.CatalogueTest do
     {:ok, [_, _]} = Catalogue.search_pieces(%{advanced: true})
     {:ok, [_]} = Catalogue.search_pieces(%{advanced: true, violin: true})
   end
+
+  test "searching titles" do
+    piece = Map.merge(@canonical_piece, %{id: 102, title: "The big folly"})
+    {:ok, _} = Catalogue.create_piece(piece)
+    piece = Map.merge(@canonical_piece, %{id: 103, title: "The BIG folly James"})
+    {:ok, _} = Catalogue.create_piece(piece)
+    piece = Map.merge(@canonical_piece, %{id: 104, title: "The small folly"})
+    {:ok, _} = Catalogue.create_piece(piece)
+    {:ok, [_,_,]} = Catalogue.search_title("big folly")
+  end
 end
