@@ -2,6 +2,7 @@
 
 - form validation on files
 - csrf middleware
+- all prices are in pence lookup money package
 
 - catalogue to destroy associated items when deleting piece
 - solution to stringifying keys in admin/pieces_controller_test
