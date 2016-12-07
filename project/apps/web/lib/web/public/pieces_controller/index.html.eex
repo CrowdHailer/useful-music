@@ -66,25 +66,25 @@
   <div class="large-9 small-12 columns">
     <div class="search-bar-filter">
       <div class="search-bar-filter-inner">
-        <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= if !page.previous, do: "disabled" %>>First Page</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= page.previous %>" <%= if !page.previous, do: "disabled" %>>Previous Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;" <%= if Page.first?(page), do: "disabled" %>>First Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= Page.previous(page) %>" <%= if Page.first?(page), do: "disabled" %>>Previous Page</button>
         <select form="search-form" name="catalogue_search[page_size]" >
-          <option <%= if page.size == 10, do: "selected" %>>10</option>
-          <option <%= if page.size == 15, do: "selected" %>>15</option>
-          <option <%= if page.size == 20, do: "selected" %>>20</option>
+          <option <%= if page.page_size == 10, do: "selected" %>>10</option>
+          <option <%= if page.page_size == 15, do: "selected" %>>15</option>
+          <option <%= if page.page_size == 20, do: "selected" %>>20</option>
         </select>
         <button form="search-form" name="catalogue_search[page]" value="1" style="border: 0em;">Refresh</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= page.next %>" <%= if !page.next, do: "disabled" %>>Next Page</button>
-        <button form="search-form" name="catalogue_search[page]" value="<%= page.last %>" <%= if !page.next, do: "disabled" %>>Last Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= Page.next(page) %>" <%= if Page.last?(page), do: "disabled" %>>Next Page</button>
+        <button form="search-form" name="catalogue_search[page]" value="<%= page.total_pages %>" <%= if Page.last?(page), do: "disabled" %>>Last Page</button>
         <!-- <p>Results Per Page</p> -->
         <p>
-          Page <%= page.current %> of <%= page.last %>
+          Page <%= page.page_number %> of <%= page.total_pages %>
         </p>
       </div>
     </div>
 
     <ul class="small-block-grid-1 large-block-grid-3 medium-block-grid-2">
-      <%= for {piece, i} <- page.pieces do %>
+      <%= for piece <- page.entries do %>
       <li>
         <div class="product-wrap">
           <div class="title-wrap">

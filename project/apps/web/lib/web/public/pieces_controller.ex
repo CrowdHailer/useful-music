@@ -6,24 +6,20 @@ defmodule UM.Web.PiecesController do
 
   def handle_request(%{path: [], method: :GET, query: query}, _env) do
     search = Map.get(query, "catalogue_search", %{})
-    # This should always produce a search
+
     {:ok, tags} = WebForm.validate(Enum.into(Enum.map(
       (instruments ++ levels ++ categories),
       (fn(option) -> {option, {:boolean, false}} end)
     ), %{}), search)
-    {:ok, pieces} = UM.Catalogue.search_pieces(tags)
-    Raxx.Response.ok(index_page_content(paginate_pieces(pieces), tags))
-  end
 
-  defp paginate_pieces(array) do
-    %{
-      previous: 0,
-      next: 0,
-      last: 0,
-      current: 0,
-      size: 10,
-      pieces: Enum.zip(Enum.take(array, 10), 1..10)
-      }
+    page = %{
+      page_number: Map.get(search, "page", "1") |> :erlang.binary_to_integer,
+      page_size: Map.get(search, "page_size", "12") |> :erlang.binary_to_integer
+    }
+
+    # in the future this should paginate the query
+    {:ok, pieces} = UM.Catalogue.search_pieces(tags)
+    Raxx.Response.ok(index_page_content(Page.paginate(pieces, page), tags))
   end
 
   defp instruments do

@@ -12,7 +12,8 @@ defmodule UM.Web.Admin.Pieces do
 
   def handle_request(%{path: [], method: :GET}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
-    Raxx.Response.ok(index_page_content(paginate_pieces(pieces)))
+    # TODO fix pages
+    Raxx.Response.ok(index_page_content(Page.paginate(pieces, %{page_size: 10, page_number: 1})))
   end
 
   def handle_request(%{path: ["search"], method: :GET, query: query}, _env) do
@@ -90,14 +91,4 @@ defmodule UM.Web.Admin.Pieces do
     "TODO"
   end
 
-  # TODO fix this
-  defp paginate_pieces(array) do
-    %{
-      previous: 0,
-      next: 0,
-      last: 0,
-      size: 10,
-      pieces: Enum.zip(Enum.take(array, 10), 1..10)
-      }
-  end
 end

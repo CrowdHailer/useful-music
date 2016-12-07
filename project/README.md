@@ -4,8 +4,10 @@
 - csrf middleware
 - html escape
 - all prices are in pence lookup money package
+- paginate in SQL query
 - Message for failed to delete item because of purchases
 - admin controller redirects to login page if needed
+
 
 - catalogue to destroy associated items when deleting piece
 - solution to stringifying keys in admin/pieces_controller_test
