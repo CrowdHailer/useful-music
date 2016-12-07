@@ -58,7 +58,7 @@ defmodule UM.CatalogueTest do
   test "cannot update a piece to be invalid", %{id: id} do
     {:ok, piece} = Catalogue.fetch_piece(id)
     piece = %{piece | title: nil}
-    {:error, :invalid_piece} = Catalogue.update_piece(piece)
+    {:error, _reason} = Catalogue.update_piece(piece)
   end
 
   # TODO delete piece

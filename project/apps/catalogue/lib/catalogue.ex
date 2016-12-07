@@ -66,6 +66,10 @@ defmodule UM.Catalogue do
   def update_piece(piece = %{id: id}) when is_integer(id) do
     # DEBT insert requires a keyword list
     piece = Enum.map(piece, fn(x) -> x end)
+    |> Enum.filter(fn
+      ({_, :file_not_provided}) -> false
+      (_) -> true
+    end)
 
     action = db(:pieces)
     |> filter(id: id)
@@ -73,8 +77,18 @@ defmodule UM.Catalogue do
     case Moebius.Db.run(action) do
       record = %{id: ^id} ->
         {:ok, record}
-      {:error, _reason} ->
-        {:error, :invalid_piece}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  def delete_piece(id) do
+    action = db(:pieces)
+    |> filter(id: id)
+    |> delete
+    case Moebius.Db.run(action) do
+      %{deleted: 1} ->
+        {:ok, id}
     end
   end
 

@@ -1,3 +1,14 @@
+# TODO
+
+- form validation on files
+- csrf middleware
+
+- catalogue to destroy associated items when deleting piece
+- solution to stringifying keys in admin/pieces_controller_test
+  `piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}``
+- Minimise validation on piece_form so we can use meaningful db exceptions
+  OR Add field errors from the form.
+
 # Gateway
 maybe best to rename web to gateway but probably not gateway will be for API endpoint and www for web backend for front end
 
@@ -38,7 +49,7 @@ add discount
 
 remove discount
 
-If session user has basket overrides session basket. 
+If session user has basket overrides session basket.
 dont do this.
 merge baskets, needed when a user with items in session basket logs in.
 

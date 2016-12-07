@@ -56,19 +56,20 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can create a new piece" do
-    # can post file using httpoison
     piece = %{@canonical_piece | id: "123", notation_preview: %Raxx.Upload{content: "Hello", filename: "blob.pdf"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
       "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})
-    assert 302 == response.status
-    assert "/admin/pieces" == Raxx.Patch.response_location(response)
     assert {:ok, _piece} = Catalogue.fetch_piece(123)
+    assert 302 == response.status
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces")
+    assert String.contains?(location, "Piece+created")
   end
 
-  test "cant create a piece without id" do
+  test "can't create a piece without id" do
     piece = %{@canonical_piece | id: "", notation_preview: nil}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
@@ -76,10 +77,12 @@ defmodule UM.Web.Admin.PiecesTest do
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
-    assert "/admin/pieces/new" == Raxx.Patch.response_location(response)
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces/new")
+    assert String.contains?(location, "Could+not+create+invalid+piece")
   end
 
-  test "cant create a piece with existing id (redirects to piece)" do
+  test "can't create a piece with existing id (redirects to piece)" do
     piece = %{@canonical_piece | id: "101"}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
@@ -87,13 +90,16 @@ defmodule UM.Web.Admin.PiecesTest do
     }))
     response = Pieces.handle_request(request, %{})
     assert 302 == response.status
-    assert "/admin/pieces/UD101/edit" == Raxx.Patch.response_location(response)
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces/UD101/edit")
+    assert String.contains?(location, "UD101+already+exists")
   end
 
   test "can visit a pieces edit page" do
     request = get("/UD#{@canonical_piece.id}/edit")
     response = Pieces.handle_request(request, %{})
     assert 200 == response.status
+    assert String.contains?(response.body, "UD101")
   end
 
   test "trying to edit a non existant piece results in a 404" do
@@ -104,17 +110,26 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can update a piece" do
-    piece = %{@canonical_piece | title: "The new hotness", notation_preview: nil, id: "101"}
+    piece = %{@canonical_piece | title: "The new hotness", id: "101", notation_preview: %Raxx.Upload{content: ""}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/UD101", form_data(%{
       "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})
+    assert {:ok, %{title: "The new hotness"}} = Catalogue.fetch_piece(101)
     assert 302 == response.status
-    assert "/admin/pieces/UD101/edit" == Raxx.Patch.response_location(response)
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces/UD101/edit")
+    assert String.contains?(location, "Piece+updated")
   end
 
-  # DEBT Flash messages on Create and update
-  # DEBT Lost information on failed form submission
-  # DEBT Do not have the ability to delete pieces
+  test "can delete a piece" do
+    request = delete("/UD101")
+    response = Pieces.handle_request(request, %{})
+    assert {:error, :piece_not_found} = Catalogue.fetch_piece(101)
+    assert 302 == response.status
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/admin/pieces")
+    assert String.contains?(location, "Piece+deleted")
+  end
 end

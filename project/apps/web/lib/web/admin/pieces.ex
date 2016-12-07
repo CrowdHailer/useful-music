@@ -32,17 +32,17 @@ defmodule UM.Web.Admin.Pieces do
       {:ok, data} ->
         case UM.Catalogue.create_piece(data) do
           {:ok, _piece} ->
-            Raxx.Response.found("", [{"location", "/admin/pieces"}])
+            Raxx.Patch.redirect("/admin/pieces", %{success: "Piece created"})
           {:error, :id_already_used} ->
             # TODO change to sending to the edit page
-            Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
+            error_message = "Piece UD#{data.id} already exists and may be edited"
+            Raxx.Patch.redirect("/admin/pieces/UD#{data.id}/edit", %{error: error_message})
           {:error, reason} ->
-            flash = Poison.encode!(%{error: reason})
-            query = URI.encode_query(%{flash: flash})
-            Raxx.Response.found("", [{"location", "/admin/pieces/new?"<> query}])
+            Raxx.Patch.redirect("/admin/pieces/new", %{error: reason})
         end
-      {:error, _stuff} ->
-        Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
+      {:error, _reason} ->
+        error_message = "Could not create invalid piece"
+        Raxx.Patch.redirect("/admin/pieces/new", %{error: error_message})
     end
   end
 
@@ -57,7 +57,6 @@ defmodule UM.Web.Admin.Pieces do
     end
   end
 
-  # Delete id
   def handle_request(%{path: ["UD" <> id], method: :POST, body: %{"piece" => form}}, _) do
     {id, ""} = Integer.parse(id)
     case __MODULE__.CreateForm.validate(form) do
@@ -65,13 +64,21 @@ defmodule UM.Web.Admin.Pieces do
         data = %{data | id: id}
         case UM.Catalogue.update_piece(data) do
           {:ok, _piece} ->
-            Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
-          {:error, :invalid_piece} ->
-            # loose all data but thats just ok on the admin side, at the moment
-            Raxx.Response.found("", [{"location", "/admin/pieces/UD#{data.id}/edit"}])
+            Raxx.Patch.redirect("/admin/pieces/UD#{data.id}/edit", %{success: "Piece updated"})
+          {:error, reason} ->
+            Raxx.Patch.redirect("/admin/pieces/UD#{data.id}/edit", %{error: reason})
         end
       {:error, _stuff} ->
-        Raxx.Response.found("", [{"location", "/admin/pieces/new"}])
+        error_message = "Could not update piece"
+        Raxx.Patch.redirect("/admin/pieces/new", %{error: error_message})
+    end
+  end
+
+  def handle_request(%{path: ["UD" <> id], method: :DELETE}, _) do
+    {id, ""} = Integer.parse(id)
+    case UM.Catalogue.delete_piece(id) do
+      {:ok, id} ->
+        Raxx.Patch.redirect("/admin/pieces", %{success: "Piece deleted"})
     end
   end
 
