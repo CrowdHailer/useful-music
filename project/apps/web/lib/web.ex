@@ -41,7 +41,7 @@ defmodule UM.Web do
     {flash, request} = UM.Web.Flash.from_request(request)
     {:ok, request} = Raxx.Patch.set_header(request, "um-flash", flash)
 
-    {ok, body} = case Raxx.Request.content_type(request) do
+    {:ok, body} = case Raxx.Request.content_type(request) do
       {"application/x-www-form-urlencoded", _} ->
         URI2.Query.decode(request.body)
       {"multipart/form-data", "boundary=" <> boundary} ->

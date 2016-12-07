@@ -7,7 +7,7 @@ defmodule NotationPreview do
     "uploads/pieces/UD#{id}"
   end
 
-  def filename(version, rest) do
+  def filename(_version, _rest) do
     # IO.inspect(version)
     # IO.inspect(rest)
     "bob"
@@ -17,13 +17,12 @@ end
 
 defmodule UM.Catalogue do
   # Also named Inventory
-  alias UM.Catalogue.Piece
   import Moebius.Query
 
   def create_piece(piece = %{id: id}) do
     # DEBT insert requires a keyword list
     piece = case Map.pop(piece, :notation_preview) do
-      {u = %Raxx.Upload{content: c}, piece} ->
+      {%Raxx.Upload{content: c}, piece} ->
         # {:ok, filename} = Arc.Storage.Local.put(NotationPreview, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
         # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
         # take ext from upload
@@ -96,7 +95,7 @@ defmodule UM.Catalogue do
     tags = Enum.flat_map(tags, fn
       ({key, true}) ->
         [{key, true}]
-      ({key, false}) ->
+      ({_key, false}) ->
         []
     end)
 
