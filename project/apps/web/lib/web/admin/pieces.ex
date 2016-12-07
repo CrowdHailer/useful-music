@@ -57,6 +57,7 @@ defmodule UM.Web.Admin.Pieces do
     end
   end
 
+  # Delete id
   def handle_request(%{path: ["UD" <> id], method: :POST, body: %{"piece" => form}}, _) do
     {id, ""} = Integer.parse(id)
     case __MODULE__.CreateForm.validate(form) do
