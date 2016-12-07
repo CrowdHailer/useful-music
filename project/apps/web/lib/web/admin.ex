@@ -34,7 +34,7 @@ defmodule UM.Web.Admin do
             # TODO adjust content length?
         end
       %{admin: false} ->
-        Raxx.Response.forbidden
+        Raxx.Response.forbidden("Forbidden")
     end
   end
 
