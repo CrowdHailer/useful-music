@@ -16,6 +16,7 @@
   `piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}``
 - Minimise validation on piece_form so we can use meaningful db exceptions
   OR Add field errors from the form.
+- random pieces are hardcoded to 4
 
 # Gateway
 maybe best to rename web to gateway but probably not gateway will be for API endpoint and www for web backend for front end
