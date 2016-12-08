@@ -1,17 +1,22 @@
-# Store in cookie user_id, preferred_currency, shopping_basket_id
+# Store in cookie user_id, currency_preference, shopping_basket_id
 # Both currency preference and basket are features of a user when logged in
 defmodule UM.Web.Session do
   def from_request(request) do
     {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
     session = case Poison.decode(session) do
-      {:ok, s = %{"customer_id" => id}} ->
+      {:ok, %{"customer_id" => id}} ->
         %{
           customer_id: id
         }
       {:error, :invalid} ->
         %{
           customer_id: nil,
-          preferred_currency: "GBP"
+          currency_preference: "GBP"
+        }
+      _ ->
+        %{
+          customer_id: nil,
+          currency_preference: "GBP"
         }
     end
     {session, request}
@@ -41,10 +46,10 @@ defmodule UM.Web.Session do
     current_customer(session) == :guest
   end
 
-  def preferred_currency(session) do
+  def currency_preference(session) do
     case current_customer(session) do
       :guest ->
-        session.preferred_currency || :GBP
+        session.currency_preference || :GBP
       customer ->
         IO.inspect(customer)
     end
@@ -70,8 +75,10 @@ defmodule UM.Web.Session do
   def customer_session(%{id: id}) do
     [{"um-session", %{customer_id: id}}]
   end
-  def guest_session() do
-    [{"um-session", %{customer_id: nil}}]
+  def guest_session(opts \\ []) do
+    opts = Enum.into(opts, %{})
+    currency = Map.get(opts, :currency_preference, "GBP")
+    [{"um-session", %{customer_id: nil, currency_preference: currency}}]
   end
 
   def external_session(data) do

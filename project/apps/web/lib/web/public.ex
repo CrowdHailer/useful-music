@@ -67,7 +67,7 @@ defmodule UM.Web.Public do
   end
 
   defp preferred_currency(session) do
-    UM.Web.Session.preferred_currency(session)
+    UM.Web.Session.currency_preference(session)
   end
 
   # DEBT will be order in the future

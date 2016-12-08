@@ -8,11 +8,6 @@ class CustomersControllerTest < MyRecordTest
     CustomersController
   end
 
-  def test_orders_page_is_available_to_that_customer
-    assert_ok get "/#{customer.id}/orders", {}, {'rack.session' => {:user_id => customer.id}}
-    assert_includes last_response.body, customer.name
-  end
-
   def test_edit_page_is_available_to_that_customer
     assert_ok get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => customer.id}}
     assert_includes last_response.body, customer.email

@@ -1,0 +1,157 @@
+
+<div class="row collapse white-section section-bottom-margin">
+  <div class="large-3 columns">
+    <!-- FILTER FORM LEFT -->
+    <%= render :'_account_sidebar' %>
+  </div>
+
+  <div class="large-9 columns">
+    <div class="row">
+      <div class="large-12 columns">
+        <form class="pure-form pure-form-aligned" action="/customers/<%= form.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+          <%= csrf_tag %>
+          <input type="hidden" name="_method" value="PUT">
+          <fieldset>
+            <h4>Edit Account</h4>
+            <div class="row">
+              <div class="large-4 columns large-offset-2 <%= if errors.first_name, do: "error" %>">
+                <label>First Name
+                  <input
+                  id="customer_first_name"
+                  name="customer[first_name]"
+                  type="text"
+                  value="<%= form.first_name %>"
+                  required
+                  placeholder="">
+                </label>
+                <%= if errors.first_name do %>
+                <small class="error"><%= errors.first_name %></small>
+                <% end %>
+              </div>
+              <div class="large-4 columns end <%= if errors.last_name, do: "error" %>">
+                <label>Last Name
+                  <input
+                  id="customer_last_name"
+                  name="customer[last_name]"
+                  type="text"
+                  value="<%= form.last_name %>"
+                  required
+                  placeholder="">
+                </label>
+                <%= if errors.last_name do %>
+                <small class="error"><%= errors.last_name %></small>
+                <% end %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 columns large-offset-2 <%= if errors.email, do: "error" %>">
+                <label>Email
+                  <input
+                  id="customer_email"
+                  name="customer[email]"
+                  type="email"
+                  value="<%= form.email %>"
+                  required
+                  placeholder="">
+                </label>
+                <%= if errors.email do %>
+                <small class="error"><%= errors.email %></small>
+                <% end %>
+              </div>
+              <div class="large-4 columns end <%= if errors.country, do: "error" %>">
+                <label>Country
+                  <select
+                  id="customer_country"
+                  name="customer[country]"
+                  required>
+                  <option value>-- country --</option>
+                  <%= for {name, code} <- all_countries do %>
+                  <option value="<%= code %>" <%= if form.country == code, do: "selected" %>><%= name %></option>
+                  <% end %>
+                </select>
+              </label>
+              <%= if errors.country do %>
+              <small class="error"><%= errors.country %></small>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <!-- <div class="large-5 columns large-offset-2">
+            <span></span>
+          </div> -->
+          <div class="large-offset-7 large-3 columns end">
+            <button type="submit" class="right">Submit</button>
+          </div>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+        <h4 id="customer-questions">Tell us about yourself</h4>
+
+        <div class="row">
+          <div class="large-8 large-offset-2 end">
+            <label for="customer_question_1">Which instrument do you play?</label>
+            <input
+            id="customer_question_1"
+            name="customer[question_1]"
+            type="text"
+            value="<%= form.question_1 %>"
+            placeholder="">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-8 large-offset-2 end">
+            <label for="customer_question_2">Do you teach music?</label>
+            <select id="customer_question_2" name="customer[question_2]">
+              <option value>Please Select</option>
+              <%= for answer <- ['Yes - mostly in schools',
+              'Yes - mostly in music centres',
+              'Yes - mostly private tuition',
+              'Yes - mostly ensembles',
+              'I have taught in the past',
+              'No'] do %>
+              <option <%= if answer == form.question_2, do: "selected" %> ><%= answer %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-8 large-offset-2 end">
+            <label for="customer_question_3">How did you hear about us?</label>
+            <select id="customer_question_3" name="customer[question_3]">
+              <option value>Please Select</option>
+              <%= for answer <- ['Google search',
+              'In a magazine or other printed publication',
+              'Facebook page',
+              'Twitter',
+              'YouTube video',
+              'Purchased a Nuvo Instrument',
+              'Friend/colleague recommendation',
+              'Teacher recommendation',
+              'Through a music exam board',
+              'Through a music shop',
+              'Through a music society',
+              'On another website',
+              'Other'] do  %>
+              <option <%= if answer == form.question_3, do: "selected" %> ><%= answer %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <!-- <div class="large-5 columns large-offset-2">
+          <span></span>
+        </div> -->
+        <div class="large-offset-7 large-3 columns end">
+          <button type="submit" class="right">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+</div>
+</div>
+</div>

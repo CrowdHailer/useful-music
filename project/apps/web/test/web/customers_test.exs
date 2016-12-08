@@ -44,16 +44,21 @@ defmodule UM.Web.CustomersTest do
         "country" => "TODO",
         "terms_agreement" => "on"
       }
-    }))
+    }), UM.Web.Session.guest_session(currency_preference: "USD"))
     response = Controller.handle_request(request, :no_state)
-    assert "/customers/" <> id = Raxx.Patch.response_location(response)
-    assert response.status == 303
-    assert %{first_name: "Bill"} = UM.Accounts.fetch_customer(id)
-    # TODO test the flash message
+    assert response.status == 302
+    assert location = Raxx.Patch.response_location(response)
+    redirection = get(location)
+    assert ["customers", id] = redirection.path
+    assert _flash = redirection.query["flash"]
+    customer = UM.Accounts.fetch_customer(id)
+    assert "Bill" == customer.first_name
+    assert "USD" == customer.currency_preference
     # TODO check the last email sent
+    # TODO check session is set
   end
 
-  test "rerenders form for bad password" do
+  test "rerenders form for bad password", %{customer: customer} do
     request = post("/", form_data(%{
       "customer" => %{
         "first_name" => "Bill",
@@ -64,7 +69,7 @@ defmodule UM.Web.CustomersTest do
         "country" => "TODO",
         "terms_agreement" => "on"
       }
-      }))
+      }), UM.Web.Session.customer_session(customer))
       response = Controller.handle_request(request, :no_state)
       assert response.status == 400
       assert String.contains?(response.body, "too short")
@@ -88,6 +93,12 @@ defmodule UM.Web.CustomersTest do
     request = get("/#{id}", UM.Web.Session.guest_session)
     response = Controller.handle_request(request, :no_state)
     assert response.status == 404
+  end
+
+  test "can visit a customers edit page", %{customer: customer} do
+    request = get("/#{customer.id}/edit", UM.Web.Session.customer_session(customer))
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 200
   end
 
   # DEBT keep success path after login/signup

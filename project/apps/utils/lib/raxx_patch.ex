@@ -24,6 +24,7 @@ defmodule Raxx.Patch do
   end
 
   def redirect(url, flash) do
+    flash = Enum.into(flash, %{})
     flash = Poison.encode!(flash)
     query = URI.encode_query(%{flash: flash})
     Raxx.Response.found("", [{"location", url <> "?" <> query}])

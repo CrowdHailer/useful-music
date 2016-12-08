@@ -1,5 +1,5 @@
 defmodule UM.Web.Customers do
-  alias UM.Web.Customers.CreateForm
+  alias UM.Web.Customers.{CreateForm, EditForm}
   require EEx
 
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
@@ -8,16 +8,23 @@ defmodule UM.Web.Customers do
   order_history_file = String.replace_suffix(__ENV__.file, ".ex", "/order_history.html.eex")
   EEx.function_from_file :def, :order_history_content, order_history_file, [:customer]
 
+  edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
+  EEx.function_from_file :def, :edit_page_content, edit_file, [:form, :errors, :success_path]
+
+  # TODO redirect if logged in
   def handle_request(request = %{method: :GET, path: ["new"]}, _) do
     Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
   end
 
-  def handle_request(%{path: [], method: post, body: %{"customer" => form}}, _env) do
+  # TODO redirect if logged in
+  def handle_request(request = %{path: [], method: :POST, body: %{"customer" => form}}, _env) do
+    session = UM.Web.Session.get(request)
     case CreateForm.validate(form) do
       {:error, {form, errors}} ->
         Raxx.Response.bad_request(new_page_content(form, errors, ""))
       {:ok, customer} ->
         customer = Map.drop(customer, [:password_confirmation, :terms_agreement])
+        customer = Map.merge(customer, %{currency_preference: UM.Web.Session.currency_preference(session)})
         case UM.Accounts.signup_customer(customer) do
           # test is email taken
           {:error, reason} ->
@@ -25,10 +32,13 @@ defmodule UM.Web.Customers do
             Raxx.Response.conflict(new_page_content(customer, %{email: "is already taken"}, ""))
           %{id: id} ->
             # TODO send an email
-            Raxx.Response.see_other("", [{"location", "/customers/#{id}"}])
+            success_message = "Welcome to Useful Music"
+            Raxx.Patch.redirect("/customers/#{id}", success: success_message)
         end
     end
   end
+
+  # function login(session, customer) -> updated session
 
   def handle_request(request = %{path: [id | rest]}, _) do
     session = UM.Web.Session.get(request)
@@ -37,12 +47,16 @@ defmodule UM.Web.Customers do
         customer = UM.Accounts.fetch_customer(id)
         customer_endpoint(%{request | path: rest}, customer)
       false ->
-        Raxx.Response.not_found("")
+        Raxx.Response.not_found("Don't look here")
     end
   end
 
-  def customer_endpoint(%{path: []}, customer) do
+  def customer_endpoint(%{path: [], method: :GET}, customer) do
     Raxx.Response.ok("order_history_content(customer)")
+  end
+
+  def customer_endpoint(%{path: ["edit"], method: :GET}, customer) do
+    Raxx.Response.ok(edit_page_content(customer, %EditForm{}, ""))
   end
 
   def csrf_tag do
@@ -50,5 +64,8 @@ defmodule UM.Web.Customers do
   end
   def render(_) do
     "TODO"
+  end
+  def all_countries do
+    [{"Great Britian", "GB"}]
   end
 end

@@ -8,10 +8,6 @@ class CustomersController < UsefulMusic::App
   # NOTE: need to create new string to assign in config dir
   render_defaults[:dir] += '/customers'
 
-  # Not necessary
-  def index
-    redirect '/admin/customers', 301
-  end
 
   def new
     @form = Customer::Create::Form.new
