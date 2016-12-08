@@ -11,6 +11,9 @@ defmodule UM.Web.Customers do
   edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
   EEx.function_from_file :def, :edit_page_content, edit_file, [:form, :errors, :success_path]
 
+  change_password_file = String.replace_suffix(__ENV__.file, ".ex", "/change_password.html.eex")
+  EEx.function_from_file :def, :change_password_page_content, change_password_file, [:customer]
+
   # TODO redirect if logged in
   def handle_request(%{method: :GET, path: ["new"]}, _) do
     Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
@@ -71,6 +74,9 @@ defmodule UM.Web.Customers do
         customer = Map.merge(form, %{id: customer.id})
         Raxx.Response.bad_request(edit_page_content(customer, errors, ""))
     end
+  end
+  def customer_endpoint(%{path: ["change_password"], method: :GET}, customer) do
+    Raxx.Response.ok(change_password_page_content(customer))
   end
 
   def csrf_tag do

@@ -136,5 +136,11 @@ defmodule UM.Web.CustomersTest do
     assert String.contains?(response.body, "required")
   end
 
+  test "can visit a customers change password page", %{customer: customer} do
+    request = get("/#{customer.id}/change_password", UM.Web.Session.customer_session(customer))
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 200
+  end
+
   # DEBT keep success path after login/signup
 end
