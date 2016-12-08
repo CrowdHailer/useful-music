@@ -3,11 +3,33 @@ defmodule UM.Web.HomeTest do
 
   import Raxx.Test
 
+  # This is a horrible duplication
+  @canonical_piece %{
+    id: 101,
+    title: "Canonical Piece",
+    sub_heading: "The very first piece",
+    description: "I uses this piece for testing all the flipping time",
+    level_overview: "not that easy",
+    notation_preview: %Raxx.Upload{
+      content: "My Upload document"
+    }}
+
+  setup do
+    Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
+    # |> IO.inspect
+    Moebius.Query.db(:items) |> Moebius.Query.delete |> Moebius.Db.run
+    # |> IO.inspect
+    Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
+    # |> IO.inspect
+    piece = @canonical_piece
+    {:ok, %{id: _id}} = UM.Catalogue.create_piece(piece)
+  end
+
   test "home page returns pieces" do
     request = get("/")
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 200
-    # TODO test page contents
+    assert String.contains?(response.body, "UD101")
   end
 
   test "redirects to the correct search for piano page" do

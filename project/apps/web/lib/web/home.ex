@@ -5,9 +5,8 @@ defmodule UM.Web.Home do
   EEx.function_from_file :def, :index_page_content, index_file, [:pieces]
 
   def handle_request(request = %{path: [], method: :GET}, _env) do
-    Raxx.Response.ok(index_page_content([
-      %{title: "hello", sub_heading: "sub heading", catalogue_number: "UD100", level_overview: "hello", notation_preview: %{url: "hi"}}
-      ]))
+    {:ok, pieces} = UM.Catalogue.random_pieces(4)
+    Raxx.Response.ok(index_page_content(pieces))
   end
 
   for tag <- UM.Catalogue.tags do
@@ -48,5 +47,9 @@ defmodule UM.Web.Home do
     ])
     # {:ok, response} = Raxx.Patch.set_header(response, "set-cookie", set_cookie_string)
     response
+  end
+
+  defp url(_filename) do
+    "random" # TODO
   end
 end

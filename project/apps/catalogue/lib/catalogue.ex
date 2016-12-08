@@ -117,6 +117,10 @@ defmodule UM.Catalogue do
     {:ok, Moebius.Db.run(query)}
   end
 
+  def random_pieces(4) do
+    {:ok, Moebius.Db.run("SELECT * FROM pieces ORDER BY RANDOM() LIMIT 4")}
+  end
+
   def search_title(title) do
     query = db(:pieces)
     |> filter("title ILIKE $1", "%#{title}%")
