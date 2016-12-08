@@ -23,10 +23,13 @@ defmodule Raxx.Patch do
     {:ok, request}
   end
 
-  def redirect(url, flash \\ []) do
+  def redirect(url, flash) do
     flash = Poison.encode!(flash)
     query = URI.encode_query(%{flash: flash})
     Raxx.Response.found("", [{"location", url <> "?" <> query}])
+  end
+  def redirect(url) do
+    Raxx.Response.found("", [{"location", url}])
   end
 
   @doc """

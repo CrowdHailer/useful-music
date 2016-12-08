@@ -3,10 +3,12 @@
 - form validation on files
 - csrf middleware
 - html escape
+- add items to public piece show page test
 - all prices are in pence lookup money package
 - paginate in SQL query
 - Message for failed to delete item because of purchases
 - admin controller redirects to login page if needed
+- search results have page hardcoded, i.e. loose search on next page (already happens)
 
 
 - catalogue to destroy associated items when deleting piece

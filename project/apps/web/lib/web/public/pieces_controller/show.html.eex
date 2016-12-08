@@ -1,0 +1,134 @@
+<div class="hide-for-large-up">
+  <div class="row collapse">
+    <div class="mob-menu-wrap" onclick="document.getElementById('filter-display').style.display = 'block'">
+      <h3 style="float: left; color: white;">
+        Search Filter
+      </h3>
+      <i class="fa fa-reorder" style="float: left; margin-left: 0.5em; color: white; font-size: 2em;"></i>
+    </div>
+  </div>
+</div>
+
+<div class="row collapse white-section section-bottom-margin">
+    <!-- FILTER FORM LEFT -->
+    <div class="large-3 medium-12 columns">
+      <div id="filter-display" class="filter-wrap">
+        <div class="hide-for-large-up">
+          <button onclick="document.getElementById('filter-display').style.display = 'none'">Hide Filter</button>
+        </div>
+        <h1>Search Filter</h1>
+        <p>Refine your search by selecting and<br> combining categories:</p>
+        <div class="filter-form">
+          <form id="search-form" action="/pieces" method="get">
+            <div class="filter-head">
+              <h2>SELECT INSTRUMENT(s)</h2>
+            </div>
+            <div class="row collapse">
+              <%= for instrument <- instruments do %>
+              <label class="pure-checkbox">
+                <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= if search[instrument], do: "checked" %>>
+                <%= stringify_option(instrument) %>
+              </label>
+              <% end %>
+            </div>
+
+            <div class="filter-head">
+              <h2>SELECT LEVEL(s)</h2>
+            </div>
+            <div class="row collapse">
+              <%= for level <- levels do %>
+              <label class="pure-checkbox">
+                <input type="checkbox" name="catalogue_search[<%= level %>]" <%= if search[level], do: "checked" %>>
+                <%= stringify_option(level) %>
+              </label>
+              <% end %>
+            </div>
+            <div class="filter-head">
+              <h2>SELECT SCORE TYPE(s)</h2>
+            </div>
+            <%= for category <- categories do %>
+            <label class="pure-checkbox">
+              <input type="checkbox" name="catalogue_search[<%= category %>]" <%= if search[category], do: "checked" %>>
+              <%= stringify_option(category) %>
+            </label>
+            <% end %>
+            <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
+            <a class="clear-search-btn" href="/pieces" class="right">Clear Search</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- END OF FILTER FORM -->
+
+    <!-- SEARCH RESULTS RIGHT -->
+
+<div class="large-9 columns">
+        <div class="row collapse white-section section-bottom-margin">
+            <div class="large-6 medium-6 small-12 columns piece-title">
+                <h1><%= piece.title %></h1>
+            </div>
+            <div class="large-6 medium-6 small-12 columns piece-title">
+                <p>Catalogue Number: <%= UM.Catalogue.Piece.catalogue_number(piece) %></p>
+            </div>
+
+            <hr style="margin: 1.25rem 0 0.1875rem;">
+            <div class="row collapse">
+                <div class="large-12 columns instrument-note">
+                    <p><%= piece.sub_heading %></p>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="large-5 medium-5 small-12 columns">
+                    <img src="<%= url(piece.cover_image) %>" alt="Piece Cover image">
+                    <a href="<%= url(piece.notation_preview) %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
+                    <h6>LISTEN TO AUDIO PREVIEW</h6>
+                    <audio preload="auto" controls <%= if true, do: "autoplay" # TODO fetch from query %>>
+                        <source src="<%= url(piece.audio_preview) %>" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="large-7 medium-7 small-12 columns">
+                    <div class="description">
+                        <p><%= piece.description %></p>
+                    </div>
+
+                    <div class="purchase-options-wrap">
+                        <h2>Purchase Options</h2>
+                        <p>Please select how many <a href="/about/licencing_and_copyright">licences</a> you would like:</p>
+                        <hr>
+                        <form action="/purchases" method="post">
+                          <%= csrf_tag %>
+                            <div class="row collapse">
+                              <%= for item <- piece.items do %>
+                              <div class="large-6 medium-6 small-12 columns">
+                                <div class="licence-select">
+                                    <h6>
+                                      <%= item.name %>
+                                    </h6>
+                                    <input type="hidden" name="purchases[][shopping_basket]" value="<%= shopping_basket.id %>">
+                                    <input type="hidden" name="purchases[][item]" value="<%= item.id %>">
+                                    <input type="number" min="0" name="purchases[][quantity]" value="0">
+                                    <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
+                                    <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
+                                    <p><%= local_price(item.initial_price) %> first licence</p>
+                                    <p><%= local_price(item.subsequent_price) %> additional</p>
+                                </div>
+                              </div>
+                              <% end %>
+                            </div>
+                            <div class="total-box">
+                                <!-- <h4>TOTAL: £30.65</h4> -->
+                                <a href=""><button class="basket-btn">ADD TO BASKET</button></a>
+                            </div>
+                            <!-- <div class="currency-piece">
+                                <h6>SELECT CURRENCY</h6>
+                                <h6><a href="/">£ </a><a href="/">$ </a><a href="/">¥ </a><a href="/">€ </a></h6>
+                            </div> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END SEARCH RESULTS -->
+</div>

@@ -23,7 +23,8 @@ defmodule UM.Web.PiecesControllerTest do
     Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
     # |> IO.inspect
     piece = @canonical_piece
-    {:ok, %{id: _id}} = Catalogue.create_piece(piece)
+    {:ok, piece} = Catalogue.create_piece(piece)
+    {:ok, %{piece: piece}}
   end
 
   test "index page shows all pieces" do
@@ -32,5 +33,37 @@ defmodule UM.Web.PiecesControllerTest do
     assert 200 == status
     assert String.contains?(body, "UD101")
     assert String.contains?(body, "Canonical Piece")
+  end
+
+  test "searches on title" do
+    request = get({"/search", %{search: "Canonical"}})
+    response = Controller.handle_request(request, %{})
+    assert 200 == response.status
+    assert String.contains?(response.body, "UD101")
+    assert String.contains?(response.body, "Canonical Piece")
+  end
+
+  test "redirects to show page for catalogue number" do
+    request = get({"/search", %{search: "UD123"}})
+    response = Controller.handle_request(request, %{})
+    assert 302 == response.status
+    assert "/pieces/UD123" == Raxx.Patch.response_location(response)
+  end
+
+  test "show page is viewable", %{piece: piece} do
+    request = get("/UD#{piece.id}")
+    response = Controller.handle_request(request, %{})
+    assert 200 == response.status
+    assert String.contains?(response.body, "UD101")
+    assert String.contains?(response.body, "Canonical Piece")
+  end
+
+  test "redirects from missing piece page" do
+    request = get("/UD999")
+    response = Controller.handle_request(request, %{})
+    assert 302 == response.status
+    location = Raxx.Patch.response_location(response)
+    assert String.contains?(location, "/pieces")
+    assert String.contains?(location, "Piece+not+found")
   end
 end
