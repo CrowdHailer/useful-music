@@ -99,4 +99,20 @@ defmodule UM.Catalogue.Piece do
     :violin,
     :viola]
   end
+
+  def all_levels do
+    [:beginner,
+    :intermediate,
+    :advanced,
+    :professional]
+  end
+
+  def all_categories do
+    [:solo,
+    :solo_with_accompaniment,
+    :duet,
+    :trio,
+    :quartet,
+    :larger_ensembles]
+  end
 end

@@ -19,6 +19,12 @@ defmodule UM.Catalogue do
   # Also named Inventory
   import Moebius.Query
 
+  def tags do
+    UM.Catalogue.Piece.all_instruments ++
+    UM.Catalogue.Piece.all_levels ++
+    UM.Catalogue.Piece.all_categories
+  end
+
   def create_piece(piece = %{id: id}) do
     # DEBT insert requires a keyword list
     piece = case Map.pop(piece, :notation_preview) do

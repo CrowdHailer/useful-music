@@ -57,19 +57,11 @@ defmodule UM.Web.PiecesController do
   end
 
   defp levels do
-    [:beginner,
-    :intermediate,
-    :advanced,
-    :professional]
+    UM.Catalogue.Piece.all_levels
   end
 
   defp categories do
-    [:solo,
-    :solo_with_accompaniment,
-    :duet,
-    :trio,
-    :quartet,
-    :larger_ensembles]
+    UM.Catalogue.Piece.all_categories
   end
 
   defp csrf_tag do

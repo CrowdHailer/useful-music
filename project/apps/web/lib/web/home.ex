@@ -4,21 +4,31 @@ defmodule UM.Web.Home do
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, [:pieces]
 
-  def handle_request(request = %{path: []}, _env) do
+  def handle_request(request = %{path: [], method: :GET}, _env) do
     Raxx.Response.ok(index_page_content([
       %{title: "hello", sub_heading: "sub heading", catalogue_number: "UD100", level_overview: "hello", notation_preview: %{url: "hi"}}
       ]))
   end
 
-  instruments = [
-    "piano",
-    "recorder",
-    "flute"
-  ]
-  for instrument <- instruments do
-    def handle_request(_request = %{path: [unquote(instrument)]}, _env) do
-      Raxx.Response.found("", [{"location", "/pieces?catalogue_search[#{unquote(instrument)}]=on"}])
+  for tag <- UM.Catalogue.tags do
+    tag = "#{tag}"
+    def handle_request(_request = %{path: [unquote(tag)], method: :GET}, _env) do
+      Raxx.Patch.redirect("/pieces?catalogue_search[#{unquote(tag)}]=on")
     end
+  end
+
+  def handle_request(%{path: ["woodwind"], method: :GET}, _) do
+    Raxx.Patch.redirect({"/pieces", %{
+      catalogue_search: %{
+        recorder: "on",
+        flute: "on",
+        oboe: "on",
+        clarineo: "on",
+        clarinet: "on",
+        bassoon: "on",
+        saxophone: "on"
+      }
+    }})
   end
 
   def handle_request(%{path: ["currency"], method: :POST, body: form}, _env) do
@@ -38,11 +48,5 @@ defmodule UM.Web.Home do
     ])
     # {:ok, response} = Raxx.Patch.set_header(response, "set-cookie", set_cookie_string)
     response
-  end
-
-  def handle_request(_, _) do
-    Raxx.Response.not_found("HOME not found")
-    # TODO make this work
-    # UM.Web.not_found()
   end
 end

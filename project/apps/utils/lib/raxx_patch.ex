@@ -28,6 +28,10 @@ defmodule Raxx.Patch do
     query = URI.encode_query(%{flash: flash})
     Raxx.Response.found("", [{"location", url <> "?" <> query}])
   end
+  def redirect({url, query}) do
+    qs = Plug.Conn.Query.encode(query)
+    Raxx.Response.found("", [{"location", url <> "?" <> qs}])
+  end
   def redirect(url) do
     Raxx.Response.found("", [{"location", url}])
   end
