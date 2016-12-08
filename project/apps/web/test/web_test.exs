@@ -49,7 +49,7 @@ defmodule UM.WebTest do
   end
 
   test "login page redirects if already logged in", %{customer: customer} do
-    request = get("/sessions/new", external_session(%{customer: %{id: customer.id}}))
+    request = get("/sessions/new", UM.Web.Session.external_session(%{customer_id: customer.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert 303 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
@@ -72,19 +72,15 @@ defmodule UM.WebTest do
     request = post("/sessions", %{
       body: "_method=DELETE",
       headers: [{"content-type", "application/x-www-form-urlencoded"}]
-    }, external_session(%{customer: %{id: customer.id}}))
+    }, UM.Web.Session.external_session(%{customer_id: customer.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert 303 == response.status
     # TODO check cookies
   end
 
   test "can view the admin page", %{admin: admin} do
-    request = get("/admin/customers", external_session(%{customer: %{id: admin.id}}))
+    request = get("/admin/customers", UM.Web.Session.external_session(%{customer_id: admin.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert 200 == response.status
-  end
-
-  def external_session(data) do
-    [{"cookie", "raxx.session="<>(struct(Session, data) |> Poison.encode!)}]
   end
 end

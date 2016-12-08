@@ -9,7 +9,7 @@
 - Message for failed to delete item because of purchases
 - admin controller redirects to login page if needed
 - search results have page hardcoded, i.e. loose search on next page (already happens)
-
+- move all session helpers from the public router
 
 - catalogue to destroy associated items when deleting piece
 - solution to stringifying keys in admin/pieces_controller_test

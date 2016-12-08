@@ -61,8 +61,4 @@ defmodule UM.Web.HomeTest do
     assert "/" == Raxx.Patch.response_location(response)
     assert {"um-set-session", %{currency_preference: "USD"}} == List.keyfind(response.headers, "um-set-session", 0)
   end
-
-  def session(data) do
-    [{"um-session", struct(Session, data)}]
-  end
 end

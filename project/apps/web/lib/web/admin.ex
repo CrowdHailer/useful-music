@@ -7,23 +7,11 @@ defmodule UM.Web.Admin do
   EEx.function_from_file :def, :index_page_content, index_file, []
 
   def handle_request(request, env) do
-    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
+    session = UM.Web.Session.get(request)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{success: nil, error: nil}})
 
-    customer = case Map.get(session, :customer) do
-      %{id: id} ->
-        user =
-        case UM.Accounts.fetch_customer(id) do
-          nil ->
-            %{id: nil, admin: false}
-          user ->
-            user
-        end
-      nil ->
-        %{id: nil, admin: false}
-    end
-    case customer do
-      %{admin: true} ->
+    case UM.Web.Session.admin?(session) do
+      true ->
         case endpoint(request, env) do
           request = %{body: nil} ->
             request
@@ -33,7 +21,7 @@ defmodule UM.Web.Admin do
             %{request | body: layout_page(content, flash)}
             # TODO adjust content length?
         end
-      %{admin: false} ->
+      false ->
         Raxx.Response.forbidden("Forbidden")
     end
   end

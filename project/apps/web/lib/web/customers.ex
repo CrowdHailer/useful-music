@@ -31,8 +31,8 @@ defmodule UM.Web.Customers do
   end
 
   def handle_request(request = %{path: [id | rest]}, _) do
-    session = UM.Web.get_session(request)
-    case has_permission?(session, id) do
+    session = UM.Web.Session.get(request)
+    case UM.Web.Session.can_view_customer?(session, id) do
       true ->
         customer = UM.Accounts.fetch_customer(id)
         customer_endpoint(%{request | path: rest}, customer)
@@ -45,15 +45,6 @@ defmodule UM.Web.Customers do
     Raxx.Response.ok("order_history_content(customer)")
   end
 
-  def has_permission?(authority, id) do
-    case {authority, id} do
-      {%{customer: %{id: id}}, id} -> true
-      {%{customer: %{id: auth}}, id} ->
-        %{admin: admin} = UM.Accounts.fetch_customer(auth)
-        admin
-      _ -> false
-    end
-  end
   def csrf_tag do
 # TODO
   end

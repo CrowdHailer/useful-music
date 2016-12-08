@@ -70,14 +70,14 @@ defmodule UM.Web.CustomersTest do
       assert String.contains?(response.body, "too short")
   end
 
-  test "customer page shows orders", %{customer: %{id: id}} do
-    request = get("/#{id}", session(%{customer: %{id: id}}))
+  test "customer page shows orders", %{customer: customer} do
+    request = get("/#{customer.id}", UM.Web.Session.customer_session(customer))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "admin can view a customer page", %{admin: admin, customer: customer} do
-    request = get("/#{customer.id}", session(%{customer: %{id: admin.id}}))
+    request = get("/#{customer.id}", UM.Web.Session.customer_session(admin))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
@@ -85,13 +85,10 @@ defmodule UM.Web.CustomersTest do
   @tag :skip
   # Wait untill set up proper fixtures
   test "customer can not view anothers customer page", %{customer: %{id: id}} do
-    request = get("/#{id}", session(%{}))
+    request = get("/#{id}", UM.Web.Session.guest_session)
     response = Controller.handle_request(request, :no_state)
     assert response.status == 404
   end
 
-  def session(data) do
-    [{"um-session", struct(Session, data)}]
-  end
   # DEBT keep success path after login/signup
 end

@@ -1,8 +1,3 @@
-# TODO namespace
-defmodule Session do
-  defstruct [customer: nil]
-end
-
 defmodule UM.Web do
   use Application
 
@@ -27,15 +22,7 @@ defmodule UM.Web do
   end
 
   def handle_request(request, env) do
-    {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
-    session = case Poison.decode(session) do
-      {:ok, %{"customer" => %{"id" => id}}} ->
-        struct(Session, %{customer: %{id: id}})
-      {:error, :invalid} ->
-        %Session{}
-      _ ->
-        %Session{}
-    end
+    {session, request} = UM.Web.Session.from_request(request)
     {:ok, request} = Raxx.Patch.set_header(request, "um-session", session)
 
     {flash, request} = UM.Web.Flash.from_request(request)
@@ -97,14 +84,5 @@ defmodule UM.Web do
   end
   defp endpoint(request, env) do
     UM.Web.Public.handle_request(request, env)
-  end
-
-  def get_session(request) do
-    case List.keyfind(request.headers, "um-session", 0) do
-      {"um-session", session} ->
-        session
-      _ ->
-        %Session{}
-    end
   end
 end

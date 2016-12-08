@@ -10,22 +10,12 @@ defmodule UM.Web.Public do
   EEx.function_from_file :def, :header_partial, header_file, [:session]
 
   def handle_request(request, env) do
-    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
+    session = UM.Web.Session.get(request)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
 
-    customer = case Map.get(session, :customer) do
-      %{id: id} ->
-        case UM.Accounts.fetch_customer(id) do
-          nil ->
-            %{id: nil, currency_preference: "GBP", name: ""}
-          user ->
-            Map.merge(user, %{currency_preference: "GBP"})
-        end
-      nil ->
-        %{id: nil, currency_preference: "GBP", name: ""}
-    end
-    session = Map.merge(%{}, flash)
-    session = Map.merge(session, %{customer: customer, shopping_basket: %{id: "TODO"}})
+    session = UM.Web.Session.load_customer(session)
+    session = Map.merge(session, flash)
+    session = Map.merge(session, %{shopping_basket: %{id: "TODO"}})
     case public_endpoint(request, env) do
       request = %{body: nil} ->
         request
@@ -59,13 +49,8 @@ defmodule UM.Web.Public do
   ## HELPERS
 
   # FIXME Change to logged_in? / authenticated?
-  defp guest_session?(%{customer: %{id: id}}) do
-    case id do
-      nil ->
-        true
-      id when is_binary(id) ->
-        false
-    end
+  defp guest_session?(session) do
+    UM.Web.Session.guest_session?(session)
   end
 
   defp customer_account_url(%{customer: %{id: id}}) do
@@ -81,8 +66,8 @@ defmodule UM.Web.Public do
     "#{f} #{l}"
   end
 
-  defp preferred_currency(%{customer: %{currency_preference: preference}}) do
-    preference || "GBP"
+  defp preferred_currency(session) do
+    UM.Web.Session.preferred_currency(session)
   end
 
   # DEBT will be order in the future

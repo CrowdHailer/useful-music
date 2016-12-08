@@ -18,14 +18,14 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "login page (/sessions/new) maintains the users target" do
-    request = get({"/new", %{"target" => "/admin"}}, session(%{}))
+    request = get({"/new", %{"target" => "/admin"}}, UM.Web.Session.guest_session)
     response = SessionsController.handle_request(request, :nostate)
     assert 200 == response.status
     assert String.contains?(response.body, "name=\"requested_path\" value=\"/admin\"")
   end
 
   test "redirects to account page if already logged it", %{customer: customer} do
-    request = get("/new", session(%{customer: %{id: customer.id}}))
+    request = get("/new", UM.Web.Session.customer_session(customer))
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
@@ -61,7 +61,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "log out will destroy session", %{customer: customer} do
-    request = delete("/", session(%{customer: %{id: customer.id}}))
+    request = delete("/", UM.Web.Session.customer_session(customer))
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
     assert "/" = Raxx.Patch.response_location(response)
@@ -72,9 +72,5 @@ defmodule UM.Web.SessionsControllerTest do
   def set_cookies(_response = %{headers: headers}) do
     headers
     # DEBT expire cookies
-  end
-
-  def session(data) do
-    [{"um-session", struct(Session, data)}]
   end
 end

@@ -27,32 +27,28 @@ defmodule UM.Web.AdminTest do
   # This would be the header field but after the gateway we are not sending cookies
   # headers: [{"cookie", "raxx.session=admin"}]}
   test "index page is available to admin", %{admin: admin} do
-    request = get("/", session(%{customer: %{id: admin.id}}))
+    request = get("/", UM.Web.Session.customer_session(admin))
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 200
   end
 
   test "index page is forbidden to customer", %{customer: customer} do
-    request = get("/", session(%{customer: %{id: customer.id}}))
+    request = get("/", UM.Web.Session.customer_session(customer))
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 403
   end
 
   test "pieces page is available to admin", %{admin: admin} do
-    request = get("/pieces", session(%{customer: %{id: admin.id}}))
+    request = get("/pieces", UM.Web.Session.customer_session(admin))
     response = UM.Web.Admin.handle_request(request, %{})
     # Check that the correct page is served
     assert response.status == 200
   end
 
   test "customers page is available to admin", %{admin: admin} do
-    request = get("/customers", session(%{customer: %{id: admin.id}}))
+    request = get("/customers", UM.Web.Session.customer_session(admin))
     response = UM.Web.Admin.handle_request(request, %{})
     # Check that the correct page is served
     assert response.status == 200
-  end
-
-  def session(data) do
-    [{"um-session", struct(Session, data)}]
   end
 end
