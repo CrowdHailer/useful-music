@@ -142,5 +142,21 @@ defmodule UM.Web.CustomersTest do
     assert response.status == 200
   end
 
+  test "can update password", %{customer: customer} do
+    request = put("/#{customer.id}/change_password", form_data(%{
+      "customer" => %{
+        "current_password" => "password",
+        "password" => "updatedSecret",
+        "password_confirmation" => "updatedSecret"
+      }}), UM.Web.Session.customer_session(customer))
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 302
+    redirection = get(Raxx.Patch.response_location(response))
+    assert ["customers", id] = redirection.path
+    assert id == customer.id
+    customer = UM.Accounts.fetch_customer(id)
+    assert "updatedSecret" == customer.password
+  end
+
   # DEBT keep success path after login/signup
 end

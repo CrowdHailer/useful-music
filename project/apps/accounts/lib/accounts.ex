@@ -43,8 +43,8 @@ defmodule UM.Accounts do
     case Moebius.Db.run(action) do
       record = %{id: ^id} ->
         {:ok, record}
-      {:error, _reason} ->
-        {:error, :invalid_customer}
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 

@@ -1,5 +1,5 @@
 defmodule UM.Web.Customers do
-  alias UM.Web.Customers.{CreateForm, EditForm}
+  alias UM.Web.Customers.{CreateForm, EditForm, ChangePasswordForm}
   require EEx
 
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
@@ -75,8 +75,27 @@ defmodule UM.Web.Customers do
         Raxx.Response.bad_request(edit_page_content(customer, errors, ""))
     end
   end
+
   def customer_endpoint(%{path: ["change_password"], method: :GET}, customer) do
     Raxx.Response.ok(change_password_page_content(customer))
+  end
+
+  def customer_endpoint(%{path: ["change_password"], method: :PUT, body: %{"customer" => form}}, customer) do
+    case ChangePasswordForm.validate(form) do
+      {:ok, data} ->
+        # Could merge with whole customer
+        case data.current_password == customer.password do
+          true ->
+            update = %{password: data.password}
+            case UM.Accounts.update_customer(Map.merge(update, %{id: customer.id})) do
+              {:ok, customer} ->
+                Raxx.Patch.redirect("/customers/#{customer.id}", success: "Password changed")
+            end
+        end
+      {:error, {form, errors}} ->
+        customer = Map.merge(form, %{id: customer.id})
+        Raxx.Response.bad_request(edit_page_content(customer, errors, ""))
+    end
   end
 
   def csrf_tag do

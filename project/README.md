@@ -11,6 +11,7 @@
 - search results have page hardcoded, i.e. loose search on next page (already happens)
 - move all session helpers from the public router
 
+- check the format of user names
 - catalogue to destroy associated items when deleting piece
 - solution to stringifying keys in admin/pieces_controller_test
   `piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}``
@@ -18,6 +19,14 @@
   OR Add field errors from the form.
 - random pieces are hardcoded to 4
 
+
+```elixir
+Try.for do
+  form <- Map.fetch(body, "customer")
+  data <- ChangePasswordForm.validate
+  %{id: id} <- Accounts.change_password(customer, data)
+end
+```
 # Gateway
 maybe best to rename web to gateway but probably not gateway will be for API endpoint and www for web backend for front end
 
