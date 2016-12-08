@@ -87,8 +87,6 @@ defmodule UM.Web.CustomersTest do
     assert response.status == 200
   end
 
-  @tag :skip
-  # Wait untill set up proper fixtures
   test "customer can not view anothers customer page", %{customer: %{id: id}} do
     request = get("/#{id}", UM.Web.Session.guest_session)
     response = Controller.handle_request(request, :no_state)
@@ -99,6 +97,43 @@ defmodule UM.Web.CustomersTest do
     request = get("/#{customer.id}/edit", UM.Web.Session.customer_session(customer))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
+  end
+
+  test "can update a customers details", %{customer: customer} do
+    request = put("/#{customer.id}", form_data(%{
+      "customer" => %{
+        "first_name" => "Enrique",
+        "last_name" => "Kennedy",
+        "email" => "bill@usa.com",
+        "country" => "TODO",
+        "question_1" => "I play bongos",
+        "question_2" => "",
+        "question_3" => ""
+      }}), UM.Web.Session.customer_session(customer))
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 302
+    redirection = get(Raxx.Patch.response_location(response))
+    assert ["customers", id] = redirection.path
+    assert id == customer.id
+    customer = UM.Accounts.fetch_customer(id)
+    assert "I play bongos" == customer.question_1
+    assert "Enrique" == customer.first_name
+  end
+
+  test "cant update a customers details with invalid name", %{customer: customer} do
+    request = put("/#{customer.id}", form_data(%{
+      "customer" => %{
+        "first_name" => "",
+        "last_name" => "Kennedy",
+        "email" => "bill@usa.com",
+        "country" => "TODO",
+        "question_1" => "I play bongos",
+        "question_2" => "",
+        "question_3" => "",
+      }}), UM.Web.Session.customer_session(customer))
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 400
+    assert String.contains?(response.body, "required")
   end
 
   # DEBT keep success path after login/signup

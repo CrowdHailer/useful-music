@@ -43,6 +43,8 @@ defmodule UM.Web do
     request = case request.body do
       %{"_method" => "DELETE"} ->
         %{request | method: :DELETE}
+      %{"_method" => "PUT"} ->
+        %{request | method: :PUT}
       _ ->
         request
     end

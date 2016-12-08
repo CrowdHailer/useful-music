@@ -8,18 +8,6 @@ class CustomersControllerTest < MyRecordTest
     CustomersController
   end
 
-  def test_edit_page_is_available_to_that_customer
-    assert_ok get "/#{customer.id}/edit", {}, {'rack.session' => {:user_id => customer.id}}
-    assert_includes last_response.body, customer.email
-
-  def test_update_is_available_to_that_customer
-    put "/#{customer.id}",
-      {:customer => customer.record.values.merge(:first_name => 'Enrique')},
-      {'rack.session' => {:user_id => customer.id}}
-    assert_match(/#{customer.id}/, last_response.location)
-    assert_equal 'Enrique', Customers.last.first_name
-  end
-
   def test_destroy_is_available_to_that_customer
     delete "/#{customer.id}", {}, {'rack.session' => {:user_id => customer.id}}
     assert_nil Customers[customer.id]

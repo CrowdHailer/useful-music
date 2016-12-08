@@ -12,7 +12,7 @@ defmodule UM.Web.Customers do
   EEx.function_from_file :def, :edit_page_content, edit_file, [:form, :errors, :success_path]
 
   # TODO redirect if logged in
-  def handle_request(request = %{method: :GET, path: ["new"]}, _) do
+  def handle_request(%{method: :GET, path: ["new"]}, _) do
     Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
   end
 
@@ -51,12 +51,26 @@ defmodule UM.Web.Customers do
     end
   end
 
-  def customer_endpoint(%{path: [], method: :GET}, customer) do
+  def customer_endpoint(%{path: [], method: :GET}, _customer) do
     Raxx.Response.ok("order_history_content(customer)")
   end
 
   def customer_endpoint(%{path: ["edit"], method: :GET}, customer) do
     Raxx.Response.ok(edit_page_content(customer, %EditForm{}, ""))
+  end
+
+  def customer_endpoint(%{path: [], method: :PUT, body: %{"customer" => form}}, customer) do
+    case EditForm.validate(form) do
+      {:ok, update} ->
+        # Could merge with whole customer
+        case UM.Accounts.update_customer(Map.merge(update, %{id: customer.id})) do
+          {:ok, customer} ->
+            Raxx.Patch.redirect("/customers/#{customer.id}", success: "Update successful")
+        end
+      {:error, {form, errors}} ->
+        customer = Map.merge(form, %{id: customer.id})
+        Raxx.Response.bad_request(edit_page_content(customer, errors, ""))
+    end
   end
 
   def csrf_tag do

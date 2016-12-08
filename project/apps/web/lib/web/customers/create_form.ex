@@ -54,7 +54,7 @@ defmodule UM.Web.Customers.CreateForm do
     end
   end
 
-  defp validate_email(raw) do
+  def validate_email(raw) do
     case String.split(raw, "@") do
       [_, _] ->
         {:ok, raw |> String.strip |> String.downcase}

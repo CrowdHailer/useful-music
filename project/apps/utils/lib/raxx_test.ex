@@ -8,6 +8,10 @@ defmodule Raxx.Test do
     build(:POST, url, body, headers)
   end
 
+  def put(url, body \\ "", headers \\ []) do
+    build(:PUT, url, body, headers)
+  end
+
   def delete(url, body \\ "", headers \\ []) do
     build(:DELETE, url, body, headers)
   end
