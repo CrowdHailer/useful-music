@@ -51,7 +51,7 @@ defmodule UM.WebTest do
   test "login page redirects if already logged in", %{customer: customer} do
     request = get("/sessions/new", UM.Web.Session.external_session(%{customer_id: customer.id}))
     response = UM.Web.handle_request(request, :no_state)
-    assert 303 == response.status
+    assert 302 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
   end
 

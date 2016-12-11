@@ -13,8 +13,7 @@ defmodule UM.Web.SessionsController do
         target = Map.get(query, "target", "")
         Raxx.Response.ok(new_page_content(target))
       %{id: id} ->
-        # trusted environment assume real id
-        Raxx.Response.see_other("", [{"location", "/customers/#{id}"}])
+        Raxx.Patch.redirect("/customers/#{id}")
     end
   end
 

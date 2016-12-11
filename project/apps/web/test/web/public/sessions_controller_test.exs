@@ -27,7 +27,7 @@ defmodule UM.Web.SessionsControllerTest do
   test "redirects to account page if already logged it", %{customer: customer} do
     request = get("/new", UM.Web.Session.customer_session(customer))
     response = SessionsController.handle_request(request, :nostate)
-    assert 303 == response.status
+    assert 302 == response.status
     assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
   end
 
