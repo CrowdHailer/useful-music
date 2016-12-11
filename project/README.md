@@ -1,6 +1,7 @@
 # TODO
 
 - form validation on files
+- encrypt password in db
 - csrf middleware
 - html escape
 - add items to public piece show page test
