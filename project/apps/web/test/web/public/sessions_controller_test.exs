@@ -5,16 +5,7 @@ defmodule UM.Web.SessionsControllerTest do
   alias UM.Web.SessionsController
 
   setup do
-    Moebius.Query.db(:customers) |> Moebius.Query.delete |> UM.Accounts.Db.run
-    assert [] == UM.Accounts.all_customers
-    customer = %{id: _id} = UM.Accounts.signup_customer(%{
-      first_name: "Dan",
-      last_name: "Dare",
-      email: "dan@example.com",
-      password: "password",
-      country: "GB"
-    })
-    {:ok, %{customer: customer}}
+    :ok = UM.Web.Fixtures.clear_db
   end
 
   test "login page (/sessions/new) maintains the users target" do
@@ -24,26 +15,29 @@ defmodule UM.Web.SessionsControllerTest do
     assert String.contains?(response.body, "name=\"requested_path\" value=\"/admin\"")
   end
 
-  test "redirects to account page if already logged it", %{customer: customer} do
-    request = get("/new", UM.Web.Session.customer_session(customer))
+  test "redirects to account page if already logged it" do
+    jo = UM.Web.Fixtures.jo_brand
+    request = get("/new", UM.Web.Session.customer_session(jo))
     response = SessionsController.handle_request(request, :nostate)
     assert 302 == response.status
-    assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
+    assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
   end
 
-  test "logging in sends user to their orders page", %{customer: customer} do
+  test "logging in sends user to their orders page" do
+    jo = UM.Web.Fixtures.jo_brand
     request = post("/", %{
-      "session" => %{"email" => customer.email, "password" => customer.password}
+      "session" => %{"email" => jo.email, "password" => jo.password}
     })
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
-    assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
+    assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
     # DEBT test encoded session.
   end
 
-  test "loggin in will redirect to the target if given", %{customer: customer} do
+  test "loggin in will redirect to the target if given" do
+    jo = UM.Web.Fixtures.jo_brand
     request = post("/", %{
-      "session" => %{"email" => customer.email, "password" => customer.password},
+      "session" => %{"email" => jo.email, "password" => jo.password},
       "target" => "/admin"
     })
     response = SessionsController.handle_request(request, :nostate)
@@ -60,8 +54,9 @@ defmodule UM.Web.SessionsControllerTest do
     assert "/sessions/new" <> _ = Raxx.Patch.response_location(response)
   end
 
-  test "log out will destroy session", %{customer: customer} do
-    request = delete("/", UM.Web.Session.customer_session(customer))
+  test "log out will destroy session" do
+    jo = UM.Web.Fixtures.jo_brand
+    request = delete("/", UM.Web.Session.customer_session(jo))
     response = SessionsController.handle_request(request, :nostate)
     assert 303 == response.status
     assert "/" = Raxx.Patch.response_location(response)

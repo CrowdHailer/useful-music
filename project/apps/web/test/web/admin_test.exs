@@ -4,51 +4,34 @@ defmodule UM.Web.AdminTest do
   import Raxx.Test
 
   setup do
-    Moebius.Query.db(:customers) |> Moebius.Query.delete |> UM.Accounts.Db.run
-    assert [] == UM.Accounts.all_customers
-    customer = %{id: _id} = UM.Accounts.signup_customer(%{
-      first_name: "Dan",
-      last_name: "Dare",
-      email: "dan@example.com",
-      password: "password",
-      country: "GB"
-    })
-    admin = %{id: _id} = UM.Accounts.signup_customer(%{
-      first_name: "Bugs",
-      last_name: "Bunny",
-      email: "bugs@hotmail.com",
-      password: "password",
-      country: "GB",
-      admin: true
-    })
-    {:ok, %{customer: customer, admin: admin}}
+    :ok = UM.Web.Fixtures.clear_db
   end
 
-  # This would be the header field but after the gateway we are not sending cookies
-  # headers: [{"cookie", "raxx.session=admin"}]}
-  test "index page is available to admin", %{admin: admin} do
-    request = get("/", UM.Web.Session.customer_session(admin))
+  test "index page is available to admin" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    request = get("/", UM.Web.Session.customer_session(bugs))
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 200
   end
 
-  test "index page is forbidden to customer", %{customer: customer} do
-    request = get("/", UM.Web.Session.customer_session(customer))
+  test "index page is forbidden to customer" do
+    jo = UM.Web.Fixtures.jo_brand
+    request = get("/", UM.Web.Session.customer_session(jo))
     response = UM.Web.Admin.handle_request(request, %{})
     assert response.status == 403
   end
 
-  test "pieces page is available to admin", %{admin: admin} do
-    request = get("/pieces", UM.Web.Session.customer_session(admin))
+  test "pieces page is available to admin" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    request = get("/pieces", UM.Web.Session.customer_session(bugs))
     response = UM.Web.Admin.handle_request(request, %{})
-    # Check that the correct page is served
     assert response.status == 200
   end
 
-  test "customers page is available to admin", %{admin: admin} do
-    request = get("/customers", UM.Web.Session.customer_session(admin))
+  test "customers page is available to admin" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    request = get("/customers", UM.Web.Session.customer_session(bugs))
     response = UM.Web.Admin.handle_request(request, %{})
-    # Check that the correct page is served
     assert response.status == 200
   end
 end
