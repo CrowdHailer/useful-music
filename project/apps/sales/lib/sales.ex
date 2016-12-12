@@ -26,6 +26,41 @@ defmodule UM.Sales do
     end
   end
 
+  def add_item(basket_id, item_id, opts \\ []) do
+    opts = Enum.into(opts, %{})
+    quantity = Map.get(opts, :quantity, 1)
+    query = db(:purchases)
+    |> filter(shopping_basket_id: basket_id, item_id: item_id)
+    update = case Moebius.Db.run(query) do
+      [] ->
+        db(:purchases)
+        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
+    end
+    Moebius.Db.run(update)
+  end
+
+  def set_item(basket_id, item_id, opts \\ []) do
+    opts = Enum.into(opts, %{})
+    quantity = Map.get(opts, :quantity, 1)
+    query = db(:purchases)
+    |> filter(shopping_basket_id: basket_id, item_id: item_id)
+    update = case Moebius.Db.run(query) do
+      [] ->
+        db(:purchases)
+        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
+    end
+    Moebius.Db.run(update)
+  end
+
+  def fetch_shopping_basket(basket_id) do
+    basket_query = db(:shopping_baskets) |> filter(id: basket_id)
+    basket = Moebius.Db.first(basket_query)
+    purchases_query = db(:purchases)
+    |> filter(shopping_basket_id: basket_id)
+    purchases = Moebius.Db.run(purchases_query)
+    {:ok, Map.merge(basket, %{purchases: purchases})}
+  end
+
   def add_purchase(%{id: basket_id}, %{quantity: quantity, item_id: item_id}) do
     query = db(:purchases)
     |> filter(shopping_basket_id: basket_id, item_id: item_id)

@@ -37,6 +37,11 @@ defmodule Raxx.Patch do
     Raxx.Response.found("", [{"location", url}])
   end
 
+  def follow(response) do
+    location = Raxx.Patch.response_location(response)
+    Raxx.Test.get(location)
+  end
+
   @doc """
   get content, having parsed content type
 
