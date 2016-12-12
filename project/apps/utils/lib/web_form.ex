@@ -1,3 +1,32 @@
+# Object and patching forms
+# Action forms
+# Does the domain action have enough reach to specify form fields in the browser?
+# how to handle errors that are not available to the form.
+#   such as when a uniqueness constraint has failed.
+# How to handle rich fields
+# Such as a when a date is specified as day, month and year
+# Differences between empty and nil.
+# String field to set value to empty and string field missing
+#   "" -> delete this value
+#   "" -> leave this value unchanged
+#   If a form is an edit page then "" means delete this value
+#   optional string min length 3 -> "" or "123"
+#   required string min length 3 ->
+# perhaps make the assumption that form objects map to pages so assume all fields present
+# If it's optional it has to have a default value, default of nil means optional
+
+# import Heimdall.Fields
+# id: integer(min: 100, max: 999, default: nil)
+# id: string(pattern: ~r/a*/, default: "") this field will overwrite fields if the form is missing it
+# id: string(pattern: ~r/a*/, default: nil) this field should not?
+# id: file(default: nil)
+# first_name: field(validate: &UM.Name.validate/1)
+# first_name: field(validate: &UM.Name.validate/1, pass_blank: true)
+# first_name: field(validate: &Heimdall.Fields.Number.validate(&1, min: 0, max: 100))
+# first_name: field(validate: &Heimdall.Fields.Checkbox.validate(&1, false: "off", true: "on"))
+# Raxx.Upload.EmptyFile
+# first_name: NameField
+
 defmodule WebForm do
   def validate(validator, form) do
     validated = Enum.map(validator, fn
