@@ -5,24 +5,7 @@ defmodule UM.WebTest do
   import Raxx.Test
 
   setup do
-    Moebius.Query.db(:customers) |> Moebius.Query.delete |> UM.Accounts.Db.run
-    assert [] == UM.Accounts.all_customers
-    customer = UM.Accounts.signup_customer(%{
-      first_name: "Dan",
-      last_name: "Dare",
-      email: "dan@example.com",
-      password: "password",
-      country: "GB"
-    })
-    admin = %{id: _id} = UM.Accounts.signup_customer(%{
-      first_name: "Bugs",
-      last_name: "Bunny",
-      email: "bugs@hotmail.com",
-      password: "password",
-      country: "GB",
-      admin: true
-    })
-    {:ok, %{customer: customer, admin: admin}}
+    :ok = UM.Web.Fixtures.clear_db
   end
 
   test "The sites stylesheets are served" do
@@ -38,9 +21,10 @@ defmodule UM.WebTest do
   end
 
   test "login will add user id to session" do
+    bugs = UM.Web.Fixtures.bugs_bunny
     request = post("/sessions", %{
       headers: [{"content-type", "application/x-www-form-urlencoded"}],
-      body: "session[email]=dan@example.com&session[password]=password"
+      body: "session[email]=#{bugs.email}&session[password]=#{bugs.password}"
     })
     response = UM.Web.handle_request(request, :no_state)
     assert delivered_cookies = :proplists.get_value("set-cookie", response.headers)
@@ -48,11 +32,12 @@ defmodule UM.WebTest do
     # TODO assert correct session contents
   end
 
-  test "login page redirects if already logged in", %{customer: customer} do
-    request = get("/sessions/new", UM.Web.Session.external_session(%{customer_id: customer.id}))
+  test "login page redirects if already logged in" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    request = get("/sessions/new", UM.Web.Session.external_session(%{customer_id: bugs.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert 302 == response.status
-    assert "/customers/#{customer.id}" == Raxx.Patch.response_location(response)
+    assert "/customers/#{bugs.id}" == Raxx.Patch.response_location(response)
   end
 
   test "login with invalid credentials shows flash" do
@@ -68,18 +53,20 @@ defmodule UM.WebTest do
     assert String.contains?(response.body, "Invalid login details")
   end
 
-  test "logout will delete session", %{customer: customer} do
+  test "logout will delete session" do
+    bugs = UM.Web.Fixtures.bugs_bunny
     request = post("/sessions", %{
       body: "_method=DELETE",
       headers: [{"content-type", "application/x-www-form-urlencoded"}]
-    }, UM.Web.Session.external_session(%{customer_id: customer.id}))
+    }, UM.Web.Session.external_session(%{customer_id: bugs.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert 303 == response.status
     # TODO check cookies
   end
 
-  test "can view the admin page", %{admin: admin} do
-    request = get("/admin/customers", UM.Web.Session.external_session(%{customer_id: admin.id}))
+  test "can view the admin page" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    request = get("/admin/customers", UM.Web.Session.external_session(%{customer_id: bugs.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert 200 == response.status
   end
