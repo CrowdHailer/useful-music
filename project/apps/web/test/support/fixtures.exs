@@ -42,4 +42,20 @@ defmodule UM.Web.Fixtures do
     )
     |> Moebius.Db.run
   end
+
+  # Like joe blogs
+  # Big spender
+  def jo_brand do
+    db(:customers)
+    |> insert(
+      id: "jo-brand-customer",
+      first_name: "Jo",
+      last_name: "Brand",
+      email: "jo@hotmail.com",
+      password: "password",
+      country: "GB",
+      admin: false
+    )
+    |> Moebius.Db.run
+  end
 end
