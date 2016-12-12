@@ -12,6 +12,7 @@
 - search results have page hardcoded, i.e. loose search on next page (already happens)
 - move all session helpers from the public router
 
+- adding no items to basket is silly (currently the case)
 - check the format of user names
 - catalogue to destroy associated items when deleting piece
 - solution to stringifying keys in admin/pieces_controller_test
