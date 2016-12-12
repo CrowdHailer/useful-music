@@ -1,9 +1,11 @@
 defmodule UM.Web.Customers.ChangePasswordForm do
+  import UM.Web.FormFields
+
   def validate(form) do
     validator = %{
-      current_password: {:required, &UM.Web.Customers.CreateForm.validate_password/1},
-      password: {:required, &UM.Web.Customers.CreateForm.validate_password/1},
-      password_confirmation: {:confirmation, "password"},
+      current_password: password(required: true),
+      password: password(required: true),
+      password_confirmation: password_confirmation,
     }
     WebForm.validate(validator, form)
   end

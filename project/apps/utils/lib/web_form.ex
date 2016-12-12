@@ -28,8 +28,38 @@
 # first_name: NameField
 
 defmodule WebForm do
+  defmodule Field do
+    defstruct [:validator, :blank]
+  end
+
+  def field(validator, options \\ %{}) do
+    options = Enum.into(options, %{})
+    options = case Map.get(options, :required) do
+      true ->
+        %{blank: {:error, :required}}
+    end
+    {:ok, blank_action} = Map.fetch(options, :blank)
+    %Field{validator: validator, blank: blank_action}
+  end
+
   def validate(validator, form) do
     validated = Enum.map(validator, fn
+      {key, %Field{validator: validator, blank: blank}} ->
+        case blank do
+          {:error, reason} ->
+            case Map.get(form, "#{key}", "") do
+              # Fix to all blank strings
+              "" ->
+                {key, {:error, reason, ""}}
+              value ->
+                case validator.(value) do
+                  {:ok, validated} ->
+                    {key, {:ok, validated}}
+                  {:error, reason} ->
+                    {key, {:error, reason, value}}
+                end
+            end
+        end
       {key, {:required, fun}} ->
         case Map.get(form, "#{key}", "") do
           "" ->
