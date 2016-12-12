@@ -5,10 +5,28 @@ defmodule Raxx.Patch do
     value
   end
 
+  def referrer(%{headers: headers}) do
+    case List.keyfind(headers, "referer", 0) do
+      {"referer", referrer} ->
+        referrer
+      _ ->
+      nil
+    end
+  end
+
   def response_location(%{headers: headers}) do
     case List.keyfind(headers, "location", 0) do
       {"location", location} ->
         location
+      _ ->
+        nil
+    end
+  end
+
+  def response_session(%{headers: headers}) do
+    case List.keyfind(headers, "um-set-session", 0) do
+      {"um-set-session", session} ->
+        session
       _ ->
         nil
     end

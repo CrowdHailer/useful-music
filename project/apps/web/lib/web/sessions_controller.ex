@@ -27,7 +27,7 @@ defmodule UM.Web.SessionsController do
             # Also use the login function from the sessions module
             response = Raxx.Response.see_other("", [
               {"location", target || "/customers/#{customer.id}"},
-              {"um-set-session", %{customer_id: customer.id}},
+              {"um-set-session", %UM.Web.Session{customer_id: customer.id, currency_preference: customer.currency_preference}},
               {"um-flash", %{success: "Welcome back #{customer.first_name} #{customer.last_name}"}}
             ])
           {:error, :invalid_credentials} ->

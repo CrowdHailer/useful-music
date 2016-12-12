@@ -53,6 +53,10 @@ defmodule UM.Web do
 
     headers = case List.keytake(headers, "um-set-session", 0) do
       {{"um-set-session", session}, headers} ->
+        session = %{
+          customer_id: session.customer_id,
+          currency_preference: session.currency_preference
+        }
         headers ++ [{"set-cookie", Raxx.Cookie.new("raxx.session", Poison.encode!(session))
         |> Raxx.Cookie.set_cookie_string}]
       nil ->

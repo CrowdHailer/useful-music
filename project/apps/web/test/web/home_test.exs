@@ -15,13 +15,9 @@ defmodule UM.Web.HomeTest do
     }}
 
   setup do
-    Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:items) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
+    :ok = UM.Web.Fixtures.clear_db
     piece = @canonical_piece
+
     {:ok, %{id: _id}} = UM.Catalogue.create_piece(piece)
   end
 
@@ -53,12 +49,30 @@ defmodule UM.Web.HomeTest do
     assert "/pieces?" <> _query = Raxx.Patch.response_location(response)
   end
 
-  # FIXME check guest vs logged in
-  test "sets currency preference" do
-    request = post("/currency", form_data(%{"preference" => "USD"}), [{"um-user-id", "dummy-guest-id"}])
+  test "sets currency preference for a customer" do
+    jo = UM.Web.Fixtures.jo_brand
+    request = post("/currency", form_data(%{"preference" => "USD"}), UM.Web.Session.customer_session(jo))
+    response = UM.Web.Home.handle_request(request, %{})
+    assert "USD" == UM.Accounts.fetch_customer(jo.id).currency_preference
+    assert response.status == 302
+    assert "/" == Raxx.Patch.response_location(response)
+    assert %{currency_preference: "USD", customer_id: id} = Raxx.Patch.response_session(response)
+    assert jo.id == id
+  end
+
+  test "sets currency preference for a guest" do
+    request = post("/currency", form_data(%{"preference" => "USD"}), UM.Web.Session.guest_session)
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)
-    assert {"um-set-session", %{currency_preference: "USD"}} == List.keyfind(response.headers, "um-set-session", 0)
+    assert %{currency_preference: "USD", customer_id: nil} = Raxx.Patch.response_session(response)
+  end
+
+  test "redirects to referrer" do
+    request = post("/currency", form_data(%{"preference" => "USD"}), UM.Web.Session.guest_session ++ [{"referer", "/pieces"}])
+    response = UM.Web.Home.handle_request(request, %{})
+    assert response.status == 302
+    assert "/pieces" == Raxx.Patch.response_location(response)
+    assert %{currency_preference: "USD", customer_id: nil} = Raxx.Patch.response_session(response)
   end
 end

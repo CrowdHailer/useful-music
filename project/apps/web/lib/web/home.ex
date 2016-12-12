@@ -30,7 +30,7 @@ defmodule UM.Web.Home do
     }})
   end
 
-  def handle_request(%{path: ["currency"], method: :POST, body: form}, _env) do
+  def handle_request(request = %{path: ["currency"], method: :POST, body: form}, _env) do
     currency = Map.get(form, "preference")
     currency = case currency do
       "USD" -> "USD"
@@ -39,13 +39,17 @@ defmodule UM.Web.Home do
       _ -> "GBP"
     end
     # TODO send to referer
-    # set_cookie_string = Raxx.Cookie.new("um.currency_preference", currency)
-    # |> Raxx.Cookie.set_cookie_string
-    response = Raxx.Response.found("", [
-      {"location", "/"},
-      {"um-set-session", %{currency_preference: currency}}
-    ])
-    # {:ok, response} = Raxx.Patch.set_header(response, "set-cookie", set_cookie_string)
+    referrer = Raxx.Patch.referrer(request) || "/"
+    session = UM.Web.Session.get(request)
+    session = case UM.Web.Session.current_customer(session) do
+      :guest ->
+        Map.merge(session, %{currency_preference: currency})
+      customer ->
+        {:ok, customer} = UM.Accounts.update_customer(%{id: customer.id, currency_preference: currency})
+        Map.merge(session, %{customer: customer, currency_preference: currency})
+    end
+    response = Raxx.Patch.redirect(referrer)
+    {:ok, response} = Raxx.Patch.set_header(response, "um-set-session", session)
     response
   end
 
