@@ -111,7 +111,7 @@
                                     <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
                                     <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
                                     <p><%= local_price(item.initial_price) %> first licence</p>
-                                    <p><%= local_price(item.subsequent_price) %> additional</p>
+                                    <p><%= local_price(item.discounted_price) %> additional</p>
                                 </div>
                               </div>
                               <% end %>
