@@ -42,6 +42,15 @@ defmodule UM.Web.Session do
     UM.Accounts.fetch_customer(id)
   end
 
+  def customer_account_url(session) do
+    case current_customer(session) do
+      :guest ->
+        nil
+      %{id: id} ->
+        "/customer/#{id}"
+    end
+  end
+
   def guest_session?(session) do
     current_customer(session) == :guest
   end

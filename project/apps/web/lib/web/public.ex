@@ -53,13 +53,8 @@ defmodule UM.Web.Public do
     UM.Web.Session.guest_session?(session)
   end
 
-  defp customer_account_url(%{customer: %{id: id}}) do
-    case id do
-      nil ->
-        "#" # FIXME some sensible default but never comes up
-      id when is_binary(id) ->
-        "/customers/#{id}"
-    end
+  defp customer_account_url(session) do
+    UM.Web.Session.customer_account_url(session)
   end
 
   defp customer_name(%{customer: %{first_name: f, last_name: l}}) do
