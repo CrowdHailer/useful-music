@@ -23,13 +23,13 @@
                   </a>
                 </td>
                 <td>
-                  <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                  <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
                       <%= csrf_tag %>
                       <input type="hidden" name="_method" value="PUT">
-                      <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
+                      <input type="number" min="1" step="1" name="item[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
                       <input class="button mobile-alert" type="submit" value="Update">
                   </form>
-                  <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                  <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
                       <%= csrf_tag %>
                       <input type="hidden" name="_method" value="DELETE">
                       <input class="button alert mobile-alert" type="submit" value="Remove">
@@ -73,10 +73,10 @@
                         <%= purchase.item.name %>
                     </td>
                     <td>
-                        <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                        <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="PUT">
-                            <input type="number" min="1" step="1" name="purchase[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
+                            <input type="number" min="1" step="1" name="item[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
                             <input class="button tiny" type="submit" value="Update">
                         </form>
                     </td>
@@ -90,7 +90,7 @@
                         <%= purchase_price(purchase) %>
                     </td>
                     <td>
-                        <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
+                        <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
                             <%= csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
                             <input class="button tiny alert" type="submit" value="Remove">
