@@ -53,6 +53,10 @@ defmodule UM.Web.Home do
     response
   end
 
+  def handle_request(%{path: ["favicon.ico"], method: :GET}, _) do
+    Raxx.Response.not_found
+  end
+
   defp url(_filename) do
     "random" # TODO
   end

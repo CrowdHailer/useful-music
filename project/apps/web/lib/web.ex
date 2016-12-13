@@ -55,10 +55,12 @@ defmodule UM.Web do
       {{"um-set-session", session}, headers} ->
         session = %{
           customer_id: session.customer_id,
-          currency_preference: session.currency_preference
+          currency_preference: session.currency_preference,
+          shopping_basket_id: session.shopping_basket_id
         }
-        headers ++ [{"set-cookie", Raxx.Cookie.new("raxx.session", Poison.encode!(session))
-        |> Raxx.Cookie.set_cookie_string}]
+        cookie_string = Raxx.Cookie.new("raxx.session", Poison.encode!(session))
+        |> Raxx.Cookie.set_cookie_string
+        headers ++ [{"set-cookie", cookie_string}]
       nil ->
         headers
     end
