@@ -1,20 +1,12 @@
-defmodule UM.Sales.Discount do
-  defstruct [
-    code: "",
-    value: 0,
-    allocation: 0,
-    customer_allocation: 0,
-    start_datetime: 0,
-    end_datetime: 0
-  ]
-end
-defmodule UM.Sales.Order do
+defmodule UM.Sales.Basket do
   @moduledoc """
   Existing system has 4 states for an order ['pending', 'processing', 'succeded', 'failed']
   Pending is almost immediatly replaced by processing
 
   A shopping basket is just a pending order, particularly as an order can have more than one transaction
-  purchase can also be thought of as order line
+  purchase can also be thought of as order line.
+  We will have separate order and basket, order should be thought of as transaction.
+  return locked basket from repo
   """
   defstruct [
     id: nil,
@@ -72,5 +64,22 @@ defmodule UM.Sales.Order do
 
   def free?(order) do
     discount_value(order) > list_price(order)
+  end
+
+  def start_transaction(basket, %{vat_rate: vat_rate, currency: :GBP}) do
+    list_price = list_price(basket)
+    discount_value = discount_value(basket)
+    payment_gross = list_price(basket) - discount_value(basket)
+    tax_payment = payment_gross * vat_rate
+    payment_net = payment_gross + tax_payment
+    %{
+      basket_total: list_price,
+      discount_value: discount_value,
+      payment_gross: payment_gross,
+      tax_payment: tax_payment,
+      payment_net: payment_net,
+      currency: :GBP,
+      basket: basket
+    }
   end
 end

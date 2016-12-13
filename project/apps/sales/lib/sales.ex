@@ -9,7 +9,7 @@ defmodule UM.Sales do
         IO.inspect(reason)
         {:error, reason}
       record ->
-        {:ok, struct(UM.Sales.ShoppingBasket, record)}
+        {:ok, struct(UM.Sales.Basket, record)}
     end
   end
 
@@ -62,8 +62,9 @@ defmodule UM.Sales do
         (purchase = %{item_id: item_id}) ->
           query = db(:items) |> filter(id: item_id)
           item = Moebius.Db.first(query)
-          Map.merge(purchase, %{item: item})
+          {item.id, Map.merge(purchase, %{item: item})}
       end)
+      |> Enum.into(%{})
       {:ok, Map.merge(basket, %{purchases: purchases})}
     end
   end
