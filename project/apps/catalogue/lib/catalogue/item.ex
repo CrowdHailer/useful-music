@@ -11,6 +11,10 @@ defmodule UM.Catalogue.Item do
     item.initial_price + (n-1) * subsequent_price(item)
   end
 
+  def initial_price(%{initial_price: i}) do
+    i
+  end
+  
   def subsequent_price(%{initial_price: i, discounted_price: d}) do
     d || i
   end

@@ -36,7 +36,7 @@
                   </form>
                 </td>
                 <td>
-                  <%= local_price(purchase_price(purchase)) %>
+                  <%= purchase_price(purchase) %>
                 </td>
               </tr>
               <% end %>
@@ -81,13 +81,13 @@
                         </form>
                     </td>
                     <td>
-                        <%= local_price(purchase.item.initial_price) %>
+                        <%= initial_price(purchase.item) %>
                     </td>
                     <td>
-                        <%= local_price(subsequent_price(purchase.item)) %>
+                        <%= subsequent_price(purchase.item) %>
                     </td>
                     <td>
-                        <%= local_price(purchase_price(purchase)) %>
+                        <%= purchase_price(purchase) %>
                     </td>
                     <td>
                         <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
@@ -118,7 +118,7 @@
                             Total
                         </th>
                         <th>
-                            <%= local_price(purchases_price(basket)) %>
+                            <%= catalogue_price(basket) %>
                         </th>
                     </tr>
                     <%= if basket.discount_id do %>

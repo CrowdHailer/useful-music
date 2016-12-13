@@ -76,8 +76,14 @@ defmodule UM.Web.OrdersController do
   defp local_price(_) do
     "0" # TODO
   end
-  defp purchase_price(_) do
-    100 # TODO
+  def initial_price(item) do
+    UM.Catalogue.Item.initial_price(item)
+  end
+  def subsequent_price(item) do
+    UM.Catalogue.Item.subsequent_price(item)
+  end
+  defp purchase_price(%{quantity: quantity, item: item}) do
+    UM.Catalogue.Item.price_for(item, quantity)
   end
   defp current_customer(session) do
     UM.Web.Session.current_customer(session)
@@ -85,11 +91,11 @@ defmodule UM.Web.OrdersController do
   defp current_country(session) do
     nil # TODO
   end
-  defp purchases_price(basket) do
-    0 # TODO
+  defp catalogue_price(basket) do
+    1231 # TODO
   end
   defp vat_rate(session) do
-    0 # TODO
+    120 # TODO
   end
   defp currency_preference(session) do
     "GBP" # TODO
@@ -108,9 +114,6 @@ defmodule UM.Web.OrdersController do
   end
   def product_name(item) do
     "TODO name"
-  end
-  def subsequent_price(item) do
-    0
   end
 end
 

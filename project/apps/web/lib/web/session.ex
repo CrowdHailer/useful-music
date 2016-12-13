@@ -1,7 +1,3 @@
-# Store in cookie user_id, currency_preference, shopping_basket_id
-# Both currency preference and basket are features of a user when logged in
-
-# could have customer: %{$ref: id}
 defmodule UM.Web.Session do
   defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
   def from_request(request) do
