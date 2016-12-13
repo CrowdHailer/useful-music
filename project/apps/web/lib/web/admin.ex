@@ -7,7 +7,7 @@ defmodule UM.Web.Admin do
   EEx.function_from_file :def, :index_page_content, index_file, []
 
   def handle_request(request, env) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{success: nil, error: nil}})
 
     case UM.Web.Session.admin?(session) do

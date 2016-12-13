@@ -7,7 +7,7 @@ defmodule UM.Web.SessionsController do
   EEx.function_from_file :def, :new_page_content, new_file, [:target]
 
   def handle_request(request = %{path: ["new"], query: query, method: :GET}, _) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     case UM.Web.Session.current_customer(session) do
       :guest ->
         target = Map.get(query, "target", "")

@@ -21,7 +21,7 @@ defmodule UM.Web.Customers do
 
   # TODO redirect if logged in
   def handle_request(request = %{path: [], method: :POST, body: %{"customer" => form}}, _env) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     case CreateForm.validate(form) do
       {:error, {form, errors}} ->
         Raxx.Response.bad_request(new_page_content(form, errors, ""))
@@ -44,7 +44,7 @@ defmodule UM.Web.Customers do
   # function login(session, customer) -> updated session
 
   def handle_request(request = %{path: [id | rest]}, _) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     case UM.Web.Session.can_view_customer?(session, id) do
       true ->
         customer = UM.Accounts.fetch_customer(id)

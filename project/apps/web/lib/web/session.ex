@@ -1,36 +1,29 @@
 defmodule UM.Web.Session do
   defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
   def from_request(request) do
-    {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
-    session = case Poison.decode(session) do
-      {:ok, raw} ->
-        %__MODULE__{
-          customer_id: Map.get(raw, "customer_id"),
-          currency_preference: Map.get(raw, "currency_preference"),
-          shopping_basket_id: Map.get(raw, "shopping_basket_id")
-        }
-      _ ->
-        %{
-          customer_id: nil,
-          currency_preference: "GBP",
-          shopping_basket_id: nil
-        }
-    end
-    # DEBT delete session from cookies
-    {session, request}
-  end
-
-  def get(request) do
     case List.keyfind(request.headers, "um-session", 0) do
       {"um-session", session} ->
-        session
+        {session, request}
       nil ->
-        %__MODULE__{
-          customer_id: nil,
-          currency_preference: "GBP",
-          shopping_basket_id: nil
-        }
+        {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
+        session = case Poison.decode(session) do
+          {:ok, raw} ->
+            %__MODULE__{
+              customer_id: Map.get(raw, "customer_id"),
+              currency_preference: Map.get(raw, "currency_preference"),
+              shopping_basket_id: Map.get(raw, "shopping_basket_id")
+            }
+          _ ->
+            %{
+              customer_id: nil,
+              currency_preference: "GBP",
+              shopping_basket_id: nil
+            }
+        end
+        # DEBT delete session from cookies
+        {session, request}
     end
+
   end
 
   def load_customer(session) do
@@ -81,6 +74,10 @@ defmodule UM.Web.Session do
     end
   end
 
+  def shopping_basket_id(session) do
+    session.shopping_basket_id
+  end
+
   def can_view_customer?(session, customer_id) do
     session.customer_id == customer_id || admin?(session)
   end
@@ -88,12 +85,13 @@ defmodule UM.Web.Session do
   ## MOVE to test
 
   def customer_session(customer) do
-    [{"um-session", %__MODULE__{customer_id: customer.id, currency_preference: Map.get(customer, :currency_preference, "GBP")}}]
+    session =  %__MODULE__{customer_id: customer.id, currency_preference: Map.get(customer, :currency_preference, "GBP")}
+    [{"um-session", session}]
   end
   def guest_session(opts \\ []) do
     opts = Enum.into(opts, %{})
     currency = Map.get(opts, :currency_preference, "GBP")
-    [{"um-session", %{customer_id: nil, currency_preference: currency}}]
+    [{"um-session", %__MODULE__{customer_id: nil, currency_preference: currency}}]
   end
 
   def external_session(data) do

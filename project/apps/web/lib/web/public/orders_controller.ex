@@ -10,7 +10,7 @@ defmodule UM.Web.OrdersController do
     body: %{"items" => items}
     }, _env) do
 
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     basket = case UM.Sales.fetch_shopping_basket(basket_id) do
       {:ok, basket} ->
         basket
@@ -27,7 +27,7 @@ defmodule UM.Web.OrdersController do
 
     redirect = "/orders/#{basket.id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Items added to basket")
-    |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket.id}))
+    |> Raxx.Patch.set_header("um-set-session", %{session | shopping_basket_id: basket.id})
     r
   end
 
@@ -37,14 +37,14 @@ defmodule UM.Web.OrdersController do
     body: %{"item" => item}
     }, _env) do
 
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
 
     quantity = Map.get(item, "quantity")
     {quantity, ""} = Integer.parse(quantity)
     UM.Sales.set_item(basket_id, item_id, quantity: quantity)
     redirect = "/orders/#{basket_id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Shopping basket updated")
-    |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
+    |> Raxx.Patch.set_header("um-set-session", %{session | shopping_basket_id: basket_id})
     r
   end
 
@@ -53,19 +53,18 @@ defmodule UM.Web.OrdersController do
     method: :DELETE
     }, _env) do
 
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
 
     UM.Sales.set_item(basket_id, item_id, quantity: 0)
     redirect = "/orders/#{basket_id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Item removed from basket")
-    |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
+    |> Raxx.Patch.set_header("um-set-session",%{session | shopping_basket_id: basket_id})
     r
   end
 
   def handle_request(request = %{path: [id], method: :GET}, _) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(id)
-    |> IO.inspect
     Raxx.Response.ok(basket_page_content(basket, session))
   end
 

@@ -10,12 +10,11 @@ defmodule UM.Web.Public do
   EEx.function_from_file :def, :header_partial, header_file, [:session]
 
   def handle_request(request, env) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
 
     session = UM.Web.Session.load_customer(session)
     session = Map.merge(session, flash)
-    session = Map.merge(session, %{shopping_basket: %{id: "TODO"}})
     case public_endpoint(request, env) do
       request = %{body: nil} ->
         request
@@ -71,12 +70,14 @@ defmodule UM.Web.Public do
     UM.Web.Session.currency_preference(session)
   end
 
-  # DEBT will be order in the future
-  defp view_basket_url(%{shopping_basket: %{id: id}}) do
-    case id do
-      id when is_binary(id) ->
+  defp view_basket_url(session) do
+    case UM.Web.Session.shopping_basket_id(session) do
+      nil ->
+        "/shopping_baskets/__empty__"
+      id ->
         "/shopping_baskets/#{id}"
     end
+
   end
 
   defp number_of_purchases(_session) do

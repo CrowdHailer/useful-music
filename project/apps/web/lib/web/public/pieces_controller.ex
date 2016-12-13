@@ -41,7 +41,7 @@ defmodule UM.Web.PiecesController do
   end
 
   def handle_request(request = %{path: ["UD" <> id], method: :GET}, _) do
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     {id, ""} = Integer.parse(id)
     case UM.Catalogue.fetch_piece(id) do
       {:ok, piece} ->

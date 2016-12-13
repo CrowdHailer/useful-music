@@ -40,13 +40,13 @@ defmodule UM.Web.Home do
     end
     # TODO send to referer
     referrer = Raxx.Patch.referrer(request) || "/"
-    session = UM.Web.Session.get(request)
+    {session, request} = UM.Web.Session.from_request(request)
     session = case UM.Web.Session.current_customer(session) do
       :guest ->
-        Map.merge(session, %{currency_preference: currency})
+        %{session | currency_preference: currency}
       customer ->
         {:ok, customer} = UM.Accounts.update_customer(%{id: customer.id, currency_preference: currency})
-        Map.merge(session, %{customer: customer, currency_preference: currency})
+        %{session | currency_preference: currency, customer: customer}
     end
     response = Raxx.Patch.redirect(referrer)
     {:ok, response} = Raxx.Patch.set_header(response, "um-set-session", session)
