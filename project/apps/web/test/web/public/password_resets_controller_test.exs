@@ -38,4 +38,15 @@ defmodule UM.Web.PasswordResetsControllerTest do
     assert 200 = response.status
   end
 
+  test "can reset password" do
+    jo = UM.Web.Fixtures.jo_brand
+    {:ok, customer} = UM.Accounts.create_password_reset(jo.email)
+    request = put("/#{customer.password_reset_token}", form_data(%{
+      "email" => jo.email,
+      "customer" => %{"password" => "mySecret", "password_confirmation" => "mySecret"}}))
+    |> Controller.handle_request(:nostate)
+    |> Raxx.Patch.follow
+    assert ["sessions", "new"] == request.path
+  end
+
 end

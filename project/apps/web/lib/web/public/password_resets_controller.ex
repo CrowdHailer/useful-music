@@ -27,7 +27,39 @@ defmodule UM.Web.PasswordResetsController do
     Raxx.Response.ok(edit_page_content(token, email))
   end
 
+  def handle_request(%{path: [token], method: :PUT, body: body}, _) do
+    # validate length of password
+    email = body["email"]
+    case UM.Accounts.find_by_email(email) do
+      {:ok, customer} ->
+        case UM.Accounts.Customer.reset_password(customer, %{
+          password: body["customer"]["password"],
+          token: token
+        }) do
+          {:ok, updated} ->
+            UM.Accounts.update_customer(updated)
+            Raxx.Patch.redirect("/sessions/new", success: "Password changed")
+        end
+      {:error, :invalid_token} ->
+        Raxx.Patch.redirect("/password_resets/new", error: "Reset token invalid or expired")
+      #   {:error, :token_expired} ->
+    end
+  end
+
   def csrf_tag do
     "" # TODO
+  end
+
+  def use_token do
+    # OK.try do
+    #   data <- ChangePasswordForm.validate(form)
+    #   customer <- UM.Accounts.authenticate_by_token(email, token)
+    #   patch = Map.merge(%{
+    #     id: customer.id,
+    #     password_reset_token: nil,
+    #     password_reset_created_at: nil,
+    #     password: data.password})
+    #   customer <- UM.Accounts.update_customer(patch)
+    # end
   end
 end

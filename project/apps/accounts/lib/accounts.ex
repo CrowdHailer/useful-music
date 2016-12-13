@@ -48,6 +48,16 @@ defmodule UM.Accounts do
     end
   end
 
+  def find_by_email(email) do
+    customer = db(:customers) |> filter(email: email) |> Db.first
+    case customer do
+      nil ->
+        {:error, :not_found}
+      customer ->
+        {:ok, customer}
+    end
+  end
+
   def authenticate(%{email: email, password: password}) do
     customer = db(:customers) |> filter(email: email) |> Db.first
     case customer && customer.password do
