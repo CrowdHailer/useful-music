@@ -11,7 +11,8 @@
 - admin controller redirects to login page if needed
 - search results have page hardcoded, i.e. loose search on next page (already happens)
 - move all session helpers from the public router
-- customer can only edit their basket
+- setting purchase items to zero
+- customer can edit only their own basket
 
 - adding no items to basket is silly (currently the case)
 - check the format of user names

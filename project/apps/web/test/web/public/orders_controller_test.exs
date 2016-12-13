@@ -46,24 +46,31 @@ defmodule UM.Web.OrdersControllerTest do
     assert 1 == UM.Sales.ShoppingBasket.number_of_licences(basket)
   end
 
-  @tag :skip
-  test "can update the number of items", %{piece: %{id: piece_id}} do
-    {:ok, %{items: [%{id: item_id}]}} = Catalogue.load_items(%{id: piece_id})
+  test "can update the number of items" do
     {:ok, basket} = UM.Sales.create_shopping_basket
+    item_id = "garden-flute-part"
+    UM.Sales.add_item(basket.id, item_id, quantity: 3)
     request = put("/#{basket.id}/items/#{item_id}", form_data(%{
       "item" => %{
         "quantity" => "2"
       }
     }), UM.Web.Session.customer_session(%{id: "100"}))
     response = Controller.handle_request(request, [])
-    |> IO.inspect
+    assert 302 == response.status
+    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket.id)
+    assert 1 == UM.Sales.ShoppingBasket.number_of_purchases(basket)
+    assert 2 == UM.Sales.ShoppingBasket.number_of_licences(basket)
   end
 
-  @tag :skip
-  test "can delete items from basket", %{piece: %{id: piece_id}} do
-    {:ok, %{items: [%{id: item_id}]}} = Catalogue.load_items(%{id: piece_id})
+  test "can delete items from basket" do
     {:ok, basket} = UM.Sales.create_shopping_basket
+    item_id = "garden-flute-part"
+    UM.Sales.add_item(basket.id, item_id, quantity: 3)
     request = delete("/#{basket.id}/items/#{item_id}", UM.Web.Session.customer_session(%{id: "100"}))
     response = Controller.handle_request(request, [])
+    assert 302 == response.status
+    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket.id)
+    assert 0 == UM.Sales.ShoppingBasket.number_of_purchases(basket)
+    assert 0 == UM.Sales.ShoppingBasket.number_of_licences(basket)
   end
 end

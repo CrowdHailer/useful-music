@@ -31,10 +31,18 @@ defmodule UM.Sales do
     quantity = Map.get(opts, :quantity, 1)
     query = db(:purchases)
     |> filter(shopping_basket_id: basket_id, item_id: item_id)
-    update = case Moebius.Db.run(query) do
-      [] ->
+    update = case {Moebius.Db.run(query), quantity} do
+      {[], q} ->
         db(:purchases)
         |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
+      {[_item], 0} ->
+        db(:purchases)
+        |> filter(shopping_basket_id: basket_id, item_id: item_id)
+        |> delete
+      {[_item], q} ->
+        db(:purchases)
+        |> filter(shopping_basket_id: basket_id, item_id: item_id)
+        |> update(quantity: quantity)
     end
     Moebius.Db.run(update)
   end

@@ -33,13 +33,10 @@ defmodule UM.Web.OrdersController do
     }, _env) do
 
     session = UM.Web.Session.get(request)
-    |> IO.inspect
 
     quantity = Map.get(item, "quantity")
     {quantity, ""} = Integer.parse(quantity)
     UM.Sales.set_item(basket_id, item_id, quantity: quantity)
-    |> IO.inspect
-    # redirect = Raxx.Patch.referrer(request) || "/shopping_baskets/#{basket_id}"
     redirect = "/shopping_baskets/#{basket_id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Shopping basket updated")
     |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
@@ -52,11 +49,8 @@ defmodule UM.Web.OrdersController do
     }, _env) do
 
     session = UM.Web.Session.get(request)
-    |> IO.inspect
 
     UM.Sales.set_item(basket_id, item_id, quantity: 0)
-    |> IO.inspect
-    # redirect = Raxx.Patch.referrer(request) || "/shopping_baskets/#{basket_id}"
     redirect = "/shopping_baskets/#{basket_id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Item removed from basket")
     |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
