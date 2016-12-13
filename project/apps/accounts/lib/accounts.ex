@@ -58,6 +58,19 @@ defmodule UM.Accounts do
     end
   end
 
+  def create_password_reset(email) do
+    # could look for exisiting reset tokens all in one query
+    action = db(:customers)
+    |> filter(email: email)
+    |> update(password_reset_token: Utils.random_string(24), password_reset_created_at: :now)
+    case Db.run(action) do
+      nil ->
+        {:error, :no_customer}
+      customer ->
+        {:ok, customer}
+    end
+  end
+
   # FIXME remove
   def create_peter do
     signup_customer(%{id: "100", admin: true, first_name: "Peter", last_name: "Saxton", email: "p@me.co", password: "password", country: "GB"})
