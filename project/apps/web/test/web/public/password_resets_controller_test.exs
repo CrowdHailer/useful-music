@@ -26,7 +26,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
 
   test "rerenders when email not found" do
     response = post("/", form_data(%{"customer" => %{"email" => "a@b.com"}}))
-    |> Controller.handle_request
+    |> Controller.handle_request(:nostate)
     assert String.contains?(response.body, "Email not found")
   end
 end
