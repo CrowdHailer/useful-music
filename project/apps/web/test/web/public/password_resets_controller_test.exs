@@ -29,4 +29,13 @@ defmodule UM.Web.PasswordResetsControllerTest do
     |> Controller.handle_request(:nostate)
     assert String.contains?(response.body, "Email not found")
   end
+
+  test "edit page is available for token" do
+    jo = UM.Web.Fixtures.jo_brand
+    {:ok, customer} = UM.Accounts.create_password_reset(jo.email)
+    request = get({"/#{customer.password_reset_token}/edit", email: jo.email})
+    response = Controller.handle_request(request, :nostate)
+    assert 200 = response.status
+  end
+
 end
