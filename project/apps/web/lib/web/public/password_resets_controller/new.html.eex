@@ -9,16 +9,16 @@
             <%= csrf_tag %>
             <fieldset>
                 <div class="row">
-                    <div class="large-4 columns large-offset-2 end <%= 'error' if @customer_email_unknown %>">
+                    <div class="large-4 columns large-offset-2 end <%= if unknown_email, do: "error" %>">
                         <label>Email
                              <input
-                                 id="customer_email"
+                             id="customer_email"
                                  name="customer[email]"
                                  type="email"
                                  required
                                  placeholder="">
                         </label>
-                        <% if @customer_email_unknown %>
+                        <%= if unknown_email do %>
                             <small class="error">Email not found</small>
                         <% end %>
                     </div>
