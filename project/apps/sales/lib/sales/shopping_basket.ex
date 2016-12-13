@@ -23,4 +23,15 @@ defmodule UM.Sales.ShoppingBasket do
   # end
 
   # add purchases the same but add what we had before
+
+  def number_of_purchases(%{purchases: purchases}) do
+    Enum.count(purchases)
+  end
+
+  def number_of_licences(%{purchases: purchases}) do
+    Enum.reduce(purchases, 0, fn
+      (%{quantity: n}, total) ->
+        total + n
+    end)
+  end
 end

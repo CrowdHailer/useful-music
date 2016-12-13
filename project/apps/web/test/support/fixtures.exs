@@ -6,6 +6,7 @@ defmodule UM.Web.Fixtures do
     db(:items) |> delete |> Moebius.Db.run
     db(:pieces) |> delete |> Moebius.Db.run
     db(:customers) |> delete |> Moebius.Db.run
+    db(:shopping_baskets) |> delete |> Moebius.Db.run
     :ok
   end
 
@@ -23,7 +24,7 @@ defmodule UM.Web.Fixtures do
   end
 
   def garden_tiger do
-    db(:pieces)
+    piece = db(:pieces)
     |> insert(
       id: 477,
       title: "The Garden Tiger",
@@ -40,6 +41,22 @@ defmodule UM.Web.Fixtures do
       piano: true
     )
     |> Moebius.Db.run
+    db(:items) |> insert(
+      id: "garden-flute-part",
+      name: "flute",
+      initial_price: 80,
+      discounted_price: 40,
+      asset: "link I dont have again",
+      piece_id: 477
+    ) |> Moebius.Db.run
+    db(:items) |> insert(
+      id: "garden-all-parts",
+      name: "all parts",
+      initial_price: 140,
+      asset: "link I dont have again",
+      piece_id: 477
+    ) |> Moebius.Db.run
+    piece
   end
 
   def bugs_bunny do

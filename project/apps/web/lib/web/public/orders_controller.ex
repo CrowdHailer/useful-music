@@ -6,18 +6,23 @@ defmodule UM.Web.OrdersController do
     }, _env) do
 
     session = UM.Web.Session.get(request)
-    |> IO.inspect
+    basket = case UM.Sales.fetch_shopping_basket(basket_id) do
+      {:ok, basket} ->
+        basket
+      {:error, :not_found} ->
+        {:ok, basket} = UM.Sales.create_shopping_basket
+        basket
+    end
 
     items |> Enum.map(fn
       ({item_id, quantity}) ->
         {quantity, ""} = Integer.parse(quantity)
-        UM.Sales.add_item(basket_id, item_id, quantity: quantity)
+        UM.Sales.add_item(basket.id, item_id, quantity: quantity)
     end)
-    |> IO.inspect
-    # redirect = Raxx.Patch.referrer(request) || "/shopping_baskets/#{basket_id}"
-    redirect = "/shopping_baskets/#{basket_id}"
+
+    redirect = "/shopping_baskets/#{basket.id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Items added to basket")
-    |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
+    |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket.id}))
     r
   end
 

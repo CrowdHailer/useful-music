@@ -13,19 +13,6 @@ defmodule UM.Sales do
     end
   end
 
-  def add_purchases(basket, purchases) do
-      add_purchases(basket, purchases, [])
-  end
-  def add_purchases(basket, [], added) do
-    {:ok, %{basket | purchases: Enum.reverse(added)}}
-  end
-  def add_purchases(basket, [purchase | rest], added) do
-    case add_purchase(basket, purchase) do
-      record = %{id: id} ->
-        add_purchases(basket, rest, [record | added])
-    end
-  end
-
   def add_item(basket_id, item_id, opts \\ []) do
     opts = Enum.into(opts, %{})
     quantity = Map.get(opts, :quantity, 1)
@@ -55,27 +42,21 @@ defmodule UM.Sales do
   def fetch_shopping_basket(basket_id) do
     basket_query = db(:shopping_baskets) |> filter(id: basket_id)
     basket = Moebius.Db.first(basket_query)
-    purchases_query = db(:purchases)
-    |> filter(shopping_basket_id: basket_id)
-    purchases = Moebius.Db.run(purchases_query)
-    {:ok, Map.merge(basket, %{purchases: purchases})}
-  end
-
-  def add_purchase(%{id: basket_id}, %{quantity: quantity, item_id: item_id}) do
-    query = db(:purchases)
-    |> filter(shopping_basket_id: basket_id, item_id: item_id)
-    case Moebius.Db.run(query) do
-      [] ->
-        db(:purchases)
-        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
-      [%{id: id}] ->
-        IO.inspect(id)
-        db(:purchases)
-        |> filter(id: id)
-        |> update(quantity: quantity)
+    case basket do
+      nil ->
+        {:error, :not_found}
+      basket ->
+      purchases_query = db(:purchases)
+      |> filter(shopping_basket_id: basket_id)
+      purchases = Moebius.Db.run(purchases_query)
+      purchases = Enum.map(purchases, fn
+        (purchase = %{item_id: item_id}) ->
+          query = db(:items) |> filter(id: item_id)
+          item = Moebius.Db.first(query)
+          Map.merge(purchase, %{item: item})
+      end)
+      {:ok, Map.merge(basket, %{purchases: purchases})}
     end
-    # |> update()
-    |> Moebius.Db.run
   end
 
   def random_string(length) do
