@@ -5,37 +5,20 @@ defmodule Um.Web.Admin.ItemsControllerTest do
   alias UM.Web.Admin.ItemsController, as: Controller
   alias UM.Catalogue
 
-  # This is a horrible duplication
-  @canonical_piece %{
-    id: 101,
-    title: "Canonical Piece",
-    sub_heading: "The very first piece",
-    description: "I uses this piece for testing all the flipping time",
-    level_overview: "not that easy",
-    notation_preview: %Raxx.Upload{
-      content: "My Upload document"
-    }}
-
   setup do
-    Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:items) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    piece = @canonical_piece
-    {:ok, piece} = Catalogue.create_piece(piece)
-    {:ok, %{piece: piece}}
+    :ok = UM.Web.Fixtures.clear_db
+    canonical = UM.Web.Fixtures.canonical_piece
+    {:ok, %{canonical: canonical}}
   end
 
-  test "new item page is available", %{piece: piece} do
+  test "new item page is available", %{canonical: piece} do
     request = get({"/new", %{"piece_id" => piece.id}})
     response = Controller.handle_request(request, :nostate)
     assert 200 == response.status
     assert String.contains?(response.body, "UD#{piece.id}")
   end
 
-  test "successful item creation", %{piece: piece} do
+  test "successful item creation", %{canonical: piece} do
     request = post("/", %{
       "item" => %{
         "name" => "Flute part",
@@ -51,7 +34,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert String.contains?(location, UM.Catalogue.Piece.catalogue_number(piece))
   end
 
-  test "item creation with missing data", %{piece: piece} do
+  test "item creation with missing data", %{canonical: piece} do
     request = post("/", %{
       "item" => %{
         "name" => "Flute part",
@@ -67,7 +50,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert String.contains?(location, "invalid+item")
   end
 
-  test "item edit page is available", %{piece: piece} do
+  test "item edit page is available", %{canonical: piece} do
     {:ok, item} = UM.Catalogue.create_item(%{
       piece_id: piece.id,
       name: "This piece",
@@ -80,7 +63,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert String.contains?(response.body, "value=\"This piece\"")
   end
 
-  test "can edit an item", %{piece: piece} do
+  test "can edit an item", %{canonical: piece} do
     {:ok, item} = UM.Catalogue.create_item(%{
       piece_id: piece.id,
       name: "This piece",
@@ -105,7 +88,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert 9000 == updated_item.initial_price
   end
 
-  test "can delete an item", %{piece: piece} do
+  test "can delete an item", %{canonical: piece} do
     {:ok, item} = UM.Catalogue.create_item(%{
       piece_id: piece.id,
       name: "This piece",

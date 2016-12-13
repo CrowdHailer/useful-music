@@ -5,29 +5,12 @@ defmodule UM.Web.Admin.PiecesTest do
 
   import Raxx.Test
 
-  # This is a horrible duplication
-  @canonical_piece %{
-    id: 101,
-    title: "Canonical Piece",
-    sub_heading: "The very first piece",
-    description: "I uses this piece for testing all the flipping time",
-    level_overview: "not that easy",
-    notation_preview: %Raxx.Upload{
-      content: "My Upload document"
-    }}
-
   setup do
-    Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:items) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    piece = @canonical_piece
-    {:ok, %{id: _id}} = Catalogue.create_piece(piece)
+    :ok = UM.Web.Fixtures.clear_db
   end
 
   test "index page shows all pieces" do
+    _piece = UM.Web.Fixtures.canonical_piece
     request = get("/")
     %{status: status, body: body} = Pieces.handle_request(request, %{})
     assert 200 == status
@@ -56,7 +39,8 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can create a new piece" do
-    piece = %{@canonical_piece | id: "123", notation_preview: %Raxx.Upload{content: "Hello", filename: "blob.pdf"}}
+    piece = UM.Web.Fixtures.canonical_piece
+    piece = %{piece | id: "123", notation_preview: %Raxx.Upload{content: "Hello", filename: "blob.pdf"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
       "piece" => piece
@@ -70,7 +54,8 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can't create a piece without id" do
-    piece = %{@canonical_piece | id: "", notation_preview: nil}
+    piece = UM.Web.Fixtures.canonical_piece
+    piece = %{piece | id: "", notation_preview: nil}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
       "piece" => piece
@@ -83,7 +68,8 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can't create a piece with existing id (redirects to piece)" do
-    piece = %{@canonical_piece | id: "101"}
+    piece = UM.Web.Fixtures.canonical_piece
+    piece = %{piece | id: "101", notation_preview: %Raxx.Upload{content: "ss"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
       "piece" => piece
@@ -96,7 +82,8 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can visit a pieces edit page" do
-    request = get("/UD#{@canonical_piece.id}/edit")
+    piece = UM.Web.Fixtures.canonical_piece
+    request = get("/UD#{piece.id}/edit")
     response = Pieces.handle_request(request, %{})
     assert 200 == response.status
     assert String.contains?(response.body, "UD101")
@@ -110,7 +97,8 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can update a piece" do
-    piece = %{@canonical_piece | title: "The new hotness", id: "101", notation_preview: %Raxx.Upload{content: ""}}
+    piece = UM.Web.Fixtures.canonical_piece
+    piece = %{piece | title: "The new hotness", id: "101", notation_preview: %Raxx.Upload{content: ""}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/UD101", form_data(%{
       "piece" => piece
@@ -124,6 +112,7 @@ defmodule UM.Web.Admin.PiecesTest do
   end
 
   test "can delete a piece" do
+    piece = UM.Web.Fixtures.canonical_piece
     request = delete("/UD101")
     response = Pieces.handle_request(request, %{})
     assert {:error, :piece_not_found} = Catalogue.fetch_piece(101)

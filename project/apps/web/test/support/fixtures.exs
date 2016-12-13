@@ -9,6 +9,19 @@ defmodule UM.Web.Fixtures do
     :ok
   end
 
+  def canonical_piece do
+    db(:pieces)
+    |> insert(
+      id: 101,
+      title: "Canonical Piece",
+      sub_heading: "The very first piece",
+      description: "I uses this piece for testing all the flipping time",
+      level_overview: "not that easy",
+      notation_preview: "TODO.pdf",
+    )
+    |> Moebius.Db.run
+  end
+
   def garden_tiger do
     db(:pieces)
     |> insert(

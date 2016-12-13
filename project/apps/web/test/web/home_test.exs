@@ -1,27 +1,13 @@
 defmodule UM.Web.HomeTest do
-  use ExUnit.Case, async: true
-
+  use ExUnit.Case
   import Raxx.Test
-
-  # This is a horrible duplication
-  @canonical_piece %{
-    id: 101,
-    title: "Canonical Piece",
-    sub_heading: "The very first piece",
-    description: "I uses this piece for testing all the flipping time",
-    level_overview: "not that easy",
-    notation_preview: %Raxx.Upload{
-      content: "My Upload document"
-    }}
 
   setup do
     :ok = UM.Web.Fixtures.clear_db
-    piece = @canonical_piece
-
-    {:ok, %{id: _id}} = UM.Catalogue.create_piece(piece)
   end
 
   test "home page returns pieces" do
+    _piece = UM.Web.Fixtures.canonical_piece
     request = get("/")
     response = UM.Web.Home.handle_request(request, %{})
     assert response.status == 200

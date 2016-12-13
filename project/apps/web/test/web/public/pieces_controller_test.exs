@@ -4,30 +4,13 @@ defmodule UM.Web.PiecesControllerTest do
 
   alias UM.Catalogue
   alias UM.Web.PiecesController, as: Controller
-  # This is a horrible duplication
-  @canonical_piece %{
-    id: 101,
-    title: "Canonical Piece",
-    sub_heading: "The very first piece",
-    description: "I uses this piece for testing all the flipping time",
-    level_overview: "not that easy",
-    notation_preview: %Raxx.Upload{
-      content: "My Upload document"
-    }}
 
   setup do
-    Moebius.Query.db(:purchases) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:items) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    Moebius.Query.db(:pieces) |> Moebius.Query.delete |> Moebius.Db.run
-    # |> IO.inspect
-    piece = @canonical_piece
-    {:ok, piece} = Catalogue.create_piece(piece)
-    {:ok, %{piece: piece}}
+    :ok = UM.Web.Fixtures.clear_db
   end
 
   test "index page shows all pieces" do
+    _piece = UM.Web.Fixtures.canonical_piece
     request = get("/")
     %{status: status, body: body} = Controller.handle_request(request, %{})
     assert 200 == status
@@ -36,6 +19,7 @@ defmodule UM.Web.PiecesControllerTest do
   end
 
   test "searches on title" do
+    _piece = UM.Web.Fixtures.canonical_piece
     request = get({"/search", %{search: "Canonical"}})
     response = Controller.handle_request(request, %{})
     assert 200 == response.status
@@ -50,7 +34,8 @@ defmodule UM.Web.PiecesControllerTest do
     assert "/pieces/UD123" == Raxx.Patch.response_location(response)
   end
 
-  test "show page is viewable", %{piece: piece} do
+  test "show page is viewable" do
+    piece = UM.Web.Fixtures.canonical_piece
     request = get("/UD#{piece.id}")
     response = Controller.handle_request(request, %{})
     assert 200 == response.status
