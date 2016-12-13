@@ -7,6 +7,7 @@ defmodule UM.Sales.OrderTest do
     assert order.id
     assert :pending == order.status
     assert Order.empty?(order)
+    assert Order.list_price(order)
   end
 
   test "add item to an order" do
@@ -18,11 +19,24 @@ defmodule UM.Sales.OrderTest do
   end
 
   test "edit existing line" do
-    item = %{id: "flute-piece"}
     order = Order.new
-    order = Order.edit_line(order, %{item: item, quantity: 10})
-    order = Order.edit_line(order, %{item: item, quantity: 2})
+    order = Order.edit_line(order, %{item: flute_part, quantity: 10})
+    order = Order.edit_line(order, %{item: flute_part, quantity: 2})
     assert 1 == Order.number_of_lines(order)
     assert 2 == Order.number_of_units(order)
+  end
+
+  test "calculate list price with discount" do
+    order = Order.new
+    order = Order.edit_line(order, %{item: flute_part, quantity: 10})
+    assert 440 == Order.list_price(order)
+  end
+
+  def flute_part do
+    %{
+      id: "flute-part",
+      initial_price: 80,
+      discounted_price: 40
+    }
   end
 end

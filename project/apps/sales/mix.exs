@@ -23,6 +23,7 @@ defmodule UM.Sales.Mixfile do
     [
       {:moebius, "~> 2.0.0"},
       {:utils, in_umbrella: true},
+      {:catalogue, in_umbrella: true},
     ]
   end
 end

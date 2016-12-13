@@ -34,4 +34,15 @@ defmodule UM.Sales.Order do
     %{order | purchases: purchases}
   end
 
+  def list_price(%{purchases: purchases}) do
+    Enum.reduce(purchases, 0, fn
+      ({_item_id, purchase}, total) ->
+        line_price(purchase)
+    end)
+  end
+
+  def line_price(%{quantity: quantity, item: item}) do
+    UM.Catalogue.Item.price_for(item, quantity)
+  end
+
 end
