@@ -1,4 +1,16 @@
 defmodule UM.Web.PasswordResetsController do
+  defmodule ResetPasswordForm do
+    import UM.Web.FormFields
+
+    def validate(form) do
+      validator = %{
+        email: password(required: true),
+        password: password(required: true),
+        password_confirmation: password_confirmation,
+      }
+      WebForm.validate(validator, form)
+    end
+  end
   require EEx
 
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
@@ -27,22 +39,16 @@ defmodule UM.Web.PasswordResetsController do
     Raxx.Response.ok(edit_page_content(token, email))
   end
 
-  def handle_request(%{path: [token], method: :PUT, body: body}, _) do
-    # validate length of password
-    email = body["email"]
-    case UM.Accounts.find_by_email(email) do
-      {:ok, customer} ->
-        case UM.Accounts.Customer.reset_password(customer, %{
-          password: body["customer"]["password"],
-          token: token
-        }) do
-          {:ok, updated} ->
-            UM.Accounts.update_customer(updated)
+  def handle_request(%{path: [token], method: :PUT, body: %{"customer" => form}}, _) do
+    case ResetPasswordForm.validate(form) do
+      {:ok, data} ->
+        data = Map.put(data, :password_reset_token, token)
+        case UM.Accounts.reset_password(data) do
+          {:ok, customer} ->
             Raxx.Patch.redirect("/sessions/new", success: "Password changed")
+          {:error, :invalid_token} ->
+            Raxx.Patch.redirect("/password_resets/new", error: "Reset token invalid or expired")
         end
-      {:error, :invalid_token} ->
-        Raxx.Patch.redirect("/password_resets/new", error: "Reset token invalid or expired")
-      #   {:error, :token_expired} ->
     end
   end
 
@@ -53,13 +59,8 @@ defmodule UM.Web.PasswordResetsController do
   def use_token do
     # OK.try do
     #   data <- ChangePasswordForm.validate(form)
-    #   customer <- UM.Accounts.authenticate_by_token(email, token)
-    #   patch = Map.merge(%{
-    #     id: customer.id,
-    #     password_reset_token: nil,
-    #     password_reset_created_at: nil,
-    #     password: data.password})
-    #   customer <- UM.Accounts.update_customer(patch)
+    #   data = Map.put(data, password_reset_token: token)
+    #   customer <- UM.Accounts.reset_password(data)
     # end
   end
 end

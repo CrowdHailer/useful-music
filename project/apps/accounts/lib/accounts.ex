@@ -58,6 +58,12 @@ defmodule UM.Accounts do
     end
   end
 
+  def reset_password(data) do
+    {:ok, customer} = find_by_email(data.email)
+    {:ok, updated} =UM.Accounts.Customer.reset_password(customer, data)
+    UM.Accounts.update_customer(updated)
+  end
+
   def authenticate(%{email: email, password: password}) do
     customer = db(:customers) |> filter(email: email) |> Db.first
     case customer && customer.password do
