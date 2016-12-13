@@ -23,7 +23,7 @@ defmodule UM.Web.OrdersControllerTest do
 
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
-    assert ["shopping_baskets", basket.id] == request_2.path
+    assert ["orders", basket.id] == request_2.path
     {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket.id)
     assert 2 == UM.Sales.ShoppingBasket.number_of_purchases(basket)
@@ -39,7 +39,7 @@ defmodule UM.Web.OrdersControllerTest do
 
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
-    assert ["shopping_baskets", basket_id] = request_2.path
+    assert ["orders", basket_id] = request_2.path
     {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
     assert 1 == UM.Sales.ShoppingBasket.number_of_purchases(basket)

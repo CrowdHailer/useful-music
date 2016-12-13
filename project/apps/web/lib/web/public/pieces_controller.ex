@@ -5,7 +5,7 @@ defmodule UM.Web.PiecesController do
   EEx.function_from_file :def, :index_page_content, index_file, [:page, :search]
 
   show_file = String.replace_suffix(__ENV__.file, ".ex", "/show.html.eex")
-  EEx.function_from_file :def, :show_page_content, show_file, [:piece, :search]
+  EEx.function_from_file :def, :show_page_content, show_file, [:piece, :search, :session]
 
   def handle_request(%{path: [], method: :GET, query: query}, _env) do
     search = Map.get(query, "catalogue_search", %{})
@@ -40,12 +40,13 @@ defmodule UM.Web.PiecesController do
     end
   end
 
-  def handle_request(%{path: ["UD" <> id], method: :GET}, _) do
+  def handle_request(request = %{path: ["UD" <> id], method: :GET}, _) do
+    session = UM.Web.Session.get(request)
     {id, ""} = Integer.parse(id)
     case UM.Catalogue.fetch_piece(id) do
       {:ok, piece} ->
         {:ok, piece} = UM.Catalogue.load_items(piece)
-        Raxx.Response.ok(show_page_content(piece, %{}))
+        Raxx.Response.ok(show_page_content(piece, %{}, session))
       {:error, :piece_not_found} ->
         Raxx.Patch.redirect("/pieces", %{flash: "Piece not found"})
     end

@@ -15,11 +15,11 @@
             </tr>
           </thead>
           <tbody>
-              <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
+              <%= for purchase <- basket.purchases do %>
               <tr>
                 <td>
-                  <a href="/pieces/<%= purchase.item.piece.id %>">
-                    <%= purchase.item.piece.product_name %>
+                  <a href="/pieces/<%= purchase.item.piece_id %>">
+                    <%= product_name(purchase.item) %>
                   </a>
                 </td>
                 <td>
@@ -36,7 +36,7 @@
                   </form>
                 </td>
                 <td>
-                  <%= local_price(purchase.price).format %>
+                  <%= local_price(purchase_price(purchase)) %>
                 </td>
               </tr>
               <% end %>
@@ -59,15 +59,14 @@
             </thead>
 
             <tbody>
-                <!-- TODO test sorting -->
-                <% @basket.purchases.sort_by{|p| p.item.piece.id}.each do |purchase| %>
+                <%= for purchase <- basket.purchases do  %>
                 <tr>
                     <td>
-                        UD<%= purchase.item.piece.id %>
+                        UD<%= purchase.item.piece_id %>
                     </td>
                     <td>
-                        <a href="/pieces/<%= purchase.item.piece.id %>">
-                            <%= purchase.item.piece.product_name %>
+                        <a href="/pieces/<%= purchase.item.piece_id %>">
+                            <%= product_name(purchase.item) %>
                         </a>
                     </td>
                     <td>
@@ -82,13 +81,13 @@
                         </form>
                     </td>
                     <td>
-                        <%= local_price(purchase.item.initial_price).format %>
+                        <%= local_price(purchase.item.initial_price) %>
                     </td>
                     <td>
-                        <%= local_price(purchase.item.subsequent_price).format %>
+                        <%= local_price(subsequent_price(purchase.item)) %>
                     </td>
                     <td>
-                        <%= local_price(purchase.price).format %>
+                        <%= local_price(purchase_price(purchase)) %>
                     </td>
                     <td>
                         <form id="form_id" action="/purchases/<%= purchase.id %>" method="post">
@@ -106,7 +105,7 @@
               <div class="vat-wrap">
                 <h5>How we charge VAT:</h5>
                 <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
-                <h6>You are purchasing from: <%= current_customer.country || 'After you have created an account or logged in, your country will appear here.' %></h6>
+                <h6>You are purchasing from: <%= current_customer(session).country || 'After you have created an account or logged in, your country will appear here.' %></h6>
               </div>
             </div>
             <div class="large-3 medium-6 small-12 columns">
@@ -119,20 +118,20 @@
                             Total
                         </th>
                         <th>
-                            <%= local_price(@basket.purchases_price).format %>
+                            <%= local_price(purchases_price(basket)) %>
                         </th>
                     </tr>
-                    <% unless @basket.discount.nil? %>
+                    <%= if basket.discount_id do %>
                     <tr>
 
                         <th width="200">
                             Discount
                         </th>
                         <th style="font-size: 0.7em;">
-                            <%= @basket.discount.code %>
+                            <%= basket.discount.code %>
                         </th>
                         <th style="font-size: 0.7em;">
-                            -<%= @basket.discount.value.format %>
+                            -<%= basket.discount.value %>
                         </th>
                     </tr>
                     <% end %>
@@ -142,10 +141,10 @@
                         VAT
                       </th>
                       <th>
-                          <%= current_customer.vat_rate.to_s %>
+                          <%= vat_rate(session) %>
                       </th>
                       <th>
-                          <%= local_price((current_customer.vat_rate * @basket.price)).format %>
+                          <%= local_price(vat_rate(session) * basket_price(basket)) %>
                       </th>
                     </tr>
                     <tr>
@@ -155,16 +154,16 @@
                             Total
                         </th>
                         <th>
-                            <%= local_price(((current_customer.vat_rate * @basket.price) + @basket.price)).format %>
+                            <%= local_price((vat_rate(session) * basket_price(basket)) + basket_price(basket)) %>
                         </th>
                     </tr>
                 </thead>
             </table>
             <form action="/currency" method="post">
                 <%= csrf_tag %>
-                <button class="currency-convert <%= 'live' if current_customer.working_currency == 'USD' %>" style="float: right;" type="submit" name="preference" value="USD">$</button>
-                <button class="currency-convert <%= 'live' if current_customer.working_currency == 'GBP' %>" style="float: right;" type="submit" name="preference" value="GBP">£</button>
-                <button class="currency-convert <%= 'live' if current_customer.working_currency == 'EUR' %>" style="float: right;" type="submit" name="preference" value="EUR">€</button>
+                <button class="currency-convert <%= if currency_preference(session) == "USD", do: "live" %>" style="float: right;" type="submit" name="preference" value="USD">$</button>
+                <button class="currency-convert <%= if currency_preference(session) == "GBP", do: "live" %>" style="float: right;" type="submit" name="preference" value="GBP">£</button>
+                <button class="currency-convert <%= if currency_preference(session) == "EUR", do: "live" %>" style="float: right;" type="submit" name="preference" value="EUR">€</button>
             </form>
             </div>
         </div>
@@ -173,34 +172,35 @@
 <div class="row">
     <div class="columns large-6 small-12 hide-for-small">
         <a class="button success continue-shopping" href="/pieces">Continue Shopping</a>
-        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= basket.id %>" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="button alert clear-basket" type="submit" value="Clear Basket">
         </form>
-        <% if !ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
+        <%= if true do %>
+        <!-- # SUSPEND_PAYMENTS TODO -->
         <h6 style="color: black; margin-top: 1em;">This is (temporarily) as far as you can go.  We are still working on the checkout to make buying and downloading sheet music as simple, safe and reliable as possible.  You are welcome to stay here awhile and sample some scores and music.</h6>
         <h6 style="color: black;">Please come back soon.</h6>
         <% end %>
     </div>
     <div class="columns large-6 small-12">
         <div class="checkout-actions">
-            <% if ENV.fetch('SUSPEND_PAYMENTS') { '' }.empty? %>
+          <!-- # SUSPEND_PAYMENTS TODO -->
+            <%= if true do %>
             <h6>
                 Do you have a discount or free download code? Please enter it here:
             </h6>
             <div class="row collapse">
                 <div class="large-12 columns">
-                    <form class="" action="/shopping_baskets/<%= @basket.id %>" method="post">
+                    <form class="" action="/shopping_baskets/<%= basket.id %>" method="post">
                     <input type="hidden" name="_method" value="PATCH">
                         <%= csrf_tag %>
-                        <!-- <input type="hidden" name="order[shopping_basket]" value="<%= @basket.id %>"> -->
-                      <div class="row">
+                        <div class="row">
                             <div class="large-5 medium-6 small-12 columns">
-                                <input type="text" name="shopping_basket[discount]" value="<%= @basket.discount.code %>" placeholder="Discount Code">
+                                <input type="text" name="shopping_basket[discount]" value="<%= discount_code(basket) %>" placeholder="Discount Code">
                             </div>
                             <div class="large-7 medium-6 small-12 columns">
-                                <% if @basket.discount.nil? %>
+                                <%= if basket.discount_id == nil do %>
                                     <button class="updatecart-btn">Apply Discount</button>
                                 <% else %>
                                     <button class="updatecart-btn success">Change Discount</button>
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                     </form>
-                    <% if current_customer.guest? %>
+                    <%= if guest_visitor?(session) do %>
                     <div class="row">
                         <div class="large-5 medium-6 small-12 columns">
                             <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
@@ -219,8 +219,9 @@
                             </p>
                         </div>
                         <div class="large-7 medium-6 small-12 columns">
-                            <a class="button checkout-option-1" href="/sessions/new?requested_path=<%= request.path %>">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                            <a class="button checkout-option-2" href="/customers/new?success_path=<%= request.path %>">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            <!-- Use referrer for redirect -->
+                            <a class="button checkout-option-1" href="/sessions/new">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            <a class="button checkout-option-2" href="/customers/new">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
                         </div>
                     </div>
                     <% else %>
@@ -231,7 +232,7 @@
                                 <p>Secure PayPal Checkout:</p>
                             </div>
                             <div class="large-7 medium-6 small-12 columns">
-                                <% if @basket.free? %>
+                                <%= if free_basket?(basket) do %>
                                     <button class="button checkout-secure-btn">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
                                 <% else %>
                                     <button class="button checkout-secure-btn">Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
@@ -267,12 +268,12 @@
       <div class="vat-wrap">
         <h5>How we charge VAT:</h5>
         <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
-        <h6>You are purchasing from: <%= current_customer.country || 'Login to provide Country' %></h6>
+        <h6>You are purchasing from: <%= current_country(session) || "Login to provide Country" %></h6>
       </div>
     </div>
     <div class="columns large-6 small-12 hide-for-medium-up">
         <a class="button success continue-shopping" href="/pieces">Continue Shopping</a>
-        <form class="as-button" id="form_id" action="/shopping_baskets/<%= @basket.id %>" method="post">
+        <form class="as-button" id="form_id" action="/shopping_baskets/<%= basket.id %>" method="post">
             <%= csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="button alert clear-basket" type="submit" value="Clear Basket">

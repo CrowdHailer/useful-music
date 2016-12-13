@@ -37,6 +37,9 @@ defmodule UM.Web.Public do
   defp public_endpoint(request = %{path: ["sessions" | rest]}, env) do
     UM.Web.SessionsController.handle_request(%{request| path: rest}, env)
   end
+  defp public_endpoint(request = %{path: ["orders" | rest]}, env) do
+    UM.Web.OrdersController.handle_request(%{request| path: rest}, env)
+  end
 
   defp public_endpoint(request = %{path: ["pieces" | rest]}, env) do
     UM.Web.PiecesController.handle_request(%{request| path: rest}, env)

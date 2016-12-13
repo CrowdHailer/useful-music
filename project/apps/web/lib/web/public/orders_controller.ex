@@ -1,4 +1,9 @@
 defmodule UM.Web.OrdersController do
+  require EEx
+
+  basket_file = String.replace_suffix(__ENV__.file, ".ex", "/basket.html.eex")
+  EEx.function_from_file :def, :basket_page_content, basket_file, [:basket, :session]
+
   def handle_request(request = %{
     path: [basket_id, "items"],
     method: :POST,
@@ -20,7 +25,7 @@ defmodule UM.Web.OrdersController do
         UM.Sales.add_item(basket.id, item_id, quantity: quantity)
     end)
 
-    redirect = "/shopping_baskets/#{basket.id}"
+    redirect = "/orders/#{basket.id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Items added to basket")
     |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket.id}))
     r
@@ -37,7 +42,7 @@ defmodule UM.Web.OrdersController do
     quantity = Map.get(item, "quantity")
     {quantity, ""} = Integer.parse(quantity)
     UM.Sales.set_item(basket_id, item_id, quantity: quantity)
-    redirect = "/shopping_baskets/#{basket_id}"
+    redirect = "/orders/#{basket_id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Shopping basket updated")
     |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
     r
@@ -51,10 +56,61 @@ defmodule UM.Web.OrdersController do
     session = UM.Web.Session.get(request)
 
     UM.Sales.set_item(basket_id, item_id, quantity: 0)
-    redirect = "/shopping_baskets/#{basket_id}"
+    redirect = "/orders/#{basket_id}"
     {:ok, r} = Raxx.Patch.redirect(redirect, success: "Item removed from basket")
     |> Raxx.Patch.set_header("um-set-session", Map.merge(session, %{basket_id: basket_id}))
     r
+  end
+
+  def handle_request(request = %{path: [id], method: :GET}, _) do
+    session = UM.Web.Session.get(request)
+    {:ok, basket} = UM.Sales.fetch_shopping_basket(id)
+    |> IO.inspect
+    Raxx.Response.ok(basket_page_content(basket, session))
+  end
+
+  defp csrf_tag do
+    "" # TODO
+  end
+
+  defp local_price(_) do
+    "0" # TODO
+  end
+  defp purchase_price(_) do
+    100 # TODO
+  end
+  defp current_customer(session) do
+    UM.Web.Session.current_customer(session)
+  end
+  defp current_country(session) do
+    nil # TODO
+  end
+  defp purchases_price(basket) do
+    0 # TODO
+  end
+  defp vat_rate(session) do
+    0 # TODO
+  end
+  defp currency_preference(session) do
+    "GBP" # TODO
+  end
+  defp guest_visitor?(session) do
+    false # TODO
+  end
+  def basket_price(basket) do
+    0 # TODO
+  end
+  def discount_code(basket) do
+    "TODO"
+  end
+  def free_basket?(basket) do
+
+  end
+  def product_name(item) do
+    "TODO name"
+  end
+  def subsequent_price(item) do
+    0
   end
 end
 

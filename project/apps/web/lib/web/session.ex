@@ -25,8 +25,16 @@ defmodule UM.Web.Session do
   end
 
   def get(request) do
-    {"um-session", session} = List.keyfind(request.headers, "um-session", 0)
-    session
+    case List.keyfind(request.headers, "um-session", 0) do
+      {"um-session", session} ->
+        session
+      nil ->
+        %__MODULE__{
+          customer_id: nil,
+          currency_preference: "GBP",
+          shopping_basket_id: nil
+        }
+    end
   end
 
   def load_customer(session) do
