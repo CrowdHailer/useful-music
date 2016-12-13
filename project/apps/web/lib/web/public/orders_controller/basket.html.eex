@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-              <%= for purchase <- basket.purchases do %>
+              <%= for {item_id, purchase} <- basket.purchases do %>
               <tr>
                 <td>
                   <a href="/pieces/<%= purchase.item.piece_id %>">
@@ -59,7 +59,7 @@
             </thead>
 
             <tbody>
-                <%= for purchase <- basket.purchases do  %>
+                <%= for {item_id, purchase} <- basket.purchases do  %>
                 <tr>
                     <td>
                         UD<%= purchase.item.piece_id %>
