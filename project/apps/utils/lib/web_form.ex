@@ -55,6 +55,9 @@ defmodule WebForm do
     field(&validate_file(&1, opts), blank: {:continue, %Raxx.Upload{content: "", filename: "", type: "application/octet-stream"}})
   end
 
+  def validate_file(nil, opts) do
+    validate_file(%Raxx.Upload{content: "", filename: "", type: "application/octet-stream"}, opts)
+  end
   def validate_file("", opts) do
     validate_file(%Raxx.Upload{content: "", filename: "", type: "application/octet-stream"}, opts)
   end

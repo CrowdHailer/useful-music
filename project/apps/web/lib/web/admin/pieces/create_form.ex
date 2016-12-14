@@ -31,17 +31,14 @@ defmodule UM.Web.Admin.Pieces.CreateForm do
       violin: WebForm.checkbox(),
       viola: WebForm.checkbox(),
       percussion: WebForm.checkbox(),
-      notation_preview: WebForm.field(fn
-        (%{content: ""}) -> {:ok, :file_not_provided}
-        (x) -> {:ok, x}
-      end), # Hash
-      audio_preview: any(), # Hash
-      cover_image: any(), # Hash
-      print_link: any(), # String
-      print_title: any(), # String
-      weezic_link: any(), # String
-      meta_description: any(), # String
-      meta_keywords: any(), # String
+      notation_preview: WebForm.file(empty: {:ok, :file_not_provided}),
+      audio_preview: WebForm.file(empty: {:ok, :file_not_provided}),
+      cover_image: WebForm.file(empty: {:ok, :file_not_provided}),
+      print_link: any(),
+      print_title: any(),
+      weezic_link: any(),
+      meta_description: any(),
+      meta_keywords: any(),
     }
     WebForm.validate(validator, form)
   end
