@@ -29,6 +29,7 @@ defmodule UM.Web.Admin.Pieces do
   end
 
   def handle_request(%{path: [], method: :POST, body: %{"piece" => form}}, _env) do
+    # IO.inspect(form)
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
         case UM.Catalogue.create_piece(data) do

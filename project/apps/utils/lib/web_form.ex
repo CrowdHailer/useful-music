@@ -50,6 +50,38 @@ defmodule WebForm do
     field(&validate_integer(&1, opts), opts)
   end
 
+  # TODO assume input present fail on missing
+  def file(opts \\ []) do
+    field(&validate_file(&1, opts), blank: {:continue, %Raxx.Upload{content: "", filename: "", type: "application/octet-stream"}})
+  end
+
+  def validate_file("", opts) do
+    validate_file(%Raxx.Upload{content: "", filename: "", type: "application/octet-stream"}, opts)
+  end
+  def validate_file(upload = %Raxx.Upload{}, opts) do
+    opts = Enum.into(opts, %{})
+    case upload_empty?(upload) do
+      true ->
+        Map.get(opts, :empty, {:ok, nil})
+      false ->
+        accept = Map.get(opts, :accept, nil)
+        case accept == nil || Enum.member?(accept, Path.extname(upload.filename)) do
+          false ->
+            {:error, :invalid_file_type}
+          true ->
+            {:ok, upload}
+        end
+    end
+  end
+
+  # Move to raxx
+  def upload_empty?(%{content: ""}) do
+    true
+  end
+  def upload_empty?(%{content: _}) do
+    false
+  end
+
   def validate_integer(raw, opts) do
     opts = Enum.into(opts, %{})
     case Integer.parse(raw) do
@@ -125,6 +157,13 @@ defmodule WebForm do
             end
           :continue ->
             case validator.(value = Map.get(form, "#{key}", "")) do
+              {:ok, validated} ->
+                {key, {:ok, validated}}
+              {:error, reason} ->
+                {key, {:error, reason, value}}
+            end
+          {:continue, default} ->
+            case validator.(value = Map.get(form, "#{key}", default)) do
               {:ok, validated} ->
                 {key, {:ok, validated}}
               {:error, reason} ->
