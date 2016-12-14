@@ -39,7 +39,11 @@ defmodule WebForm do
   defp coerce_checkbox(raw, opts) do
     opts = Enum.into(opts, %{})
     truthy = Map.get(opts, :true, "on")
-    {:ok, raw == truthy}
+    if Map.get(opts, :required) && raw != truthy do
+      {:error, :checkbox_needs_accepting}
+    else
+      {:ok, raw == truthy}
+    end
   end
 
   def integer(opts \\ []) do
@@ -164,13 +168,6 @@ defmodule WebForm do
             {key, {:ok, :match}}
           false ->
             {key, {:error, :does_not_match, ""}}
-        end
-      {key, :required_checkbox} ->
-        case Map.get(form, "#{key}", "off") do
-          "on" ->
-            {key, {:ok, :checked}}
-          _ ->
-            {key, {:error, :checkbox_needs_accepting, ""}}
         end
     end)
     |> Enum.into(%{})

@@ -1,9 +1,6 @@
 defmodule UM.Web.FormFields do
   def name(opts) do
     WebForm.field(&validate_name/1, opts)
-    # WebForm.required()
-    # WebForm.optional( default: 2)
-    # WebForm.field( default: 2) pass blank through
   end
 
   def email(opts) do
@@ -17,6 +14,7 @@ defmodule UM.Web.FormFields do
   def password_confirmation do
     {:confirmation, "password"}
   end
+
   def country(opts) do
     WebForm.field(&pass_all/1, opts)
   end

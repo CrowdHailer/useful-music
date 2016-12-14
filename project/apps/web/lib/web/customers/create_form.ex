@@ -27,7 +27,7 @@ defmodule UM.Web.Customers.CreateForm do
       password: password(required: true),
       password_confirmation: password_confirmation,
       country: country(required: true),
-      terms_agreement: :required_checkbox
+      terms_agreement: WebForm.checkbox(required: true)
     }
     WebForm.validate(validator, form)
   end
