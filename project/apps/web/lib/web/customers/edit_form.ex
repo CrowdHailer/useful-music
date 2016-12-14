@@ -13,13 +13,13 @@ defmodule UM.Web.Customers.EditForm do
 
   def validate(form) do
     WebForm.validate(%{
-      first_name: UM.Web.FormFields.name(required: true),
-      last_name: UM.Web.FormFields.name(required: true),
-      email: UM.Web.FormFields.email(required: true),
-      country: {:required, fn(x) -> {:ok, x} end},
-      question_1: {:optional, fn(x) -> {:ok, x} end},
-      question_2: {:optional, fn(x) -> {:ok, x} end},
-      question_3: {:optional, fn(x) -> {:ok, x} end},
+      first_name: name(required: true),
+      last_name: name(required: true),
+      email: email(required: true),
+      country: country(required: true),
+      question_1: any(),
+      question_2: any(),
+      question_3: any(),
     }, form)
   end
 end

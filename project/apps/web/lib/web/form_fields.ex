@@ -19,6 +19,24 @@ defmodule UM.Web.FormFields do
     WebForm.field(&pass_all/1, opts)
   end
 
+  def price_in_pounds(opts \\ []) do
+    WebForm.field(&validate_price/1, opts)
+  end
+
+  defp validate_price(raw) do
+    case Float.parse(raw) do
+      {float, ""} ->
+        {:ok, round(float * 100)} # TODO check decimal places
+        _ ->
+        {:error, :not_a_float, raw}
+    end
+  end
+
+  def any(opts \\ []) do
+    # DEBT this is not often a good idea
+    WebForm.field(&pass_all/1, opts)
+  end
+
   defp pass_all(input) do
     {:ok, input}
   end

@@ -131,30 +131,6 @@ defmodule WebForm do
                 {key, {:error, reason, value}}
             end
         end
-      {key, {:required, fun}} ->
-        case Map.get(form, "#{key}", "") do
-          "" ->
-            {key, {:error, :required, ""}}
-          value ->
-            case fun.(value) do
-              {:ok, validated} ->
-                {key, {:ok, validated}}
-              {:error, reason} ->
-                {key, {:error, reason, value}}
-            end
-        end
-      {key, {:optional, fun}} ->
-        case Map.get(form, "#{key}", "") do
-          "" ->
-            {key, {:ok, ""}}
-          value ->
-            case fun.(value) do
-              {:ok, validated} ->
-                {key, {:ok, validated}}
-              {:error, reason} ->
-                {key, {:error, reason, value}}
-            end
-        end
       {key, {:confirmation, checks}} ->
         case Map.get(form, checks, "") == Map.get(form, "#{key}", "") do
           true ->
@@ -178,19 +154,6 @@ defmodule WebForm do
             {%{form | key => raw}, %{errors| key => reason}}
         end)
         {:error, {form, errors}}
-    end
-  end
-
-  def validate_integer(raw) do
-    case Integer.parse(raw) do
-      {i, ""} -> {:ok, i}
-      _ -> {:error, :not_and_integer, raw}
-    end
-  end
-  def validate_float(raw) do
-    case Float.parse(raw) do
-      {f, ""} -> {:ok, f}
-      _ -> {:error, :not_and_integer, raw}
     end
   end
 end

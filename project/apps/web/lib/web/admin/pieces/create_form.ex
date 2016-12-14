@@ -1,13 +1,13 @@
 defmodule UM.Web.Admin.Pieces.CreateForm do
+  import UM.Web.FormFields
 
   def validate(form) do
-
     validator = %{
       id: WebForm.integer(min: 100, max: 999, required: true),
-      title: {:required, fn(x) -> {:ok, x} end},
-      sub_heading: {:required, fn(x) -> {:ok, x} end},
-      level_overview: {:required, fn(x) -> {:ok, x} end},
-      description: {:required, fn(x) -> {:ok, x} end},
+      title: any(required: true),
+      sub_heading: any(required: true),
+      level_overview: any(required: true),
+      description: any(required: true),
       solo: WebForm.checkbox(),
       solo_with_accompaniment: WebForm.checkbox(),
       duet: WebForm.checkbox(),
@@ -31,17 +31,17 @@ defmodule UM.Web.Admin.Pieces.CreateForm do
       violin: WebForm.checkbox(),
       viola: WebForm.checkbox(),
       percussion: WebForm.checkbox(),
-      notation_preview: {:optional, fn
+      notation_preview: WebForm.field(fn
         (%{content: ""}) -> {:ok, :file_not_provided}
         (x) -> {:ok, x}
-      end}, # Hash
-      audio_preview: {:optional, fn(x) -> {:ok, x} end}, # Hash
-      cover_image: {:optional, fn(x) -> {:ok, x} end}, # Hash
-      print_link: {:optional, fn(x) -> {:ok, x} end}, # String
-      print_title: {:optional, fn(x) -> {:ok, x} end}, # String
-      weezic_link: {:optional, fn(x) -> {:ok, x} end}, # String
-      meta_description: {:optional, fn(x) -> {:ok, x} end}, # String
-      meta_keywords: {:optional, fn(x) -> {:ok, x} end}, # String
+      end), # Hash
+      audio_preview: any(), # Hash
+      cover_image: any(), # Hash
+      print_link: any(), # String
+      print_title: any(), # String
+      weezic_link: any(), # String
+      meta_description: any(), # String
+      meta_keywords: any(), # String
     }
     WebForm.validate(validator, form)
   end

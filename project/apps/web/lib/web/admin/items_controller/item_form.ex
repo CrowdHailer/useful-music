@@ -1,22 +1,15 @@
 defmodule UM.Web.Admin.ItemsController.ItemForm do
   def validate(form) do
     validator = %{
-      piece_id: {:required, &WebForm.validate_integer/1},
-      name: {:required, fn(x) -> {:ok, x} end},
-      asset: {:required, fn
+      piece_id: WebForm.integer(required: true),
+      name: UM.Web.FormFields.any(required: true),
+      asset: WebForm.field(fn
         (%{content: ""}) -> {:ok, :file_not_provided}
         (x) -> {:ok, x.filename}
-      end},
-      initial_price: {:required, &validate_price/1},
-      discounted_price: {:optional, &validate_price/1}
+      end),
+      initial_price: UM.Web.FormFields.price_in_pounds(required: true),
+      discounted_price: UM.Web.FormFields.price_in_pounds()
     }
     WebForm.validate(validator, form)
-  end
-
-  def validate_price(raw) do
-    case WebForm.validate_float(raw) do
-      {:ok, float} ->
-        {:ok, round(float * 100)} # TODO check decimal places
-    end
   end
 end
