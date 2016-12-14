@@ -32,7 +32,17 @@ defmodule WebForm do
     defstruct [:validator, :blank]
   end
 
-  def integer(opts) do
+  def checkbox(opts \\ []) do
+    field(&coerce_checkbox(&1, opts), opts)
+  end
+
+  defp coerce_checkbox(raw, opts) do
+    opts = Enum.into(opts, %{})
+    truthy = Map.get(opts, :true, "on")
+    {:ok, raw == truthy}
+  end
+
+  def integer(opts \\ []) do
     field(&validate_integer(&1, opts), opts)
   end
 

@@ -67,7 +67,7 @@ defmodule WebFormTest do
   end
 
   test "integer with default" do
-    # should invalid input be coerced
+    # should invalid input be coerced e.g. ballon -> 0
     validator = %{quantity: integer(default: 0)}
 
     assert {:ok, data} = validate(validator, %{"quantity" => "3"})
@@ -77,6 +77,24 @@ defmodule WebFormTest do
     assert {:error, {form, error}} = validate(validator, %{"quantity" => "saphire"})
     assert %{quantity: "saphire"} == form
     assert %{quantity: :not_an_integer} == error
+  end
+
+  test "optional checkbox" do
+    validator = %{choice: checkbox()}
+
+    assert {:ok, data} = validate(validator, %{"choice" => "on"})
+    assert %{choice: true} == data
+    assert {:ok, data} = validate(validator, %{})
+    assert %{choice: false} == data
+  end
+
+  test "required checkbox" do
+    validator = %{choice: checkbox(blank: {:error, :checkbox_needs_accepting})}
+
+    assert {:ok, data} = validate(validator, %{"choice" => "on"})
+    assert %{choice: true} == data
+    assert {:error, {form, error}} = validate(validator, %{})
+    assert %{choice: :checkbox_needs_accepting} == error
   end
 
   defp greeting_validator("hello"), do: {:ok, "Hello"}
