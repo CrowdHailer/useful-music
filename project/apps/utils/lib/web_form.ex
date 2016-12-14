@@ -32,6 +32,32 @@ defmodule WebForm do
     defstruct [:validator, :blank]
   end
 
+  def integer(opts) do
+    field(&validate_integer(&1, opts), opts)
+  end
+
+  def validate_integer(raw, opts) do
+    opts = Enum.into(opts, %{})
+    case Integer.parse(raw) do
+      {i, ""} ->
+        min = Map.get(opts, :min)
+        case min == nil || min < i do
+          true ->
+            max = Map.get(opts, :max)
+            case max == nil || max > i do
+              true ->
+                {:ok, i}
+              false ->
+                {:error, :too_large}
+            end
+          false ->
+            {:error, :too_small}
+        end
+      _ ->
+        {:error, :not_an_integer}
+    end
+  end
+
   def field(validator, options \\ []) do
     options = Enum.into(options, %{})
     blank_action = case Map.fetch(options, :blank) do
