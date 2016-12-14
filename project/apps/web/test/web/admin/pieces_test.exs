@@ -69,7 +69,8 @@ defmodule UM.Web.Admin.PiecesTest do
 
   test "can't create a piece with existing id (redirects to piece)" do
     piece = UM.Web.Fixtures.canonical_piece
-    piece = %{piece | id: "101", notation_preview: %Raxx.Upload{content: "ss"}}
+    # DEBT this overwrites files of the currenct piece
+    piece = %{piece | id: "101", notation_preview: %Raxx.Upload{content: "ss", filename: "billy.jpg"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", form_data(%{
       "piece" => piece

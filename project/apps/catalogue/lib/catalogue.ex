@@ -1,16 +1,11 @@
-defmodule NotationPreview do
+defmodule PieceStorage do
   use Arc.Definition
 
    def __storage, do: Arc.Storage.Local # Add this
 
-  def storage_dir(_version, {file, %{id: id}}) do
+  def storage_dir(:original, {file, %{id: id}}) do
     "uploads/pieces/UD#{id}"
   end
-
-  def filename(:original, {file, %{id: id}}) do
-    "UD#{id}_notation_preview"
-  end
-
 end
 
 defmodule UM.Catalogue do
@@ -27,10 +22,12 @@ defmodule UM.Catalogue do
     # DEBT insert requires a keyword list
     piece = case Map.pop(piece, :notation_preview) do
       {%Raxx.Upload{content: c, filename: filename}, piece} ->
-        # {:ok, filename} = Arc.Storage.Local.put(NotationPreview, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
+        # {:ok, filename} = Arc.Storage.Local.put(PieceStorage, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
         # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
         # take ext from upload
-        {:ok, filename} = NotationPreview.store({%{filename: filename, binary: c}, %{id: id}})
+        filename = "UD#{id}_notation_preview" <> Path.extname(filename)
+
+        {:ok, filename} = PieceStorage.store({%{filename: filename, binary: c}, %{id: id}})
         Map.merge(piece, %{notation_preview: filename})
       {nil, piece} ->
         piece
@@ -131,6 +128,20 @@ defmodule UM.Catalogue do
     nil = Map.get(item, :id)
     item = Map.put(item, :id, random_string(16))
     item = Enum.map(item, fn(x) -> x end)
+
+    item = case Map.pop(item, :asset) do
+      {%Raxx.Upload{content: c, filename: filename}, piece} ->
+        # {:ok, filename} = Arc.Storage.Local.put(PieceStorage, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
+        # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
+        # take ext from upload
+
+
+        # TODO save create an assets uploader
+        # {:ok, filename} = PieceStorage.store({%{filename: filename, binary: c}, %{id: id}})
+        Map.merge(piece, %{asset: filename})
+      {nil, item} ->
+        item
+    end
 
     action = db(:items) |> insert(item)
     case Moebius.Db.run(action) do

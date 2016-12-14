@@ -79,11 +79,11 @@
       </div>
       <div class="row collapse">
         <div class="large-5 medium-5 small-12 columns">
-          <img src="<%= url(piece.cover_image) %>" alt="Piece Cover image">
-          <a href="<%= url(piece.notation_preview) %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
+          <img src="<%= cover_image_url(piece) %>" alt="Piece Cover image">
+          <a href="<%= notation_preview_url(piece) %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
           <h6>LISTEN TO AUDIO PREVIEW</h6>
           <audio preload="auto" controls <%= if true, do: "autoplay" # TODO fetch from query %>>
-            <source src="<%= url(piece.audio_preview) %>" type="audio/mpeg">
+            <source src="<%= audio_preview_url(piece) %>" type="audio/mpeg">
               Your browser does not support the audio element.
             </audio>
           </div>
