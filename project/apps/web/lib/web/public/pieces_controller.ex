@@ -12,7 +12,7 @@ defmodule UM.Web.PiecesController do
 
     {:ok, tags} = WebForm.validate(Enum.into(Enum.map(
       (instruments ++ levels ++ categories),
-      (fn(option) -> {option, {:boolean, false}} end)
+      (fn(option) -> {option, WebForm.checkbox()} end)
     ), %{}), search)
 
     page = %{
