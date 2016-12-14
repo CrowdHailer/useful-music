@@ -32,13 +32,24 @@ defmodule WebForm do
     defstruct [:validator, :blank]
   end
 
-  def field(validator, options \\ %{}) do
+  def field(validator, options \\ []) do
     options = Enum.into(options, %{})
-    options = case Map.get(options, :required) do
-      true ->
-        %{blank: {:error, :required}}
+    blank_action = case Map.fetch(options, :blank) do
+      {:ok, blank_action} ->
+        blank_action
+      :error ->
+        case Map.get(options, :required) do
+          true ->
+            {:error, :required}
+          nil ->
+            case Map.fetch(options, :default) do
+              {:ok, default} ->
+                {:ok, default}
+              :error ->
+                :continue
+            end
+        end
     end
-    {:ok, blank_action} = Map.fetch(options, :blank)
     %Field{validator: validator, blank: blank_action}
   end
 
@@ -58,6 +69,26 @@ defmodule WebForm do
                   {:error, reason} ->
                     {key, {:error, reason, value}}
                 end
+            end
+          {:ok, value} ->
+            case Map.get(form, "#{key}", "") do
+              # Fix to all blank strings
+              "" ->
+                {key, {:ok, value}}
+              value ->
+                case validator.(value) do
+                  {:ok, validated} ->
+                    {key, {:ok, validated}}
+                  {:error, reason} ->
+                    {key, {:error, reason, value}}
+                end
+            end
+          :continue ->
+            case validator.(value = Map.get(form, "#{key}", "")) do
+              {:ok, validated} ->
+                {key, {:ok, validated}}
+              {:error, reason} ->
+                {key, {:error, reason, value}}
             end
         end
       {key, {:required, fun}} ->
