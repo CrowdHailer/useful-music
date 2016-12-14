@@ -7,10 +7,8 @@ defmodule NotationPreview do
     "uploads/pieces/UD#{id}"
   end
 
-  def filename(_version, _rest) do
-    # IO.inspect(version)
-    # IO.inspect(rest)
-    "bob"
+  def filename(:original, {file, %{id: id}}) do
+    "UD#{id}_notation_preview"
   end
 
 end
@@ -28,11 +26,11 @@ defmodule UM.Catalogue do
   def create_piece(piece = %{id: id}) do
     # DEBT insert requires a keyword list
     piece = case Map.pop(piece, :notation_preview) do
-      {%Raxx.Upload{content: c}, piece} ->
+      {%Raxx.Upload{content: c, filename: filename}, piece} ->
         # {:ok, filename} = Arc.Storage.Local.put(NotationPreview, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
         # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
         # take ext from upload
-        {:ok, filename} = NotationPreview.store({%{filename: "notation_preview.pdf", binary: c}, %{id: id}})
+        {:ok, filename} = NotationPreview.store({%{filename: filename, binary: c}, %{id: id}})
         Map.merge(piece, %{notation_preview: filename})
       {nil, piece} ->
         piece
