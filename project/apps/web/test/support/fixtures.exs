@@ -18,7 +18,7 @@ defmodule UM.Web.Fixtures do
       sub_heading: "The very first piece",
       description: "I uses this piece for testing all the flipping time",
       level_overview: "not that easy",
-      notation_preview: "TODO.pdf",
+      notation_preview: "UD101_notation_preview.pdf",
     )
     |> Moebius.Db.run
   end

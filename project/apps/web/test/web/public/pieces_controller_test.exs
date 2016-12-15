@@ -2,7 +2,6 @@ defmodule UM.Web.PiecesControllerTest do
   use ExUnit.Case
   import Raxx.Test
 
-  alias UM.Catalogue
   alias UM.Web.PiecesController, as: Controller
 
   setup do
