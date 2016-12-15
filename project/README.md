@@ -1,6 +1,6 @@
 # TODO
 
-- Check piece and item views, use asset url as `file:///`
+- Check piece and item views, use asset url as `file:///` (cannot use file url as served from vagrant)
 - s3 file uploads
 - Check basket creation and viewing. Admin view of baskets
 - Discounts pages

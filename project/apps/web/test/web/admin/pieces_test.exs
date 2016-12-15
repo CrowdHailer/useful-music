@@ -101,7 +101,7 @@ defmodule UM.Web.Admin.PiecesTest do
     piece = UM.Web.Fixtures.canonical_piece
     piece = %{piece | title: "The new hotness", id: "101", notation_preview: %Raxx.Upload{content: ""}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
-    request = post("/UD101", form_data(%{
+    request = put("/UD101", form_data(%{
       "piece" => piece
     }))
     response = Pieces.handle_request(request, %{})

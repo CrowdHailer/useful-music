@@ -79,9 +79,7 @@ defmodule UM.Web.PiecesController do
   end
 
   def notation_preview_url(piece) do
-    path = UM.Catalogue.PieceStorage.url({piece.notation_preview, piece})
-    path = Path.expand("." <> path)
-    "file://" <> path
+    UM.Catalogue.PieceStorage.url({piece.notation_preview, piece})
   end
 
   def cover_image_url(piece) do

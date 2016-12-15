@@ -46,7 +46,7 @@ defmodule UM.Web.Session do
     :guest
   end
   def current_customer(%{customer_id: id}) do
-    UM.Accounts.fetch_customer(id)
+    UM.Accounts.fetch_customer(id) || :guest
   end
 
   def customer_account_url(session) do

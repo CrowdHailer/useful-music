@@ -22,6 +22,10 @@ defmodule UM.Web do
   end
 
   def handle_request(request, env) do
+    if Mix.env == :dev do
+      IO.inspect(request)
+    end
+
     {session, request} = UM.Web.Session.from_request(request)
     {:ok, request} = Raxx.Patch.set_header(request, "um-session", session)
 

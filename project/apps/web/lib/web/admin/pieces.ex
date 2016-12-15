@@ -59,18 +59,21 @@ defmodule UM.Web.Admin.Pieces do
     end
   end
 
-  def handle_request(%{path: ["UD" <> id], method: :POST, body: %{"piece" => form}}, _) do
-    {id, ""} = Integer.parse(id)
+  def handle_request(%{path: ["UD" <> id], method: :PUT, body: %{"piece" => form}}, _) do
+    # DEBT need to merge in id before validating
+    form = Map.merge(form, %{"id" => id})
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
-        data = %{data | id: id}
         case UM.Catalogue.update_piece(data) do
           {:ok, _piece} ->
             Raxx.Patch.redirect("/admin/pieces/UD#{data.id}/edit", %{success: "Piece updated"})
           {:error, reason} ->
             Raxx.Patch.redirect("/admin/pieces/UD#{data.id}/edit", %{error: reason})
         end
-      {:error, _stuff} ->
+      {:error, reason} ->
+        if Mix.env == :dev do
+          IO.inspect(reason)
+        end
         error_message = "Could not update piece"
         Raxx.Patch.redirect("/admin/pieces/new", %{error: error_message})
     end
