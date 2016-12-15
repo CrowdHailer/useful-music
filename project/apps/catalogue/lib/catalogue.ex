@@ -1,16 +1,6 @@
-defmodule PieceStorage do
-  use Arc.Definition
-
-   def __storage, do: Arc.Storage.Local # Add this
-
-  def storage_dir(:original, {file, %{id: id}}) do
-    "uploads/pieces/UD#{id}"
-  end
-end
-
 defmodule UM.Catalogue do
-  # Also named Inventory
   import Moebius.Query
+  alias UM.Catalogue.{PieceStorage, ItemStorage}
 
   def tags do
     UM.Catalogue.Piece.all_instruments ++
@@ -18,30 +8,41 @@ defmodule UM.Catalogue do
     UM.Catalogue.Piece.all_categories
   end
 
-  def create_piece(piece = %{id: id}) do
-    # DEBT insert requires a keyword list
+  def save_piece_assets(piece) do
     piece = case Map.pop(piece, :notation_preview) do
-      {%Raxx.Upload{content: c, filename: filename}, piece} ->
-        # {:ok, filename} = Arc.Storage.Local.put(PieceStorage, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
-        # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
-        # take ext from upload
-        filename = "UD#{id}_notation_preview" <> Path.extname(filename)
-
-        {:ok, filename} = PieceStorage.store({%{filename: filename, binary: c}, %{id: id}})
+      {in_memory = %{content: _, filename: _}, piece} ->
+        {:ok, filename} = PieceStorage.save_notation_preview(in_memory, piece)
         Map.merge(piece, %{notation_preview: filename})
       {nil, piece} ->
         piece
+      {filename, piece} when is_binary(filename) ->
+        Map.put(piece, :notation_preview, filename)
     end
     piece = case Map.pop(piece, :cover_image) do
-      {_, piece} ->
+      {in_memory = %{content: _, filename: _}, piece} ->
+        {:ok, filename} = PieceStorage.save_cover_image(in_memory, piece)
+        Map.merge(piece, %{cover_image: filename})
+      {nil, piece} ->
         piece
+      {filename, piece} when is_binary(filename) ->
+        Map.put(piece, :cover_image, filename)
     end
     piece = case Map.pop(piece, :audio_preview) do
-      {_, piece} ->
+      {in_memory = %{content: _, filename: _}, piece} ->
+        {:ok, filename} = PieceStorage.save_audio_preview(in_memory, piece)
+        Map.merge(piece, %{audio_preview: filename})
+      {nil, piece} ->
         piece
+      {filename, piece} when is_binary(filename) ->
+        Map.put(piece, :audio_preview, filename)
     end
-    # IO.inspect(piece)
+    piece
+  end
+
+  def create_piece(piece = %{id: id}) do
+    piece = save_piece_assets(piece)
     piece = Enum.map(piece, fn(x) -> x end)
+
     action = db(:pieces) |> insert(piece)
     case Moebius.Db.run(action) do
       record = %{id: ^id} ->
@@ -52,7 +53,6 @@ defmodule UM.Catalogue do
       {:error, reason} ->
         {:error, reason}
     end
-    # |> IO.inspect
   end
 
   def fetch_piece(id) do
@@ -64,12 +64,9 @@ defmodule UM.Catalogue do
   end
 
   def update_piece(piece = %{id: id}) when is_integer(id) do
+    piece = save_piece_assets(piece)
     # DEBT insert requires a keyword list
     piece = Enum.map(piece, fn(x) -> x end)
-    |> Enum.filter(fn
-      ({_, :file_not_provided}) -> false
-      (_) -> true
-    end)
 
     action = db(:pieces)
     |> filter(id: id)
@@ -123,25 +120,26 @@ defmodule UM.Catalogue do
     {:ok, Moebius.Db.run(query)}
   end
 
+  def save_item_assets(item) do
+    case Map.pop(item, :asset) do
+      {in_memory = %{content: _, filename: _}, item} ->
+        {:ok, filename} = ItemStorage.save_asset(in_memory, item)
+        Map.merge(item, %{asset: filename})
+      {nil, item} ->
+        item
+      {filename, item} when is_binary(filename) ->
+        Map.put(item, :asset, filename)
+    end
+  end
+
   def create_item(item) do
     # DEBT insert requires a keyword list
     nil = Map.get(item, :id)
     item = Map.put(item, :id, random_string(16))
+
+    item = save_item_assets(item)
+
     item = Enum.map(item, fn(x) -> x end)
-
-    item = case Map.pop(item, :asset) do
-      {%Raxx.Upload{content: c, filename: filename}, piece} ->
-        # {:ok, filename} = Arc.Storage.Local.put(PieceStorage, 1, {Arc.File.new(%{filename: "noop.txt", binary: c}), %{id: id}})
-        # The filename should not be from the client. It is only rewritten for each version, i.e. thumbnails
-        # take ext from upload
-
-
-        # TODO save create an assets uploader
-        # {:ok, filename} = PieceStorage.store({%{filename: filename, binary: c}, %{id: id}})
-        Map.merge(piece, %{asset: filename})
-      {nil, item} ->
-        item
-    end
 
     action = db(:items) |> insert(item)
     case Moebius.Db.run(action) do
@@ -161,12 +159,10 @@ defmodule UM.Catalogue do
   end
 
   def update_item(item = %{id: id}) do
+    item = save_item_assets(item)
+
     # DEBT insert requires a keyword list
     item = Enum.map(item, fn(x) -> x end)
-    |> Enum.filter(fn
-      ({_, :file_not_provided}) -> false
-      (_) -> true
-    end)
 
     action = db(:items)
       |> filter(id: id)
