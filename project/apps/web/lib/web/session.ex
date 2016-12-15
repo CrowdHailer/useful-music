@@ -6,13 +6,9 @@ defmodule UM.Web.Session do
         {session, request}
       nil ->
         {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
-        session = case Poison.decode(session) do
-          {:ok, raw} ->
-            %__MODULE__{
-              customer_id: Map.get(raw, "customer_id"),
-              currency_preference: Map.get(raw, "currency_preference"),
-              shopping_basket_id: Map.get(raw, "shopping_basket_id")
-            }
+        session = case decode(session) do
+          {:ok, session} ->
+            session
           _ ->
             %{
               customer_id: nil,
@@ -23,7 +19,19 @@ defmodule UM.Web.Session do
         # DEBT delete session from cookies
         {session, request}
     end
+  end
 
+  def decode(string) do
+    case Poison.decode(string) do
+      {:ok, raw} ->
+        {:ok, %__MODULE__{
+          customer_id: Map.get(raw, "customer_id"),
+          currency_preference: Map.get(raw, "currency_preference"),
+          shopping_basket_id: Map.get(raw, "shopping_basket_id")
+        }}
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
   def load_customer(session) do

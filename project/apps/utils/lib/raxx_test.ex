@@ -24,6 +24,13 @@ defmodule Raxx.Test do
     }
   end
 
+  def encode_form(data) do
+    %{
+      headers: [{"content-type", "application/x-www-form-urlencoded"}],
+      body: Plug.Conn.Query.encode(data)
+    }
+  end
+
   defp build(method, url, body, headers) when is_binary(url) do
     {url, query} = case String.split(url, "?") do
       [url, qs] ->

@@ -5,7 +5,7 @@ defmodule UM.Sales.Basket do
 
   A shopping basket is just a pending order, particularly as an order can have more than one transaction
   purchase can also be thought of as order line.
-  We will have separate order and basket, order should be thought of as transaction.
+  We will have separate order and order, basket should be thought of as transaction.
   return locked basket from repo
   """
   defstruct [
@@ -22,7 +22,7 @@ defmodule UM.Sales.Basket do
     }
   end
 
-  def empty?(order), do: number_of_lines(order) == 0
+  def empty?(basket), do: number_of_lines(basket) == 0
 
   def number_of_lines(%{purchases: purchases}), do: Enum.count(purchases)
 
@@ -33,9 +33,9 @@ defmodule UM.Sales.Basket do
     end)
   end
 
-  def edit_line(order = %{purchases: purchases}, %{item: item, quantity: quantity}) do
+  def edit_line(basket = %{purchases: purchases}, %{item: item, quantity: quantity}) do
     purchases = Map.put(purchases, item.id, %{item: item, quantity: quantity})
-    %{order | purchases: purchases}
+    %{basket | purchases: purchases}
   end
 
   def list_price(%{purchases: purchases}) do
@@ -49,12 +49,12 @@ defmodule UM.Sales.Basket do
     UM.Catalogue.Item.price_for(item, quantity)
   end
 
-  def add_discount(order, discount) do
-    %{order | discount: discount}
+  def add_discount(basket, discount) do
+    %{basket | discount: discount}
   end
 
-  def discount_value(order) do
-    case order.discount do
+  def discount_value(basket) do
+    case basket.discount do
       nil ->
         0
       %{value: value} ->
@@ -62,8 +62,8 @@ defmodule UM.Sales.Basket do
     end
   end
 
-  def free?(order) do
-    discount_value(order) > list_price(order)
+  def free?(basket) do
+    discount_value(basket) > list_price(basket)
   end
 
   def start_transaction(basket, %{vat_rate: vat_rate, currency: :GBP}) do

@@ -59,6 +59,15 @@ defmodule UM.Web.Fixtures do
     piece
   end
 
+  def guest_basket do
+    basket = db(:shopping_baskets) |> insert(id: "inprogress-shop")
+    |> Moebius.Db.run
+    garden_tiger
+    UM.Sales.set_item(basket.id, "garden-flute-part")
+    UM.Sales.set_item(basket.id, "garden-all-parts")
+    basket
+  end
+
   def bugs_bunny do
     db(:customers)
     |> insert(
@@ -75,6 +84,7 @@ defmodule UM.Web.Fixtures do
 
   # Like joe blogs
   # Big spender
+  # has completed order but no current basket
   def jo_brand do
     db(:customers)
     |> insert(
