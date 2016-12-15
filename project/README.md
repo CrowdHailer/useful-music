@@ -1,6 +1,17 @@
 # TODO
 
-- form validation on files
+- Check piece and item views, use asset url as `file:///`
+- s3 file uploads
+- Check basket creation and viewing. Admin view of baskets
+- Discounts pages
+- Create Order, autocomplete for free orders
+- Admin views for order and and shopping baskets
+- Check customer pages, view order
+- Deployment
+- Paypal integration
+- Bug tracking
+
+- form validation on files, accept types
 - encrypt password in db
 - csrf middleware
 - html escape
