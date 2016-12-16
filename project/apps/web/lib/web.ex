@@ -44,14 +44,7 @@ defmodule UM.Web do
 
     request = %{request | body: body}
 
-    request = case request.body do
-      %{"_method" => "DELETE"} ->
-        %{request | method: :DELETE}
-      %{"_method" => "PUT"} ->
-        %{request | method: :PUT}
-      _ ->
-        request
-    end
+    request = Raxx.MethodOverride.override_method(request)
 
     %{status: status, headers: headers, body: body} = endpoint(request, env)
 

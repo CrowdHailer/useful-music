@@ -25,7 +25,7 @@ defmodule UM.Web.Mixfile do
       {:accounts, in_umbrella: true},
       {:utils, in_umbrella: true},
       {:ace, "~> 0.7.0"},
-      {:raxx, "~> 0.7.0"},
+      {:raxx, "~> 0.7.1"},
       {:moebius, "~> 2.0.0"},
       {:poison, "~> 2.0.1"},
       {:plug, "~> 1.2.2"} # TODO remove; currently used for query strings etc
