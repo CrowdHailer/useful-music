@@ -31,6 +31,7 @@ defmodule Raxx.Test do
     }
   end
 
+  # This should be the `Raxx.request` function
   defp build(method, url, body, headers) when is_binary(url) do
     {url, query} = case String.split(url, "?") do
       [url, qs] ->

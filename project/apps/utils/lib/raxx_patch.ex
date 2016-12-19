@@ -41,6 +41,17 @@ defmodule Raxx.Patch do
     {:ok, request}
   end
 
+  @doc """
+  redirect to a new url.
+
+  Don't have flash explicitly named?
+  use function head of the form
+  redirect(url)
+  redirect({path, query})
+  redirect(url, body) # pattern match
+  redirect(url, headers)
+  redirect(url, content, extra_headers)
+  """
   def redirect(url, flash) do
     flash = Enum.into(flash, %{})
     flash = Poison.encode!(flash)
