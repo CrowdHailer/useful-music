@@ -1,7 +1,34 @@
+Useful Music
+============
+
+Application to sell sheet music and associated audio tracks.
+
+## Installation
+
+```sh
+# Clone this repository
+git clone git@github.com:CrowdHailer/useful-music.git
+cd useful-music
+
+# start up the development environment
+vagrant up
+vagrant ssh
+```
+
+## Development
+
+This is a migration of a Ruby project to an elixir project.
+Ruby code will only be deleted once the functionality has been migrated.
+
+## Notes
+
+- maybe project should be renamed development and mapped directly to the vagrant file.
+
+
 # TODO
 
-- Check piece and item views, use asset url as `file:///` (cannot use file url as served from vagrant)
-- s3 file uploads
+### For Demo
+
 - Check basket creation and viewing. Admin view of baskets
 - Discounts pages
 - Create Order, autocomplete for free orders
@@ -11,10 +38,15 @@
 - Paypal integration
 - Bug tracking
 
+### For Production
+
 - form validation on files, accept types
 - encrypt password in db
 - csrf middleware
 - html escape
+
+### Nice to have
+
 - add items to public piece show page test
 - all prices are in pence lookup money package
 - paginate in SQL query
