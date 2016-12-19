@@ -33,13 +33,22 @@ use Mix.Config
 env_name = case Mix.env do
   :test -> :test
   :dev -> :development
+  :prod -> :production
 end
 
-config :moebius, connection: [
-  hostname: System.get_env("PGHOST"),
-  username: System.get_env("PGUSER"),
-  password: System.get_env("PGPASSWORD"),
-  database: "useful_music_#{env_name}",
+connection_config = case System.get_env("DATABASE_URL") do
+  url when is_binary(url) ->
+    [url: url]
+  :nil ->
+    [
+      hostname: System.get_env("PGHOST"),
+      username: System.get_env("PGUSER"),
+      password: System.get_env("PGPASSWORD"),
+      database: "useful_music_#{env_name}"
+    ]
+end
+
+config :moebius, connection: connection_config ++ [
   pool_mod: DBConnection.Poolboy
 ],
 scripts: "test/db"

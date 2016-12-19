@@ -6,8 +6,10 @@ defmodule UM.Web do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    port = System.get_env("PORT") || "8080"
+    {port, ""} = Integer.parse(port)
     children = [
-      worker(Ace.TCP, [{Raxx.Adapters.Ace.Handler, @raxx_app}, [port: 8080]])
+      worker(Ace.TCP, [{Raxx.Adapters.Ace.Handler, @raxx_app}, [port: port]])
     ]
 
     opts = [strategy: :one_for_one, name: UM.Web.Supervisor]
