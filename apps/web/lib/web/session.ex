@@ -54,7 +54,7 @@ defmodule UM.Web.Session do
       :guest ->
         nil
       %{id: id} ->
-        "/customer/#{id}"
+        "/customers/#{id}"
     end
   end
 
