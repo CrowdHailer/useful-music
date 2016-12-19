@@ -33,6 +33,7 @@ use Mix.Config
 env_name = case Mix.env do
   :test -> :test
   :dev -> :development
+  :prod -> :production
 end
 
 config :moebius, connection: [
