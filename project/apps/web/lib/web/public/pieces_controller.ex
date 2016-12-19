@@ -79,7 +79,7 @@ defmodule UM.Web.PiecesController do
   end
 
   def notation_preview_url(piece) do
-    UM.Catalogue.PieceStorage.url({piece.notation_preview, piece})
+    UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original, signed: true)
   end
 
   def cover_image_url(piece) do

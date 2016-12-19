@@ -1,9 +1,11 @@
 defmodule UM.Catalogue.PieceStorage do
   use Arc.Definition
 
-   def __storage, do: Arc.Storage.Local # Add this
+  if Mix.env == :test do
+     def __storage, do: Arc.Storage.Local # Add this
+  end
 
-  def storage_dir(:original, {file, %{id: id}}) do
+  def storage_dir(:original, {_file, %{id: id}}) do
     "uploads/pieces/UD#{id}"
   end
 

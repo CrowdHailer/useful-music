@@ -43,3 +43,21 @@ config :moebius, connection: [
   pool_mod: DBConnection.Poolboy
 ],
 scripts: "test/db"
+
+
+config :arc,
+  bucket: {:system, "S3_BUCKET_NAME"},
+  # access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}],
+  # secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}],
+  asset_host: "https://s3-us-west-2.amazonaws.com/useful-music-tmp"
+
+config :ex_aws,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  s3: [
+    scheme: "https://",
+    host: "s3-us-west-2.amazonaws.com",
+    region: "us-west-2"
+  ]
+
+config :ex_aws, debug_requests: true
