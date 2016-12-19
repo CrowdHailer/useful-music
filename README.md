@@ -20,12 +20,21 @@ vagrant ssh
 This is a migration of a Ruby project to an elixir project.
 Ruby code will only be deleted once the functionality has been migrated.
 
+## Production
+
+Hosted on a heroku environment.
+Requires a database as well as elixir AND ruby build packs.
+
+- [elixir build pack](https://github.com/HashNuke/heroku-buildpack-elixir)
+- [instructions for multiple buildpacks](https://devcenter.heroku.com/articles/using-multiple-buildpacks-for-an-app)
+- [instruction for installing elixir buildpack](http://www.phoenixframework.org/docs/heroku)
+
+
+Had to stop using subdirectory for elixir project.
+Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as-an-app/) was a possible alternative
+
 ## Notes
 
-- maybe project should be renamed development and mapped directly to the vagrant file.
-
-
-# TODO
 
 ### For Demo
 
