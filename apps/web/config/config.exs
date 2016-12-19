@@ -31,6 +31,7 @@ use Mix.Config
 
 # Need this for interop with ruby sequel
 # TODO web should not need access to the database directly
+# TODO only need to setup db config once
 env_name = case Mix.env do
   :test -> :test
   :dev -> :development
@@ -53,3 +54,8 @@ config :moebius, connection: connection_config ++ [
   pool_mod: DBConnection.Poolboy
 ],
 scripts: "test/db"
+
+config :bugsnag,
+  api_key: System.get_env("BUGSNAG_API_KEY"),
+  use_logger: true,
+  release_stage: "elixir"

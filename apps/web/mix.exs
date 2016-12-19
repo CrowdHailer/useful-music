@@ -15,7 +15,7 @@ defmodule UM.Web.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :moebius, :catalogue, :accounts],
+    [applications: [:logger, :moebius, :catalogue, :accounts, :bugsnag],
      mod: {UM.Web, []}]
   end
 
@@ -25,6 +25,7 @@ defmodule UM.Web.Mixfile do
       {:accounts, in_umbrella: true},
       {:utils, in_umbrella: true},
       {:ace, "~> 0.7.0"},
+      {:bugsnag, "~> 1.3.2"},
       {:raxx, "~> 0.7.1"},
       {:moebius, "~> 2.0.0"},
       {:poison, "~> 2.0.1"},
