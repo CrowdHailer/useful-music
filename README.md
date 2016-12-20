@@ -39,13 +39,10 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 ### For Demo
 
 - Check basket creation and viewing. Admin view of baskets
-- Discounts pages
 - Create Order, autocomplete for free orders
 - Admin views for order and and shopping baskets
 - Check customer pages, view order
-- Deployment
 - Paypal integration
-- Bug tracking
 
 ### For Production
 
