@@ -50,19 +50,28 @@ defmodule UM.Web.Admin.DiscountsController do
   end
 
   def discount_value(%{value: pence}) do
-    pence / 100
+    (pence || 0) / 100
   end
 
   def number_redeemed(_) do
     "0" # TODO
   end
 
+  def discount_start_datetime(%{start_datetime: nil}) do
+    ""
+  end
   def discount_start_datetime(%{start_datetime: datetime}) do
-    [date, _time] = String.split(datetime, " ")
-    date
+    postgres_datetime_to_iso8601(datetime)
   end
 
-  def discount_end_datetime(%{start_datetime: datetime}) do
+  def discount_end_datetime(%{end_datetime: nil}) do
+    ""
+  end
+  def discount_end_datetime(%{end_datetime: datetime}) do
+    postgres_datetime_to_iso8601(datetime)
+  end
+
+  defp postgres_datetime_to_iso8601(datetime) do
     [date, _time] = String.split(datetime, " ")
     date
   end
