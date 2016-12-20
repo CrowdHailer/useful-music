@@ -36,6 +36,9 @@ defmodule UM.Web.Admin do
   def endpoint(request = %{path: ["items" | rest]}, env) do
     UM.Web.Admin.ItemsController.handle_request(%{request | path: rest}, env)
   end
+  def endpoint(request = %{path: ["discounts" | rest]}, env) do
+    UM.Web.Admin.DiscountsController.handle_request(%{request | path: rest}, env)
+  end
 
   def endpoint(request = %{path: ["customers" | rest]}, env) do
     UM.Web.Admin.Customers.handle_request(%{request | path: rest}, env)

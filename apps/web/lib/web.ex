@@ -87,8 +87,15 @@ defmodule UM.Web do
     rescue
       exception ->
         Bugsnag.report(exception)
-        body = "See Bug Report"
-        Raxx.Response.internal_server_error(body, [{"content-length", "#{:erlang.iolist_size(body)}"}])
+        case Mix.env do
+          :dev ->
+            stacktrace = System.stacktrace
+            body = Raxx.DebugPage.html(request, {:error, exception, stacktrace}, :web)
+            Raxx.Response.internal_server_error(body, [{"content-length", "#{:erlang.iolist_size(body)}"}])
+          _ ->
+            body = "See Bug Report"
+            Raxx.Response.internal_server_error(body, [{"content-length", "#{:erlang.iolist_size(body)}"}])
+        end
     end
   end
 
