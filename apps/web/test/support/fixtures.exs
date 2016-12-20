@@ -7,6 +7,7 @@ defmodule UM.Web.Fixtures do
     db(:pieces) |> delete |> Moebius.Db.run
     db(:customers) |> delete |> Moebius.Db.run
     db(:shopping_baskets) |> delete |> Moebius.Db.run
+    db(:discounts) |> delete |> Moebius.Db.run
     :ok
   end
 
@@ -95,6 +96,20 @@ defmodule UM.Web.Fixtures do
       password: "password",
       country: "GB",
       admin: false
+    )
+    |> Moebius.Db.run
+  end
+
+  def test_discount() do
+    db(:discounts)
+    |> insert(
+      id: "test-code",
+      code: "TEST123",
+      value: 1000,
+      allocation: 10,
+      customer_allocation: 1,
+      start_datetime: {{2016, 1, 1}, {0, 0, 0}},
+      end_datetime: {{2020, 1, 1}, {0, 0, 0}},
     )
     |> Moebius.Db.run
   end

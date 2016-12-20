@@ -90,6 +90,10 @@ defmodule UM.Web.Session do
     session.customer_id == customer_id || admin?(session)
   end
 
+  def csrf_tag do
+    "" # TODO
+  end
+
   ## MOVE to test
 
   def customer_session(customer) do
