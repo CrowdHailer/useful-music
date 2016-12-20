@@ -28,4 +28,16 @@ defmodule UM.Sales.Discounts do
         {:ok, discount}
     end
   end
+
+  def update(discount = %{id: id}) do
+    discount = Enum.map(discount, fn(x) -> x end)
+
+    action = db(:discounts) |> filter(id: id) |> update(discount)
+    case Moebius.Db.run(action) do
+      record = %{id: ^id} ->
+        {:ok, record}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
 end
