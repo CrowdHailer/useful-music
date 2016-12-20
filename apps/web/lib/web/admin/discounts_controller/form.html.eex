@@ -8,16 +8,20 @@
     </aside>
     <article class="col col-4-5">
 
-        <h2 id="item-type">New Discount</h2>
+        <h2><%= form_title(discount) %></h2>
         <hr>
-        <form class="pure-form pure-form-aligned" action="/admin/discounts" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-            <%= csrf_tag %>
+        <form class="pure-form pure-form-aligned" action="/admin/discounts/<%= if discount.id, do: discount.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+            <%= UM.Web.Session.csrf_tag %>
+            <%= if discount.id do %>
+            <input type="hidden" name="_method" value="PUT">
+            <% end %>
             <fieldset>
                 <div class="pure-control-group">
                     <label for="discount_code">Code</label>
                     <input
                         id="discount_code"
                         name="discount[code]"
+                        value="<%= discount.code %>"
                         autofocus
                         required
                         placeholder="EXAMPLE001">
@@ -28,6 +32,7 @@
                     <input
                         id="discount_value"
                         name="discount[value]"
+                        value="<%= discount.value %>"
                         type="number"
                         step="0.01"
                         min="1"
@@ -42,6 +47,7 @@
                     <input
                         id="discount_allocation"
                         name="discount[allocation]"
+                        value="<%= discount.allocation %>"
                         type="number"
                         step="1"
                         min="1"
@@ -55,6 +61,7 @@
                     <input
                         id="discount_customer_allocation"
                         name="discount[customer_allocation]"
+                        value="<%= discount.customer_allocation %>"
                         type="number"
                         step="1"
                         min="1"
@@ -69,6 +76,7 @@
                     <input
                         id="discount_start_datetime"
                         name="discount[start_datetime]"
+                        value="<%= discount.start_datetime %>"
                         type="date"
                         required
                         placeholder="">
@@ -79,6 +87,7 @@
                     <input
                         id="discount_end_datetime"
                         name="discount[end_datetime]"
+                        value="<%= discount.end_datetime %>"
                         type="date"
                         required
                         placeholder="">

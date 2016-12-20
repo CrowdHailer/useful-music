@@ -15,4 +15,10 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
     assert 200 == response.status
     assert String.contains?(response.body, code)
   end
+
+  test "new page is ready" do
+    request = get("/new")
+    response = Controller.handle_request(request, [])
+    assert 200 == response.status
+  end
 end
