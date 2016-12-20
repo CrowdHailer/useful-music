@@ -21,4 +21,20 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
     response = Controller.handle_request(request, [])
     assert 200 == response.status
   end
+
+  test "can create a discount" do
+    request = post("/", form_data(%{"discount" => %{
+      "code" => "mycode23",
+      "allocation" => "100",
+      "customer_allocation" => "1",
+      "value" => "10.00",
+      "start_datetime" => "2016-01-01",
+      "end_datetime" => "2020-01-01",
+    }}))
+    response = Controller.handle_request(request, [])
+    redirect = Raxx.Patch.follow(response)
+    assert {%{success: "Discount created"}, _request} = UM.Web.Flash.from_request(redirect)
+    assert ["admin", "discounts", id] = redirect.path
+    assert {:ok, %{code: "MYCODE23", value: 1000}} = UM.Sales.Discounts.fetch_by_id(id)
+  end
 end

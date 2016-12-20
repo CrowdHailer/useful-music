@@ -32,6 +32,27 @@ defmodule UM.Web.FormFields do
     end
   end
 
+  def discount_code(opts \\ []) do
+    WebForm.field(&validate_discount_code/1, opts)
+  end
+
+  defp validate_discount_code(raw) do
+    {:ok, raw
+    |> String.strip
+    |> String.upcase}
+  end
+
+  def date(opts) do
+    WebForm.field(&validate_date/1, opts)
+  end
+
+  defp validate_date(raw) do
+    case Date.from_iso8601(raw) do
+      {:ok, date} ->
+        {:ok, Date.to_iso8601(date) <> " 00:00:00"}
+    end
+  end
+
   def any(opts \\ []) do
     # DEBT this is not often a good idea
     WebForm.field(&pass_all/1, opts)
