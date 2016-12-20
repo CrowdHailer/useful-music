@@ -49,22 +49,22 @@ defmodule UM.Web.Admin.DiscountsController do
     end
   end
 
-  def discount_value(_) do
-    "TODO"
+  def discount_value(%{value: pence}) do
+    pence / 100
   end
 
   def number_redeemed(_) do
-    "TODO"
+    "0" # TODO
   end
 
-  def discount_start_datetime(_) do
-    # .strftime('%Y-%m-%d')
-    "TODO"
+  def discount_start_datetime(%{start_datetime: datetime}) do
+    [date, _time] = String.split(datetime, " ")
+    date
   end
 
-  def discount_end_datetime(_) do
-    # .strftime('%Y-%m-%d')
-    "TODO"
+  def discount_end_datetime(%{start_datetime: datetime}) do
+    [date, _time] = String.split(datetime, " ")
+    date
   end
 
   def form_title(%{id: nil}) do
