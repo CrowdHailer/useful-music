@@ -52,10 +52,6 @@ defmodule UM.Web.PasswordResetsController do
     end
   end
 
-  def csrf_tag do
-    "" # TODO
-  end
-
   def use_token do
     # OK.try do
     #   data <- ChangePasswordForm.validate(form)

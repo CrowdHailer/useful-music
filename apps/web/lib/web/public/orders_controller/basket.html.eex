@@ -24,13 +24,13 @@
                 </td>
                 <td>
                   <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
-                      <%= csrf_tag %>
+                      <%= UM.Web.Session.csrf_tag %>
                       <input type="hidden" name="_method" value="PUT">
                       <input type="number" min="1" step="1" name="item[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
                       <input class="button mobile-alert" type="submit" value="Update">
                   </form>
                   <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
-                      <%= csrf_tag %>
+                      <%= UM.Web.Session.csrf_tag %>
                       <input type="hidden" name="_method" value="DELETE">
                       <input class="button alert mobile-alert" type="submit" value="Remove">
                   </form>
@@ -74,7 +74,7 @@
                     </td>
                     <td>
                         <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
-                            <%= csrf_tag %>
+                            <%= UM.Web.Session.csrf_tag %>
                             <input type="hidden" name="_method" value="PUT">
                             <input type="number" min="1" step="1" name="item[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
                             <input class="button tiny" type="submit" value="Update">
@@ -91,7 +91,7 @@
                     </td>
                     <td>
                         <form id="form_id" action="/orders/<%= basket.id %>/items/<%= purchase.item.id %>" method="post">
-                            <%= csrf_tag %>
+                            <%= UM.Web.Session.csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
                             <input class="button tiny alert" type="submit" value="Remove">
                         </form>
@@ -160,7 +160,7 @@
                 </thead>
             </table>
             <form action="/currency" method="post">
-                <%= csrf_tag %>
+                <%= UM.Web.Session.csrf_tag %>
                 <button class="currency-convert <%= if currency_preference(session) == "USD", do: "live" %>" style="float: right;" type="submit" name="preference" value="USD">$</button>
                 <button class="currency-convert <%= if currency_preference(session) == "GBP", do: "live" %>" style="float: right;" type="submit" name="preference" value="GBP">£</button>
                 <button class="currency-convert <%= if currency_preference(session) == "EUR", do: "live" %>" style="float: right;" type="submit" name="preference" value="EUR">€</button>
@@ -173,7 +173,7 @@
     <div class="columns large-6 small-12 hide-for-small">
         <a class="button success continue-shopping" href="/pieces">Continue Shopping</a>
         <form class="as-button" id="form_id" action="/shopping_baskets/<%= basket.id %>" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="button alert clear-basket" type="submit" value="Clear Basket">
         </form>
@@ -194,7 +194,7 @@
                 <div class="large-12 columns">
                     <form class="" action="/shopping_baskets/<%= basket.id %>" method="post">
                     <input type="hidden" name="_method" value="PATCH">
-                        <%= csrf_tag %>
+                        <%= UM.Web.Session.csrf_tag %>
                         <div class="row">
                             <div class="large-5 medium-6 small-12 columns">
                                 <input type="text" name="shopping_basket[discount]" value="<%= discount_code(basket) %>" placeholder="Discount Code">
@@ -226,7 +226,7 @@
                     </div>
                     <% else %>
                     <form id="checkout-button" action="/orders" method="post" class="">
-                        <%= csrf_tag %>
+                        <%= UM.Web.Session.csrf_tag %>
                         <div class="row">
                             <div class="large-5 medium-6 small-12 columns">
                                 <p>Secure PayPal Checkout:</p>
@@ -274,7 +274,7 @@
     <div class="columns large-6 small-12 hide-for-medium-up">
         <a class="button success continue-shopping" href="/pieces">Continue Shopping</a>
         <form class="as-button" id="form_id" action="/shopping_baskets/<%= basket.id %>" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="button alert clear-basket" type="submit" value="Clear Basket">
         </form>

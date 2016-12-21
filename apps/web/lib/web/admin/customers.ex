@@ -50,10 +50,6 @@ defmodule UM.Web.Admin.Customers do
     end
   end
 
-  def csrf_tag do
-    "" # "todo csrf tag"
-  end
-
   def customer_name(%{first_name: first_name, last_name: last_name}) do
     # FIXME move to Accounts
     "#{first_name} #{last_name}"

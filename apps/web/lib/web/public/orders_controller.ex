@@ -68,10 +68,6 @@ defmodule UM.Web.OrdersController do
     Raxx.Response.ok(basket_page_content(basket, session))
   end
 
-  defp csrf_tag do
-    "" # TODO
-  end
-
   defp local_price(_) do
     "0" # TODO
   end

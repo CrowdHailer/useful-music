@@ -70,8 +70,4 @@ defmodule UM.Web.Admin.ItemsController do
   defp asset_url(_item) do
     "TODO"
   end
-
-  defp csrf_tag do
-    "" # TODO
-  end
 end

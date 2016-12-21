@@ -6,7 +6,7 @@
 <div class="row collapse">
     <div class="large-12 columns">
         <form class="" action="/customers?success_path=<%= success_path %>" accept-charset="UTF-8" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <fieldset>
                 <div class="row">
                     <div class="large-4 columns large-offset-2 <%= if errors.first_name, do: "error" %>">

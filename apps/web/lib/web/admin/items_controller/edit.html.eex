@@ -16,7 +16,7 @@
     <article class="col col-4-5">
         <h2>Edit Item</h2>
         <form class="button" id="form_id" action="/admin/items/<%= item.id %>" method="post" onsubmit="return confirm('Are you sure you want to remove \'<%= item.name %>\' from \'<%= piece.title %>\'')">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="destroy" type="submit" name="some_name" value="Remove Item">
         </form>
@@ -25,7 +25,7 @@
         </p>
         <hr>
         <form class="pure-form pure-form-aligned" action="/admin/items/<%= item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
 

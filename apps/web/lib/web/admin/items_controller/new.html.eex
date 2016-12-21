@@ -20,7 +20,7 @@
         </p>
         <hr>
         <form class="pure-form pure-form-aligned" action="/admin/items/" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="item[piece_id]" value="<%= piece.id %>">
             <fieldset>
 

@@ -43,8 +43,4 @@ defmodule UM.Web.SessionsController do
     response = Raxx.Response.see_other("", [{"location", "/"}])
     Raxx.Session.Open.overwrite(nil, response)
   end
-
-  defp csrf_tag do
-    "TODO"
-  end
 end

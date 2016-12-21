@@ -87,10 +87,6 @@ defmodule UM.Web.Admin.Pieces do
     end
   end
 
-  defp csrf_tag do
-    "TODO create a real tag"
-  end
-
   defp url(_file) do
     "TODO"
   end

@@ -6,7 +6,7 @@
 <div class="row collapse">
     <div class="large-12 columns">
         <form action="/sessions" accept-charset="UTF-8" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="requested_path" value="<%= target %>">
             <fieldset>
                 <div class="row">

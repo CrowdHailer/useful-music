@@ -88,10 +88,4 @@ defmodule UM.Web.Public do
   def current_basket_total(_session) do
     "£4.25"
   end
-
-  def csrf_tag do
-    "" #TODO
-  end
-
-
 end

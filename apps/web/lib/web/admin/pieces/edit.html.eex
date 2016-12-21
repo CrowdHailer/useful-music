@@ -20,7 +20,7 @@
         <h2>Edit Piece: <%= UM.Catalogue.Piece.catalogue_number(piece) %></h2>
 
         <form class="pure-form pure-form-aligned" action="/admin/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <fieldset>
                 <div class="pure-control-group">

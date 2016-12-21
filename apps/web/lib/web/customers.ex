@@ -98,9 +98,6 @@ defmodule UM.Web.Customers do
     end
   end
 
-  def csrf_tag do
-# TODO
-  end
   def render(_) do
     "TODO"
   end

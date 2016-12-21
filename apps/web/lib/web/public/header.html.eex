@@ -35,7 +35,7 @@
   <div class="medium-6 small-12 columns">
     <li>
         <form class="logout-form-mobile" id="form_id" action="/sessions" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
             <input class="logout-form-input" type="submit" value="logout">
         </form>
@@ -219,7 +219,7 @@
                             </li>
                             <li>
                                 <form class="logout-form" id="form_id" action="/sessions" method="post">
-                                    <%= csrf_tag %>
+                                    <%= UM.Web.Session.csrf_tag %>
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="submit" value="logout">
                                 </form>
@@ -236,7 +236,7 @@
                     </div>
                     <div class="large-6 columns">
                         <form action="/currency" method="post">
-                            <%= csrf_tag %>
+                            <%= UM.Web.Session.csrf_tag %>
                             <button class="currency-convert-head <%= if preferred_currency(session) == "USD", do: "live" %>" type="submit" name="preference" value="USD">$</button>
                             <button class="currency-convert-head <%= if preferred_currency(session) == "GBP", do: "live" %>" type="submit" name="preference" value="GBP">£</button>
                             <button class="currency-convert-head <%= if preferred_currency(session) == "EUR", do: "live" %>" type="submit" name="preference" value="EUR">€</button>

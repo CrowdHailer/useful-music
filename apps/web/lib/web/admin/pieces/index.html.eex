@@ -95,7 +95,7 @@
                     <th>
                         <a class="edit" href="/admin/pieces/<%= piece.id %>/edit">edit</a>
                         <form class="button" id="form_id" action="/admin/pieces/<%= piece.id %>" method="post" onsubmit="return confirm('Are you sure you want to destroy UD<%= piece.id %> ')">
-                            <%= csrf_tag %>
+                            <%= UM.Web.Session.csrf_tag %>
                             <input type="hidden" name="_method" value="DELETE">
                             <input class="destroy" type="submit" name="some_name" value="Destroy">
                         </form>

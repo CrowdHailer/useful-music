@@ -6,7 +6,7 @@
 <div class="row collapse">
     <div class="large-12 columns">
         <form class="" action="/password_resets/<%= token %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-            <%= csrf_tag %>
+            <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="email" value="<%= email %>">
             <fieldset>

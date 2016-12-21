@@ -11,7 +11,7 @@
     <h2 id="item-type">New Piece</h2>
     <hr>
     <form class="pure-form pure-form-aligned" action="/admin/pieces" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
-      <%= csrf_tag %>
+      <%= UM.Web.Session.csrf_tag %>
       <fieldset>
         <div class="pure-control-group">
           <label for="piece_id">Catalog <em>UD</em></label>

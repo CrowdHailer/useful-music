@@ -65,10 +65,6 @@ defmodule UM.Web.PiecesController do
     UM.Catalogue.Piece.all_categories
   end
 
-  defp csrf_tag do
-    "" # TODO
-  end
-
   defp shopping_basket do
     %{
       id: "TODO"
