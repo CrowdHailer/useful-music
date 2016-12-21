@@ -1,14 +1,11 @@
 defmodule UM.Web.Admin.Pieces do
   require EEx
 
-  new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
-  EEx.function_from_file :def, :new_page_content, new_file, []
-
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
   EEx.function_from_file :def, :index_page_content, index_file, [:page]
 
-  edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
-  EEx.function_from_file :def, :edit_page_content, edit_file, [:piece]
+  edit_form_template = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
+  EEx.function_from_file :def, :edit_form, edit_form_template, [:piece]
 
   def handle_request(%{path: [], method: :GET}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
@@ -25,7 +22,8 @@ defmodule UM.Web.Admin.Pieces do
   end
 
   def handle_request(%{path: ["new"]}, _env) do
-    Raxx.Response.ok(new_page_content)
+    piece = %UM.Catalogue.Piece{items: []}
+    Raxx.Response.ok(edit_form(piece))
   end
 
   def handle_request(%{path: [], method: :POST, body: %{"piece" => form}}, _env) do
@@ -53,7 +51,7 @@ defmodule UM.Web.Admin.Pieces do
     case UM.Catalogue.fetch_piece(id) do
       {:ok, piece} ->
         {:ok, piece} = UM.Catalogue.load_items(piece)
-        Raxx.Response.ok(edit_page_content(piece))
+        Raxx.Response.ok(edit_form(piece))
       {:error, :piece_not_found} ->
         Raxx.Response.not_found("Could not find piece UD#{id}")
     end

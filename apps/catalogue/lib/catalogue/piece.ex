@@ -1,6 +1,6 @@
 defmodule UM.Catalogue.Piece do
   defstruct [
-    id: "", # Integer
+    id: nil, # Integer
     title: "", # String
     sub_heading: "", # String
     level_overview: "", # String
@@ -36,6 +36,7 @@ defmodule UM.Catalogue.Piece do
     weezic_link: "", # String
     meta_description: "", # String
     meta_keywords: "", # String
+    items: :not_loaded
   ]
 
   def catalogue_number(%{id: id}) do

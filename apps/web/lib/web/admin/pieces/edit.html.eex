@@ -4,9 +4,11 @@
             <li class="menu-option">
                 <a class="menu-link" href="/admin/pieces">Back to pieces</a>
             </li>
+            <%= if piece.id do %>
             <li class="menu-option">
                 <a class="menu-link" href="/admin/items/new?piece_id=<%= piece.id %>">Add Item</a>
             </li>
+            <% end %>
             <hr>
             <%= for item <- piece.items do %>
             <li class="menu-option">
@@ -16,12 +18,22 @@
         </ul>
     </aside>
     <article class="col col-4-5">
-
+        <%= if piece.id do %>
         <h2>Edit Piece: <%= UM.Catalogue.Piece.catalogue_number(piece) %></h2>
-
+        <% else %>
+        <h2 id="item-type">New Piece</h2>
+        <% end %>
+        <hr>
+        <%= if piece.id do %>
         <form class="pure-form pure-form-aligned" action="/admin/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <% else %>
+        <form class="pure-form pure-form-aligned" action="/admin/pieces" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <% end %>
             <%= UM.Web.Session.csrf_tag %>
+            <%= if piece.id do %>
             <input type="hidden" name="_method" value="PUT">
+              <!-- else POST -->
+            <% end %>
             <fieldset>
                 <div class="pure-control-group">
                     <label for="piece_id">Catalog <em>UD</em></label>
@@ -312,7 +324,13 @@
 
                 <div class="pure-control-group">
                     <label></label>
-                    <span><a href="<%= url(piece.notation_preview) %>">existing asset</a></span>
+                    <span>
+                        <%= if url(piece.notation_preview) do %>
+                        <a href="<%= url(piece.notation_preview) %>">existing asset</a>
+                        <% else %>
+                        No Audio Preview
+                        <% end %>
+                    </span>
                 </div>
 
                 <div class="pure-control-group">

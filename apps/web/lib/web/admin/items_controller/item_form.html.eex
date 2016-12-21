@@ -33,7 +33,10 @@
         <hr>
         <form class="pure-form pure-form-aligned" action="/admin/items/<%= item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
             <%= UM.Web.Session.csrf_tag %>
+            <%= if item.id do %>
             <input type="hidden" name="_method" value="PUT">
+              <!-- else POST -->
+            <% end %>
             <fieldset>
 
                 <div class="pure-control-group">
