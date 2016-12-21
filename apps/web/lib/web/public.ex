@@ -22,7 +22,6 @@ defmodule UM.Web.Public do
         request
       request = %{status: _, body: content} ->
         %{request | body: layout_page(content, session)}
-        # TODO adjust content length?
     end
   end
 
@@ -81,7 +80,7 @@ defmodule UM.Web.Public do
   end
 
   defp number_of_purchases(_session) do
-    # TODO
+    # TODO number of purchases
     2
   end
 

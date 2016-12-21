@@ -38,7 +38,7 @@ defmodule UM.Web.Home do
       "GBP" -> "GBP"
       _ -> "GBP"
     end
-    # TODO send to referer
+
     referrer = Raxx.Patch.referrer(request) || "/"
     {session, request} = UM.Web.Session.from_request(request)
     session = case UM.Web.Session.current_customer(session) do
@@ -55,9 +55,5 @@ defmodule UM.Web.Home do
 
   def handle_request(%{path: ["favicon.ico"], method: :GET}, _) do
     Raxx.Response.not_found
-  end
-
-  defp url(_filename) do
-    "random" # TODO
   end
 end
