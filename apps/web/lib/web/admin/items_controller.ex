@@ -1,17 +1,15 @@
 defmodule UM.Web.Admin.ItemsController do
   require EEx
 
-  new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")
-  EEx.function_from_file :def, :new_page_content, new_file, [:piece]
-
-  edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
-  EEx.function_from_file :def, :edit_page_content, edit_file, [:item, :piece]
+  form_template = String.replace_suffix(__ENV__.file, ".ex", "/item_form.html.eex")
+  EEx.function_from_file :def, :edit_form, form_template, [:item, :piece]
 
   def handle_request(%{method: :GET, path: ["new"], query: %{"piece_id" => piece_id}}, _) do
     {piece_id, ""} = Integer.parse(piece_id)
     case UM.Catalogue.fetch_piece(piece_id) do
       {:ok, piece} ->
-        Raxx.Response.ok(new_page_content(piece))
+        item = %UM.Catalogue.Item{}
+        Raxx.Response.ok(edit_form(item, piece))
     end
   end
 
@@ -35,7 +33,7 @@ defmodule UM.Web.Admin.ItemsController do
     case UM.Catalogue.fetch_item(id) do
       {:ok, item} ->
         {:ok, piece} = UM.Catalogue.fetch_piece(item.piece_id)
-        Raxx.Response.ok(edit_page_content(item, piece))
+        Raxx.Response.ok(edit_form(item, piece))
       # DEBT if manage to visit no item page
     end
   end
@@ -54,7 +52,7 @@ defmodule UM.Web.Admin.ItemsController do
 
   def handle_request(%{method: :DELETE, path: [id]}, _) do
     case UM.Catalogue.delete_item(id) do
-      {:ok, id} ->
+      {:ok, _id} ->
         Raxx.Patch.redirect("/admin/pieces", %{success: "Item removed"})
     end
   end

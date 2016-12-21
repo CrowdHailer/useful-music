@@ -14,6 +14,7 @@
       </ul>
     </aside>
     <article class="col col-4-5">
+        <%= if item.id do %>
         <h2>Edit Item</h2>
         <form class="button" id="form_id" action="/admin/items/<%= item.id %>" method="post" onsubmit="return confirm('Are you sure you want to remove \'<%= item.name %>\' from \'<%= piece.title %>\'')">
             <%= UM.Web.Session.csrf_tag %>
@@ -23,6 +24,12 @@
         <p>
           Edit item '<%= item.name %>'. Which belongs to piece <em>'<%= product_name(piece) %>'</em>, Catalogue number '<%= catalogue_number(piece) %>'
         </p>
+        <% else %>
+        <h2>Add Item</h2>
+        <p>
+          Add item to piece <em>'<%= product_name(piece) %>'</em>, Catalogue number '<%= catalogue_number(piece) %>'
+        </p>
+        <% end %>
         <hr>
         <form class="pure-form pure-form-aligned" action="/admin/items/<%= item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
             <%= UM.Web.Session.csrf_tag %>
@@ -67,12 +74,14 @@
 
                 <hr>
 
+                <%= if item.id do %>
                 <p>
                   NB if changing name reupload asset as names are currently assigned on upload
                 </p>
                 <p>
                   Leave blank to use <a href="<%= asset_url(item) %>" target="_blank">exisiting asset</a>
                 </p>
+                <% end %>
                 <input type="file" name="[item][asset]" placeholder="asset">
             </fieldset>
 

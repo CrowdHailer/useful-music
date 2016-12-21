@@ -1,5 +1,6 @@
 defmodule UM.Catalogue.Item do
   defstruct [
+    id: nil,
     name: nil,
     initial_price: nil,
     discounted_price: nil,
@@ -14,7 +15,7 @@ defmodule UM.Catalogue.Item do
   def initial_price(%{initial_price: i}) do
     i
   end
-  
+
   def subsequent_price(%{initial_price: i, discounted_price: d}) do
     d || i
   end
