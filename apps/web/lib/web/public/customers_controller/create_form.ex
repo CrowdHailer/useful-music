@@ -1,5 +1,5 @@
 # Rename SignUpForm
-defmodule UM.Web.Customers.CreateForm do
+defmodule UM.Web.CustomersController.CreateForm do
   # All of these fields are required
   # extra fields are not necessary a problem but might clash with db rows, unlikely
 

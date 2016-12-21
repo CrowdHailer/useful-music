@@ -1,4 +1,4 @@
-defmodule UM.Web.Customers.ChangePasswordForm do
+defmodule UM.Web.CustomersController.ChangePasswordForm do
   import UM.Web.FormFields
 
   def validate(form) do

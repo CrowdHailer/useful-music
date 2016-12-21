@@ -1,4 +1,4 @@
-defmodule UM.Web.Customers.EditForm do
+defmodule UM.Web.CustomersController.EditForm do
   defstruct [
     first_name: nil,
     last_name: nil,

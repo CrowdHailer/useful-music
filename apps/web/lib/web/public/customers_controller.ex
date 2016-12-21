@@ -1,5 +1,5 @@
-defmodule UM.Web.Customers do
-  alias UM.Web.Customers.{CreateForm, EditForm, ChangePasswordForm}
+defmodule UM.Web.CustomersControllerController do
+  alias UM.Web.CustomersController.{CreateForm, EditForm, ChangePasswordForm}
   require EEx
 
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")

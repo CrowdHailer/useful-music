@@ -1,7 +1,7 @@
-defmodule UM.Web.Customers.CreateFormTest do
+defmodule UM.Web.CustomersController.CreateFormTest do
   use ExUnit.Case, async: true
 
-  alias UM.Web.Customers.CreateForm
+  alias UM.Web.CustomersController.CreateForm
 
   @valid_form %{
     "first_name" => "Will",

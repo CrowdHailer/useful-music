@@ -30,7 +30,7 @@ defmodule UM.Web.Public do
   end
 
   defp public_endpoint(request = %{path: ["customers" | rest]}, env) do
-    UM.Web.Customers.handle_request(%{request| path: rest}, env)
+    UM.Web.CustomersControllerController.handle_request(%{request| path: rest}, env)
   end
   defp public_endpoint(request = %{path: ["sessions" | rest]}, env) do
     UM.Web.SessionsController.handle_request(%{request| path: rest}, env)

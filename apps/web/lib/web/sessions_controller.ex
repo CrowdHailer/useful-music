@@ -1,6 +1,4 @@
 defmodule UM.Web.SessionsController do
-  # alias UM.Web.Customers.CreateForm
-
   require EEx
 
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")

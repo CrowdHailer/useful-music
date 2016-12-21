@@ -1,10 +1,9 @@
-defmodule UM.Web.CustomersTest do
-  #not async untill removed reverence to db
+defmodule UM.Web.CustomersControllerControllerTest do
   use ExUnit.Case
 
   import Raxx.Test
 
-  alias UM.Web.Customers, as: Controller
+  alias UM.Web.CustomersControllerController, as: Controller
 
   setup do
     :ok = UM.Web.Fixtures.clear_db
