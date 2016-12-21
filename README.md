@@ -54,6 +54,7 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 
 ### Nice to have
 
+- set signed url expiry to 60 minutes
 - sort items in shopping basket by piece id
 - password reset checks the token has not expired
 - single page info webform
