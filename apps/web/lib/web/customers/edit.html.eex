@@ -2,7 +2,7 @@
 <div class="row collapse white-section section-bottom-margin">
   <div class="large-3 columns">
     <!-- FILTER FORM LEFT -->
-    <%= render :'_account_sidebar' %>
+    <%= render_account_sidebar(form) %>
   </div>
 
   <div class="large-9 columns">

@@ -3,17 +3,17 @@
     <div class="account-wrap account">
       <h1></h1>
       <li class="button account-button">
-        <a href="/customers/<%= @customer.id %>/orders">My Orders &amp; Downloads</a>
+        <a href="/customers/<%= customer.id %>/orders">My Orders &amp; Downloads</a>
       </li>
       <li class="button account-button">
-        <a href="/customers/<%= @customer.id %>/edit">Edit Account</a>
+        <a href="/customers/<%= customer.id %>/edit">Edit Account</a>
       </li>
       <li class="button account-button">
-        <a href="/customers/<%= @customer.id %>/change_password">Change Password</a>
+        <a href="/customers/<%= customer.id %>/change_password">Change Password</a>
       </li>
       <li class="button account-button logout-btn">
         <form id="form_id" action="/sessions" method="post">
-          <%= csrf_tag %>
+          <%= UM.Web.Session.csrf_tag %>
           <input type="hidden" name="_method" value="DELETE">
           <input type="submit" value="LOGOUT">
         </form>
