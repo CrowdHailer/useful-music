@@ -50,7 +50,6 @@ defmodule UM.Sales do
   def fetch_shopping_basket(basket_id) do
     basket_query = db(:shopping_baskets) |> filter(id: basket_id)
     basket = Moebius.Db.first(basket_query)
-    # TODO sort purchases by piece id
     case basket do
       nil ->
         {:error, :not_found}

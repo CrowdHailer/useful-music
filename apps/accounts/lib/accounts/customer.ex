@@ -1,6 +1,5 @@
 defmodule UM.Accounts.Customer do
   def reset_password(customer, %{password: password, password_reset_token: token}) do
-    # TODO check token expiry
     case token == customer.password_reset_token do
       true ->
         {:ok, Map.merge(customer, %{

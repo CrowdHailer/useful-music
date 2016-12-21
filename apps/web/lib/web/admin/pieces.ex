@@ -9,7 +9,7 @@ defmodule UM.Web.Admin.Pieces do
 
   def handle_request(%{path: [], method: :GET}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
-    # TODO fix pages
+    # TODO fix pagination
     Raxx.Response.ok(index_page_content(Page.paginate(pieces, %{page_size: 10, page_number: 1})))
   end
 
@@ -27,14 +27,12 @@ defmodule UM.Web.Admin.Pieces do
   end
 
   def handle_request(%{path: [], method: :POST, body: %{"piece" => form}}, _env) do
-    # IO.inspect(form)
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
         case UM.Catalogue.create_piece(data) do
           {:ok, _piece} ->
             Raxx.Patch.redirect("/admin/pieces", %{success: "Piece created"})
           {:error, :id_already_used} ->
-            # TODO change to sending to the edit page
             error_message = "Piece UD#{data.id} already exists and may be edited"
             Raxx.Patch.redirect("/admin/pieces/UD#{data.id}/edit", %{error: error_message})
           {:error, reason} ->
@@ -58,7 +56,6 @@ defmodule UM.Web.Admin.Pieces do
   end
 
   def handle_request(%{path: ["UD" <> id], method: :PUT, body: %{"piece" => form}}, _) do
-    # DEBT need to merge in id before validating
     form = Map.merge(form, %{"id" => id})
     case __MODULE__.CreateForm.validate(form) do
       {:ok, data} ->
@@ -84,9 +81,4 @@ defmodule UM.Web.Admin.Pieces do
         Raxx.Patch.redirect("/admin/pieces", %{success: "Piece deleted"})
     end
   end
-
-  defp url(_file) do
-    "TODO"
-  end
-
 end

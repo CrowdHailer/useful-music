@@ -116,4 +116,16 @@ defmodule UM.Catalogue.Piece do
     :quartet,
     :larger_ensembles]
   end
+
+  def notation_preview_url(piece) do
+    UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original, signed: true)
+  end
+
+  def cover_image_url(piece) do
+    UM.Catalogue.PieceStorage.url({piece.cover_image, piece}, :original, signed: true)
+  end
+
+  def audio_preview_url(piece) do
+    UM.Catalogue.PieceStorage.url({piece.audio_preview, piece}, :original, signed: true)
+  end
 end

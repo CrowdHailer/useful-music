@@ -104,8 +104,6 @@ defmodule UM.Catalogue do
         db(:pieces)
         |> filter(tags)
     end
-
-    # TODO this should load all the items as well
     {:ok, Moebius.Db.run(query)}
   end
 

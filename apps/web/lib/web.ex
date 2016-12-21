@@ -66,10 +66,9 @@ defmodule UM.Web do
 
       headers = case List.keytake(headers, "um-flash", 0) do
         {{"um-flash", flash}, headers} ->
-          # TODO pull location from headers
           location = Raxx.Patch.response_location(%{headers: headers})
           qs = flash |> Poison.encode! |> URI.encode
-          # TODO location with existing query
+          # DEBT location with existing query
           location = location <> "?flash=" <> qs
           List.keyreplace(headers, "location", 0, {"location", location})
         nil ->

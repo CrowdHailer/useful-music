@@ -65,16 +65,12 @@ defmodule UM.CatalogueTest do
     assert {:error, _reason} = Catalogue.update_piece(piece)
   end
 
-  # TODO delete piece
-
   test "fetch a list of all pieces" do
     {:ok, [piece]} = Catalogue.search_pieces()
     assert 101 = piece.id
   end
 
-  # TODO start catalogue with a few items
   test "can create a new item", %{id: piece_id} do
-    # alternative signature (%{id: piece_id}, item)
     {:ok, item} = Catalogue.create_item(%{
       name: "audio",
       initial_price: 60,
@@ -86,7 +82,6 @@ defmodule UM.CatalogueTest do
   end
 
   test "can update an item", %{id: piece_id} do
-    # alternative signature (%{id: piece_id}, item)
     {:ok, item} = Catalogue.create_item(%{
       name: "audio",
       initial_price: 60,

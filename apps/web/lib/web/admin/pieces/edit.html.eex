@@ -325,8 +325,8 @@
                 <div class="pure-control-group">
                     <label></label>
                     <span>
-                        <%= if url(piece.notation_preview) do %>
-                        <a href="<%= url(piece.notation_preview) %>">existing asset</a>
+                        <%= if piece.notation_preview do %>
+                        <a href="<%= UM.Catalogue.Piece.notation_preview_url(piece) %>">existing asset</a>
                         <% else %>
                         No Audio Preview
                         <% end %>
@@ -344,8 +344,8 @@
                 <div class="pure-control-group">
                     <label></label>
                     <span>
-                        <%= if url(piece.audio_preview) do %>
-                        <a href="<%= url(piece.audio_preview) %>">existing asset</a>
+                        <%= if piece.audio_preview do %>
+                        <a href="<%= UM.Catalogue.Piece.audio_preview_url(piece) %>">existing asset</a>
                         <% else %>
                         No Audio Preview
                         <% end %>
@@ -363,8 +363,8 @@
                 <div class="pure-control-group">
                     <label></label>
                     <span>
-                        <% if url(piece.cover_image) do %>
-                        <a href="<%= url(piece.cover_image) %>">existing asset</a>
+                        <% if piece.cover_image do %>
+                        <a href="<%= UM.Catalogue.Piece.cover_image_url(piece) %>">existing asset</a>
                         <% else %>
                         No Audio Preview
                         <% end %>

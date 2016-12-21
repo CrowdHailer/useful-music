@@ -131,14 +131,8 @@ defmodule Raxx.Session do
   end
 
   def parse_request_cookies(request) do
-    # TODO delegate to cookies
     headers = request.headers
     {"cookie", cookie_string} = List.keyfind(headers, "cookie", 0, {"cookie", ""})
     cookies = Raxx.Cookie.parse([cookie_string])
   end
-
-
-  # TODO redirect is broken
-  # Raxx.Response.redirect("body")
-  # |> Raxx.Response.set_cookie("user.id", "hi")
 end

@@ -1,5 +1,5 @@
 defmodule Raxx.Test do
-  # TODO stringify query keys
+  # DEBT stringify query keys
   def get(url, body \\ "", headers \\ []) do
     build(:GET, url, body, headers)
   end
@@ -17,7 +17,7 @@ defmodule Raxx.Test do
   end
 
   def form_data(data) do
-    # TODO stringify keys
+    # DEBT stringify keys
     %{
       headers: [{"content-type", "application/x-www-form-urlencoded"}],
       body: data
@@ -43,7 +43,7 @@ defmodule Raxx.Test do
     build(method, url, query, body, headers)
   end
   defp build(method, {url, query}, body, headers) do
-    # TODO check url string for query
+    # DEBT check url string for query
     build(method, url, query, body, headers)
   end
   defp build(method, url, query, body, headers) when is_list(body) do

@@ -74,18 +74,6 @@ defmodule UM.Web.PiecesController do
     "£TODO"
   end
 
-  def notation_preview_url(piece) do
-    UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original, signed: true)
-  end
-
-  def cover_image_url(piece) do
-    UM.Catalogue.PieceStorage.url({piece.cover_image, piece})
-  end
-
-  def audio_preview_url(piece) do
-    UM.Catalogue.PieceStorage.url({piece.audio_preview, piece})
-  end
-
   defp stringify_option(term) do
     "#{term}"
     |> String.capitalize

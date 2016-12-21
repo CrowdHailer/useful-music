@@ -3,10 +3,6 @@ defmodule UM.Web.Customers.CreateForm do
   # All of these fields are required
   # extra fields are not necessary a problem but might clash with db rows, unlikely
 
-  # TODO delete this
-  # In controller
-  # EditForm.errors(%{})
-
   defstruct [
     first_name: nil,
     last_name: nil,

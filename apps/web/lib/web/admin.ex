@@ -19,7 +19,6 @@ defmodule UM.Web.Admin do
             request
           request = %{status: _, body: content} ->
             %{request | body: layout_page(content, flash)}
-            # TODO adjust content length?
         end
       false ->
         Raxx.Response.forbidden("Forbidden")

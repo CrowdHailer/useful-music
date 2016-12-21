@@ -50,7 +50,6 @@ defmodule WebForm do
     field(&validate_integer(&1, opts), opts)
   end
 
-  # TODO assume input present fail on missing
   def file(opts \\ []) do
     field(&validate_file(&1, opts), blank: {:continue, %Raxx.Upload{content: "", filename: "", type: "application/octet-stream"}})
   end

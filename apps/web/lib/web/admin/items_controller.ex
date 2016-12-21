@@ -65,7 +65,7 @@ defmodule UM.Web.Admin.ItemsController do
     UM.Catalogue.Piece.product_name(piece)
   end
 
-  defp asset_url(_item) do
-    "TODO"
+  defp asset_url(item) do
+    UM.Catalogue.ItemStorage.url({item.asset, item}, :original, signed: true)
   end
 end
