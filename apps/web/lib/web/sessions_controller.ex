@@ -15,7 +15,8 @@ defmodule UM.Web.SessionsController do
     end
   end
 
-  def handle_request(%{path: [], method: :POST, body: body}, _env) do
+  def handle_request(request = %{path: [], method: :POST, body: body}, _env) do
+    {session, _request} = UM.Web.Session.from_request(request)
     form = Map.get(body, "session")
     case {:ok, %{email: form["email"], password: form["password"]}} do
       {:ok, data} ->
@@ -24,7 +25,7 @@ defmodule UM.Web.SessionsController do
             target = Map.get(body, "target", "/customers/#{customer.id}")
             Raxx.Patch.redirect(target)
             |> with_flash(success: "Welcome back #{UM.Accounts.Customer.name(customer)}")
-            |> with_session(%UM.Web.Session{customer_id: customer.id, currency_preference: customer.currency_preference})
+            |> with_session(UM.Web.Session.login(session, customer))
           {:error, :invalid_credentials} ->
             Raxx.Patch.redirect("/sessions/new")
             |> with_flash(error: "Invalid login details")

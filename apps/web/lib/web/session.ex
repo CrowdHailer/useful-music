@@ -94,6 +94,10 @@ defmodule UM.Web.Session do
     "" # TODO
   end
 
+  def login(session, customer) do
+    %__MODULE__{customer_id: customer.id, currency_preference: customer.currency_preference}
+  end
+
   ## MOVE to test
 
   def customer_session(customer) do
