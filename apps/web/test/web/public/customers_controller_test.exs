@@ -32,12 +32,12 @@ defmodule UM.Web.CustomersControllerControllerTest do
     assert location = Raxx.Patch.response_location(response)
     redirection = get(location)
     assert ["customers", id] = redirection.path
-    assert _flash = redirection.query["flash"]
+    assert List.keyfind(response.headers, "um-flash", 0)
     customer = UM.Accounts.fetch_customer(id)
     assert "Bill" == customer.first_name
     assert "USD" == customer.currency_preference
     # TODO check the last email sent
-    # TODO check session is set
+    assert {"um-set-session", %{customer_id: ^id}} = List.keyfind(response.headers, "um-set-session", 0)
   end
 
   test "rerenders form for bad password" do

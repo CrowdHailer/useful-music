@@ -24,11 +24,11 @@ defmodule UM.Web.SessionsController do
           {:ok, customer} ->
             target = Map.get(body, "target", "/customers/#{customer.id}")
             Raxx.Patch.redirect(target)
-            |> with_flash(success: "Welcome back #{UM.Accounts.Customer.name(customer)}")
-            |> with_session(UM.Web.Session.login(session, customer))
+            |> UM.Web.with_flash(success: "Welcome back #{UM.Accounts.Customer.name(customer)}")
+            |> UM.Web.with_session(UM.Web.Session.login(session, customer))
           {:error, :invalid_credentials} ->
             Raxx.Patch.redirect("/sessions/new")
-            |> with_flash(error: "Invalid login details")
+            |> UM.Web.with_flash(error: "Invalid login details")
         end
     end
   end
@@ -36,19 +36,5 @@ defmodule UM.Web.SessionsController do
   def handle_request(_request = %{path: [], method: :DELETE}, _) do
     response = Raxx.Response.see_other("", [{"location", "/"}])
     Raxx.Session.Open.overwrite(nil, response)
-  end
-
-  def with_flash(request, flash) do
-    flash = Enum.into(flash, %{})
-    # {"location", url} = List.keyfind(request.headers, "location", 0)
-    # [url] = String.split(url, "?") # DEBT this checks no query already set
-    # flash = Poison.encode!(flash)
-    # query = URI.encode_query(%{flash: flash})
-    # headers = List.keyreplace(request.headers, "location", 0, {"location", url <> "?" <> query})
-    %{request | headers: request.headers ++ [{"um-flash", flash}]}
-  end
-
-  def with_session(request, session) do
-    %{request | headers: request.headers ++ [{"um-set-session", session}]}
   end
 end

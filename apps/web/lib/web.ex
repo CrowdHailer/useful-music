@@ -106,4 +106,18 @@ defmodule UM.Web do
   defp endpoint(request, env) do
     UM.Web.Public.handle_request(request, env)
   end
+
+  def with_flash(request, flash) do
+    flash = Enum.into(flash, %{})
+    # {"location", url} = List.keyfind(request.headers, "location", 0)
+    # [url] = String.split(url, "?") # DEBT this checks no query already set
+    # flash = Poison.encode!(flash)
+    # query = URI.encode_query(%{flash: flash})
+    # headers = List.keyreplace(request.headers, "location", 0, {"location", url <> "?" <> query})
+    %{request | headers: request.headers ++ [{"um-flash", flash}]}
+  end
+
+  def with_session(request, session) do
+    %{request | headers: request.headers ++ [{"um-set-session", session}]}
+  end
 end

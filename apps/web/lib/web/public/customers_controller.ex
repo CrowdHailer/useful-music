@@ -42,9 +42,10 @@ defmodule UM.Web.CustomersControllerController do
               {:error, reason} ->
                 IO.inspect(reason)
                 Raxx.Response.conflict(new_page_content(customer, %{email: "is already taken"}, ""))
-              %{id: id} ->
-                success_message = "Welcome to Useful Music"
-                Raxx.Patch.redirect("/customers/#{id}", success: success_message)
+              customer = %{id: id} ->
+                Raxx.Patch.redirect("/customers/#{id}")
+                |> UM.Web.with_flash(success: "Welcome to Useful Music")
+                |> UM.Web.with_session(UM.Web.Session.login(session, customer))
             end
         end
       false ->
