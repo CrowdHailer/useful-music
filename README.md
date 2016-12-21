@@ -35,7 +35,6 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 
 ## Notes
 
-
 ### For Demo
 
 - Check basket creation and viewing. Admin view of baskets
@@ -46,6 +45,7 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 
 ### For Production
 
+- mailers
 - form validation on files, accept types
 - encrypt password in db
 - csrf middleware
