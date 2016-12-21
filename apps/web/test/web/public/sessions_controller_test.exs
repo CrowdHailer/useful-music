@@ -75,7 +75,7 @@ defmodule UM.Web.SessionsControllerTest do
       "session" => %{"email" => jo.email, "password" => jo.password}
     })
     response = SessionsController.handle_request(request, :nostate)
-    assert 303 == response.status
+    assert 302 == response.status
     assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
     # DEBT test encoded session.
   end

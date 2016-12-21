@@ -11,4 +11,8 @@ defmodule UM.Accounts.Customer do
         {:error, :invalid_token}
     end
   end
+
+  def name(%{first_name: first_name, last_name: last_name}) do
+    "#{first_name} #{last_name}"
+  end
 end
