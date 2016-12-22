@@ -1,4 +1,5 @@
 defmodule UM.Web.CustomersControllerController do
+  import UM.Web.ViewHelpers
   alias UM.Web.CustomersController.{CreateForm, EditForm, ChangePasswordForm}
   require EEx
 
@@ -108,9 +109,5 @@ defmodule UM.Web.CustomersControllerController do
         customer = Map.merge(form, %{id: customer.id})
         Raxx.Response.bad_request(edit_page_content(customer, errors, ""))
     end
-  end
-
-  def all_countries do
-    [{"Great Britian", "GB"}]
   end
 end

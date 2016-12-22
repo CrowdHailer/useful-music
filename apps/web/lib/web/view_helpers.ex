@@ -1,10 +1,18 @@
 defmodule UM.Web.ViewHelpers do
 
+  def logged_in?(session) do
+    !UM.Session.guest_session?(session)
+  end
+
   ####### ACCOUNTS #######
 
   def customer_name(customer) do
     # FIXME html escape because outside information
     UM.Accounts.Customer.name(customer)
+  end
+
+  def all_countries do
+    [{"Great Britian", "GB"}]
   end
 
   ####### CATALOGUE #######
@@ -23,11 +31,19 @@ defmodule UM.Web.ViewHelpers do
   def item_discounted_price(%{discounted_price: nil}), do: nil
   def item_discounted_price(%{discounted_price: pence}), do: pence / 100
 
+  def item_subsequent_price(item) do
+    UM.Catalogue.Item.subsequent_price(item) / 100
+  end
+
   def item_asset_url(item) do
     UM.Catalogue.ItemStorage.url({item.asset, item}, :original, signed: true)
   end
 
   ####### SALES #######
+
+  def purchase_price(%{quantity: quantity, item: item}) do
+    UM.Catalogue.Item.price_for(item, quantity) / 100
+  end
 
   def discount_value(%{value: pence}) do
     (pence || 0) / 100

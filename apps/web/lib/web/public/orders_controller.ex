@@ -69,21 +69,6 @@ defmodule UM.Web.OrdersController do
     Raxx.Response.ok(basket_page_content(basket, session))
   end
 
-  defp local_price(_) do
-    "0" # TODO
-  end
-  def initial_price(item) do
-    UM.Catalogue.Item.initial_price(item)
-  end
-  def subsequent_price(item) do
-    UM.Catalogue.Item.subsequent_price(item)
-  end
-  defp purchase_price(%{quantity: quantity, item: item}) do
-    UM.Catalogue.Item.price_for(item, quantity)
-  end
-  defp current_customer(session) do
-    UM.Web.Session.current_customer(session)
-  end
   defp current_country(session) do
     nil # TODO
   end
@@ -95,9 +80,6 @@ defmodule UM.Web.OrdersController do
   end
   defp currency_preference(session) do
     "GBP" # TODO
-  end
-  defp guest_visitor?(session) do
-    false # TODO
   end
   def basket_price(basket) do
     0 # TODO

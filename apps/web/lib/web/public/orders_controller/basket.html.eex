@@ -81,10 +81,10 @@
                         </form>
                     </td>
                     <td>
-                        <%= initial_price(purchase.item) %>
+                        <%= item_initial_price(purchase.item) %>
                     </td>
                     <td>
-                        <%= subsequent_price(purchase.item) %>
+                        <%= item_subsequent_price(purchase.item) %>
                     </td>
                     <td>
                         <%= purchase_price(purchase) %>
@@ -105,7 +105,7 @@
               <div class="vat-wrap">
                 <h5>How we charge VAT:</h5>
                 <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
-                <h6>You are purchasing from: <%= current_customer(session).country || 'After you have created an account or logged in, your country will appear here.' %></h6>
+                <h6>You are purchasing from: <%= current_country(session) || "After you have created an account or logged in, your country will appear here." %></h6>
               </div>
             </div>
             <div class="large-3 medium-6 small-12 columns">
@@ -144,7 +144,7 @@
                           <%= vat_rate(session) %>
                       </th>
                       <th>
-                          <%= local_price(vat_rate(session) * basket_price(basket)) %>
+                          <%= vat_rate(session) * basket_price(basket) %>
                       </th>
                     </tr>
                     <tr>
@@ -154,7 +154,7 @@
                             Total
                         </th>
                         <th>
-                            <%= local_price((vat_rate(session) * basket_price(basket)) + basket_price(basket)) %>
+                            <%= (vat_rate(session) * basket_price(basket)) + basket_price(basket) %>
                         </th>
                     </tr>
                 </thead>
@@ -208,23 +208,7 @@
                             </div>
                         </div>
                     </form>
-                    <%= if guest_visitor?(session) do %>
-                    <div class="row">
-                        <div class="large-5 medium-6 small-12 columns">
-                            <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                                Existing User?
-                            </p>
-                            <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
-                                New Customer?
-                            </p>
-                        </div>
-                        <div class="large-7 medium-6 small-12 columns">
-                            <!-- Use referrer for redirect -->
-                            <a class="button checkout-option-1" href="/sessions/new">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                            <a class="button checkout-option-2" href="/customers/new">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
-                        </div>
-                    </div>
-                    <% else %>
+                    <%= if logged_in?(session) do %>
                     <form id="checkout-button" action="/orders" method="post" class="">
                         <%= UM.Web.Session.csrf_tag %>
                         <div class="row">
@@ -240,6 +224,22 @@
                             </div>
                         </div>
                     </form>
+                    <% else %>
+                    <div class="row">
+                        <div class="large-5 medium-6 small-12 columns">
+                            <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                Existing User?
+                            </p>
+                            <p style="text-align:right;font-size:150%" title="Downloads can be large files and will be available in your account for 4 days from purchase">
+                                New Customer?
+                            </p>
+                        </div>
+                        <div class="large-7 medium-6 small-12 columns">
+                            <!-- Use referrer for redirect -->
+                            <a class="button checkout-option-1" href="/sessions/new">Login and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                            <a class="button checkout-option-2" href="/customers/new">Create account and checkout<i class="fa fa-arrow-right checkout-icon"></i></a>
+                        </div>
+                    </div>
                     <% end %>
                 </div>
             </div>
