@@ -4,6 +4,11 @@ defmodule UM.Web.ViewHelpers do
     !UM.Web.Session.guest_session?(session)
   end
 
+  def user_name(session) do
+    user = UM.Web.Session.current_customer(session)
+    customer_name(user)
+  end
+
   def user_country(session) do
     nil # TODO
   end

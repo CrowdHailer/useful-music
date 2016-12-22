@@ -22,7 +22,7 @@
       <div class="medium-6 small-12 columns">
     <%= if logged_in?(session) do %>
     <li>
-        <a href="<%= user_account_url(session) %>">Hello <%= customer_name(session) %></a>
+        <a href="<%= user_account_url(session) %>">Hello <%= user_name(session) %></a>
     </li>
   </div>
   <div class="medium-6 small-12 columns">
@@ -208,7 +208,7 @@
                             </li>
                             <%= if logged_in?(session) do %>
                             <li>
-                                <a href="<%= user_account_url(session) %>"><%= customer_name(session) %></a>
+                                <a href="<%= user_account_url(session) %>"><%= user_name(session) %></a>
                             </li>
                             <li>
                                 <form class="logout-form" id="form_id" action="/sessions" method="post">
