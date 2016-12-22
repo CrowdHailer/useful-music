@@ -51,6 +51,10 @@ defmodule Raxx.Patch do
   redirect(url, body) # pattern match
   redirect(url, headers)
   redirect(url, content, extra_headers)
+
+  Return a `Raxx.Response` that informs the client that the resouce has been found elsewhere.
+
+  This function sets a `Location` header as well as sending a redirection page.
   """
   def redirect(url, flash) do
     flash = Enum.into(flash, %{})
@@ -64,6 +68,12 @@ defmodule Raxx.Patch do
   end
   def redirect(url) do
     Raxx.Response.found("", [{"location", url}])
+  end
+
+  defp redirect_page(path) do
+    """
+      <html><body>You are being <a href=\"#{ escape(path) }\">redirected</a>.</body></html>
+    """
   end
 
   def follow(response) do
