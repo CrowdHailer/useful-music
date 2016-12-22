@@ -117,8 +117,12 @@ defmodule UM.Catalogue.Piece do
     :larger_ensembles]
   end
 
+# DEBT these belong in a View layer
+  def description_summary(%{description: description}, length \\ 12) do
+    String.slice(description, 0, length)
+  end
+
   def notation_preview_url(piece, default \\ nil) do
-    IO.inspect piece
     if piece.notation_preview do
       UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original, signed: true)
     else

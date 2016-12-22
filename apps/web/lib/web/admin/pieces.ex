@@ -1,4 +1,5 @@
 defmodule UM.Web.Admin.Pieces do
+  alias UM.Catalogue.Piece
   require EEx
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
@@ -9,6 +10,11 @@ defmodule UM.Web.Admin.Pieces do
 
   def handle_request(%{path: [], method: :GET}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
+    pieces = Enum.map(pieces, fn
+      (piece) ->
+        {:ok, piece} = UM.Catalogue.load_items(piece)
+        piece
+    end)
     # TODO fix pagination
     Raxx.Response.ok(index_page_content(Page.paginate(pieces, %{page_size: 10, page_number: 1})))
   end
@@ -77,7 +83,7 @@ defmodule UM.Web.Admin.Pieces do
   def handle_request(%{path: ["UD" <> id], method: :DELETE}, _) do
     {id, ""} = Integer.parse(id)
     case UM.Catalogue.delete_piece(id) do
-      {:ok, id} ->
+      {:ok, _id} ->
         Raxx.Patch.redirect("/admin/pieces", %{success: "Piece deleted"})
     end
   end
