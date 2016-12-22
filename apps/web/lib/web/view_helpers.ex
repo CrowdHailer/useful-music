@@ -1,7 +1,32 @@
 defmodule UM.Web.ViewHelpers do
 
   def logged_in?(session) do
-    !UM.Session.guest_session?(session)
+    !UM.Web.Session.guest_session?(session)
+  end
+
+  def user_country(session) do
+    nil # TODO
+  end
+
+  def currency_preference(session) do
+    UM.Web.Session.currency_preference(session)
+  end
+
+  def user_vat_rate(session) do
+    120 # TODO
+  end
+
+  def user_account_url(session) do
+    UM.Web.Session.customer_account_url(session)
+  end
+
+  def user_shopping_basket_url(session) do
+    case UM.Web.Session.shopping_basket_id(session) do
+      nil ->
+        "/shopping_baskets/__empty__"
+      id ->
+        "/shopping_baskets/#{id}"
+    end
   end
 
   ####### ACCOUNTS #######
@@ -65,6 +90,15 @@ defmodule UM.Web.ViewHelpers do
 
   def purchase_price(%{quantity: quantity, item: item}) do
     UM.Catalogue.Item.price_for(item, quantity) / 100
+  end
+
+  def number_of_purchases(_session) do
+    # TODO number of purchases
+    2
+  end
+
+  def current_basket_total(_session) do
+    "£4.25" # TODO
   end
 
   def discount_value(%{value: pence}) do

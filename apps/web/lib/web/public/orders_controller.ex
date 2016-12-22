@@ -69,18 +69,10 @@ defmodule UM.Web.OrdersController do
     Raxx.Response.ok(basket_page_content(basket, session))
   end
 
-  defp current_country(session) do
-    nil # TODO
-  end
   defp catalogue_price(basket) do
     1231 # TODO
   end
-  defp vat_rate(session) do
-    120 # TODO
-  end
-  defp currency_preference(session) do
-    "GBP" # TODO
-  end
+
   def basket_price(basket) do
     0 # TODO
   end

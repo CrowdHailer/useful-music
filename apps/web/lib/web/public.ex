@@ -1,4 +1,5 @@
 defmodule UM.Web.Public do
+  import UM.Web.ViewHelpers
   require EEx
   layout_file = String.replace_suffix(__ENV__.file, ".ex", "/layout.html.eex")
   EEx.function_from_file :def, :layout_page, layout_file, [:content, :session]
@@ -48,43 +49,5 @@ defmodule UM.Web.Public do
 
   defp public_endpoint(request, env) do
     UM.Web.Home.handle_request(request, env)
-  end
-
-  ## HELPERS
-
-  # FIXME Change to logged_in? / authenticated?
-  defp guest_session?(session) do
-    UM.Web.Session.guest_session?(session)
-  end
-
-  defp customer_account_url(session) do
-    UM.Web.Session.customer_account_url(session)
-  end
-
-  defp customer_name(%{customer: %{first_name: f, last_name: l}}) do
-    "#{f} #{l}"
-  end
-
-  defp preferred_currency(session) do
-    UM.Web.Session.currency_preference(session)
-  end
-
-  defp view_basket_url(session) do
-    case UM.Web.Session.shopping_basket_id(session) do
-      nil ->
-        "/shopping_baskets/__empty__"
-      id ->
-        "/shopping_baskets/#{id}"
-    end
-
-  end
-
-  defp number_of_purchases(_session) do
-    # TODO number of purchases
-    2
-  end
-
-  def current_basket_total(_session) do
-    "£4.25"
   end
 end

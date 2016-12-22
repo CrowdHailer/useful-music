@@ -105,7 +105,7 @@
               <div class="vat-wrap">
                 <h5>How we charge VAT:</h5>
                 <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
-                <h6>You are purchasing from: <%= current_country(session) || "After you have created an account or logged in, your country will appear here." %></h6>
+                <h6>You are purchasing from: <%= user_country(session) || "After you have created an account or logged in, your country will appear here." %></h6>
               </div>
             </div>
             <div class="large-3 medium-6 small-12 columns">
@@ -141,10 +141,10 @@
                         VAT
                       </th>
                       <th>
-                          <%= vat_rate(session) %>
+                          <%= user_vat_rate(session) %>
                       </th>
                       <th>
-                          <%= vat_rate(session) * basket_price(basket) %>
+                          <%= user_vat_rate(session) * basket_price(basket) %>
                       </th>
                     </tr>
                     <tr>
@@ -154,7 +154,7 @@
                             Total
                         </th>
                         <th>
-                            <%= (vat_rate(session) * basket_price(basket)) + basket_price(basket) %>
+                            <%= (user_vat_rate(session) * basket_price(basket)) + basket_price(basket) %>
                         </th>
                     </tr>
                 </thead>
@@ -268,7 +268,7 @@
       <div class="vat-wrap">
         <h5>How we charge VAT:</h5>
         <h6>VAT is charged at your local rate for customers in the EU. VAT is not charged for customers outside of the EU.</h6>
-        <h6>You are purchasing from: <%= current_country(session) || "Login to provide Country" %></h6>
+        <h6>You are purchasing from: <%= user_country(session) || "Login to provide Country" %></h6>
       </div>
     </div>
     <div class="columns large-6 small-12 hide-for-medium-up">

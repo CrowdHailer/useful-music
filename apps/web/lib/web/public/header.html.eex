@@ -6,7 +6,7 @@
         <h3 style="float: left; color: white;" onclick="document.getElementById('mob-menu-display').style.display = 'inline'">
           <i class="fa fa-reorder" style="float: left; color: white; font-size: 1.25em; margin-right: 0.25em;"></i> Menu
         </h3>
-        <a href="<%= view_basket_url(session) %>">
+        <a href="<%= user_shopping_basket_url(session) %>">
           <h3 style="text-align: right; float: right; color: white;">
             BASKET
           </h3>
@@ -20,16 +20,9 @@
     <div class="row">
       <div class="customer-info-wrap">
       <div class="medium-6 small-12 columns">
-    <%= if guest_session?(session) do %>
+    <%= if logged_in?(session) do %>
     <li>
-        <a href="/sessions/new">Login</a>
-    </li>
-    <li>
-        <a href="/customers/new">Create Account</a>
-    </li>
-    <% else %>
-    <li>
-        <a href="<%= customer_account_url(session) %>">Hello <%= customer_name(session) %></a>
+        <a href="<%= user_account_url(session) %>">Hello <%= customer_name(session) %></a>
     </li>
   </div>
   <div class="medium-6 small-12 columns">
@@ -39,6 +32,13 @@
             <input type="hidden" name="_method" value="DELETE">
             <input class="logout-form-input" type="submit" value="logout">
         </form>
+    </li>
+    <% else %>
+    <li>
+        <a href="/sessions/new">Login</a>
+    </li>
+    <li>
+        <a href="/customers/new">Create Account</a>
     </li>
     <% end %>
   </div>
@@ -206,16 +206,9 @@
                                     <li><a href="http://blog.usefulmusic.com">Blog</a></li>
                                 </ul>
                             </li>
-                            <%= if guest_session?(session) do %>
+                            <%= if logged_in?(session) do %>
                             <li>
-                                <a href="/sessions/new">Login</a>
-                            </li>
-                            <li>
-                                <a href="/customers/new">Create Account</a>
-                            </li>
-                            <% else %>
-                            <li>
-                                <a href="<%= customer_account_url(session) %>"><%= customer_name(session) %></a>
+                                <a href="<%= user_account_url(session) %>"><%= customer_name(session) %></a>
                             </li>
                             <li>
                                 <form class="logout-form" id="form_id" action="/sessions" method="post">
@@ -223,6 +216,13 @@
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="submit" value="logout">
                                 </form>
+                            </li>
+                            <% else %>
+                            <li>
+                                <a href="/sessions/new">Login</a>
+                            </li>
+                            <li>
+                                <a href="/customers/new">Create Account</a>
                             </li>
                             <% end %>
                         </ul>
@@ -232,18 +232,18 @@
             <div class="large-2 columns basket-nav">
                 <div class="row collapse">
                     <div class="large-6 columns">
-                        <a href="<%= view_basket_url(session) %>"><label>BASKET</label></a>
+                        <a href="<%= user_shopping_basket_url(session) %>"><label>BASKET</label></a>
                     </div>
                     <div class="large-6 columns">
                         <form action="/currency" method="post">
                             <%= UM.Web.Session.csrf_tag %>
-                            <button class="currency-convert-head <%= if preferred_currency(session) == "USD", do: "live" %>" type="submit" name="preference" value="USD">$</button>
-                            <button class="currency-convert-head <%= if preferred_currency(session) == "GBP", do: "live" %>" type="submit" name="preference" value="GBP">£</button>
-                            <button class="currency-convert-head <%= if preferred_currency(session) == "EUR", do: "live" %>" type="submit" name="preference" value="EUR">€</button>
+                            <button class="currency-convert-head <%= if currency_preference(session) == "USD", do: "live" %>" type="submit" name="preference" value="USD">$</button>
+                            <button class="currency-convert-head <%= if currency_preference(session) == "GBP", do: "live" %>" type="submit" name="preference" value="GBP">£</button>
+                            <button class="currency-convert-head <%= if currency_preference(session) == "EUR", do: "live" %>" type="submit" name="preference" value="EUR">€</button>
                         </form>
                     </div>
                 </div>
-                <a href="<%= view_basket_url(session) %>">
+                <a href="<%= user_shopping_basket_url(session) %>">
                     <label class="basket-label">
                         <%= number_of_purchases(session) %> ITEM(S) | <%= current_basket_total(session) %> <i class="fa fa-shopping-cart"></i>
                     </label>
