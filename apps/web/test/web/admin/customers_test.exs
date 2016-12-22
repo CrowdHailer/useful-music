@@ -24,8 +24,7 @@ defmodule UM.Web.Admin.CustomersTest do
     assert true == UM.Accounts.fetch_customer(jo.id).admin
     request = Raxx.Patch.follow(response)
     assert ["admin", "customers"] == request.path
-    {flash, _request} = UM.Web.Flash.from_request(request)
-    assert %{success: "Jo Brand is now an admin"} = flash
+    assert %{success: "Jo Brand is now an admin"} = Raxx.Patch.get_header(response, "um-flash")
   end
 
   test "can make remove admin access" do
@@ -35,7 +34,6 @@ defmodule UM.Web.Admin.CustomersTest do
     assert false == UM.Accounts.fetch_customer(bugs.id).admin
     request = Raxx.Patch.follow(response)
     assert ["admin", "customers"] == request.path
-    {flash, _request} = UM.Web.Flash.from_request(request)
-    assert %{success: "Bugs Bunny is now not an admin"} = flash
+    assert %{success: "Bugs Bunny is now not an admin"} = Raxx.Patch.get_header(response, "um-flash")
   end
 end

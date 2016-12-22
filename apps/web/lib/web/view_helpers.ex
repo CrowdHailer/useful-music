@@ -1,4 +1,14 @@
 defmodule UM.Web.ViewHelpers do
+
+  ####### ACCOUNTS #######
+
+  def customer_name(customer) do
+    # FIXME html escape because outside information
+    UM.Accounts.Customer.name(customer)
+  end
+
+  ####### CATALOGUE #######
+
   def piece_product_name(piece) do
     UM.Catalogue.Piece.product_name(piece)
   end
@@ -15,5 +25,30 @@ defmodule UM.Web.ViewHelpers do
 
   def item_asset_url(item) do
     UM.Catalogue.ItemStorage.url({item.asset, item}, :original, signed: true)
+  end
+
+  ####### SALES #######
+
+  def discount_value(%{value: pence}) do
+    (pence || 0) / 100
+  end
+
+  def discount_start_datetime(%{start_datetime: nil}) do
+    ""
+  end
+  def discount_start_datetime(%{start_datetime: datetime}) do
+    postgres_datetime_to_iso8601(datetime)
+  end
+
+  def discount_end_datetime(%{end_datetime: nil}) do
+    ""
+  end
+  def discount_end_datetime(%{end_datetime: datetime}) do
+    postgres_datetime_to_iso8601(datetime)
+  end
+
+  defp postgres_datetime_to_iso8601(datetime) do
+    [date, _time] = String.split(datetime, " ")
+    date
   end
 end

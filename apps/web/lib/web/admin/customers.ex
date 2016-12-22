@@ -1,4 +1,5 @@
 defmodule UM.Web.Admin.Customers do
+  import UM.Web.ViewHelpers
   require EEx
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
@@ -24,13 +25,8 @@ defmodule UM.Web.Admin.Customers do
     updated_customer = Map.merge(customer, %{admin: true})
     case UM.Accounts.update_customer(updated_customer) do
       {:ok, latest} ->
-        flash = %{success: "#{customer_name(latest)} is now an admin"}
-        flash = Poison.encode!(flash)
-        query = URI.encode_query(%{flash: flash})
-        Raxx.Response.see_other("", [
-          {"location", "/admin/customers?" <> query}
-        ])
-
+        Raxx.Patch.redirect("/admin/customers")
+        |> UM.Web.with_flash(success: "#{customer_name(latest)} is now an admin")
     end
   end
 
@@ -39,17 +35,8 @@ defmodule UM.Web.Admin.Customers do
     updated_customer = Map.merge(customer, %{admin: false})
     case UM.Accounts.update_customer(updated_customer) do
       {:ok, latest} ->
-        flash = %{success: "#{customer_name(latest)} is now not an admin"}
-        flash = Poison.encode!(flash)
-        query = URI.encode_query(%{flash: flash})
-        Raxx.Response.see_other("", [
-          {"location", "/admin/customers?" <> query}
-        ])
+        Raxx.Patch.redirect("/admin/customers")
+        |> UM.Web.with_flash(success: "#{customer_name(latest)} is now not an admin")
     end
-  end
-
-  def customer_name(%{first_name: first_name, last_name: last_name}) do
-    # FIXME move to Accounts
-    "#{first_name} #{last_name}"
   end
 end

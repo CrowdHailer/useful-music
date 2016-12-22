@@ -1,4 +1,5 @@
 defmodule UM.Web.Admin.DiscountsController do
+  import UM.Web.ViewHelpers
   require EEx
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")
@@ -49,31 +50,8 @@ defmodule UM.Web.Admin.DiscountsController do
     end
   end
 
-  def discount_value(%{value: pence}) do
-    (pence || 0) / 100
-  end
-
   def number_redeemed(_) do
     "0" # TODO
-  end
-
-  def discount_start_datetime(%{start_datetime: nil}) do
-    ""
-  end
-  def discount_start_datetime(%{start_datetime: datetime}) do
-    postgres_datetime_to_iso8601(datetime)
-  end
-
-  def discount_end_datetime(%{end_datetime: nil}) do
-    ""
-  end
-  def discount_end_datetime(%{end_datetime: datetime}) do
-    postgres_datetime_to_iso8601(datetime)
-  end
-
-  defp postgres_datetime_to_iso8601(datetime) do
-    [date, _time] = String.split(datetime, " ")
-    date
   end
 
   def form_title(%{id: nil}) do
