@@ -91,6 +91,7 @@ defmodule UM.Web do
           :test ->
             :erlang.raise(:error, exception, stacktrace)
           :dev ->
+            :erlang.raise(:error, exception, stacktrace)
             body = Raxx.DebugPage.html(request, {:error, exception, stacktrace}, :web)
             Raxx.Response.internal_server_error(body, [{"content-length", "#{:erlang.iolist_size(body)}"}])
           _ ->

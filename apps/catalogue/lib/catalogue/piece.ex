@@ -1,10 +1,10 @@
 defmodule UM.Catalogue.Piece do
   defstruct [
     id: nil, # Integer
-    title: "", # String
-    sub_heading: "", # String
-    level_overview: "", # String
-    description: "", # String
+    title: nil, # String
+    sub_heading: nil, # String
+    level_overview: nil, # String
+    description: nil, # String
     solo: false,
     solo_with_accompaniment: false,
     duet: false,
@@ -28,14 +28,14 @@ defmodule UM.Catalogue.Piece do
     violin: false,
     viola: false,
     percussion: false,
-    notation_preview: "", # Hash
-    audio_preview: "", # Hash
-    cover_image: "", # Hash
-    print_link: "", # String
-    print_title: "", # String
-    weezic_link: "", # String
-    meta_description: "", # String
-    meta_keywords: "", # String
+    notation_preview: nil, # Hash
+    audio_preview: nil, # Hash
+    cover_image: nil, # Hash
+    print_link: nil, # String
+    print_title: nil, # String
+    weezic_link: nil, # String
+    meta_description: nil, # String
+    meta_keywords: nil, # String
     items: :not_loaded
   ]
 
