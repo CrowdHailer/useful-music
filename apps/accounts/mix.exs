@@ -22,6 +22,7 @@ defmodule UM.Accounts.Mixfile do
   defp deps do
     [
       {:utils, in_umbrella: true},
+      {:countries, github: "SebastianSzturo/countries"},
       {:moebius, "~> 2.0.0"}
     ]
   end

@@ -42,7 +42,10 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def all_countries do
-    [{"Great Britian", "GB"}]
+    for %{alpha2: code, name: name} <- Countries.all do
+      {"#{name}", "#{code}"}
+    end
+    |> Enum.sort_by(fn({name, _}) -> name end)
   end
 
   ####### CATALOGUE #######

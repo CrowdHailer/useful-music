@@ -60,9 +60,9 @@
                                 name="customer[country]"
                                 required>
                                 <option value>-- country --</option>
-                                < Country.all.sort_by!{ |c| c.first.downcase }.each do |name, code|>
-                                    <option value="<= code >" < 'selected' if form.country && code == form.country.alpha2 >< name ></option>
-                                < end >
+                                <%= for {name, code} <- all_countries do %>
+                                <option value="<%= code %>" <%= if form.country == code, do: "selected" %>><%= name %></option>
+                                <% end %>
                             </select>
                         </label>
                         <%= if errors.country do %>
