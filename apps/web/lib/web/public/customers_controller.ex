@@ -39,11 +39,11 @@ defmodule UM.Web.CustomersControllerController do
             customer = Map.drop(customer, [:password_confirmation, :terms_agreement])
             customer = Map.merge(customer, %{currency_preference: UM.Web.Session.currency_preference(session)})
             case UM.Accounts.signup_customer(customer) do
-              # test is email taken
               {:error, reason} ->
                 IO.inspect(reason)
                 Raxx.Response.conflict(new_page_content(customer, %{email: "is already taken"}, ""))
               customer = %{id: id} ->
+                UM.Web.Emails.account_created(customer) |> UM.Web.Mailer.deliver_now
                 Raxx.Patch.redirect("/customers/#{id}")
                 |> UM.Web.with_flash(success: "Welcome to Useful Music")
                 |> UM.Web.with_session(UM.Web.Session.login(session, customer))

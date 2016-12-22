@@ -1,4 +1,4 @@
-Hi, <%= customer.name %>
+Hi, <%= customer_name(customer) %>
 
 Thank you very much for joining us at Useful Music.
 

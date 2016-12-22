@@ -1,6 +1,6 @@
 defmodule UM.Web.CustomersControllerControllerTest do
   use ExUnit.Case
-
+  use Bamboo.Test
   import Raxx.Test
 
   alias UM.Web.CustomersControllerController, as: Controller
@@ -36,8 +36,8 @@ defmodule UM.Web.CustomersControllerControllerTest do
     customer = UM.Accounts.fetch_customer(id)
     assert "Bill" == customer.first_name
     assert "USD" == customer.currency_preference
-    # TODO check the last email sent
     assert {"um-set-session", %{customer_id: ^id}} = List.keyfind(response.headers, "um-set-session", 0)
+    assert_delivered_email UM.Web.Emails.account_created(customer)
   end
 
   test "rerenders form for bad password" do

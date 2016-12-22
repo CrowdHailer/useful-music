@@ -26,6 +26,7 @@ defmodule UM.Web.Mixfile do
       {:utils, in_umbrella: true},
       {:ace, "~> 0.7.0"},
       {:bugsnag, "~> 1.3.2"},
+      {:bamboo, "~> 0.7"},
       {:raxx, "~> 0.7.1"},
       {:moebius, "~> 2.0.0"},
       {:poison, "~> 2.0.1"},

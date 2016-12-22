@@ -59,3 +59,12 @@ config :bugsnag,
   api_key: System.get_env("BUGSNAG_API_KEY"),
   use_logger: true,
   release_stage: "elixir"
+
+if Mix.env == :test do
+  config :web, UM.Web.Mailer,
+    adapter: Bamboo.TestAdapter
+else
+config :web, UM.Web.Mailer,
+  adapter: Bamboo.SendgridAdapter,
+  api_key: "my_api_key"
+end
