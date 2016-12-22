@@ -193,26 +193,6 @@ defmodule UM.Catalogue do
     :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 
-  # FIXME remove
-  def load_fixtures do
-    piece = %{
-      id: 101,
-      title: "Canonical Piece",
-      sub_heading: "The very first piece",
-      description: "I uses this piece for testing all the flipping time",
-      level_overview: "not that easy",
-      notation_preview: %Raxx.Upload{content: "Hello, World!", filename: "hello.txt"}}
-    {:ok, %{id: piece_id}} = create_piece(piece)
-    {:ok, item} = create_item(%{
-      # make item struct
-      id: nil,
-      name: "the other piece",
-      initial_price: 60,
-      asset: "link I dont have again",
-      piece_id: piece_id
-    })
-  end
-
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 

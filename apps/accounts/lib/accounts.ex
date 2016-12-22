@@ -7,7 +7,7 @@ defmodule UM.Accounts do
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-    
+
     children = [
       worker(Db, [Moebius.get_connection]),
     ]
@@ -85,10 +85,5 @@ defmodule UM.Accounts do
       customer ->
         {:ok, customer}
     end
-  end
-
-  # FIXME remove
-  def create_peter do
-    signup_customer(%{id: "100", admin: true, first_name: "Peter", last_name: "Saxton", email: "p@me.co", password: "password", country: "GB"})
   end
 end
