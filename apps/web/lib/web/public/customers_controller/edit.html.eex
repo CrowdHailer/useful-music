@@ -98,12 +98,12 @@
                 <label for="customer_question_2">Do you teach music?</label>
                 <select id="customer_question_2" name="customer[question_2]">
                   <option value>Please Select</option>
-                  <%= for answer <- ['Yes - mostly in schools',
-                  'Yes - mostly in music centres',
-                  'Yes - mostly private tuition',
-                  'Yes - mostly ensembles',
-                  'I have taught in the past',
-                  'No'] do %>
+                  <%= for answer <- ["Yes - mostly in schools",
+                  "Yes - mostly in music centres",
+                  "Yes - mostly private tuition",
+                  "Yes - mostly ensembles",
+                  "I have taught in the past",
+                  "No"] do %>
                   <option <%= if answer == form.question_2, do: "selected" %> ><%= answer %></option>
                   <% end %>
                 </select>
@@ -112,22 +112,23 @@
 
             <div class="row">
               <div class="large-8 large-offset-2 end">
+                <% IO.inspect(form) %>
                 <label for="customer_question_3">How did you hear about us?</label>
                 <select id="customer_question_3" name="customer[question_3]">
                   <option value>Please Select</option>
-                  <%= for answer <- ['Google search',
-                  'In a magazine or other printed publication',
-                  'Facebook page',
-                  'Twitter',
-                  'YouTube video',
-                  'Purchased a Nuvo Instrument',
-                  'Friend/colleague recommendation',
-                  'Teacher recommendation',
-                  'Through a music exam board',
-                  'Through a music shop',
-                  'Through a music society',
-                  'On another website',
-                  'Other'] do  %>
+                  <%= for answer <- ["Google search",
+                  "In a magazine or other printed publication",
+                  "Facebook page",
+                  "Twitter",
+                  "YouTube video",
+                  "Purchased a Nuvo Instrument",
+                  "Friend/colleague recommendation",
+                  "Teacher recommendation",
+                  "Through a music exam board",
+                  "Through a music shop",
+                  "Through a music society",
+                  "On another website",
+                  "Other"] do  %>
                   <option <%= if answer == form.question_3, do: "selected" %> ><%= answer %></option>
                   <% end %>
                 </select>
