@@ -39,6 +39,28 @@ defmodule UM.Web.ViewHelpers do
     UM.Catalogue.ItemStorage.url({item.asset, item}, :original, signed: true)
   end
 
+  def instruments do
+    # Maybe belongs at Catalogue layer
+    UM.Catalogue.Piece.all_instruments
+    |> Enum.map(&stringify_option/1)
+  end
+
+  def levels do
+    UM.Catalogue.Piece.all_levels
+    |> Enum.map(&stringify_option/1)
+  end
+
+  def categories do
+    UM.Catalogue.Piece.all_categories
+    |> Enum.map(&stringify_option/1)
+  end
+
+  defp stringify_option(term) do
+    "#{term}"
+    |> String.capitalize
+    |> String.replace("_", " ")
+  end
+
   ####### SALES #######
 
   def purchase_price(%{quantity: quantity, item: item}) do

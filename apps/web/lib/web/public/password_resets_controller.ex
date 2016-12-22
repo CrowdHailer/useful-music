@@ -19,7 +19,6 @@ defmodule UM.Web.PasswordResetsController do
   edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
   EEx.function_from_file :def, :edit_page_content, edit_file, [:token, :email]
 
-
   def handle_request(%{path: ["new"], method: :GET}, _) do
     Raxx.Response.ok(new_page_content(nil))
   end
@@ -50,13 +49,5 @@ defmodule UM.Web.PasswordResetsController do
             Raxx.Patch.redirect("/password_resets/new", error: "Reset token invalid or expired")
         end
     end
-  end
-
-  def use_token do
-    # OK.try do
-    #   data <- ChangePasswordForm.validate(form)
-    #   data = Map.put(data, password_reset_token: token)
-    #   customer <- UM.Accounts.reset_password(data)
-    # end
   end
 end

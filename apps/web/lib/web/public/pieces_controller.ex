@@ -53,31 +53,9 @@ defmodule UM.Web.PiecesController do
     end
   end
 
-  defp instruments do
-    # Maybe belongs at Catalogue layer
-    UM.Catalogue.Piece.all_instruments
-  end
-
-  defp levels do
-    UM.Catalogue.Piece.all_levels
-  end
-
-  defp categories do
-    UM.Catalogue.Piece.all_categories
-  end
-
   defp shopping_basket do
     %{
       id: "TODO"
     }
-  end
-  defp local_price(price) do
-    "£TODO"
-  end
-
-  defp stringify_option(term) do
-    "#{term}"
-    |> String.capitalize
-    |> String.replace("_", " ")
   end
 end

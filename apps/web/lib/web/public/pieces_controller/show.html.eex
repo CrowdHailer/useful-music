@@ -27,7 +27,7 @@
             <%= for instrument <- instruments do %>
             <label class="pure-checkbox">
               <input type="checkbox" name="catalogue_search[<%= instrument %>]" <%= if search[instrument], do: "checked" %>>
-              <%= stringify_option(instrument) %>
+              <%= instrument %>
             </label>
             <% end %>
           </div>
@@ -39,7 +39,7 @@
             <%= for level <- levels do %>
             <label class="pure-checkbox">
               <input type="checkbox" name="catalogue_search[<%= level %>]" <%= if search[level], do: "checked" %>>
-              <%= stringify_option(level) %>
+              <%= level %>
             </label>
             <% end %>
           </div>
@@ -49,7 +49,7 @@
           <%= for category <- categories do %>
           <label class="pure-checkbox">
             <input type="checkbox" name="catalogue_search[<%= category %>]" <%= if search[category], do: "checked" %>>
-            <%= stringify_option(category) %>
+            <%= category %>
           </label>
           <% end %>
           <button class="search-btn" type="submit">SEARCH<i class="fa fa-search search-filter-icon"></i></button>
@@ -108,8 +108,8 @@
                       <input type="number" min="0" name="items[<%= item.id %>]" value="0">
                       <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
                       <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
-                      <p><%= local_price(item.initial_price) %> first licence</p>
-                      <p><%= local_price(item.discounted_price) %> additional</p>
+                      <p><%= item_initial_price(item) %> first licence</p>
+                      <p><%= item_subsequent_price(item) %> additional</p>
                     </div>
                   </div>
                   <% end %>
