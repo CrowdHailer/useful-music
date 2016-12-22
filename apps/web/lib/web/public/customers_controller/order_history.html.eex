@@ -15,29 +15,27 @@
 
 <div class="row summary-padding">
     <div class="large-12 columns orders">
-        <%= for order <- customer.orders do %>
-            <!-- TODO -->
-            <!-- order.succeded? && DateTime.now <= order.completed_at.+(4*3600*24) -->
-            <% if true do %>
+        <%= for order <- orders do %>
+            <%= if true do %>
             <!-- repeat this bit-->
             <div class="row collapse">
                 <div class="order-title-wrap">
                     <div class="row collapse">
                         <div class="large-6 medium-6 small-12 columns">
-                            <h6 class="left-order"><%= order.completed_at.strftime('%d %B %Y') %> |  Order ID: <%= order.id %></h6>
+                            <h6 class="left-order"><%= order_checkout_date(order) %> |  Order ID: <%= order.id %></h6>
                         </div>
                         <div class="large-6 medium-6 small-12 columns">
-                            <h6 class="right-order">Order Expires on <%= order.completed_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+                            <h6 class="right-order">Order Expires on <%= order_expiry_date(order) %></h6>
                         </div>
                     </div>
                 </div>
                 <div class="large-2 medium-2 small-12 columns">
                     <div class="order-summary">
                         <h6>Amount</h6>
-                        <h6><%= order.payment_gross.format %></h6>
+                        <h6><%= order_payment_gross(order) %></h6>
                         <hr>
                         <h6>Tax</h6>
-                        <h6><%= order.tax_payment.format %></h6>
+                        <h6><%= order_tax_payment(order) %></h6>
                         <hr>
                         <div class="license-inform">
                           <h6 style="font-size: 1.5em;">License</h6>
@@ -59,19 +57,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%= for purchase <- order.shopping_basket.purchases do %>
+                                <%= for purchase <- order_purchases(order) do %>
                                 <tr>
                                     <th>
-                                        <%= purchase.item.piece.title %>
+                                        <%= item_title(purchase.item) %>
                                     </th>
                                     <th>
-                                        <%= purchase.item.piece.sub_heading %>
+                                        <%= item_sub_heading(purchase.item) %>
                                     </th>
                                     <th>
-                                        <%= purchase.item.name %>
+                                        <%= item_name(purchase.item) %>
                                     </th>
                                     <th>
-                                        <a href="<%= purchase.item.asset.url %>" download>Download</a>
+                                        <a href="<%= item_asset_url(purchase.item) %>" download>Download</a>
                                     </th>
                                 </tr>
                                 <% end %>
@@ -85,20 +83,20 @@
                     <div class="order-title-wrap expired">
                         <div class="row collapse">
                             <div class="large-6 medium-6 small-12 columns">
-                                <h6 class="left-order"><%= order.completed_at.strftime('%d %B %Y') %> |  Order ID: <%= order.id %></h6>
+                                <h6 class="left-order"><%= order_checkout_date(order) %> |  Order ID: <%= order.id %></h6>
                             </div>
                             <div class="large-6 medium-6 small-12 columns">
-                                <h6 class="right-order">Order Expired on <%= order.completed_at.+(4*3600*24).strftime('%d.%m.%Y') %></h6>
+                                <h6 class="right-order">Order Expired on <%= order_expiry_date(order) %></h6>
                             </div>
                         </div>
                     </div>
                     <div class="large-2 medium-2 small-12 columns">
                         <div class="order-summary">
                             <h6>Amount</h6>
-                            <h6><%= order.payment_gross.format %></h6>
+                            <h6><%= order_payment_gross(order) %></h6>
                             <hr>
                             <h6>Tax</h6>
-                            <h6><%= order.tax_payment.format %></h6>
+                            <h6><%= order_tax_payment(order) %></h6>
                             <hr>
                             <h6>License</h6>
                             <a href="/orders/<%= order.id %>" target="_blank" download><h6>Download</h6></a>
@@ -117,19 +115,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%= for purchase <- order.shopping_basket.purchases do %>
+                                    <%= for purchase <- order_purchases(order) do %>
                                     <tr>
                                         <th>
-                                            <%= purchase.item.piece.title %>
+                                            <%= item_title(purchase.item) %>
                                         </th>
                                         <th>
-                                            <%= purchase.item.piece.sub_heading %>
+                                            <%= item_sub_heading(purchase.item) %>
                                         </th>
                                         <th>
-                                            <%= purchase.item.name %>
+                                            <%= item_name(purchase.item) %>
                                         </th>
                                         <th>
-                                            Expired - <a href="/pieces/<%= purchase.item.piece.id %>">Repurchase</a>
+                                            Expired - <a href="/pieces/<%= purchase.item.piece_id %>">Repurchase</a>
                                         </th>
                                     </tr>
                                     <% end %>

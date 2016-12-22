@@ -55,6 +55,16 @@ defmodule UM.Web.ViewHelpers do
     UM.Catalogue.Piece.catalogue_number(piece)
   end
 
+  def item_title(_) do
+    "TODO"
+  end
+  def item_sub_heading(_) do
+    "TODO"
+  end
+  def item_name(_) do
+    "TODO"
+  end
+
   def item_initial_price(%{initial_price: nil}), do: nil
   def item_initial_price(%{initial_price: pence}), do: pence / 100
 
@@ -127,5 +137,33 @@ defmodule UM.Web.ViewHelpers do
   defp postgres_datetime_to_iso8601(datetime) do
     [date, _time] = String.split(datetime, " ")
     date
+  end
+
+  def order_checkout_date(_order) do
+    # '%d %B %Y'
+    "TODO"
+  end
+
+  def order_expiry_date(order) do
+    "4 days later" # TODO
+  end
+
+  def order_payment_gross(order) do
+    "TODO"
+  end
+
+  def order_tax_payment(order) do
+
+  end
+
+  def order_purchases(order) do
+    [%{
+      item: %{
+        id: "something",
+        piece_id: "somethinf else",
+        asset: "TODO"
+
+      }
+    }]
   end
 end

@@ -7,7 +7,7 @@ defmodule UM.Web.CustomersControllerController do
   EEx.function_from_file :def, :new_page_content, new_file, [:form, :errors, :success_path]
 
   order_history_file = String.replace_suffix(__ENV__.file, ".ex", "/order_history.html.eex")
-  EEx.function_from_file :def, :order_history_content, order_history_file, [:customer]
+  EEx.function_from_file :def, :order_history_content, order_history_file, [:orders, :customer]
 
   edit_file = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
   EEx.function_from_file :def, :edit_page_content, edit_file, [:form, :errors, :success_path]
@@ -67,8 +67,11 @@ defmodule UM.Web.CustomersControllerController do
     end
   end
 
-  def customer_endpoint(%{path: [], method: :GET}, _customer) do
-    Raxx.Response.ok("order_history_content(customer)")
+  def customer_endpoint(%{path: [], method: :GET}, customer) do
+    # pull all orders that succeeded in the last 4 days
+    # sorted by completion date
+    orders = [%{id: "transation_id"}]
+    Raxx.Response.ok(order_history_content(orders, customer))
   end
 
   def customer_endpoint(%{path: ["edit"], method: :GET}, customer) do
