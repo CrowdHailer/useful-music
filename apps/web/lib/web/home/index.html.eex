@@ -72,12 +72,12 @@
             </div>
             <div class="row collapse">
                 <div class="large-6 small-12 columns product-main">
-                    <p><%= UM.Catalogue.Piece.catalogue_number(piece) %></p>
+                    <p><%= piece_catalogue_number(piece) %></p>
                     <p>LEVEL <%= piece.level_overview %></p>
                     <hr class="prod-break">
-                    <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
+                    <a href="/pieces/<%= piece_catalogue_number(piece) %>?autoplay=true"><h6><i class="fa fa-play prod-icon-cstm"></i>LISTEN</h6></a>
                     <a href="<%= UM.Catalogue.Piece.notation_preview_url(piece, "") %>" target="_blank"><h6><i class="fa fa-music prod-icon-cstm"></i>SEE SCORE</h6></a>
-                    <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>">
+                    <a href="/pieces/<%= piece_catalogue_number(piece) %>">
                         <button class="piece-btn">Full Details</button>
                     </a>
                 </div>

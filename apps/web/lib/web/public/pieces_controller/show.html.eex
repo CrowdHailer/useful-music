@@ -68,7 +68,7 @@
         <h1><%= piece.title %></h1>
       </div>
       <div class="large-6 medium-6 small-12 columns piece-title">
-        <p>Catalogue Number: <%= UM.Catalogue.Piece.catalogue_number(piece) %></p>
+        <p>Catalogue Number: <%= piece_catalogue_number(piece) %></p>
       </div>
 
       <hr style="margin: 1.25rem 0 0.1875rem;">

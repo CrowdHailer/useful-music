@@ -19,7 +19,7 @@
               <tr>
                 <td>
                   <a href="/pieces/<%= purchase.item.piece_id %>">
-                    <%= product_name(purchase.item) %>
+                    <%= piece_product_name(purchase.item) %>
                   </a>
                 </td>
                 <td>
@@ -66,7 +66,7 @@
                     </td>
                     <td>
                         <a href="/pieces/<%= purchase.item.piece_id %>">
-                            <%= product_name(purchase.item) %>
+                            <%= piece_product_name(purchase.item) %>
                         </a>
                     </td>
                     <td>

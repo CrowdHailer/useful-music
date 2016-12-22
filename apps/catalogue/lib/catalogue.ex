@@ -168,8 +168,8 @@ defmodule UM.Catalogue do
     case Moebius.Db.run(action) do
       record = %{id: ^id} ->
         {:ok, record}
-      {:error, _reason} ->
-        {:error, :invalid_item}
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 

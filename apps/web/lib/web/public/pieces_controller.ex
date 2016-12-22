@@ -1,4 +1,5 @@
 defmodule UM.Web.PiecesController do
+  import UM.Web.ViewHelpers
   require EEx
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")

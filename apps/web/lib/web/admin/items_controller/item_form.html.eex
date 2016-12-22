@@ -8,7 +8,7 @@
               <a class="menu-link" href="/admin/pieces">Back to Pieces</a>
           </li>
           <li class="menu-option">
-              <a class="menu-link" href="/admin/pieces/<%= catalogue_number(piece) %>/edit">Back to <%= catalogue_number(piece) %></a>
+              <a class="menu-link" href="/admin/pieces/<%= piece_catalogue_number(piece) %>/edit">Back to <%= piece_catalogue_number(piece) %></a>
           </li>
           <hr>
       </ul>
@@ -19,20 +19,21 @@
         <form class="button" id="form_id" action="/admin/items/<%= item.id %>" method="post" onsubmit="return confirm('Are you sure you want to remove \'<%= item.name %>\' from \'<%= piece.title %>\'')">
             <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="DELETE">
-            <input class="destroy" type="submit" name="some_name" value="Remove Item">
+            <input class="destroy" type="submit" value="Remove Item">
         </form>
         <p>
-          Edit item '<%= item.name %>'. Which belongs to piece <em>'<%= product_name(piece) %>'</em>, Catalogue number '<%= catalogue_number(piece) %>'
+          Edit item '<%= item.name %>'. Which belongs to piece <em>'<%= piece_product_name(piece) %>'</em>, Catalogue number '<%= piece_catalogue_number(piece) %>'
         </p>
         <% else %>
         <h2>Add Item</h2>
         <p>
-          Add item to piece <em>'<%= product_name(piece) %>'</em>, Catalogue number '<%= catalogue_number(piece) %>'
+          Add item to piece <em>'<%= piece_product_name(piece) %>'</em>, Catalogue number '<%= piece_catalogue_number(piece) %>'
         </p>
         <% end %>
         <hr>
         <form class="pure-form pure-form-aligned" action="/admin/items/<%= item.id %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post" onsubmit="alert('If you have changed this items name please reupload the asset')">
             <%= UM.Web.Session.csrf_tag %>
+            <input type="hidden" name="item[piece_id]" value="<%= piece.id %>">
             <%= if item.id do %>
             <input type="hidden" name="_method" value="PUT">
               <!-- else POST -->
@@ -59,7 +60,7 @@
                         min="0"
                         step="0.01"
                         required
-                        value="<%= item.initial_price %>"
+                        value="<%= item_initial_price(item) %>"
                         placeholder="initial price">
                 </div>
 
@@ -71,7 +72,7 @@
                         type="number"
                         min="0"
                         step="0.01"
-                        value="<%= item.discounted_price %>"
+                        value="<%= item_discounted_price(item) %>"
                         placeholder="discounted price">
                 </div>
 
@@ -82,10 +83,10 @@
                   NB if changing name reupload asset as names are currently assigned on upload
                 </p>
                 <p>
-                  Leave blank to use <a href="<%= asset_url(item) %>" target="_blank">exisiting asset</a>
+                  Leave blank to use <a href="<%= item_asset_url(item) %>" target="_blank">exisiting asset</a>
                 </p>
                 <% end %>
-                <input type="file" name="[item][asset]" placeholder="asset">
+                <input type="file" name="item[asset]" placeholder="asset">
             </fieldset>
 
             <hr>

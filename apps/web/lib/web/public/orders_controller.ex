@@ -1,4 +1,5 @@
 defmodule UM.Web.OrdersController do
+  import UM.Web.ViewHelpers
   require EEx
 
   basket_file = String.replace_suffix(__ENV__.file, ".ex", "/basket.html.eex")
@@ -106,9 +107,6 @@ defmodule UM.Web.OrdersController do
   end
   def free_basket?(basket) do
 
-  end
-  def product_name(item) do
-    "TODO name"
   end
 end
 

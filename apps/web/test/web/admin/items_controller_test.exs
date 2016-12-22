@@ -71,7 +71,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
       initial_price: 40
     })
     # was previously a put
-    request = post("/#{item.id}", %{"item" => %{
+    request = put("/#{item.id}", %{"item" => %{
       "name" => "Flute part",
       "piece_id" => "#{piece.id}",
       "initial_price" => "90",
@@ -82,7 +82,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert 302 == response.status
     location = Raxx.Patch.response_location(response)
     assert String.contains?(location, "/admin/pieces/UD101/edit")
-    assert String.contains?(location, "Item+created")
+    assert String.contains?(location, "Item+updated")
     {:ok, updated_item} = UM.Catalogue.fetch_item(item.id)
     assert "somefile.mp3" == updated_item.asset
     assert 9000 == updated_item.initial_price
