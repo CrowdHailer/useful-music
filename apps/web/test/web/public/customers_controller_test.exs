@@ -149,5 +149,17 @@ defmodule UM.Web.CustomersControllerControllerTest do
     assert "updatedSecret" == jo.password
   end
 
+  test "failed to update password" do
+    jo = UM.Web.Fixtures.jo_brand
+    request = put("/#{jo.id}/change_password", form_data(%{
+      "customer" => %{
+        "current_password" => "password",
+        "password" => "bad",
+        "password_confirmation" => "bad"
+      }}), UM.Web.Session.customer_session(jo))
+    response = Controller.handle_request(request, :no_state)
+    assert response.status == 302
+  end
+
   # DEBT keep success path after login/signup
 end

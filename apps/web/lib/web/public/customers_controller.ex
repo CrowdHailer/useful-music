@@ -99,7 +99,6 @@ defmodule UM.Web.CustomersControllerController do
   def customer_endpoint(%{path: ["change_password"], method: :PUT, body: %{"customer" => form}}, customer) do
     case ChangePasswordForm.validate(form) do
       {:ok, data} ->
-        # Could merge with whole customer
         case data.current_password == customer.password do
           true ->
             update = %{password: data.password}
@@ -107,10 +106,14 @@ defmodule UM.Web.CustomersControllerController do
               {:ok, customer} ->
                 Raxx.Patch.redirect("/customers/#{customer.id}", success: "Password changed")
             end
+          false ->
+            Raxx.Patch.redirect("/customers/#{customer.id}/change_password")
+            |> UM.Web.with_flash(error: "Could not update password")
         end
-      {:error, {form, errors}} ->
-        customer = Map.merge(form, %{id: customer.id})
-        Raxx.Response.bad_request(edit_page_content(customer, errors, ""))
+      {:error, form_with_errors} ->
+        IO.inspect(form_with_errors)
+        Raxx.Patch.redirect("/customers/#{customer.id}/change_password")
+        |> UM.Web.with_flash(error: "Could not update password")
     end
   end
 end
