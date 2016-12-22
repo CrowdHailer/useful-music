@@ -21,14 +21,15 @@ defmodule UM.Catalogue.Mixfile do
 
   defp deps do
     [
-      {:arc, "~> 0.6.0-rc3"},
+      {:arc, "~> 0.6.0"},
       {:moebius, "~> 2.0.0"},
+      {:hackney, "~> 1.6", override: true},
 
       # If using Amazon S3 (arc):
-      ex_aws: "~> 1.0.0-rc3",
-      hackney: "~> 1.5",
+      ex_aws: "~> 1.0.0",
       poison: "~> 2.0",
-      sweet_xml: "~> 0.5"
+      sweet_xml: "~> 0.5",
+
     ]
   end
 end

@@ -9,6 +9,8 @@ defmodule Project.Mixfile do
   end
 
   defp deps do
-    []
+    [
+      {:hackney, "~> 1.6", override: true},
+    ]
   end
 end

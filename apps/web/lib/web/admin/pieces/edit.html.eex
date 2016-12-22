@@ -44,7 +44,9 @@
                     autofocus
                     required
                     value="<%= piece.id %>"
-                    disabled
+                    <%= if piece.id do %>
+                      disabled
+                    <% end %>
                     placeholder="XXX">
                 </div>
 
@@ -328,7 +330,7 @@
                         <%= if piece.notation_preview do %>
                         <a href="<%= UM.Catalogue.Piece.notation_preview_url(piece) %>">existing asset</a>
                         <% else %>
-                        No Audio Preview
+                        No Notation Preview
                         <% end %>
                     </span>
                 </div>
@@ -363,10 +365,10 @@
                 <div class="pure-control-group">
                     <label></label>
                     <span>
-                        <% if piece.cover_image do %>
+                        <%= if piece.cover_image do %>
                         <a href="<%= UM.Catalogue.Piece.cover_image_url(piece) %>">existing asset</a>
                         <% else %>
-                        No Audio Preview
+                        No Cover Image
                         <% end %>
                     </span>
                 </div>

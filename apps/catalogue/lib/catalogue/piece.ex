@@ -118,6 +118,7 @@ defmodule UM.Catalogue.Piece do
   end
 
   def notation_preview_url(piece, default \\ nil) do
+    IO.inspect piece
     if piece.notation_preview do
       UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original, signed: true)
     else
