@@ -67,7 +67,12 @@ defmodule UM.Web.CustomersControllerController do
     end
   end
 
-  def customer_endpoint(%{path: [], method: :GET}, customer) do
+  def customer_endpoint(request = %{path: [], method: :GET}, customer) do
+    path = ["orders"]
+    customer_endpoint(%{request | path: path}, customer)
+  end
+
+  def customer_endpoint(%{path: ["orders"], method: :GET}, customer) do
     # pull all orders that succeeded in the last 4 days
     # sorted by completion date
     orders = [%{id: "transation_id"}]
