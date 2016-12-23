@@ -39,6 +39,7 @@ defmodule UM.Web.Fixtures do
     |> Moebius.Db.run
   end
 
+  # has a basket in progress
   def bugs_bunny do
     db(:customers)
     |> insert(

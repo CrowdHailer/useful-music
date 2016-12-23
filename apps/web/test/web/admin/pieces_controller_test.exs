@@ -1,6 +1,6 @@
 defmodule UM.Web.Admin.PiecesControllerTest do
   use ExUnit.Case
-  alias UM.Web.Admin.PiecesController
+  alias UM.Web.Admin.PiecesController, as: Controller
   alias UM.Catalogue
 
   import Raxx.Test
@@ -12,28 +12,28 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   test "index page shows all pieces" do
     _piece = UM.Web.Fixtures.canonical_piece
     request = get("/")
-    %{status: status, body: body} = Pieces.handle_request(request, %{})
+    %{status: status, body: body} = Controller.handle_request(request, %{})
     assert 200 == status
     assert String.contains?(body, "UD101")
   end
 
   test "can search for a piece by id" do
     request = get({"/search", %{"search" => "123"}})
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert 302 == response.status
     assert "/admin/pieces/UD123/edit" == Raxx.Patch.response_location(response)
   end
 
   test "can search for a piece by catalogue_number" do
     request = get({"/search", %{"search" => "UD123"}})
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert 302 == response.status
     assert "/admin/pieces/UD123/edit" == Raxx.Patch.response_location(response)
   end
 
   test "can visit new piece page" do
     request = get("/new")
-    %{status: status, body: body} = Pieces.handle_request(request, %{})
+    %{status: status, body: body} = Controller.handle_request(request, %{})
     assert 200 == status
     assert String.contains?(body, "New Piece")
   end
@@ -45,7 +45,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     request = post("/", form_data(%{
       "piece" => piece
     }))
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert {:ok, _piece} = Catalogue.fetch_piece(123)
     assert 302 == response.status
     location = Raxx.Patch.response_location(response)
@@ -60,7 +60,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     request = post("/", form_data(%{
       "piece" => piece
     }))
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert 302 == response.status
     location = Raxx.Patch.response_location(response)
     assert String.contains?(location, "/admin/pieces/new")
@@ -75,7 +75,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     request = post("/", form_data(%{
       "piece" => piece
     }))
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert 302 == response.status
     location = Raxx.Patch.response_location(response)
     assert String.contains?(location, "/admin/pieces/UD101/edit")
@@ -85,14 +85,14 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   test "can visit a pieces edit page" do
     piece = UM.Web.Fixtures.canonical_piece
     request = get("/UD#{piece.id}/edit")
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert 200 == response.status
     assert String.contains?(response.body, "UD101")
   end
 
   test "trying to edit a non existant piece results in a 404" do
     request = get("/UD999/edit")
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert 404 == response.status
     assert String.contains?(response.body, "UD999")
   end
@@ -104,7 +104,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     request = put("/UD101", form_data(%{
       "piece" => piece
     }))
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert {:ok, %{title: "The new hotness"}} = Catalogue.fetch_piece(101)
     assert 302 == response.status
     location = Raxx.Patch.response_location(response)
@@ -115,7 +115,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   test "can delete a piece" do
     piece = UM.Web.Fixtures.canonical_piece
     request = delete("/UD101")
-    response = Pieces.handle_request(request, %{})
+    response = Controller.handle_request(request, %{})
     assert {:error, :piece_not_found} = Catalogue.fetch_piece(101)
     assert 302 == response.status
     location = Raxx.Patch.response_location(response)

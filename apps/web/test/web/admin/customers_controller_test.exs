@@ -1,6 +1,6 @@
 defmodule UM.Web.Admin.CustomersControllerTest do
   use ExUnit.Case
-  alias UM.Web.Admin.CustomersController
+  alias UM.Web.Admin.CustomersController, as: Controller
 
   import Raxx.Test
 
@@ -12,7 +12,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
     _jo = UM.Web.Fixtures.jo_brand
     _bugs = UM.Web.Fixtures.bugs_bunny
     request = get("/")
-    response = Customers.handle_request(request, :nostate)
+    response = Controller.handle_request(request, :nostate)
     assert String.contains?(response.body, "Jo Brand")
     assert String.contains?(response.body, "Bugs Bunny")
   end
@@ -20,7 +20,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   test "can make customer an admin" do
     jo = UM.Web.Fixtures.jo_brand
     request = post("/#{jo.id}/admin", form_data(%{}))
-    response = Customers.handle_request(request, :nostate)
+    response = Controller.handle_request(request, :nostate)
     assert true == UM.Accounts.fetch_customer(jo.id).admin
     request = Raxx.Patch.follow(response)
     assert ["admin", "customers"] == request.path
@@ -30,7 +30,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   test "can make remove admin access" do
     bugs = UM.Web.Fixtures.bugs_bunny
     request = delete("/#{bugs.id}/admin", form_data(_method: "DELETE"))
-    response = Customers.handle_request(request, :nostate)
+    response = Controller.handle_request(request, :nostate)
     assert false == UM.Accounts.fetch_customer(bugs.id).admin
     request = Raxx.Patch.follow(response)
     assert ["admin", "customers"] == request.path
