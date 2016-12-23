@@ -1,4 +1,4 @@
-defmodule UM.Web.About do
+defmodule UM.Web.AboutController do
   require EEx
 
   index_file = String.replace_suffix(__ENV__.file, ".ex", "/index.html.eex")

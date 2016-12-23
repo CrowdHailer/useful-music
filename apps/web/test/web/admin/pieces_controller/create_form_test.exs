@@ -1,7 +1,7 @@
-defmodule UM.Web.Admin.PiecesController.CreateFormTest do
+defmodule UM.Web.Admin.PiecesControllerController.CreateFormTest do
   use ExUnit.Case
 
-  alias UM.Web.Admin.PiecesController.CreateForm
+  alias UM.Web.Admin.PiecesControllerController.CreateForm
 
   test "audio preview is cast to nil if file empty" do
     

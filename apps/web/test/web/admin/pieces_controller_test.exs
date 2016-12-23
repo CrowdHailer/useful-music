@@ -1,6 +1,6 @@
-defmodule UM.Web.Admin.PiecesTest do
+defmodule UM.Web.Admin.PiecesControllerTest do
   use ExUnit.Case
-  alias UM.Web.Admin.Pieces
+  alias UM.Web.Admin.PiecesController
   alias UM.Catalogue
 
   import Raxx.Test

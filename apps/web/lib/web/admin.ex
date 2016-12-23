@@ -30,7 +30,7 @@ defmodule UM.Web.Admin do
   end
 
   def endpoint(request = %{path: ["pieces" | rest]}, env) do
-    UM.Web.Admin.Pieces.handle_request(%{request | path: rest}, env)
+    UM.Web.Admin.PiecesController.handle_request(%{request | path: rest}, env)
   end
   def endpoint(request = %{path: ["items" | rest]}, env) do
     UM.Web.Admin.ItemsController.handle_request(%{request | path: rest}, env)
@@ -40,6 +40,6 @@ defmodule UM.Web.Admin do
   end
 
   def endpoint(request = %{path: ["customers" | rest]}, env) do
-    UM.Web.Admin.Customers.handle_request(%{request | path: rest}, env)
+    UM.Web.Admin.CustomersController.handle_request(%{request | path: rest}, env)
   end
 end

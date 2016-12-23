@@ -1,4 +1,4 @@
-defmodule UM.Web.Images do
+defmodule UM.Web.ImagesController do
   require Raxx.Static
   @external_resource "./static/images"
 

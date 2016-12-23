@@ -1,4 +1,4 @@
-defmodule UM.Web.Admin.Customers do
+defmodule UM.Web.Admin.CustomersController do
   import UM.Web.ViewHelpers
   require EEx
 

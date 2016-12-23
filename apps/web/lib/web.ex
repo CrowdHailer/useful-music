@@ -17,10 +17,10 @@ defmodule UM.Web do
   end
 
   def handle_request(request = %{path: ["stylesheets" | rest]}, env) do
-    UM.Web.Stylesheets.handle_request(%{request| path: rest}, env)
+    UM.Web.StylesheetsController.handle_request(%{request| path: rest}, env)
   end
   def handle_request(request = %{path: ["images" | rest]}, env) do
-    UM.Web.Images.handle_request(%{request| path: rest}, env)
+    UM.Web.ImagesController.handle_request(%{request| path: rest}, env)
   end
 
   def handle_request(request, env) do

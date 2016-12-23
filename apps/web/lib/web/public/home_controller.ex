@@ -1,4 +1,4 @@
-defmodule UM.Web.Home do
+defmodule UM.Web.HomeController do
   import UM.Web.ViewHelpers
   require EEx
 

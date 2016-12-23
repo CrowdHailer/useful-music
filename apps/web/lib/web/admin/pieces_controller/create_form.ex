@@ -1,4 +1,4 @@
-defmodule UM.Web.Admin.Pieces.CreateForm do
+defmodule UM.Web.Admin.PiecesController.CreateForm do
   import UM.Web.FormFields
 
   def validate(form) do

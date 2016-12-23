@@ -27,7 +27,7 @@ defmodule UM.Web.Public do
   end
 
   defp public_endpoint(request = %{path: ["about" | rest]}, env) do
-    UM.Web.About.handle_request(%{request| path: rest}, env)
+    UM.Web.AboutController.handle_request(%{request| path: rest}, env)
   end
 
   defp public_endpoint(request = %{path: ["customers" | rest]}, env) do
@@ -48,6 +48,6 @@ defmodule UM.Web.Public do
   end
 
   defp public_endpoint(request, env) do
-    UM.Web.Home.handle_request(request, env)
+    UM.Web.HomeController.handle_request(request, env)
   end
 end

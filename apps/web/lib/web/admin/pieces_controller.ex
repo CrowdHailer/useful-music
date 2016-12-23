@@ -1,4 +1,4 @@
-defmodule UM.Web.Admin.Pieces do
+defmodule UM.Web.Admin.PiecesController do
   import UM.Web.ViewHelpers
   alias UM.Catalogue.Piece
   require EEx

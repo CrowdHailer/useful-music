@@ -1,6 +1,6 @@
-defmodule UM.Web.Admin.CustomersTest do
+defmodule UM.Web.Admin.CustomersControllerTest do
   use ExUnit.Case
-  alias UM.Web.Admin.Customers
+  alias UM.Web.Admin.CustomersController
 
   import Raxx.Test
 
