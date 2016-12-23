@@ -1,4 +1,7 @@
 defmodule UM.Sales.Discount do
+  defmodule Zero do
+    defstruct [id: nil]
+  end
   defstruct [
     id: nil,
     code: nil,
@@ -8,4 +11,16 @@ defmodule UM.Sales.Discount do
     start_datetime: nil,
     end_datetime: nil
   ]
+
+  def zero, do: %Zero{}
+
+  def value(%Zero{}), do: 0
+  def value(%{value: value}), do: value
+
+  def check_availabile(%Zero{}, _) do
+    {:ok, %Zero{}}
+  end
+
+  # pending?
+  # expired?
 end

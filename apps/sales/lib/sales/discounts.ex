@@ -1,4 +1,6 @@
 defmodule UM.Sales.Discounts do
+  # check_allocation(discount) -> {:ok, remaining}
+  # check_customer_allocation(discount)
   import Moebius.Query
   def index_by_code(page) do
     query = db(:discounts) |> sort(:code, :asc)
