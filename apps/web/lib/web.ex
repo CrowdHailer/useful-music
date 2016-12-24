@@ -121,4 +121,8 @@ defmodule UM.Web do
   def with_session(request, session) do
     %{request | headers: request.headers ++ [{"um-set-session", session}]}
   end
+
+  def fetch_session(request) do
+    :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
+  end
 end

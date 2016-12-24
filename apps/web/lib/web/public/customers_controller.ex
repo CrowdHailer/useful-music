@@ -19,7 +19,7 @@ defmodule UM.Web.CustomersControllerController do
   EEx.function_from_file :def, :render_account_sidebar, account_sidebar_template, [:customer]
 
   def handle_request(request = %{method: :GET, path: ["new"]}, _) do
-    session = :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
+    session = UM.Web.fetch_session(request)
     if UM.Web.Session.logged_in?(session) do
       Raxx.Patch.redirect("/", success: "Already logged in")
     else
@@ -28,7 +28,7 @@ defmodule UM.Web.CustomersControllerController do
   end
 
   def handle_request(request = %{path: [], method: :POST, body: %{"customer" => form}}, _env) do
-    session = :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
+    session = UM.Web.fetch_session(request)
     case UM.Web.Session.logged_in?(session) do
       false ->
         case CreateForm.validate(form) do
@@ -54,7 +54,7 @@ defmodule UM.Web.CustomersControllerController do
   end
 
   def handle_request(request = %{path: [id | rest]}, _) do
-    session = :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
+    session = UM.Web.fetch_session(request)
     case UM.Web.Session.can_view_account?(session, id) do
       true ->
         customer = UM.Accounts.fetch_customer(id)
