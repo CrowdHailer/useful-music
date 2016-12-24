@@ -1,6 +1,6 @@
 defmodule UM.Web.AboutControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   test "test index page is available" do
     request = get("/")

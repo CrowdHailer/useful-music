@@ -1,6 +1,6 @@
 defmodule UM.Web.OrdersControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   alias UM.Catalogue
   alias UM.Web.OrdersController, as: Controller
@@ -15,7 +15,7 @@ defmodule UM.Web.OrdersControllerTest do
   test "customer can add a purchase to their basket" do
     {:ok, basket} = UM.Sales.create_shopping_basket
     # TODO have items in already
-    request = post("/#{basket.id}/items", form_data(%{
+    request = post("/#{basket.id}/items", Raxx.Test.form_data(%{
       "items" => %{
         "garden-all-parts" => "4",
         "garden-flute-part" => "2"
@@ -32,7 +32,7 @@ defmodule UM.Web.OrdersControllerTest do
   end
 
   test "guest can add a purchase to new basket" do
-    request = post("/empty/items", form_data(%{
+    request = post("/empty/items", Raxx.Test.form_data(%{
       "items" => %{
         "garden-all-parts" => "1"
       }
@@ -52,7 +52,7 @@ defmodule UM.Web.OrdersControllerTest do
     {:ok, basket} = UM.Sales.create_shopping_basket
     item_id = "garden-flute-part"
     UM.Sales.add_item(basket.id, item_id, quantity: 3)
-    request = put("/#{basket.id}/items/#{item_id}", form_data(%{
+    request = put("/#{basket.id}/items/#{item_id}", Raxx.Test.form_data(%{
       "item" => %{
         "quantity" => "2"
       }

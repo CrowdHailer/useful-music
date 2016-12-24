@@ -1,7 +1,7 @@
 defmodule UM.Web.CustomersControllerControllerTest do
   use ExUnit.Case
   use Bamboo.Test
-  import Raxx.Test
+  import Raxx.Request
 
   alias UM.Web.CustomersControllerController, as: Controller
 
@@ -16,7 +16,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
   end
 
   test "can create new customer" do
-    request = post("/", form_data(%{
+    request = post("/", Raxx.Test.form_data(%{
       "customer" => %{
         "first_name" => "Bill",
         "last_name" => "Kennedy",
@@ -41,7 +41,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
   end
 
   test "rerenders form for bad password" do
-    request = post("/", form_data(%{
+    request = post("/", Raxx.Test.form_data(%{
       "customer" => %{
         "first_name" => "Bill",
         "last_name" => "Kennedy",
@@ -88,7 +88,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
 
   test "can update a customers details" do
     jo = UM.Web.Fixtures.jo_brand
-    request = put("/#{jo.id}", form_data(%{
+    request = put("/#{jo.id}", Raxx.Test.form_data(%{
       "customer" => %{
         "first_name" => "Joanna",
         "last_name" => "Brand",
@@ -110,7 +110,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
 
   test "cant update a customers details with invalid name" do
     jo = UM.Web.Fixtures.jo_brand
-    request = put("/#{jo.id}", form_data(%{
+    request = put("/#{jo.id}", Raxx.Test.form_data(%{
       "customer" => %{
         "first_name" => "",
         "last_name" => "Kennedy",
@@ -134,7 +134,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
 
   test "can update password" do
     jo = UM.Web.Fixtures.jo_brand
-    request = put("/#{jo.id}/change_password", form_data(%{
+    request = put("/#{jo.id}/change_password", Raxx.Test.form_data(%{
       "customer" => %{
         "current_password" => "password",
         "password" => "updatedSecret",
@@ -151,7 +151,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
 
   test "failed to update password" do
     jo = UM.Web.Fixtures.jo_brand
-    request = put("/#{jo.id}/change_password", form_data(%{
+    request = put("/#{jo.id}/change_password", Raxx.Test.form_data(%{
       "customer" => %{
         "current_password" => "password",
         "password" => "bad",

@@ -1,6 +1,6 @@
 defmodule UM.Web.PasswordResetsControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   alias UM.Web.PasswordResetsController, as: Controller
 
@@ -16,7 +16,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
 
   test "create password reset" do
     jo = UM.Web.Fixtures.jo_brand
-    request = post("/", form_data(%{"customer" => %{"email" => jo.email}}))
+    request = post("/", Raxx.Test.form_data(%{"customer" => %{"email" => jo.email}}))
     |> Controller.handle_request(:nostate)
     |> Raxx.Patch.follow
     {flash, request} = UM.Web.Flash.from_request(request)
@@ -25,7 +25,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   end
 
   test "rerenders when email not found" do
-    response = post("/", form_data(%{"customer" => %{"email" => "a@b.com"}}))
+    response = post("/", Raxx.Test.form_data(%{"customer" => %{"email" => "a@b.com"}}))
     |> Controller.handle_request(:nostate)
     assert String.contains?(response.body, "Email not found")
   end
@@ -41,7 +41,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   test "can reset password" do
     jo = UM.Web.Fixtures.jo_brand
     {:ok, customer} = UM.Accounts.create_password_reset(jo.email)
-    request = put("/#{customer.password_reset_token}", form_data(%{
+    request = put("/#{customer.password_reset_token}", Raxx.Test.form_data(%{
       "customer" => %{
         "email" => jo.email,
         "password" => "mySecret",

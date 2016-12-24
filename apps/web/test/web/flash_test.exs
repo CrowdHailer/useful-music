@@ -2,7 +2,7 @@ defmodule UM.Web.FlashTest do
   alias UM.Web.Flash
   use ExUnit.Case, async: true
 
-  import Raxx.Test
+  import Raxx.Request
 
   test "returns empty flash from request with no query" do
     request = get("/")

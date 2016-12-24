@@ -1,6 +1,6 @@
 defmodule UM.Web.HomeControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   setup do
     :ok = UM.Web.Fixtures.clear_db
@@ -39,7 +39,7 @@ defmodule UM.Web.HomeControllerTest do
   test "sets currency preference for a customer" do
     jo = UM.Web.Fixtures.jo_brand
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)
-    request = post("/currency", form_data(%{"preference" => "USD"}), [{"um-session", session}])
+    request = post("/currency", Raxx.Test.form_data(%{"preference" => "USD"}), [{"um-session", session}])
     response = UM.Web.HomeController.handle_request(request, %{})
     assert "USD" == UM.Accounts.fetch_customer(jo.id).currency_preference
     assert response.status == 302
@@ -49,7 +49,7 @@ defmodule UM.Web.HomeControllerTest do
   end
 
   test "sets currency preference for a guest" do
-    request = post("/currency", form_data(%{"preference" => "USD"}), [{"um-session", UM.Web.Session.new}])
+    request = post("/currency", Raxx.Test.form_data(%{"preference" => "USD"}), [{"um-session", UM.Web.Session.new}])
     response = UM.Web.HomeController.handle_request(request, %{})
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)
@@ -57,7 +57,7 @@ defmodule UM.Web.HomeControllerTest do
   end
 
   test "setting currency redirects to referrer" do
-    request = post("/currency", form_data(%{"preference" => "USD"}), [
+    request = post("/currency", Raxx.Test.form_data(%{"preference" => "USD"}), [
       {"um-session", UM.Web.Session.new},
       {"referer", "/pieces"}
     ])

@@ -1,6 +1,6 @@
 defmodule UM.Web.SessionsControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   alias UM.Web.SessionsController
 
@@ -22,7 +22,7 @@ defmodule UM.Web.SessionsControllerTest do
   test "login will add user id to session" do
     jo = UM.Web.Fixtures.jo_brand
     basket = UM.Web.Fixtures.guest_basket
-    request = post("/sessions", encode_form(%{
+    request = post("/sessions", Raxx.Test.encode_form(%{
       target: "/checkout",
       session: %{email: jo.email, password: jo.password}
     }), UM.Web.Session.external_session(%{shopping_basket_id: basket.id}))
@@ -37,7 +37,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "login with invalid credentials shows flash" do
-    request = post("/sessions", encode_form(%{
+    request = post("/sessions", Raxx.Test.encode_form(%{
       session: %{email: "interloper@example.com", password: "bad_password"}
     }))
     response = UM.Web.handle_request(request, :no_state)

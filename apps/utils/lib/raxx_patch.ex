@@ -78,7 +78,7 @@ defmodule Raxx.Patch do
 
   def follow(response) do
     location = Raxx.Patch.response_location(response)
-    Raxx.Test.get(location)
+    Raxx.Request.get(location)
   end
 
   @doc """
@@ -89,7 +89,7 @@ defmodule Raxx.Patch do
   # type spec, this should return an error for un parsable content
   """
   def form_content(request) do
-    case Raxx.Request.content_type(request) do
+    case Raxx.Headers.content_type(request) do
       {"multipart/form-data", "boundary=" <> boundary} ->
         {:ok, Raxx.Request.parse_multipart_form_data(request.body, boundary)}
       {"application/x-www-form-urlencoded", _} ->

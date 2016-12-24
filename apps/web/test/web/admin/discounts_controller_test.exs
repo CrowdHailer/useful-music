@@ -1,6 +1,6 @@
 defmodule Um.Web.Admin.DiscountsControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   alias UM.Web.Admin.DiscountsController, as: Controller
 
@@ -23,7 +23,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
   end
 
   test "can create a discount" do
-    request = post("/", form_data(%{"discount" => %{
+    request = post("/", Raxx.Test.form_data(%{"discount" => %{
       "code" => "mycode23",
       "allocation" => "100",
       "customer_allocation" => "1",
@@ -48,7 +48,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
 
   test "can update a discount" do
     discount = %{code: code, id: id} = UM.Web.Fixtures.current_discount
-    request = put("/#{id}", form_data(%{"discount" => %{
+    request = put("/#{id}", Raxx.Test.form_data(%{"discount" => %{
       "code" => code,
       "allocation" => "100",
       "customer_allocation" => "1",

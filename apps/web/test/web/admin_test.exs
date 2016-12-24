@@ -1,7 +1,7 @@
 defmodule UM.Web.AdminTest do
   use ExUnit.Case
 
-  import Raxx.Test
+  import Raxx.Request
 
   setup do
     :ok = UM.Web.Fixtures.clear_db

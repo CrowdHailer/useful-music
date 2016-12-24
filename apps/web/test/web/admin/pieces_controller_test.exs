@@ -3,7 +3,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   alias UM.Web.Admin.PiecesController, as: Controller
   alias UM.Catalogue
 
-  import Raxx.Test
+  import Raxx.Request
 
   setup do
     :ok = UM.Web.Fixtures.clear_db
@@ -42,7 +42,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     piece = UM.Web.Fixtures.canonical_piece
     piece = %{piece | id: "123", notation_preview: %Raxx.Upload{content: "Hello", filename: "blob.pdf"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
-    request = post("/", form_data(%{
+    request = post("/", Raxx.Test.form_data(%{
       "piece" => piece
     }))
     response = Controller.handle_request(request, %{})
@@ -57,7 +57,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     piece = UM.Web.Fixtures.canonical_piece
     piece = %{piece | id: "", notation_preview: nil}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
-    request = post("/", form_data(%{
+    request = post("/", Raxx.Test.form_data(%{
       "piece" => piece
     }))
     response = Controller.handle_request(request, %{})
@@ -72,7 +72,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     # DEBT this overwrites files of the currenct piece
     piece = %{piece | id: "101", notation_preview: %Raxx.Upload{content: "ss", filename: "billy.jpg"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
-    request = post("/", form_data(%{
+    request = post("/", Raxx.Test.form_data(%{
       "piece" => piece
     }))
     response = Controller.handle_request(request, %{})
@@ -101,7 +101,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
     piece = UM.Web.Fixtures.canonical_piece
     piece = %{piece | title: "The new hotness", id: "101", notation_preview: %Raxx.Upload{content: ""}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
-    request = put("/UD101", form_data(%{
+    request = put("/UD101", Raxx.Test.form_data(%{
       "piece" => piece
     }))
     response = Controller.handle_request(request, %{})

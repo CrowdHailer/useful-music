@@ -1,6 +1,6 @@
 defmodule Um.Web.Admin.ItemsControllerTest do
   use ExUnit.Case
-  import Raxx.Test
+  import Raxx.Request
 
   alias UM.Web.Admin.ItemsController, as: Controller
   alias UM.Catalogue

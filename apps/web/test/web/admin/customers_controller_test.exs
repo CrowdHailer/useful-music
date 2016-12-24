@@ -2,7 +2,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   use ExUnit.Case
   alias UM.Web.Admin.CustomersController, as: Controller
 
-  import Raxx.Test
+  import Raxx.Request
 
   setup do
     :ok = UM.Web.Fixtures.clear_db
@@ -19,7 +19,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
 
   test "can make customer an admin" do
     jo = UM.Web.Fixtures.jo_brand
-    request = post("/#{jo.id}/admin", form_data(%{}))
+    request = post("/#{jo.id}/admin", Raxx.Test.form_data(%{}))
     response = Controller.handle_request(request, :nostate)
     assert true == UM.Accounts.fetch_customer(jo.id).admin
     request = Raxx.Patch.follow(response)
@@ -29,7 +29,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
 
   test "can make remove admin access" do
     bugs = UM.Web.Fixtures.bugs_bunny
-    request = delete("/#{bugs.id}/admin", form_data(_method: "DELETE"))
+    request = delete("/#{bugs.id}/admin", Raxx.Test.form_data(_method: "DELETE"))
     response = Controller.handle_request(request, :nostate)
     assert false == UM.Accounts.fetch_customer(bugs.id).admin
     request = Raxx.Patch.follow(response)
