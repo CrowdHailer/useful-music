@@ -57,17 +57,6 @@ defmodule UM.Web.Session do
     {session, request}
   end
 
-  def from_request(request) do
-    case List.keyfind(request.headers, "um-session", 0) do
-      {"um-session", session} ->
-        {session, request}
-      nil ->
-        session = UM.Web.Session.new
-        # DEBT delete session from cookies
-        {session, request}
-    end
-  end
-
   def decode(string) do
     case Poison.decode(string) do
       {:ok, %{"account_id" => id}} ->

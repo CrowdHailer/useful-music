@@ -39,7 +39,7 @@ defmodule UM.Web.HomeController do
       "GBP" -> "GBP"
       _ -> "GBP"
     end
-    {session, request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
 
     Raxx.Patch.redirect(Raxx.Patch.referrer(request) || "/")
     |> UM.Web.with_session(UM.Web.Session.select_currency(session, currency))

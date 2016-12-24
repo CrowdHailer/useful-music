@@ -11,7 +11,7 @@ defmodule UM.Web.OrdersController do
     body: %{"items" => items}
     }, _env) do
 
-    {session, request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
     basket = case UM.Sales.fetch_shopping_basket(basket_id) do
       {:ok, basket} ->
         basket
@@ -38,7 +38,7 @@ defmodule UM.Web.OrdersController do
     body: %{"item" => item}
     }, _env) do
 
-    {session, request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
 
     quantity = Map.get(item, "quantity")
     {quantity, ""} = Integer.parse(quantity)
@@ -54,7 +54,7 @@ defmodule UM.Web.OrdersController do
     method: :DELETE
     }, _env) do
 
-    {session, request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
 
     UM.Sales.set_item(basket_id, item_id, quantity: 0)
     redirect = "/orders/#{basket_id}"
@@ -64,7 +64,7 @@ defmodule UM.Web.OrdersController do
   end
 
   def handle_request(request = %{path: [id], method: :GET}, _) do
-    {session, request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(id)
     Raxx.Response.ok(basket_page_content(basket, session))
   end
