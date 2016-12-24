@@ -4,77 +4,46 @@ defmodule UM.Web.Session do
     # shopping_basket = Maybe(ShoppingBasket)
     defstruct [shopping_basket: nil, currency_preference: nil]
   end
+  defmodule Authenticated do
+    # Always has a customer
+    defstruct [account: nil]
+  end
+
   defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
   def new do
     %__MODULE__.UnAuthenticated{currency_preference: "GBP"}
   end
 
-  def logged_in?(%UnAuthenticated{}) do
-    false
-  end
-  # TODO remove last clause
-  def logged_in?(session) do
-    !UM.Web.Session.guest_session?(session)
-  end
+  def logged_in?(%UnAuthenticated{}), do: false
+  def logged_in?(%Authenticated{}), do: true
 
-  def admin?(%UnAuthenticated{}) do
-    false
-  end
-  # TODO remove last clause
-  def admin?(session) do
-    case current_customer(session) do
-      :guest ->
-        false
-      %{admin: true} ->
-        true
-      %{admin: false} ->
-        false
-    end
-  end
+  def admin?(%Authenticated{account: %{admin: true}}), do: true
+  def admin?(_), do: false
 
-  def can_view_account?(%UnAuthenticated{}, _) do
-    false
-  end
-  # TODO remove last clause
-  def can_view_account?(session, customer_id) do
-    session.customer_id == customer_id || admin?(session)
-  end
+  def can_view_account?(%{account: %{admin: true}}, _), do: true
+  def can_view_account?(%{account: %{id: id}}, id), do: true
+  def can_view_account?(_, _), do: false
 
-  def currency_preference(%UnAuthenticated{currency_preference: currency}) do
-    currency
-  end
-  # TODO remove last clause
-  def currency_preference(session) do
-    case current_customer(session) do
-      :guest ->
-        session.currency_preference
-      customer ->
-        customer.currency_preference
-    end
-  end
+  def currency_preference(%UnAuthenticated{currency_preference: currency}), do: currency
+  def currency_preference(%{account: %{currency_preference: currency}}), do: currency
 
   def login(session, customer) do
-    currency_preference = if customer.currency_preference do
-      customer.currency_preference
+    customer = if customer.currency_preference do
+      customer
     else
       customer = %{customer | currency_preference: session.currency_preference}
-      # DEBT check return values
-      UM.Accounts.update_customer(customer)
-      customer.currency_preference
+      {:ok, customer} = UM.Accounts.update_customer(customer)
+      customer
     end
-    %__MODULE__{customer_id: customer.id, currency_preference: currency_preference, customer: customer}
+    %__MODULE__.Authenticated{account: customer}
   end
 
-  def select_currency(session, currency) when currency in ["USD", "EUR", "GBP"] do
-    if logged_in?(session) do
-      customer = current_customer(session)
-      updated_customer = %{customer | currency_preference: currency}
-      # DEBT check return values
-      UM.Accounts.update_customer(updated_customer)
-      %{session | currency_preference: currency, customer: updated_customer}
-    else
-      %{session | currency_preference: currency}
-    end
+  def select_currency(session = %UnAuthenticated{}, currency) when currency in ["USD", "EUR", "GBP"] do
+    %{session | currency_preference: currency}
+  end
+  def select_currency(session = %{account: customer}, currency) when currency in ["USD", "EUR", "GBP"] do
+    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | currency_preference: currency})
+    %{session | account: updated_customer}
   end
 
   def from_request(request) do
@@ -116,7 +85,7 @@ defmodule UM.Web.Session do
   end
 
   # current customer looks up customer
-  def current_customer(%{customer: customer}) when customer != nil do
+  def current_customer(%{account: customer}) when customer != nil do
     customer
   end
   def current_customer(%{customer_id: nil}) do

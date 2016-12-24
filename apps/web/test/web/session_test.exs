@@ -68,7 +68,6 @@ defmodule UM.Web.SessionTest do
     session = Session.new
     |> Session.login(jo)
     |> Session.select_currency("GBP")
-    assert "GBP" == session.currency_preference
     assert "GBP" == Session.currency_preference(session)
     {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
     assert "GBP" == updated_jo.currency_preference
