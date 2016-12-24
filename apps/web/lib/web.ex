@@ -125,4 +125,8 @@ defmodule UM.Web do
   def fetch_session(request) do
     :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
   end
+
+  def fetch_flash(request) do
+    :proplists.get_value("um-flash", request.headers, %UM.Web.Flash{})
+  end
 end

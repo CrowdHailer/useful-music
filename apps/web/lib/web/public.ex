@@ -12,7 +12,7 @@ defmodule UM.Web.Public do
 
   def handle_request(request, env) do
     session = UM.Web.fetch_session(request)
-    {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
+    flash = UM.Web.fetch_flash(request)
 
     case public_endpoint(request, env) do
       request = %{body: nil} ->
