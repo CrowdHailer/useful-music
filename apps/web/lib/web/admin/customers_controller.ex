@@ -21,7 +21,7 @@ defmodule UM.Web.Admin.CustomersController do
   end
 
   def handle_request(%{method: :POST, path: [id, "admin"]}, _) do
-    customer = UM.Accounts.fetch_customer(id)
+    {:ok, customer} = UM.Accounts.fetch_by_id(id)
     updated_customer = Map.merge(customer, %{admin: true})
     case UM.Accounts.update_customer(updated_customer) do
       {:ok, latest} ->
@@ -31,7 +31,7 @@ defmodule UM.Web.Admin.CustomersController do
   end
 
   def handle_request(%{method: :DELETE, path: [id, "admin"]}, _) do
-    customer = UM.Accounts.fetch_customer(id)
+    {:ok, customer} = UM.Accounts.fetch_by_id(id)
     updated_customer = Map.merge(customer, %{admin: false})
     case UM.Accounts.update_customer(updated_customer) do
       {:ok, latest} ->

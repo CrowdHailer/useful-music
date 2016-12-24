@@ -33,7 +33,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     redirection = get(location)
     assert ["customers", id] = redirection.path
     assert List.keyfind(response.headers, "um-flash", 0)
-    customer = UM.Accounts.fetch_customer(id)
+    {:ok, customer} = UM.Accounts.fetch_by_id(id)
     assert "Bill" == customer.first_name
     assert "USD" == customer.currency_preference
     assert id == Raxx.Patch.response_session(response).account.id
