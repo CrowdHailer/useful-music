@@ -26,7 +26,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "country" => "TODO",
         "terms_agreement" => "on"
       }
-    }), UM.Web.Session.guest_session(currency_preference: "USD"))
+    }), [{"um-session", UM.Web.Session.new |> UM.Web.Session.select_currency("USD")}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 302
     assert location = Raxx.Patch.response_location(response)
@@ -36,7 +36,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     customer = UM.Accounts.fetch_customer(id)
     assert "Bill" == customer.first_name
     assert "USD" == customer.currency_preference
-    assert {"um-set-session", %{customer_id: ^id}} = List.keyfind(response.headers, "um-set-session", 0)
+    assert id == Raxx.Patch.response_session(response).account.id
     assert_delivered_email UM.Web.Emails.account_created(customer)
   end
 

@@ -27,9 +27,9 @@ defmodule UM.Web.OrdersController do
     end)
 
     redirect = "/orders/#{basket.id}"
-    {:ok, r} = Raxx.Patch.redirect(redirect, success: "Items added to basket")
-    |> Raxx.Patch.set_header("um-set-session", %{session | shopping_basket_id: basket.id})
-    r
+    Raxx.Patch.redirect(redirect)
+    |> UM.Web.with_flash(success: "Items added to basket")
+    |> UM.Web.with_session(session)
   end
 
   def handle_request(request = %{

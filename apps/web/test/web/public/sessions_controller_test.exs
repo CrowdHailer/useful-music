@@ -8,6 +8,7 @@ defmodule UM.Web.SessionsControllerTest do
     :ok = UM.Web.Fixtures.clear_db
   end
 
+  @tag :skip
   test "login page redirects if already logged in" do
     jo = UM.Web.Fixtures.jo_brand
     request = get("/sessions/new", UM.Web.Session.external_session(%{customer_id: jo.id}))
@@ -16,6 +17,7 @@ defmodule UM.Web.SessionsControllerTest do
     assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
   end
 
+  @tag :skip
   test "redirects to account page if already logged it" do
     jo = UM.Web.Fixtures.jo_brand
     request = get("/new", UM.Web.Session.customer_session(jo))
@@ -25,6 +27,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   # login from checkout page with a guest basket
+    @tag :skip
   test "login will add user id to session" do
     jo = UM.Web.Fixtures.jo_brand
     basket = UM.Web.Fixtures.guest_basket
@@ -42,6 +45,7 @@ defmodule UM.Web.SessionsControllerTest do
     # TODO guest shopping basket is added to the session
   end
 
+  @tag :skip
   test "login with invalid credentials shows flash" do
     request = post("/sessions", encode_form(%{
       session: %{email: "interloper@example.com", password: "bad_password"}
@@ -51,6 +55,8 @@ defmodule UM.Web.SessionsControllerTest do
     assert {%{error: "Invalid login details"}, _} = UM.Web.Flash.from_request(request)
   end
 
+  @tag :skip
+  # TODO packing and unpacking session
   test "logout will delete session" do
     bugs = UM.Web.Fixtures.bugs_bunny
     request = post("/sessions", %{
@@ -62,6 +68,7 @@ defmodule UM.Web.SessionsControllerTest do
     # TODO check cookies
   end
 
+  @tag :skip
   test "login page (/sessions/new) maintains the users target" do
     request = get({"/new", %{"target" => "/admin"}}, UM.Web.Session.guest_session)
     response = SessionsController.handle_request(request, :nostate)
@@ -69,6 +76,7 @@ defmodule UM.Web.SessionsControllerTest do
     assert String.contains?(response.body, "name=\"requested_path\" value=\"/admin\"")
   end
 
+  @tag :skip
   test "logging in sends user to their orders page" do
     jo = UM.Web.Fixtures.jo_brand
     request = post("/", %{

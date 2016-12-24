@@ -19,19 +19,18 @@ defmodule UM.Web.CustomersControllerController do
   EEx.function_from_file :def, :render_account_sidebar, account_sidebar_template, [:customer]
 
   def handle_request(request = %{method: :GET, path: ["new"]}, _) do
-    {session, request} = UM.Web.Session.from_request(request)
-    case UM.Web.Session.guest_session?(session) do
-      true ->
-        Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
-      false ->
-        Raxx.Patch.redirect("/", success: "Already logged in")
+    session = :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
+    if UM.Web.Session.logged_in?(session) do
+      Raxx.Patch.redirect("/", success: "Already logged in")
+    else
+      Raxx.Response.ok(new_page_content(%CreateForm{}, %CreateForm{}, ""))
     end
   end
 
   def handle_request(request = %{path: [], method: :POST, body: %{"customer" => form}}, _env) do
-    {session, request} = UM.Web.Session.from_request(request)
-    case UM.Web.Session.guest_session?(session) do
-      true ->
+    session = :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
+    case UM.Web.Session.logged_in?(session) do
+      false ->
         case CreateForm.validate(form) do
           {:error, {form, errors}} ->
             Raxx.Response.bad_request(new_page_content(form, errors, ""))
@@ -49,15 +48,13 @@ defmodule UM.Web.CustomersControllerController do
                 |> UM.Web.with_session(UM.Web.Session.login(session, customer))
             end
         end
-      false ->
+      true ->
         Raxx.Patch.redirect("/", success: "Already logged in")
     end
   end
 
-  # function login(session, customer) -> updated session
-
   def handle_request(request = %{path: [id | rest]}, _) do
-    {session, request} = UM.Web.Session.from_request(request)
+    session = :proplists.get_value("um-session", request.headers, UM.Web.Session.new)
     case UM.Web.Session.can_view_account?(session, id) do
       true ->
         customer = UM.Accounts.fetch_customer(id)

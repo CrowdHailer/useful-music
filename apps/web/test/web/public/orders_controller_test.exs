@@ -41,7 +41,7 @@ defmodule UM.Web.OrdersControllerTest do
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
     assert ["orders", basket_id] = request_2.path
-    {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
+    # {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
     assert 1 == UM.Sales.Basket.number_of_lines(basket)
     assert 1 == UM.Sales.Basket.number_of_units(basket)

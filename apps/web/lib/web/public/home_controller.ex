@@ -39,19 +39,10 @@ defmodule UM.Web.HomeController do
       "GBP" -> "GBP"
       _ -> "GBP"
     end
-
-    referrer = Raxx.Patch.referrer(request) || "/"
     {session, request} = UM.Web.Session.from_request(request)
-    session = case UM.Web.Session.current_customer(session) do
-      :guest ->
-        %{session | currency_preference: currency}
-      customer ->
-        {:ok, customer} = UM.Accounts.update_customer(%{id: customer.id, currency_preference: currency})
-        %{session | currency_preference: currency, customer: customer}
-    end
-    response = Raxx.Patch.redirect(referrer)
-    {:ok, response} = Raxx.Patch.set_header(response, "um-set-session", session)
-    response
+
+    Raxx.Patch.redirect(Raxx.Patch.referrer(request) || "/")
+    |> UM.Web.with_session(UM.Web.Session.select_currency(session, currency))
   end
 
   def handle_request(%{path: ["favicon.ico"], method: :GET}, _) do

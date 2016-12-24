@@ -35,30 +35,34 @@ defmodule UM.Web.HomeControllerTest do
     assert "/pieces?" <> _query = Raxx.Patch.response_location(response)
   end
 
+  # TODO test less as setting a currency preference is tested in the session tests
   test "sets currency preference for a customer" do
     jo = UM.Web.Fixtures.jo_brand
-    request = post("/currency", form_data(%{"preference" => "USD"}), UM.Web.Session.customer_session(jo))
+    session = UM.Web.Session.new |> UM.Web.Session.login(jo)
+    request = post("/currency", form_data(%{"preference" => "USD"}), [{"um-session", session}])
     response = UM.Web.HomeController.handle_request(request, %{})
     assert "USD" == UM.Accounts.fetch_customer(jo.id).currency_preference
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)
-    assert %{currency_preference: "USD", customer_id: id} = Raxx.Patch.response_session(response)
-    assert jo.id == id
+    assert "USD" = Raxx.Patch.response_session(response) |> UM.Web.Session.currency_preference
+    # assert jo.id == id
   end
 
   test "sets currency preference for a guest" do
-    request = post("/currency", form_data(%{"preference" => "USD"}), UM.Web.Session.guest_session)
+    request = post("/currency", form_data(%{"preference" => "USD"}), [{"um-session", UM.Web.Session.new}])
     response = UM.Web.HomeController.handle_request(request, %{})
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)
-    assert %{currency_preference: "USD", customer_id: nil} = Raxx.Patch.response_session(response)
+    assert "USD" = Raxx.Patch.response_session(response) |> UM.Web.Session.currency_preference
   end
 
-  test "redirects to referrer" do
-    request = post("/currency", form_data(%{"preference" => "USD"}), UM.Web.Session.guest_session ++ [{"referer", "/pieces"}])
+  test "setting currency redirects to referrer" do
+    request = post("/currency", form_data(%{"preference" => "USD"}), [
+      {"um-session", UM.Web.Session.new},
+      {"referer", "/pieces"}
+    ])
     response = UM.Web.HomeController.handle_request(request, %{})
     assert response.status == 302
     assert "/pieces" == Raxx.Patch.response_location(response)
-    assert %{currency_preference: "USD", customer_id: nil} = Raxx.Patch.response_session(response)
   end
 end

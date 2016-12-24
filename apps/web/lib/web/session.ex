@@ -9,7 +9,6 @@ defmodule UM.Web.Session do
     defstruct [account: nil]
   end
 
-  defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
   def new do
     %__MODULE__.UnAuthenticated{currency_preference: "GBP"}
   end
@@ -70,65 +69,34 @@ defmodule UM.Web.Session do
   def decode(string) do
     case Poison.decode(string) do
       {:ok, raw} ->
-        {:ok, %__MODULE__{
-          customer_id: Map.get(raw, "customer_id"),
-          currency_preference: Map.get(raw, "currency_preference"),
-          shopping_basket_id: Map.get(raw, "shopping_basket_id")
-        }}
+        # {:ok, %__MODULE__{
+        #   customer_id: Map.get(raw, "customer_id"),
+        #   currency_preference: Map.get(raw, "currency_preference"),
+        #   shopping_basket_id: Map.get(raw, "shopping_basket_id")
+        # }}
+        new
       {:error, reason} ->
         {:error, reason}
     end
   end
 
-  def load_customer(session) do
-    Map.merge(session, %{customer: current_customer(session)})
-  end
-
-  # current customer looks up customer
-  def current_customer(%{account: customer}) when customer != nil do
-    customer
-  end
-  def current_customer(%{customer_id: nil}) do
-    :guest
-  end
-  def current_customer(%{customer_id: id}) do
-    UM.Accounts.fetch_customer(id) || :guest
-  end
-
-  def customer_account_url(session) do
-    case current_customer(session) do
-      :guest ->
-        nil
-      %{id: id} ->
-        "/customers/#{id}"
-    end
-  end
-
-  def guest_session?(session) do
-    current_customer(session) == :guest
-  end
-
-
+# TODO move these to view helper combination of session and basket
   def checkout_price(session) do
     0
   end
 
+# TODO move these to view helper combination of session and basket
   def number_of_basket_items(session) do
     0
   end
-
-
 
   def shopping_basket_id(session) do
     session.shopping_basket_id
   end
 
-
   def csrf_tag do
     "" # TODO
   end
-
-
 
   ## MOVE to test
 
@@ -137,9 +105,7 @@ defmodule UM.Web.Session do
     [{"um-session", session}]
   end
   def guest_session(opts \\ []) do
-    opts = Enum.into(opts, %{})
-    currency = Map.get(opts, :currency_preference, "GBP")
-    [{"um-session", %__MODULE__{customer_id: nil, currency_preference: currency}}]
+    [{"um-session", new}]
   end
 
   def external_session(data) do
