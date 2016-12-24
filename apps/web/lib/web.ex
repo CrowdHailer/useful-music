@@ -52,12 +52,8 @@ defmodule UM.Web do
 
       headers = case List.keytake(headers, "um-set-session", 0) do
         {{"um-set-session", session}, headers} ->
-          session = %{
-            customer_id: session.customer_id,
-            currency_preference: session.currency_preference,
-            shopping_basket_id: session.shopping_basket_id
-          }
-          cookie_string = Raxx.Cookie.new("raxx.session", Poison.encode!(session))
+          encoded_session = UM.Web.Session.encode!(session)
+          cookie_string = Raxx.Cookie.new("raxx.session", encoded_session)
           |> Raxx.Cookie.set_cookie_string
           headers ++ [{"set-cookie", cookie_string}]
         nil ->

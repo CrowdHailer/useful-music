@@ -67,7 +67,15 @@ defmodule UM.Web.Session do
     end
   end
 
+  def encode!(%Authenticated{account: %{id: id}}) do
+    Poison.encode!(%{account_id: id})
+  end
+  def encode!(%UnAuthenticated{currency_preference: currency}) do
+    Poison.encode!(%{currency_preference: currency})
+  end
+
 # TODO move these to view helper combination of session and basket
+  # These functions are useful if the session acts as a cache layer
   def checkout_price(session) do
     0
   end
@@ -94,6 +102,6 @@ defmodule UM.Web.Session do
   end
 
   def external_session(session) do
-    [{"cookie", "raxx.session="<>Poison.encode!(session)}]
+    [{"cookie", "raxx.session=" <> encode!(session)}]
   end
 end

@@ -105,17 +105,4 @@ defmodule UM.Web.SessionTest do
   test "carry on shopping with session basket if it has items, the old basket will be abandoned" do
 
   end
-
-  @tag :skip
-  test "decoding an empty session has an empty basket" do
-    session = Session.decode("")
-    |> IO.inspect
-    assert false == Session.logged_in?(session)
-    assert false == Session.admin?(session)
-  end
-
-  # test "can decode a user session" do
-  #   jo = UM.Web.Fixtures.jo_brand
-  #   |> IO.inspect
-  # end
 end

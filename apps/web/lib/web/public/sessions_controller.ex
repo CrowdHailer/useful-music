@@ -5,18 +5,17 @@ defmodule UM.Web.SessionsController do
   EEx.function_from_file :def, :new_page_content, new_file, [:target]
 
   def handle_request(request = %{path: ["new"], query: query, method: :GET}, _) do
-    {session, _request} = UM.Web.Session.from_request(request)
-    case UM.Web.Session.current_customer(session) do
-      :guest ->
+    case UM.Web.fetch_session(request) do
+      %UM.Web.Session.UnAuthenticated{} ->
         target = Map.get(query, "target", "")
         Raxx.Response.ok(new_page_content(target))
-      %{id: id} ->
+      %UM.Web.Session.Authenticated{account: %{id: id}} ->
         Raxx.Patch.redirect("/customers/#{id}")
     end
   end
 
   def handle_request(request = %{path: [], method: :POST, body: body}, _env) do
-    {session, _request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
     form = Map.get(body, "session")
     case {:ok, %{email: form["email"], password: form["password"]}} do
       {:ok, data} ->
@@ -34,7 +33,7 @@ defmodule UM.Web.SessionsController do
   end
 
   def handle_request(%{path: [], method: :DELETE}, _) do
-    Raxx.Response.redirect("/")
-    |> UM.Web.with_session(Session.new)
+    Raxx.Patch.redirect("/")
+    |> UM.Web.with_session(UM.Web.Session.new)
   end
 end

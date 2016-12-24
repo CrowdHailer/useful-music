@@ -8,20 +8,11 @@ defmodule UM.Web.SessionsControllerTest do
     :ok = UM.Web.Fixtures.clear_db
   end
 
-  @tag :skip
   test "login page redirects if already logged in" do
     jo = UM.Web.Fixtures.jo_brand
-    request = get("/sessions/new", UM.Web.Session.external_session(%{customer_id: jo.id}))
+    session = UM.Web.Session.new |> UM.Web.Session.login(jo)
+    request = get("/sessions/new", UM.Web.Session.external_session(session))
     response = UM.Web.handle_request(request, :no_state)
-    assert 302 == response.status
-    assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
-  end
-
-  @tag :skip
-  test "redirects to account page if already logged it" do
-    jo = UM.Web.Fixtures.jo_brand
-    request = get("/new", UM.Web.Session.customer_session(jo))
-    response = SessionsController.handle_request(request, :nostate)
     assert 302 == response.status
     assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
   end
@@ -45,7 +36,6 @@ defmodule UM.Web.SessionsControllerTest do
     # TODO guest shopping basket is added to the session
   end
 
-  @tag :skip
   test "login with invalid credentials shows flash" do
     request = post("/sessions", encode_form(%{
       session: %{email: "interloper@example.com", password: "bad_password"}
@@ -55,20 +45,17 @@ defmodule UM.Web.SessionsControllerTest do
     assert {%{error: "Invalid login details"}, _} = UM.Web.Flash.from_request(request)
   end
 
-  @tag :skip
-  # TODO packing and unpacking session
   test "logout will delete session" do
     bugs = UM.Web.Fixtures.bugs_bunny
     request = post("/sessions", %{
       body: "_method=DELETE",
       headers: [{"content-type", "application/x-www-form-urlencoded"}]
-    }, UM.Web.Session.external_session(%{customer_id: bugs.id}))
+    }, UM.Web.Session.external_session(UM.Web.Session.new |> UM.Web.Session.login(bugs)))
     response = UM.Web.handle_request(request, :no_state)
-    assert 303 == response.status
+    assert 302 == response.status
     # TODO check cookies
   end
 
-  @tag :skip
   test "login page (/sessions/new) maintains the users target" do
     request = get({"/new", %{"target" => "/admin"}}, UM.Web.Session.guest_session)
     response = SessionsController.handle_request(request, :nostate)
@@ -76,7 +63,6 @@ defmodule UM.Web.SessionsControllerTest do
     assert String.contains?(response.body, "name=\"requested_path\" value=\"/admin\"")
   end
 
-  @tag :skip
   test "logging in sends user to their orders page" do
     jo = UM.Web.Fixtures.jo_brand
     request = post("/", %{
