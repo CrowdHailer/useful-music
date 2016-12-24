@@ -1,0 +1,75 @@
+defmodule UM.Web.SessionTest do
+  use ExUnit.Case
+  import Raxx.Test
+  alias UM.Web.Session
+
+  setup do
+    :ok = UM.Web.Fixtures.clear_db
+  end
+
+  test "new session is not logged in and cannot view admin pages" do
+    session = Session.new()
+    assert false == Session.logged_in?(session)
+    assert false == Session.admin?(session)
+  end
+
+  test "guest session cannot view customer account" do
+    jo = UM.Web.Fixtures.jo_brand
+    session = Session.new()
+    assert false == Session.can_view_customer?(session, jo.id)
+  end
+
+  test "new session has GBP currency_preference" do
+    session = Session.new()
+    assert "GBP" == Session.currency_preference(session)
+  end
+
+  test "new session has an empty basket" do
+    session = Session.new()
+    assert 0 == Session.checkout_price(session)
+    assert 0 == Session.number_of_basket_items(session)
+  end
+
+  test "select currency preference" do
+    session = Session.new |> Session.select_currency("EUR")
+    assert "EUR" == Session.currency_preference(session)
+  end
+
+  test "selecting a currency will save it to the customers data" do
+    jo = UM.Web.Fixtures.jo_brand
+    session = Session.new
+    |> Session.login(jo)
+    |> Session.select_currency("GBP")
+    assert "GBP" == session.currency_preference
+    assert "GBP" == Session.currency_preference(session)
+    {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
+    assert "GBP" == updated_jo.currency_preference
+  end
+
+  test "logging in will select the users currency preference, if they have one" do
+    jo = UM.Web.Fixtures.jo_brand
+    session = Session.new |> Session.login(jo)
+    assert "USD" == Session.currency_preference(session)
+  end
+
+  test "logging in set the users currency preference, if the do not have one" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    session = Session.new |> Session.select_currency("EUR") |> Session.login(bugs)
+    {:ok, updated_bugs} = UM.Accounts.fetch_by_id(bugs.id)
+    assert "EUR" == updated_bugs.currency_preference
+  end
+
+
+  @tag :skip
+  test "decoding an empty session has an empty basket" do
+    session = Session.decode("")
+    |> IO.inspect
+    assert false == Session.logged_in?(session)
+    assert false == Session.admin?(session)
+  end
+
+  test "can decode a user session" do
+    jo = UM.Web.Fixtures.jo_brand
+    |> IO.inspect
+  end
+end

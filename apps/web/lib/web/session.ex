@@ -1,5 +1,9 @@
 defmodule UM.Web.Session do
   defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
+  def new do
+    %__MODULE__{currency_preference: "GBP"}
+  end
+
   def from_request(request) do
     case List.keyfind(request.headers, "um-session", 0) do
       {"um-session", session} ->
@@ -58,6 +62,10 @@ defmodule UM.Web.Session do
     end
   end
 
+  def logged_in?(session) do
+    !UM.Web.Session.guest_session?(session)
+  end
+
   def guest_session?(session) do
     current_customer(session) == :guest
   end
@@ -69,6 +77,14 @@ defmodule UM.Web.Session do
       customer ->
         customer.currency_preference
     end
+  end
+
+  def checkout_price(session) do
+    0
+  end
+
+  def number_of_basket_items(session) do
+    0
   end
 
   def admin?(session) do
@@ -95,7 +111,27 @@ defmodule UM.Web.Session do
   end
 
   def login(session, customer) do
-    %__MODULE__{customer_id: customer.id, currency_preference: customer.currency_preference}
+    currency_preference = if customer.currency_preference do
+      customer.currency_preference
+    else
+      customer = %{customer | currency_preference: session.currency_preference}
+      # DEBT check return values
+      UM.Accounts.update_customer(customer)
+      customer.currency_preference
+    end
+    %__MODULE__{customer_id: customer.id, currency_preference: currency_preference, customer: customer}
+  end
+
+  def select_currency(session, currency) do
+    if logged_in?(session) do
+      customer = current_customer(session)
+      updated_customer = %{customer | currency_preference: currency}
+      # DEBT check return values
+      UM.Accounts.update_customer(updated_customer)
+      %{session | currency_preference: currency, customer: updated_customer}
+    else
+      %{session | currency_preference: currency}
+    end
   end
 
   ## MOVE to test

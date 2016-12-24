@@ -29,6 +29,12 @@ defmodule UM.Accounts do
     Db.run(q)
   end
 
+  # Move to CustomersRepo
+  def fetch_by_id(id) do
+    customer = %{id: ^id} = fetch_customer(id)
+    {:ok, customer}
+  end
+
   def fetch_customer(id) do
     db(:customers) |> filter(id: id) |> Db.first
   end

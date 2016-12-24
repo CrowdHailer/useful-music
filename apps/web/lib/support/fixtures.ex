@@ -57,6 +57,7 @@ defmodule UM.Web.Fixtures do
   # Like joe blogs
   # Big spender
   # has completed order but no current basket
+  # currency_preference = USD
   def jo_brand do
     db(:customers)
     |> insert(
@@ -66,7 +67,8 @@ defmodule UM.Web.Fixtures do
       email: "jo@hotmail.com",
       password: "password",
       country: "GB",
-      admin: false
+      admin: false,
+      currency_preference: "USD"
     )
     |> Moebius.Db.run
   end
