@@ -96,7 +96,7 @@
               <h2>Purchase Options</h2>
               <p>Please select how many <a href="/about/licencing_and_copyright">licences</a> you would like:</p>
               <hr>
-              <form action="/orders/<%= session.shopping_basket_id || "__empty__" %>/items" method="post">
+              <form action="/orders/<%= current_shopping_basket_id(session) %>/items" method="post">
                 <%= UM.Web.Session.csrf_tag %>
                 <div class="row collapse">
                   <%= for item <- piece.items do %>

@@ -34,6 +34,11 @@ defmodule UM.Web.ViewHelpers do
     end
   end
 
+  def current_shopping_basket_id(session) do
+    # TODO
+    "__empty__"
+  end
+
   ####### ACCOUNTS #######
 
   def customer_name(customer) do

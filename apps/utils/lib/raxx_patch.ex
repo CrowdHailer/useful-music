@@ -116,33 +116,3 @@ defmodule Raxx.Patch do
   #   end
   # end
 end
-
-defmodule Raxx.Session do
-  # Plug sessions always use a cookie.
-  # take sid(from_cookies) -> store -> sesson data
-
-  # session -> encode -> cookie_string
-  # sesson -> decode
-  defmodule Open do
-    # retrieve
-    def retrieve(request, options) do
-      cookies = Raxx.Session.parse_request_cookies(request)
-      session = Map.get(cookies, "raxx.session", "")
-      {:ok, session}
-    end
-
-    # stash
-    def overwrite(session, response, options \\ []) do
-      set_cookie_string = Raxx.Cookie.new("raxx.session", session)
-      |> Raxx.Cookie.set_cookie_string
-      {:ok, response} = Raxx.Patch.set_header(response, "set-cookie", set_cookie_string)
-      response
-    end
-  end
-
-  def parse_request_cookies(request) do
-    headers = request.headers
-    {"cookie", cookie_string} = List.keyfind(headers, "cookie", 0, {"cookie", ""})
-    cookies = Raxx.Cookie.parse([cookie_string])
-  end
-end

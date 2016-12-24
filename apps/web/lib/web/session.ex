@@ -50,17 +50,7 @@ defmodule UM.Web.Session do
       {"um-session", session} ->
         {session, request}
       nil ->
-        {:ok, session} = Raxx.Session.Open.retrieve(request, %{})
-        session = case decode(session) do
-          {:ok, session} ->
-            session
-          _ ->
-            %{
-              customer_id: nil,
-              currency_preference: "GBP",
-              shopping_basket_id: nil
-            }
-        end
+        session = UM.Web.Session.new
         # DEBT delete session from cookies
         {session, request}
     end
