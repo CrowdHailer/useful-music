@@ -58,7 +58,7 @@ defmodule UM.Web.CustomersControllerController do
 
   def handle_request(request = %{path: [id | rest]}, _) do
     {session, request} = UM.Web.Session.from_request(request)
-    case UM.Web.Session.can_view_customer?(session, id) do
+    case UM.Web.Session.can_view_account?(session, id) do
       true ->
         customer = UM.Accounts.fetch_customer(id)
         customer_endpoint(%{request | path: rest}, customer)

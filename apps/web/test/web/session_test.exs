@@ -7,16 +7,48 @@ defmodule UM.Web.SessionTest do
     :ok = UM.Web.Fixtures.clear_db
   end
 
-  test "new session is not logged in and cannot view admin pages" do
+  ##### AUTHORIZATION
+
+  test "guest session is not logged in and cannot view admin pages" do
     session = Session.new()
     assert false == Session.logged_in?(session)
     assert false == Session.admin?(session)
   end
 
+  test "customer session is logged in and cannot view admin pages" do
+    jo = UM.Web.Fixtures.jo_brand
+    session = Session.new() |> Session.login(jo)
+    assert true == Session.logged_in?(session)
+    assert false == Session.admin?(session)
+  end
+
+  test "admin session is logged in and cannot view admin pages" do
+    bugs = UM.Web.Fixtures.bugs_bunny
+    session = Session.new() |> Session.login(bugs)
+    assert true == Session.logged_in?(session)
+    assert true == Session.admin?(session)
+  end
+
   test "guest session cannot view customer account" do
     jo = UM.Web.Fixtures.jo_brand
     session = Session.new()
-    assert false == Session.can_view_customer?(session, jo.id)
+    assert false == Session.can_view_account?(session, jo.id)
+  end
+
+  test "customer can view their own accounts only" do
+    jo = UM.Web.Fixtures.jo_brand
+    bugs = UM.Web.Fixtures.bugs_bunny
+    session = Session.new() |> Session.login(jo)
+    assert true == Session.can_view_account?(session, jo.id)
+    assert false == Session.can_view_account?(session, bugs.id)
+  end
+
+  test "admin can view all customer accounts" do
+    jo = UM.Web.Fixtures.jo_brand
+    bugs = UM.Web.Fixtures.bugs_bunny
+    session = Session.new() |> Session.login(bugs)
+    assert true == Session.can_view_account?(session, jo.id)
+    assert true == Session.can_view_account?(session, bugs.id)
   end
 
   test "new session has GBP currency_preference" do
@@ -68,8 +100,8 @@ defmodule UM.Web.SessionTest do
     assert false == Session.admin?(session)
   end
 
-  test "can decode a user session" do
-    jo = UM.Web.Fixtures.jo_brand
-    |> IO.inspect
-  end
+  # test "can decode a user session" do
+  #   jo = UM.Web.Fixtures.jo_brand
+  #   |> IO.inspect
+  # end
 end
