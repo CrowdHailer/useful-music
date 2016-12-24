@@ -6,13 +6,21 @@ defmodule UM.Web.Session do
   end
   defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
   def new do
-    %__MODULE__{currency_preference: "GBP"}
+    %__MODULE__.UnAuthenticated{currency_preference: "GBP"}
   end
 
+  def logged_in?(%UnAuthenticated{}) do
+    false
+  end
+  # TODO remove last clause
   def logged_in?(session) do
     !UM.Web.Session.guest_session?(session)
   end
 
+  def admin?(%UnAuthenticated{}) do
+    false
+  end
+  # TODO remove last clause
   def admin?(session) do
     case current_customer(session) do
       :guest ->
@@ -24,10 +32,18 @@ defmodule UM.Web.Session do
     end
   end
 
+  def can_view_account?(%UnAuthenticated{}, _) do
+    false
+  end
+  # TODO remove last clause
   def can_view_account?(session, customer_id) do
     session.customer_id == customer_id || admin?(session)
   end
 
+  def currency_preference(%UnAuthenticated{currency_preference: currency}) do
+    currency
+  end
+  # TODO remove last clause
   def currency_preference(session) do
     case current_customer(session) do
       :guest ->

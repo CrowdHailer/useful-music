@@ -51,15 +51,11 @@ defmodule UM.Web.SessionTest do
     assert true == Session.can_view_account?(session, bugs.id)
   end
 
+  ### CURRENCY PREFERENCES
+
   test "new session has GBP currency_preference" do
     session = Session.new()
     assert "GBP" == Session.currency_preference(session)
-  end
-
-  test "new session has an empty basket" do
-    session = Session.new()
-    assert 0 == Session.checkout_price(session)
-    assert 0 == Session.number_of_basket_items(session)
   end
 
   test "select currency preference" do
@@ -91,6 +87,25 @@ defmodule UM.Web.SessionTest do
     assert "EUR" == updated_bugs.currency_preference
   end
 
+  ### SHOPPING ACTIONS
+
+  test "new session has an empty basket" do
+    session = Session.new()
+    assert 0 == Session.checkout_price(session)
+    assert 0 == Session.number_of_basket_items(session)
+  end
+
+  test "logging in uses customer basket if session basket empty" do
+
+  end
+
+  test "logging in uses session basket if customer basket empty" do
+
+  end
+
+  test "carry on shopping with session basket if it has items, the old basket will be abandoned" do
+
+  end
 
   @tag :skip
   test "decoding an empty session has an empty basket" do
