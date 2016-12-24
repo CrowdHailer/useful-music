@@ -11,6 +11,7 @@ defmodule UM.Web.OrdersControllerTest do
     {:ok, %{piece: garden_tiger}}
   end
 
+  @tag :skip
   test "customer can add a purchase to their basket" do
     {:ok, basket} = UM.Sales.create_shopping_basket
     # TODO have items in already
@@ -46,6 +47,7 @@ defmodule UM.Web.OrdersControllerTest do
     assert 1 == UM.Sales.Basket.number_of_units(basket)
   end
 
+  @tag :skip
   test "can update the number of items" do
     {:ok, basket} = UM.Sales.create_shopping_basket
     item_id = "garden-flute-part"
@@ -62,6 +64,7 @@ defmodule UM.Web.OrdersControllerTest do
     assert 2 == UM.Sales.Basket.number_of_units(basket)
   end
 
+  @tag :skip
   test "can delete items from basket" do
     {:ok, basket} = UM.Sales.create_shopping_basket
     item_id = "garden-flute-part"

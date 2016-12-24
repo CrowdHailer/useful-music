@@ -1,4 +1,9 @@
 defmodule UM.Web.Session do
+  defmodule UnAuthenticated do
+    # currency_preference = "USD" | "GBP" | "EUR"
+    # shopping_basket = Maybe(ShoppingBasket)
+    defstruct [shopping_basket: nil, currency_preference: nil]
+  end
   defstruct [:customer_id, :customer, :currency_preference, :shopping_basket_id, :shopping_basket]
   def new do
     %__MODULE__{currency_preference: "GBP"}
@@ -44,7 +49,7 @@ defmodule UM.Web.Session do
     %__MODULE__{customer_id: customer.id, currency_preference: currency_preference, customer: customer}
   end
 
-  def select_currency(session, currency) do
+  def select_currency(session, currency) when currency in ["USD", "EUR", "GBP"] do
     if logged_in?(session) do
       customer = current_customer(session)
       updated_customer = %{customer | currency_preference: currency}
@@ -143,7 +148,7 @@ defmodule UM.Web.Session do
   ## MOVE to test
 
   def customer_session(customer) do
-    session =  %__MODULE__{customer_id: customer.id, currency_preference: Map.get(customer, :currency_preference, "GBP")}
+    session =  new |> login(customer)
     [{"um-session", session}]
   end
   def guest_session(opts \\ []) do
