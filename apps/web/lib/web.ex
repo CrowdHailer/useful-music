@@ -28,7 +28,7 @@ defmodule UM.Web do
       IO.inspect(request)
     end
     try do
-      {session, request} = UM.Web.Session.from_request(request)
+      {session, request} = UM.Web.Session.unpack(request)
       {:ok, request} = Raxx.Patch.set_header(request, "um-session", session)
 
       {flash, request} = UM.Web.Flash.from_request(request)

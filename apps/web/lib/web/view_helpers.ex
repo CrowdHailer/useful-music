@@ -1,7 +1,7 @@
 defmodule UM.Web.ViewHelpers do
 
   def logged_in?(session) do
-    !UM.Web.Session.guest_session?(session)
+    UM.Web.Session.logged_in?(session)
   end
 
   def user_name(session) do
@@ -26,10 +26,10 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def user_shopping_basket_url(session) do
-    case UM.Web.Session.shopping_basket_id(session) do
+    case UM.Web.Session.shopping_basket(session) do
       nil ->
         "/shopping_baskets/__empty__"
-      id ->
+      %{id: id} ->
         "/shopping_baskets/#{id}"
     end
   end

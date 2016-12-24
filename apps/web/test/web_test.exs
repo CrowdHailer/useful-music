@@ -14,18 +14,15 @@ defmodule UM.WebTest do
     assert response.status == 200
   end
 
-  @tag :skip
   test "about controller is mounted" do
     request = get("/about")
     response = UM.Web.handle_request(request, :no_state)
     assert response.status == 200
   end
 
-  @tag :skip
-  # sort session packing/unpacking
   test "can view the admin page" do
     bugs = UM.Web.Fixtures.bugs_bunny
-    request = get("/admin/customers", UM.Web.Session.external_session(%{customer_id: bugs.id}))
+    request = get("/admin/customers", [{"cookie", "raxx.session=" <> Poison.encode!(%{account_id: bugs.id})}])
     response = UM.Web.handle_request(request, :no_state)
     assert 200 == response.status
   end

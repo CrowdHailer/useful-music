@@ -11,11 +11,9 @@ defmodule UM.Web.Public do
   EEx.function_from_file :def, :header_partial, header_file, [:session]
 
   def handle_request(request, env) do
-    {session, request} = UM.Web.Session.from_request(request)
+    session = UM.Web.fetch_session(request)
     {"um-flash", flash} = List.keyfind(request.headers, "um-flash", 0, {"um-flash", %{}})
 
-    session = UM.Web.Session.load_customer(session)
-    session = Map.merge(session, flash)
     case public_endpoint(request, env) do
       request = %{body: nil} ->
         request
