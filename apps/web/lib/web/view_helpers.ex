@@ -1,11 +1,13 @@
 defmodule UM.Web.ViewHelpers do
+  alias UM.Web.Session
+  alias UM.Sales.Basket, as: ShoppingBasket
 
   def logged_in?(session) do
-    UM.Web.Session.logged_in?(session)
+    Session.logged_in?(session)
   end
 
   def user_name(session) do
-    user = UM.Web.Session.current_customer(session)
+    user = Session.current_customer(session)
     customer_name(user)
   end
 
@@ -14,22 +16,48 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def currency_preference(session) do
-    UM.Web.Session.currency_preference(session)
+    Session.currency_preference(session)
   end
 
   def user_vat_rate(session) do
     120 # TODO
   end
 
+  # This is the price without vat
+  def checkout_price(session) do
+    shopping_basket = Session.shopping_basket(session)
+    in_pence = ShoppingBasket.payment_gross(shopping_basket)
+    user_price(in_pence, session)
+  end
+
+  def user_price(pence, session) do
+    case currency_preference(session) do
+      "GBP" ->
+        "£#{pence / 100}"
+      "EUR" ->
+        "TODO"
+      "USD" ->
+        "$TODO"
+    end
+  end
+
+  def number_of_purchases(session) do
+    shopping_basket = Session.shopping_basket(session)
+    ShoppingBasket.number_of_lines(shopping_basket)
+  end
+
   def user_account_url(session) do
-    UM.Web.Session.customer_account_url(session)
+    case Session.current_customer(session) do
+      nil -> "/customers/__guest__"
+      %{id: id} -> "/customers/#{id}"
+    end
   end
 
   def user_shopping_basket_url(session) do
-    case UM.Web.Session.shopping_basket(session) do
+    case Session.shopping_basket(session).id do
       nil ->
         "/shopping_baskets/__empty__"
-      %{id: id} ->
+      id ->
         "/shopping_baskets/#{id}"
     end
   end
@@ -113,15 +141,6 @@ defmodule UM.Web.ViewHelpers do
 
   def purchase_price(%{quantity: quantity, item: item}) do
     UM.Catalogue.Item.price_for(item, quantity) / 100
-  end
-
-  def number_of_purchases(_session) do
-    # TODO number of purchases
-    2
-  end
-
-  def current_basket_total(_session) do
-    "£4.25" # TODO
   end
 
   def discount_value(%{value: pence}) do

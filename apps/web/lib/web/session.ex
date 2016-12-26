@@ -16,6 +16,9 @@ defmodule UM.Web.Session do
   def logged_in?(%UnAuthenticated{}), do: false
   def logged_in?(%Authenticated{}), do: true
 
+  def current_customer(%Authenticated{account: customer}), do: customer
+  def current_customer(%UnAuthenticated{}), do: nil
+
   def admin?(%Authenticated{account: %{admin: true}}), do: true
   def admin?(_), do: false
 
@@ -26,15 +29,20 @@ defmodule UM.Web.Session do
   def currency_preference(%UnAuthenticated{currency_preference: currency}), do: currency
   def currency_preference(%{account: %{currency_preference: currency}}), do: currency
 
-  def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket
-  def shopping_basket(%{account: %{shopping_basket: shopping_basket}}), do: shopping_basket
+  def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket || UM.Sales.Basket.empty
+  def shopping_basket(%{account: %{shopping_basket: shopping_basket}}), do: shopping_basket || UM.Sales.Basket.empty
+
+  def csrf_tag do
+    "" # TODO
+  end
 
   def login(session, customer) do
     customer = if customer.currency_preference do
       customer
     else
       customer = %{customer | currency_preference: session.currency_preference}
-      {:ok, customer} = UM.Accounts.update_customer(customer)
+      # TODO saving customers properly handling shopping_baskets
+      {:ok, customer} = UM.Accounts.update_customer(Map.delete(customer, :shopping_basket))
       customer
     end
     %__MODULE__.Authenticated{account: customer}
@@ -61,7 +69,17 @@ defmodule UM.Web.Session do
     case Poison.decode(string) do
       {:ok, %{"account_id" => id}} ->
         {:ok, customer} = UM.Accounts.fetch_by_id(id)
+        shopping_basket = case UM.Sales.fetch_shopping_basket(customer.shopping_basket_id) do
+          {:ok, shopping_basket} ->
+            shopping_basket
+          {:error, :not_found} ->
+            UM.Sales.Basket.empty
+        end
+        customer = Map.merge(customer, %{shopping_basket: shopping_basket})
         new |> login(customer)
+      {:ok, raw} ->
+        currency = Map.get(raw, "currency_preference", "GBP")
+        new |> select_currency(currency)
       {:error, _reason} ->
         new
     end
@@ -72,21 +90,6 @@ defmodule UM.Web.Session do
   end
   def encode!(%UnAuthenticated{currency_preference: currency}) do
     Poison.encode!(%{currency_preference: currency})
-  end
-
-# TODO move these to view helper combination of session and basket
-  # These functions are useful if the session acts as a cache layer
-  def checkout_price(session) do
-    0
-  end
-
-# TODO move these to view helper combination of session and basket
-  def number_of_basket_items(session) do
-    0
-  end
-
-  def csrf_tag do
-    "" # TODO
   end
 
   ## MOVE to test

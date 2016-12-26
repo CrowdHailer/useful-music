@@ -90,8 +90,7 @@ defmodule UM.Web.SessionTest do
 
   test "new session has an empty basket" do
     session = Session.new()
-    assert 0 == Session.checkout_price(session)
-    assert 0 == Session.number_of_basket_items(session)
+    assert UM.Sales.Basket.empty == Session.shopping_basket(session)
   end
 
   test "logging in uses customer basket if session basket empty" do

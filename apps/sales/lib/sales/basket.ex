@@ -12,7 +12,7 @@ defmodule UM.Sales.Basket do
     id: nil,
     status: :pending, # can be ['pending', 'processing', 'succeded', 'failed']
     purchases: %{},
-    currency: nil,
+    currency: nil, # feel like that might not be neccessary
     discount: nil
   ]
 
@@ -20,6 +20,10 @@ defmodule UM.Sales.Basket do
     %__MODULE__{
       id: Utils.random_string(16)
     }
+  end
+
+  def empty do
+    %__MODULE__{}
   end
 
   def empty?(basket), do: number_of_lines(basket) == 0
@@ -31,11 +35,6 @@ defmodule UM.Sales.Basket do
       ({_item_id, %{quantity: n}}, total) ->
         total + n
     end)
-  end
-
-  def edit_line(basket = %{purchases: purchases}, %{item: item, quantity: quantity}) do
-    purchases = Map.put(purchases, item.id, %{item: item, quantity: quantity})
-    %{basket | purchases: purchases}
   end
 
   def list_price(%{purchases: purchases}) do
@@ -62,8 +61,17 @@ defmodule UM.Sales.Basket do
     end
   end
 
+  def payment_gross(basket) do
+    max(list_price(basket) - discount_value(basket), 0)
+  end
+
   def free?(basket) do
     discount_value(basket) > list_price(basket)
+  end
+
+  def edit_line(basket = %{purchases: purchases}, %{item: item, quantity: quantity}) do
+    purchases = Map.put(purchases, item.id, %{item: item, quantity: quantity})
+    %{basket | purchases: purchases}
   end
 
   def start_transaction(basket, %{vat_rate: vat_rate, currency: :GBP}) do

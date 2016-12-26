@@ -245,7 +245,7 @@
                 </div>
                 <a href="<%= user_shopping_basket_url(session) %>">
                     <label class="basket-label">
-                        <%= number_of_purchases(session) %> ITEM(S) | <%= current_basket_total(session) %> <i class="fa fa-shopping-cart"></i>
+                        <%= number_of_purchases(session) %> ITEM(S) | <%= checkout_price(session) %> <i class="fa fa-shopping-cart"></i>
                     </label>
                 </a>
             </div>
