@@ -11,23 +11,16 @@ defmodule UM.Web.OrdersController do
     body: %{"items" => items}
     }, _env) do
 
+    # check authorization? session basket == basket
+    # validate input
     session = UM.Web.fetch_session(request)
-    basket = case UM.Sales.fetch_shopping_basket(basket_id) do
-      {:ok, basket} ->
-        basket
-      {:error, :not_found} ->
-        {:ok, basket} = UM.Sales.create_shopping_basket
-        basket
-    end
+    shopping_basket = UM.Web.Session.shopping_basket(session)
+    ^basket_id = shopping_basket.id || "__empty__"
 
-    items |> Enum.map(fn
-      ({item_id, quantity}) ->
-        {quantity, ""} = Integer.parse(quantity)
-        UM.Sales.add_item(basket.id, item_id, quantity: quantity)
-    end)
+    {:ok, shopping_basket} = UM.Sales.add_items(shopping_basket, items)
+    session = UM.Web.Session.update_shopping_basket(session, shopping_basket)
 
-    redirect = "/orders/#{basket.id}"
-    Raxx.Patch.redirect(redirect)
+    Raxx.Patch.redirect("/orders/#{shopping_basket.id}")
     |> UM.Web.with_flash(success: "Items added to basket")
     |> UM.Web.with_session(session)
   end

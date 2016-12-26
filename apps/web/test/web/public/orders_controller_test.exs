@@ -11,6 +11,28 @@ defmodule UM.Web.OrdersControllerTest do
     {:ok, %{piece: garden_tiger}}
   end
 
+  # test that the session is updated with the correct basket.
+  # test that the basket is updated in the database.
+  # test that the user is redirected to the correct basket.
+  # test that the correct flash message is set.
+  test "guest can add a purchase to new basket" do
+    request = post("/__empty__/items", Raxx.Test.form_data(%{
+      "items" => %{
+        "garden-all-parts" => "1"
+      }
+    }), UM.Web.Session.guest_session)
+    response = Controller.handle_request(request, [])
+
+    request_2 = Raxx.Patch.follow(response)
+    assert ["orders", basket_id] = request_2.path
+    session = :proplists.get_value("um-set-session", response.headers)
+    assert basket_id == UM.Web.Session.shopping_basket(session).id
+    # {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
+    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
+    assert 1 == UM.Sales.Basket.number_of_lines(basket)
+    assert 1 == UM.Sales.Basket.number_of_units(basket)
+  end
+
   @tag :skip
   test "customer can add a purchase to their basket" do
     {:ok, basket} = UM.Sales.create_shopping_basket
@@ -31,21 +53,7 @@ defmodule UM.Web.OrdersControllerTest do
     assert 6 == UM.Sales.Basket.number_of_units(basket)
   end
 
-  test "guest can add a purchase to new basket" do
-    request = post("/empty/items", Raxx.Test.form_data(%{
-      "items" => %{
-        "garden-all-parts" => "1"
-      }
-    }), UM.Web.Session.guest_session)
 
-    response = Controller.handle_request(request, [])
-    request_2 = Raxx.Patch.follow(response)
-    assert ["orders", basket_id] = request_2.path
-    # {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
-    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
-    assert 1 == UM.Sales.Basket.number_of_lines(basket)
-    assert 1 == UM.Sales.Basket.number_of_units(basket)
-  end
 
   @tag :skip
   test "can update the number of items" do

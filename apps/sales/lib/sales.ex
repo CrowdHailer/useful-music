@@ -13,6 +13,22 @@ defmodule UM.Sales do
     end
   end
 
+  def add_items(shopping_basket, items) do
+    shopping_basket = case shopping_basket do
+      %{id: nil} ->
+        {:ok, shopping_basket} = create_shopping_basket
+        shopping_basket
+      shopping_basket ->
+        shopping_basket
+    end
+    items |> Enum.map(fn
+      ({item_id, quantity}) ->
+        {quantity, ""} = Integer.parse(quantity)
+        UM.Sales.add_item(shopping_basket.id, item_id, quantity: quantity)
+    end)
+    fetch_shopping_basket(shopping_basket.id)
+  end
+
   def add_item(basket_id, item_id, opts \\ []) do
     opts = Enum.into(opts, %{})
     quantity = Map.get(opts, :quantity, 1)

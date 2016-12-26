@@ -56,6 +56,10 @@ defmodule UM.Web.Session do
     %{session | account: updated_customer}
   end
 
+  def update_shopping_basket(session = %UnAuthenticated{}, shopping_basket) do
+    %{session | shopping_basket: shopping_basket}
+  end
+
   def unpack(request) do
     headers = request.headers
     {"cookie", cookie_string} = List.keyfind(headers, "cookie", 0, {"cookie", ""})
