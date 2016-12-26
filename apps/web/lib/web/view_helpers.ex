@@ -143,6 +143,10 @@ defmodule UM.Web.ViewHelpers do
     UM.Catalogue.Item.price_for(item, quantity) / 100
   end
 
+  def discount_code(discount) do
+    UM.Sales.Discount.code(discount)
+  end
+
   def discount_value(%{value: pence}) do
     (pence || 0) / 100
   end
@@ -179,9 +183,27 @@ defmodule UM.Web.ViewHelpers do
     "TODO"
   end
 
+  def basket_payment_gross(basket) do
+    "TODO"
+  end
+
+  def basket_free?(basket) do
+    ShoppingBasket.free?(basket)
+  end
+
   def order_tax_payment(order) do
 
   end
+
+  def discount_number_redeemed(discount) do
+    0 # TODO
+  end
+
+  # def basket_tax_payment(basket, vat) do
+  #   in_pence = ShoppingBasket.payment_gross(basket)
+  #   # TODO handle vat rate here
+  #   user_price(in_pence, session)
+  # end
 
   def order_purchases(order) do
     [%{

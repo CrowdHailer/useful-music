@@ -52,10 +52,4 @@ defmodule UM.Web.PiecesController do
         Raxx.Patch.redirect("/pieces", %{flash: "Piece not found"})
     end
   end
-
-  defp shopping_basket do
-    %{
-      id: "TODO"
-    }
-  end
 end

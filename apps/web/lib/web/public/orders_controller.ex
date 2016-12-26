@@ -68,20 +68,6 @@ defmodule UM.Web.OrdersController do
     {:ok, basket} = UM.Sales.fetch_shopping_basket(id)
     Raxx.Response.ok(basket_page_content(basket, session))
   end
-
-  defp catalogue_price(basket) do
-    1231 # TODO
-  end
-
-  def basket_price(basket) do
-    0 # TODO
-  end
-  def discount_code(basket) do
-    "TODO"
-  end
-  def free_basket?(basket) do
-
-  end
 end
 
 # creation adds many

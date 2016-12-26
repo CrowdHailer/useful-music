@@ -68,7 +68,7 @@
                         <%= discount.customer_allocation %>
                     </th>
                     <th>
-                        <%= number_redeemed(discount) %>
+                        <%= discount_number_redeemed(discount) %>
                     </th>
                     <th>
                         <%= discount_start_datetime(discount) %>

@@ -50,10 +50,6 @@ defmodule UM.Web.Admin.DiscountsController do
     end
   end
 
-  def number_redeemed(_) do
-    "0" # TODO
-  end
-
   def form_title(%{id: nil}) do
     "New Discount"
   end
