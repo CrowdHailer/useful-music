@@ -74,8 +74,6 @@ defmodule UM.Web.OrdersControllerTest do
     assert 6 == UM.Sales.Basket.number_of_units(basket)
   end
 
-
-
   @tag :skip
   test "can update the number of items" do
     {:ok, basket} = UM.Sales.create_shopping_basket

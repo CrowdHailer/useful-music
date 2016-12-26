@@ -22,7 +22,7 @@ defmodule UM.Web.SessionTest do
     assert false == Session.admin?(session)
   end
 
-  test "admin session is logged in and cannot view admin pages" do
+  test "admin session is logged in and can view admin pages" do
     bugs = UM.Web.Fixtures.bugs_bunny
     session = Session.new() |> Session.login(bugs)
     assert true == Session.logged_in?(session)
@@ -58,12 +58,12 @@ defmodule UM.Web.SessionTest do
     assert "GBP" == Session.currency_preference(session)
   end
 
-  test "select currency preference" do
+  test "guest can select currency preference" do
     session = Session.new |> Session.select_currency("EUR")
     assert "EUR" == Session.currency_preference(session)
   end
 
-  test "selecting a currency will save it to the customers data" do
+  test "customer selecting a currency preference will have it saved" do
     jo = UM.Web.Fixtures.jo_brand
     session = Session.new
     |> Session.login(jo)
@@ -91,6 +91,23 @@ defmodule UM.Web.SessionTest do
   test "new session has an empty basket" do
     session = Session.new()
     assert UM.Sales.Basket.empty == Session.shopping_basket(session)
+  end
+
+  test "guest can update their shopping basket" do
+    {:ok, shopping_basket} = UM.Sales.create_shopping_basket
+    session = Session.new |> Session.update_shopping_basket(shopping_basket)
+    assert shopping_basket == Session.shopping_basket(session)
+  end
+
+  test "customer updating their shopping basket will have it saved" do
+    jo = UM.Web.Fixtures.jo_brand
+    {:ok, shopping_basket} = UM.Sales.create_shopping_basket
+    session = Session.new
+    |> Session.login(jo)
+    |> Session.update_shopping_basket(shopping_basket)
+    assert shopping_basket == Session.shopping_basket(session)
+    {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
+    assert shopping_basket.id == updated_jo.shopping_basket_id
   end
 
   test "logging in uses customer basket if session basket empty" do
