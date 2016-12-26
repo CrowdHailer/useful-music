@@ -59,6 +59,10 @@ defmodule UM.Web.Session do
   def update_shopping_basket(session = %UnAuthenticated{}, shopping_basket) do
     %{session | shopping_basket: shopping_basket}
   end
+  def update_shopping_basket(session = %{account: customer}, shopping_basket) do
+    {:ok, updated_customer} = UM.Accounts.update_customer(%{Map.delete(customer, :shopping_basket) | shopping_basket_id: shopping_basket.id})
+    %{session | account: Map.merge(updated_customer, %{shopping_basket: shopping_basket})}
+  end
 
   def unpack(request) do
     headers = request.headers
@@ -99,7 +103,7 @@ defmodule UM.Web.Session do
   ## MOVE to test
 
   def customer_session(customer) do
-    session =  new |> login(customer)
+    session =  new |> login(Map.merge(customer, %{shopping_basket: nil}))
     [{"um-session", session}]
   end
   def guest_session(opts \\ []) do

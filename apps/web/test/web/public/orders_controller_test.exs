@@ -33,16 +33,37 @@ defmodule UM.Web.OrdersControllerTest do
     assert 1 == UM.Sales.Basket.number_of_units(basket)
   end
 
+  test "customer can add a purchase to new basket" do
+    jo = UM.Web.Fixtures.jo_brand
+    request = post("/__empty__/items", Raxx.Test.form_data(%{
+      "items" => %{
+        "garden-all-parts" => "1"
+      }
+    }), UM.Web.Session.customer_session(jo))
+    response = Controller.handle_request(request, [])
+    request_2 = Raxx.Patch.follow(response)
+    assert ["orders", basket_id] = request_2.path
+    session = :proplists.get_value("um-set-session", response.headers)
+    assert basket_id == UM.Web.Session.shopping_basket(session).id
+    {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
+    assert basket_id == updated_jo.shopping_basket_id
+    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
+    assert 1 == UM.Sales.Basket.number_of_lines(basket)
+    assert 1 == UM.Sales.Basket.number_of_units(basket)
+  end
+
   @tag :skip
   test "customer can add a purchase to their basket" do
     {:ok, basket} = UM.Sales.create_shopping_basket
-    # TODO have items in already
+    UM.Sales.add_item(basket, "garden-audio-part", 1)
+    bugs = UM.Fixtures.bugs_bunny
+
     request = post("/#{basket.id}/items", Raxx.Test.form_data(%{
       "items" => %{
         "garden-all-parts" => "4",
         "garden-flute-part" => "2"
       }
-    }), UM.Web.Session.customer_session(%{id: "100"}))
+    }), UM.Web.Session.customer_session(bugs))
 
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
