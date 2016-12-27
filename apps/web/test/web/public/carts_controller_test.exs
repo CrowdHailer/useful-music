@@ -24,7 +24,7 @@ defmodule UM.Web.CartsControllerTest do
     response = Controller.handle_request(request, [])
 
     request_2 = Raxx.Patch.follow(response)
-    assert ["orders", basket_id] = request_2.path
+    assert ["shopping_baskets", basket_id] = request_2.path
     session = :proplists.get_value("um-set-session", response.headers)
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     # {%{success: "Items added to cart"}, _request} = UM.Web.Flash.from_request(request_2)
@@ -47,7 +47,7 @@ defmodule UM.Web.CartsControllerTest do
     response = Controller.handle_request(request, [])
 
     request_2 = Raxx.Patch.follow(response)
-    assert ["orders", basket_id] = request_2.path
+    assert ["shopping_baskets", basket_id] = request_2.path
     session = :proplists.get_value("um-set-session", response.headers)
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     # {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
@@ -65,7 +65,7 @@ defmodule UM.Web.CartsControllerTest do
     }), UM.Web.Session.customer_session(jo))
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
-    assert ["orders", basket_id] = request_2.path
+    assert ["shopping_baskets", basket_id] = request_2.path
     session = :proplists.get_value("um-set-session", response.headers)
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
