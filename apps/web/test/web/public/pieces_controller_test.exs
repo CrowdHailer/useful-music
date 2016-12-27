@@ -5,11 +5,11 @@ defmodule UM.Web.PiecesControllerTest do
   alias UM.Web.PiecesController, as: Controller
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "index page shows all pieces" do
-    _piece = UM.Web.Fixtures.canonical_piece
+    _piece = UM.Catalogue.Fixtures.canonical_piece
     request = get("/")
     %{status: status, body: body} = Controller.handle_request(request, %{})
     assert 200 == status
@@ -18,7 +18,7 @@ defmodule UM.Web.PiecesControllerTest do
   end
 
   test "searches on title" do
-    _piece = UM.Web.Fixtures.canonical_piece
+    _piece = UM.Catalogue.Fixtures.canonical_piece
     request = get({"/search", %{search: "Canonical"}})
     response = Controller.handle_request(request, %{})
     assert 200 == response.status
@@ -34,7 +34,7 @@ defmodule UM.Web.PiecesControllerTest do
   end
 
   test "show page is viewable" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     request = get("/UD#{piece.id}")
     response = Controller.handle_request(request, %{})
     assert 200 == response.status

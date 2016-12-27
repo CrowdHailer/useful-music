@@ -6,8 +6,8 @@ defmodule Um.Web.Admin.ItemsControllerTest do
   alias UM.Catalogue
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
-    canonical = UM.Web.Fixtures.canonical_piece
+    :ok = UM.Catalogue.Fixtures.clear_db
+    canonical = UM.Catalogue.Fixtures.canonical_piece
     {:ok, %{canonical: canonical}}
   end
 

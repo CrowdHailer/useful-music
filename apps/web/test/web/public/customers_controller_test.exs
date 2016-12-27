@@ -6,7 +6,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
   alias UM.Web.CustomersControllerController, as: Controller
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "new page is available" do
@@ -58,36 +58,36 @@ defmodule UM.Web.CustomersControllerControllerTest do
   end
 
   test "customer page shows orders" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = get("/#{jo.id}", UM.Web.Session.customer_session(jo))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "admin can view a customer page" do
-    jo = UM.Web.Fixtures.jo_brand
-    bugs = UM.Web.Fixtures.bugs_bunny
+    jo = UM.Accounts.Fixtures.jo_brand
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     request = get("/#{jo.id}", UM.Web.Session.customer_session(bugs))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "customer can not view anothers customer page" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = get("/#{jo.id}", UM.Web.Session.guest_session)
     response = Controller.handle_request(request, :no_state)
     assert response.status == 404
   end
 
   test "can visit a customers edit page" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = get("/#{jo.id}/edit", UM.Web.Session.customer_session(jo))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "can update a customers details" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = put("/#{jo.id}", Raxx.Test.form_data(%{
       "customer" => %{
         "first_name" => "Joanna",
@@ -109,7 +109,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
   end
 
   test "cant update a customers details with invalid name" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = put("/#{jo.id}", Raxx.Test.form_data(%{
       "customer" => %{
         "first_name" => "",
@@ -126,14 +126,14 @@ defmodule UM.Web.CustomersControllerControllerTest do
   end
 
   test "can visit a customers change password page" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = get("/#{jo.id}/change_password", UM.Web.Session.customer_session(jo))
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "can update password" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = put("/#{jo.id}/change_password", Raxx.Test.form_data(%{
       "customer" => %{
         "current_password" => "password",
@@ -150,7 +150,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
   end
 
   test "failed to update password" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = put("/#{jo.id}/change_password", Raxx.Test.form_data(%{
       "customer" => %{
         "current_password" => "password",

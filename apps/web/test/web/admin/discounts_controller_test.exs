@@ -5,11 +5,11 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
   alias UM.Web.Admin.DiscountsController, as: Controller
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "index page shows all discounts" do
-    discount = %{code: code} = UM.Web.Fixtures.current_discount
+    discount = %{code: code} = UM.Sales.Fixtures.current_discount
     request = get("/")
     response = Controller.handle_request(request, [])
     assert 200 == response.status
@@ -39,7 +39,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
   end
 
   test "edit page is available" do
-    discount = %{code: code, id: id} = UM.Web.Fixtures.current_discount
+    discount = %{code: code, id: id} = UM.Sales.Fixtures.current_discount
     request = get("/#{id}/edit")
     response = Controller.handle_request(request, [])
     assert 200 == response.status
@@ -47,7 +47,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
   end
 
   test "can update a discount" do
-    discount = %{code: code, id: id} = UM.Web.Fixtures.current_discount
+    discount = %{code: code, id: id} = UM.Sales.Fixtures.current_discount
     request = put("/#{id}", Raxx.Test.form_data(%{"discount" => %{
       "code" => code,
       "allocation" => "100",

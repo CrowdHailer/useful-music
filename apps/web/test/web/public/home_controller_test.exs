@@ -3,11 +3,11 @@ defmodule UM.Web.HomeControllerTest do
   import Raxx.Request
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "home page returns pieces" do
-    _piece = UM.Web.Fixtures.canonical_piece
+    _piece = UM.Catalogue.Fixtures.canonical_piece
     request = get("/")
     response = UM.Web.HomeController.handle_request(request, %{})
     assert response.status == 200
@@ -37,7 +37,7 @@ defmodule UM.Web.HomeControllerTest do
 
   # TODO test less as setting a currency preference is tested in the session tests
   test "sets currency preference for a customer" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)
     request = post("/currency", Raxx.Test.form_data(%{"preference" => "USD"}), [{"um-session", session}])
     response = UM.Web.HomeController.handle_request(request, %{})

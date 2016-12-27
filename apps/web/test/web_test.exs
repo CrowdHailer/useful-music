@@ -5,7 +5,7 @@ defmodule UM.WebTest do
   import Raxx.Request
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "The sites stylesheets are served" do
@@ -21,7 +21,7 @@ defmodule UM.WebTest do
   end
 
   test "can view the admin page" do
-    bugs = UM.Web.Fixtures.bugs_bunny
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     request = get("/admin/customers", [{"cookie", "raxx.session=" <> Poison.encode!(%{account_id: bugs.id})}])
     response = UM.Web.handle_request(request, :no_state)
     assert 200 == response.status

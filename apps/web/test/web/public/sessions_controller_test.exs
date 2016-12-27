@@ -5,11 +5,11 @@ defmodule UM.Web.SessionsControllerTest do
   alias UM.Web.SessionsController
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "login page redirects if already logged in" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)
     request = get("/sessions/new", UM.Web.Session.external_session(session))
     response = UM.Web.handle_request(request, :no_state)
@@ -20,8 +20,8 @@ defmodule UM.Web.SessionsControllerTest do
   # login from checkout page with a guest basket
     @tag :skip
   test "login will add user id to session" do
-    jo = UM.Web.Fixtures.jo_brand
-    basket = UM.Web.Fixtures.guest_basket
+    jo = UM.Accounts.Fixtures.jo_brand
+    basket = UM.Catalogue.Fixtures.guest_basket
     request = post("/sessions", Raxx.Test.encode_form(%{
       target: "/checkout",
       session: %{email: jo.email, password: jo.password}
@@ -46,7 +46,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "logout will delete session" do
-    bugs = UM.Web.Fixtures.bugs_bunny
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     request = post("/sessions", %{
       body: "_method=DELETE",
       headers: [{"content-type", "application/x-www-form-urlencoded"}]
@@ -64,7 +64,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "logging in sends user to their orders page" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = post("/", %{
       "session" => %{"email" => jo.email, "password" => jo.password}
     })

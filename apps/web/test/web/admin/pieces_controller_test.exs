@@ -6,11 +6,11 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   import Raxx.Request
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "index page shows all pieces" do
-    _piece = UM.Web.Fixtures.canonical_piece
+    _piece = UM.Catalogue.Fixtures.canonical_piece
     request = get("/")
     %{status: status, body: body} = Controller.handle_request(request, %{})
     assert 200 == status
@@ -39,7 +39,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can create a new piece" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     piece = %{piece | id: "123", notation_preview: %Raxx.Upload{content: "Hello", filename: "blob.pdf"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", Raxx.Test.form_data(%{
@@ -54,7 +54,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can't create a piece without id" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     piece = %{piece | id: "", notation_preview: nil}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = post("/", Raxx.Test.form_data(%{
@@ -68,7 +68,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can't create a piece with existing id (redirects to piece)" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     # DEBT this overwrites files of the currenct piece
     piece = %{piece | id: "101", notation_preview: %Raxx.Upload{content: "ss", filename: "billy.jpg"}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
@@ -83,7 +83,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can visit a pieces edit page" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     request = get("/UD#{piece.id}/edit")
     response = Controller.handle_request(request, %{})
     assert 200 == response.status
@@ -98,7 +98,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can update a piece" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     piece = %{piece | title: "The new hotness", id: "101", notation_preview: %Raxx.Upload{content: ""}}
     piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}
     request = put("/UD101", Raxx.Test.form_data(%{
@@ -113,7 +113,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can delete a piece" do
-    piece = UM.Web.Fixtures.canonical_piece
+    piece = UM.Catalogue.Fixtures.canonical_piece
     request = delete("/UD101")
     response = Controller.handle_request(request, %{})
     assert {:error, :piece_not_found} = Catalogue.fetch_piece(101)

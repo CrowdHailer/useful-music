@@ -4,7 +4,7 @@ defmodule UM.Web.SessionTest do
   alias UM.Web.Session
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   ##### AUTHORIZATION
@@ -16,36 +16,36 @@ defmodule UM.Web.SessionTest do
   end
 
   test "customer session is logged in and cannot view admin pages" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     session = Session.new() |> Session.login(jo)
     assert true == Session.logged_in?(session)
     assert false == Session.admin?(session)
   end
 
   test "admin session is logged in and can view admin pages" do
-    bugs = UM.Web.Fixtures.bugs_bunny
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     session = Session.new() |> Session.login(bugs)
     assert true == Session.logged_in?(session)
     assert true == Session.admin?(session)
   end
 
   test "guest session cannot view customer account" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     session = Session.new()
     assert false == Session.can_view_account?(session, jo.id)
   end
 
   test "customer can view their own accounts only" do
-    jo = UM.Web.Fixtures.jo_brand
-    bugs = UM.Web.Fixtures.bugs_bunny
+    jo = UM.Accounts.Fixtures.jo_brand
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     session = Session.new() |> Session.login(jo)
     assert true == Session.can_view_account?(session, jo.id)
     assert false == Session.can_view_account?(session, bugs.id)
   end
 
   test "admin can view all customer accounts" do
-    jo = UM.Web.Fixtures.jo_brand
-    bugs = UM.Web.Fixtures.bugs_bunny
+    jo = UM.Accounts.Fixtures.jo_brand
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     session = Session.new() |> Session.login(bugs)
     assert true == Session.can_view_account?(session, jo.id)
     assert true == Session.can_view_account?(session, bugs.id)
@@ -64,7 +64,7 @@ defmodule UM.Web.SessionTest do
   end
 
   test "customer selecting a currency preference will have it saved" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     session = Session.new
     |> Session.login(jo)
     |> Session.select_currency("GBP")
@@ -74,13 +74,13 @@ defmodule UM.Web.SessionTest do
   end
 
   test "logging in will select the users currency preference, if they have one" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     session = Session.new |> Session.login(jo)
     assert "USD" == Session.currency_preference(session)
   end
 
   test "logging in set the users currency preference, if the do not have one" do
-    bugs = UM.Web.Fixtures.bugs_bunny
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     session = Session.new |> Session.select_currency("EUR") |> Session.login(bugs)
     {:ok, updated_bugs} = UM.Accounts.fetch_by_id(bugs.id)
     assert "EUR" == updated_bugs.currency_preference
@@ -100,7 +100,7 @@ defmodule UM.Web.SessionTest do
   end
 
   test "customer updating their shopping basket will have it saved" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     {:ok, shopping_basket} = UM.Sales.create_shopping_basket
     session = Session.new
     |> Session.login(jo)

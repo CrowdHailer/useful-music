@@ -5,12 +5,12 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   import Raxx.Request
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "index page shows customers" do
-    _jo = UM.Web.Fixtures.jo_brand
-    _bugs = UM.Web.Fixtures.bugs_bunny
+    _jo = UM.Accounts.Fixtures.jo_brand
+    _bugs = UM.Accounts.Fixtures.bugs_bunny
     request = get("/")
     response = Controller.handle_request(request, :nostate)
     assert String.contains?(response.body, "Jo Brand")
@@ -18,7 +18,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   end
 
   test "can make customer an admin" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = post("/#{jo.id}/admin", Raxx.Test.form_data(%{}))
     response = Controller.handle_request(request, :nostate)
     assert true == UM.Accounts.fetch_customer(jo.id).admin
@@ -28,7 +28,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   end
 
   test "can make remove admin access" do
-    bugs = UM.Web.Fixtures.bugs_bunny
+    bugs = UM.Accounts.Fixtures.bugs_bunny
     request = delete("/#{bugs.id}/admin", Raxx.Test.form_data(_method: "DELETE"))
     response = Controller.handle_request(request, :nostate)
     assert false == UM.Accounts.fetch_customer(bugs.id).admin

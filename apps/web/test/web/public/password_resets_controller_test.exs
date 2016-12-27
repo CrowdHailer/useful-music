@@ -5,7 +5,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   alias UM.Web.PasswordResetsController, as: Controller
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
+    :ok = UM.Catalogue.Fixtures.clear_db
   end
 
   test "new page is available" do
@@ -15,7 +15,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   end
 
   test "create password reset" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = post("/", Raxx.Test.form_data(%{"customer" => %{"email" => jo.email}}))
     |> Controller.handle_request(:nostate)
     |> Raxx.Patch.follow
@@ -31,7 +31,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   end
 
   test "edit page is available for token" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     {:ok, customer} = UM.Accounts.create_password_reset(jo.email)
     request = get({"/#{customer.password_reset_token}/edit", email: jo.email})
     response = Controller.handle_request(request, :nostate)
@@ -39,7 +39,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   end
 
   test "can reset password" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     {:ok, customer} = UM.Accounts.create_password_reset(jo.email)
     request = put("/#{customer.password_reset_token}", Raxx.Test.form_data(%{
       "customer" => %{

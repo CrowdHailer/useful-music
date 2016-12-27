@@ -6,8 +6,8 @@ defmodule UM.Web.CartsControllerTest do
   alias UM.Web.CartsController, as: Controller
 
   setup do
-    :ok = UM.Web.Fixtures.clear_db
-    garden_tiger = UM.Web.Fixtures.garden_tiger
+    :ok = UM.Catalogue.Fixtures.clear_db
+    garden_tiger = UM.Catalogue.Fixtures.garden_tiger
     {:ok, %{piece: garden_tiger}}
   end
 
@@ -57,7 +57,7 @@ defmodule UM.Web.CartsControllerTest do
   end
 
   test "customer can add a purchase to new cart" do
-    jo = UM.Web.Fixtures.jo_brand
+    jo = UM.Accounts.Fixtures.jo_brand
     request = patch("/__empty__/purchases", Raxx.Test.form_data(%{
       "purchases" => %{
         "garden-all-parts" => "1"

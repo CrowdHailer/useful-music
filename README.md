@@ -2,6 +2,9 @@
 # Customer doesn't have basket inside, use id and then keep data in session.
 # Similar behaviour for discount
 
+web depends on all
+accounts depends on all except web
+sales depends on catalogue
 
 Useful Music
 ============
