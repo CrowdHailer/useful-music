@@ -2,67 +2,65 @@ defmodule UM.Sales.CartTest do
   use ExUnit.Case
   alias UM.Sales.Cart
 
-  test "creating an basket" do
-    basket = Cart.new
-    assert basket.id
-    assert :pending == basket.status
-    assert Cart.empty?(basket)
-    assert Cart.list_price(basket)
+  test "creating an cart" do
+    cart = Cart.empty
+    assert Cart.empty?(cart)
+    assert Cart.list_price(cart)
   end
 
-  test "add item to an basket" do
-    basket = Cart.new
+  test "add item to an cart" do
+    cart = Cart.empty
     item = %{id: "flute-piece"}
     quantity = 2
-    basket = Cart.edit_line(basket, %{item: item, quantity: quantity})
-    refute Cart.empty? basket
+    cart = Cart.edit_line(cart, %{item: item, quantity: quantity})
+    refute Cart.empty? cart
   end
 
   test "edit existing line" do
-    basket = Cart.new
-    basket = Cart.edit_line(basket, %{item: flute_part, quantity: 10})
-    basket = Cart.edit_line(basket, %{item: flute_part, quantity: 2})
-    assert 1 == Cart.number_of_lines(basket)
-    assert 2 == Cart.number_of_units(basket)
+    cart = Cart.empty
+    cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
+    cart = Cart.edit_line(cart, %{item: flute_part, quantity: 2})
+    assert 1 == Cart.number_of_lines(cart)
+    assert 2 == Cart.number_of_units(cart)
   end
 
   test "calculate list price " do
-    basket = Cart.new
-    basket = Cart.edit_line(basket, %{item: flute_part, quantity: 10})
-    basket = Cart.edit_line(basket, %{item: piano_part, quantity: 2})
-    assert 600 == Cart.list_price(basket)
+    cart = Cart.empty
+    cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
+    cart = Cart.edit_line(cart, %{item: piano_part, quantity: 2})
+    assert 600 == Cart.list_price(cart)
   end
 
   test "can have a discount " do
-    basket = Cart.new
-    basket = Cart.edit_line(basket, %{item: flute_part, quantity: 10})
-    basket = Cart.add_discount(basket, two_pounds_odd)
-    assert 440 == Cart.list_price(basket)
-    assert 200 == Cart.discount_value(basket)
-    refute Cart.free?(basket)
+    cart = Cart.empty
+    cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
+    cart = Cart.add_discount(cart, two_pounds_odd)
+    assert 440 == Cart.list_price(cart)
+    assert 200 == Cart.discount_value(cart)
+    refute Cart.free?(cart)
   end
 
-  test "can have a discount that makes the basket free" do
-    basket = Cart.new
-    basket = Cart.edit_line(basket, %{item: piano_part, quantity: 2})
-    basket = Cart.add_discount(basket, two_pounds_odd)
-    assert 160 == Cart.list_price(basket)
-    assert 200 == Cart.discount_value(basket)
-    assert Cart.free?(basket)
+  test "can have a discount that makes the cart free" do
+    cart = Cart.empty
+    cart = Cart.edit_line(cart, %{item: piano_part, quantity: 2})
+    cart = Cart.add_discount(cart, two_pounds_odd)
+    assert 160 == Cart.list_price(cart)
+    assert 200 == Cart.discount_value(cart)
+    assert Cart.free?(cart)
   end
 
   test "can start transaction" do
-    basket = Cart.new
-    basket = Cart.edit_line(basket, %{item: flute_part, quantity: 10})
-    basket = Cart.add_discount(basket, two_pounds_odd)
-    transaction = Cart.start_transaction(basket, %{vat_rate: 0.2, currency: :GBP})
-    assert 440 == transaction.basket_total
+    cart = Cart.empty
+    cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
+    cart = Cart.add_discount(cart, two_pounds_odd)
+    transaction = Cart.start_transaction(cart, %{vat_rate: 0.2, currency: :GBP})
+    assert 440 == transaction.cart_total
     assert 200 == transaction.discount_value
     assert 240 == transaction.payment_gross
     assert 48 == transaction.tax_payment
     assert 288 == transaction.payment_net
     assert :GBP == transaction.currency
-    assert basket == transaction.basket
+    assert cart == transaction.cart
   end
 
   def two_pounds_odd do
