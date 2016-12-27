@@ -42,4 +42,8 @@ defmodule UM.Web.Admin do
   def endpoint(request = %{path: ["customers" | rest]}, env) do
     UM.Web.Admin.CustomersController.handle_request(%{request | path: rest}, env)
   end
+
+  def endpoint(request = %{path: ["shopping_baskets" | rest]}, env) do
+    UM.Web.Admin.CartsController.handle_request(%{request | path: rest}, env)
+  end
 end

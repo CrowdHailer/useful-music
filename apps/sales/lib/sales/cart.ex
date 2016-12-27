@@ -26,6 +26,10 @@ defmodule UM.Sales.Cart do
     max(list_price(cart) - discount_value(cart), 0)
   end
 
+  def checkout_price(cart) do
+    payment_gross(cart)
+  end
+
   def free?(cart) do
     discount_value(cart) > list_price(cart)
   end
@@ -44,6 +48,11 @@ defmodule UM.Sales.Cart do
       %{value: value} ->
         value
     end
+  end
+
+  def referenced?(cart) do
+    # TODO
+    false
   end
 
   def line_price(%{quantity: quantity, item: item}) do
