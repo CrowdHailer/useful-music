@@ -38,12 +38,13 @@ defmodule UM.Sales.Cart do
   end
 
   def discount_value(cart) do
-    case cart.discount do
-      nil ->
-        0
-      %{value: value} ->
-        value
-    end
+    0
+    # case cart.discount do
+    #   nil ->
+    #     0
+    #   %{value: value} ->
+    #     value
+    # end
   end
 
   def line_price(%{quantity: quantity, item: item}) do
@@ -63,7 +64,7 @@ defmodule UM.Sales.Cart do
     purchases = Map.put(purchases, item.id, %{item: item, quantity: quantity})
     %{cart | purchases: purchases}
   end
-  
+
   def add_discount(cart, discount) do
     %{cart | discount: discount}
   end

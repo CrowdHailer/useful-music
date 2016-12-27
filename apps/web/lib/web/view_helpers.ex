@@ -144,6 +144,14 @@ defmodule UM.Web.ViewHelpers do
     UM.Catalogue.Item.price_for(item, quantity) / 100
   end
 
+  def item_piece_product_name(item) do
+    "TODO"
+  end
+
+  def cart_discount_code(_cart) do
+    "TODO"
+  end
+
   def discount_code(discount) do
     UM.Sales.Discount.code(discount)
   end
