@@ -1,4 +1,4 @@
-defmodule UM.Sales.Basket do
+defmodule UM.Sales.Cart do
   @moduledoc """
   Existing system has 4 states for an order ['pending', 'processing', 'succeded', 'failed']
   Pending is almost immediatly replaced by processing

@@ -29,8 +29,8 @@ defmodule UM.Web.Session do
   def currency_preference(%UnAuthenticated{currency_preference: currency}), do: currency
   def currency_preference(%{account: %{currency_preference: currency}}), do: currency
 
-  def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket || UM.Sales.Basket.empty
-  def shopping_basket(%{account: %{shopping_basket: shopping_basket}}), do: shopping_basket || UM.Sales.Basket.empty
+  def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket || UM.Sales.Cart.empty
+  def shopping_basket(%{account: %{shopping_basket: shopping_basket}}), do: shopping_basket || UM.Sales.Cart.empty
 
   def csrf_tag do
     "" # TODO
@@ -81,7 +81,7 @@ defmodule UM.Web.Session do
           {:ok, shopping_basket} ->
             shopping_basket
           {:error, :not_found} ->
-            UM.Sales.Basket.empty
+            UM.Sales.Cart.empty
         end
         customer = Map.merge(customer, %{shopping_basket: shopping_basket})
         new |> login(customer)

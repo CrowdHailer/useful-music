@@ -1,6 +1,6 @@
 defmodule UM.Web.ViewHelpers do
   alias UM.Web.Session
-  alias UM.Sales.Basket, as: ShoppingBasket
+  alias UM.Sales.Cart, as: ShoppingBasket
 
   def logged_in?(session) do
     Session.logged_in?(session)

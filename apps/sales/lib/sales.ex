@@ -9,7 +9,7 @@ defmodule UM.Sales do
         IO.inspect(reason)
         {:error, reason}
       record ->
-        {:ok, struct(UM.Sales.Basket, record)}
+        {:ok, struct(UM.Sales.Cart, record)}
     end
   end
 

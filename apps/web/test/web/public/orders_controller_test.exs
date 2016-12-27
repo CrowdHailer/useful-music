@@ -29,8 +29,8 @@ defmodule UM.Web.OrdersControllerTest do
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     # {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
-    assert 1 == UM.Sales.Basket.number_of_lines(basket)
-    assert 1 == UM.Sales.Basket.number_of_units(basket)
+    assert 1 == UM.Sales.Cart.number_of_lines(basket)
+    assert 1 == UM.Sales.Cart.number_of_units(basket)
   end
 
   test "customer can add a purchase to new basket" do
@@ -48,8 +48,8 @@ defmodule UM.Web.OrdersControllerTest do
     {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
     assert basket_id == updated_jo.shopping_basket_id
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
-    assert 1 == UM.Sales.Basket.number_of_lines(basket)
-    assert 1 == UM.Sales.Basket.number_of_units(basket)
+    assert 1 == UM.Sales.Cart.number_of_lines(basket)
+    assert 1 == UM.Sales.Cart.number_of_units(basket)
   end
 
   @tag :skip
@@ -70,8 +70,8 @@ defmodule UM.Web.OrdersControllerTest do
     assert ["orders", basket.id] == request_2.path
     {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket.id)
-    assert 2 == UM.Sales.Basket.number_of_lines(basket)
-    assert 6 == UM.Sales.Basket.number_of_units(basket)
+    assert 2 == UM.Sales.Cart.number_of_lines(basket)
+    assert 6 == UM.Sales.Cart.number_of_units(basket)
   end
 
   @tag :skip
@@ -87,8 +87,8 @@ defmodule UM.Web.OrdersControllerTest do
     response = Controller.handle_request(request, [])
     assert 302 == response.status
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket.id)
-    assert 1 == UM.Sales.Basket.number_of_lines(basket)
-    assert 2 == UM.Sales.Basket.number_of_units(basket)
+    assert 1 == UM.Sales.Cart.number_of_lines(basket)
+    assert 2 == UM.Sales.Cart.number_of_units(basket)
   end
 
   @tag :skip
@@ -100,7 +100,7 @@ defmodule UM.Web.OrdersControllerTest do
     response = Controller.handle_request(request, [])
     assert 302 == response.status
     {:ok, basket} = UM.Sales.fetch_shopping_basket(basket.id)
-    assert 0 == UM.Sales.Basket.number_of_lines(basket)
-    assert 0 == UM.Sales.Basket.number_of_units(basket)
+    assert 0 == UM.Sales.Cart.number_of_lines(basket)
+    assert 0 == UM.Sales.Cart.number_of_units(basket)
   end
 end
