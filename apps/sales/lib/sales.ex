@@ -3,7 +3,7 @@ defmodule UM.Sales do
   import Moebius.Query
 
   def create_shopping_basket do
-    query = db(:shopping_baskets) |> insert(id: random_string(16))
+    query = db(:shopping_baskets) |> insert(id: Utils.random_string(16))
     case Moebius.Db.run(query) do
       {:error, reason} ->
         IO.inspect(reason)
@@ -52,7 +52,7 @@ defmodule UM.Sales do
     update = case Moebius.Db.run(query) do
       [] ->
         db(:purchases)
-        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
+        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: Utils.random_string(16))
       [_existing] ->
         db(:purchases)
         |> filter(shopping_basket_id: basket_id, item_id: item_id)
@@ -69,7 +69,7 @@ defmodule UM.Sales do
     update = case {Moebius.Db.run(query), quantity} do
       {[], q} ->
         db(:purchases)
-        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
+        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: Utils.random_string(16))
       {[_item], 0} ->
         db(:purchases)
         |> filter(shopping_basket_id: basket_id, item_id: item_id)
@@ -101,10 +101,6 @@ defmodule UM.Sales do
       |> Enum.into(%{})
       {:ok, Map.merge(basket, %{purchases: purchases})}
     end
-  end
-
-  def random_string(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 
   def start(_type, _args) do

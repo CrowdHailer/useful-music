@@ -133,7 +133,7 @@ defmodule UM.Catalogue do
   def create_item(item) do
     # DEBT insert requires a keyword list
     nil = Map.get(item, :id)
-    item = Map.put(item, :id, random_string(16))
+    item = Map.put(item, :id, Utils.random_string(16))
 
     item = save_item_assets(item)
 
@@ -187,10 +187,6 @@ defmodule UM.Catalogue do
     query = db(:items) |> filter(piece_id: piece_id)
     items = Moebius.Db.run(query)
     {:ok, Map.merge(piece, %{items: items})}
-  end
-
-  def random_string(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 
   def start(_type, _args) do

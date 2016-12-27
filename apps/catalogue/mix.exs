@@ -30,6 +30,7 @@ defmodule UM.Catalogue.Mixfile do
       poison: "~> 2.0",
       sweet_xml: "~> 0.5",
 
+      {:utils, in_umbrella: true},
     ]
   end
 end
