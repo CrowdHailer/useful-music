@@ -96,8 +96,9 @@
               <h2>Purchase Options</h2>
               <p>Please select how many <a href="/about/licencing_and_copyright">licences</a> you would like:</p>
               <hr>
-              <form action="/orders/<%= current_shopping_basket_id(session) %>/items" method="post">
+              <form action="/shopping_baskets/<%= current_shopping_basket_id(session) %>/purchases" method="post">
                 <%= UM.Web.Session.csrf_tag %>
+                <input type="hidden" name="_method" value="PATCH">
                 <div class="row collapse">
                   <%= for item <- piece.items do %>
                   <div class="large-6 medium-6 small-12 columns">
@@ -105,7 +106,7 @@
                       <h6>
                         <%= item.name %>
                       </h6>
-                      <input type="number" min="0" name="items[<%= item.id %>]" value="0">
+                      <input type="number" min="0" name="purchases[<%= item.id %>]" value="0">
                       <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
                       <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
                       <p><%= item_initial_price(item) %> first licence</p>

@@ -72,10 +72,10 @@
             <%= purchase.item.name %>
           </td>
           <td>
-            <form id="form_id" action="/orders/<%= cart.id %>/items/<%= purchase.item.id %>" method="post">
+            <form id="form_id" action="/shopping_baskets/<%= cart.id %>/purchases" method="post">
               <%= UM.Web.Session.csrf_tag %>
-              <input type="hidden" name="_method" value="PUT">
-              <input type="number" min="1" step="1" name="item[quantity]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
+              <input type="hidden" name="_method" value="PATCH">
+              <input type="number" min="1" step="1" name="purchases[<%= purchase.item.id %>]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
               <input class="button tiny" type="submit" value="Update">
             </form>
           </td>

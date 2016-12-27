@@ -63,8 +63,12 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def current_shopping_basket_id(session) do
-    # TODO
-    "__empty__"
+    case Session.cart(session).id do
+      nil ->
+        "__empty__"
+      id ->
+        id
+    end
   end
 
   ####### ACCOUNTS #######

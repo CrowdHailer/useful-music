@@ -28,7 +28,7 @@ defmodule UM.Web.CartsController do
     {:ok, cart} = UM.Sales.edit_purchases(cart, purchases)
     session = UM.Web.Session.update_shopping_basket(session, cart)
 
-    Raxx.Patch.redirect("/orders/#{cart.id}")
+    Raxx.Patch.redirect("/shopping_baskets/#{cart.id}")
     |> UM.Web.with_flash(success: "Items added to basket")
     |> UM.Web.with_session(session)
   end
