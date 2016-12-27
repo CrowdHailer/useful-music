@@ -21,6 +21,9 @@ defmodule UM.Sales.Discount do
     {:ok, %Zero{}}
   end
 
+  def code() do
+    code
+  end
   # pending?
   # expired?
 end

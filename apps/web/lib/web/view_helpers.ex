@@ -84,7 +84,8 @@ defmodule UM.Web.ViewHelpers do
   ####### CATALOGUE #######
 
   def piece_product_name(piece) do
-    UM.Catalogue.Piece.product_name(piece)
+    # UM.Catalogue.Piece.product_name(piece)
+    "Oh noes"
   end
 
   def piece_catalogue_number(piece) do

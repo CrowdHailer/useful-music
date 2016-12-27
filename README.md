@@ -1,3 +1,8 @@
+# RENAME cart
+# Customer doesn't have basket inside, use id and then keep data in session.
+# Similar behaviour for discount
+
+
 Useful Music
 ============
 
