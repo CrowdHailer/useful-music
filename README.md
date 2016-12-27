@@ -75,6 +75,7 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 - setting purchase items to zero
 - customer can edit only their own basket
 - change password page shows form errors
+- remove abandoned carts
 
 - adding no items to basket is silly (currently the case)
 - check the format of user names
