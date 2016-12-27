@@ -6,19 +6,9 @@ defmodule UM.Web.Admin.CustomersController do
   EEx.function_from_file :def, :index_page_content, index_file, [:page]
 
   def handle_request(%{method: :GET, path: [], query: query}, _) do
-    query = query || %{}
-    size = Map.get(query, "page_size", "10") |> :erlang.binary_to_integer
-    page = Map.get(query, "page", "1") |> :erlang.binary_to_integer
-    # TODO paginate properly
-    customers = UM.Accounts.all_customers
-
-    Raxx.Response.ok(index_page_content(%{
-      size: size,
-      previous: max(page - 1, 0),
-      next: page + 1,
-      last: 10,
-      customers: Enum.zip(customers, 1..Enum.count(customers))
-      }))
+    page = UM.Web.requested_page(query, page_size: 10)
+    {:ok, page_of_customers} = UM.Accounts.all_customers(page)
+    Raxx.Response.ok(index_page_content(page_of_customers))
   end
 
   def handle_request(%{method: :POST, path: [id, "admin"]}, _) do

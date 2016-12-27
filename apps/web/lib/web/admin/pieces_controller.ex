@@ -9,15 +9,15 @@ defmodule UM.Web.Admin.PiecesController do
   edit_form_template = String.replace_suffix(__ENV__.file, ".ex", "/edit.html.eex")
   EEx.function_from_file :def, :edit_form, edit_form_template, [:piece]
 
-  def handle_request(%{path: [], method: :GET}, _env) do
+  def handle_request(%{path: [], method: :GET, query: query}, _env) do
     {:ok, pieces} = UM.Catalogue.search_pieces
     pieces = Enum.map(pieces, fn
       (piece) ->
         {:ok, piece} = UM.Catalogue.load_items(piece)
         piece
     end)
-    # TODO fix pagination
-    Raxx.Response.ok(index_page_content(Page.paginate(pieces, %{page_size: 10, page_number: 1})))
+    page = UM.Web.requested_page(query)
+    Raxx.Response.ok(index_page_content(Page.paginate(pieces, page)))
   end
 
   def handle_request(%{path: ["search"], method: :GET, query: query}, _env) do

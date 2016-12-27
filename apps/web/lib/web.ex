@@ -126,10 +126,13 @@ defmodule UM.Web do
     :proplists.get_value("um-flash", request.headers, %UM.Web.Flash{})
   end
 
-  def requested_page(query) do
+  def requested_page(query, opts \\ []) do
+    defaults = %{page_size: 10, page_number: 1}
+    opts = Enum.into(opts, %{})
+    defaults = Map.merge(defaults, opts)
     %{
-      page_number: Map.get(query, "page", "1") |> :erlang.binary_to_integer,
-      page_size: Map.get(query, "page_size", "12") |> :erlang.binary_to_integer
+      page_number: Map.get(query, "page", "#{defaults.page_number}") |> :erlang.binary_to_integer,
+      page_size: Map.get(query, "page_size", "#{defaults.page_size}") |> :erlang.binary_to_integer
     }
   end
 end

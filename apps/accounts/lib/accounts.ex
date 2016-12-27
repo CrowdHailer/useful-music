@@ -18,8 +18,12 @@ defmodule UM.Accounts do
 
   import Moebius.Query
 
-  def all_customers do
-    db(:customers) |> Db.run
+  def all_customers(page) do
+    case db(:customers) |> Db.run do
+      customers when is_list(customers) ->
+        {:ok, Page.paginate(customers, page)}
+    end
+
   end
 
   def signup_customer(customer) do

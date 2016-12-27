@@ -10,18 +10,18 @@ defmodule UM.Web.Admin.DiscountsController do
 
   alias __MODULE__.{EditForm}
 
-  def handle_request(_request = %{path: [], method: :GET}, _) do
-    # TODO paginate
-    {:ok, page_of_discounts} = UM.Sales.Discounts.index_by_code(%{page_size: 12, page_number: 1})
+  def handle_request(%{path: [], method: :GET, query: query}, _) do
+    page = UM.Web.requested_page(query)
+    {:ok, page_of_discounts} = UM.Sales.Discounts.index_by_code(page)
     Raxx.Response.ok(index_template(page_of_discounts))
   end
 
-  def handle_request(_request = %{path: ["new"], method: :GET}, _) do
+  def handle_request(%{path: ["new"], method: :GET}, _) do
     discount = %UM.Sales.Discount{id: nil}
     Raxx.Response.ok(form_template(discount))
   end
 
-  def handle_request(_request = %{path: [], method: :POST, body: %{"discount" => form}}, _) do
+  def handle_request(%{path: [], method: :POST, body: %{"discount" => form}}, _) do
     case EditForm.validate(form) do
       {:ok, data} ->
         discount = Map.merge(data, %{id: Utils.random_string(16)})
@@ -35,12 +35,12 @@ defmodule UM.Web.Admin.DiscountsController do
     end
   end
 
-  def handle_request(_request = %{path: [id, "edit"], method: :GET}, _) do
+  def handle_request(%{path: [id, "edit"], method: :GET}, _) do
     {:ok, discount} = UM.Sales.Discounts.fetch_by_id(id)
     Raxx.Response.ok(form_template(discount))
   end
 
-  def handle_request(_request = %{path: [id], method: :PUT, body: %{"discount" => form}}, _) do
+  def handle_request(%{path: [id], method: :PUT, body: %{"discount" => form}}, _) do
     case EditForm.validate(form) do
       {:ok, data} ->
         discount = Map.merge(data, %{id: id})

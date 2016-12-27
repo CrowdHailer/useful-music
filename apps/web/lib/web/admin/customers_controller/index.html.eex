@@ -23,16 +23,16 @@
     </header>
     <header class="admin">
         <form class="right" action="/admin/customers" method="get">
-            <button class="action" name="page" value="1" <%= if !page.previous, do: "disabled" %>>First Page</button>
-            <button class="action" name="page" value="<%= page.previous %>" <%= if !page.previous, do: "disabled" %>>Previous</button>
-            <select class="action" name="page_size">
-                <option <%= if page.size == 10, do: "selected" %>>10</option>
-                <option <%= if page.size == 15, do: "selected" %>>15</option>
-                <option <%= if page.size == 20, do: "selected" %>>20</option>
-            </select>
-            <button class="action" name="page" value="1">Refresh</button>
-            <button class="action" name="page" value="<%= page.next %>" <%= if !page.next, do: "disabled" %>>Next</button>
-            <button class="action" name="page" value="<%= page.last %>" <%= if !page.next, do: "disabled" %>>Last Page</button>
+          <button class="action" name="page" value="1" <%= if Page.first?(page), do: "disabled" %>>First Page</button>
+          <button class="action" name="page" value="<%= Page.previous(page) %>" <%= if Page.first?(page), do: "disabled" %>>Previous</button>
+          <select class="action" name="page_size">
+              <option <%= if page.page_size == 10, do: "selected" %>>10</option>
+              <option <%= if page.page_size == 15, do: "selected" %>>15</option>
+              <option <%= if page.page_size == 20, do: "selected" %>>20</option>
+          </select>
+          <button class="action" name="page" value="1">Refresh</button>
+          <button class="action" name="page" value="<%= Page.next(page) %>" <%= if Page.last?(page), do: "disabled" %>>Next</button>
+          <button class="action" name="page" value="<%= page.total_pages %>" <%= if Page.last?(page), do: "disabled" %>>Last Page</button>
         </form>
     </header>
     <table class="index">
@@ -46,7 +46,7 @@
         </thead>
 
         <tbody>
-            <%= for {customer, i} <- page.customers do %>
+            <%= for {customer, i} <- Enum.with_index(page.entries) do %>
                 <tr class="<%= if rem(i, 2) == 0, do: "even", else: "odd" %>">
                     <th>
                         <a href="/customers/<%= customer.id %>"><%= customer.id %></a>
