@@ -2,7 +2,7 @@ defmodule UM.Web.Public do
   import UM.Web.ViewHelpers
   require EEx
   layout_file = String.replace_suffix(__ENV__.file, ".ex", "/layout.html.eex")
-  EEx.function_from_file :def, :layout_page, layout_file, [:content, :session]
+  EEx.function_from_file :def, :layout_page, layout_file, [:content, :session, :flash]
 
   footer_file = String.replace_suffix(__ENV__.file, ".ex", "/footer.html.eex")
   EEx.function_from_file :def, :footer_partial, footer_file, []
@@ -20,7 +20,7 @@ defmodule UM.Web.Public do
       request = %{body: ""} ->
         request
       request = %{status: _, body: content} ->
-        %{request | body: layout_page(content, session)}
+        %{request | body: layout_page(content, session, flash)}
     end
   end
 

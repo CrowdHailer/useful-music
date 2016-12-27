@@ -103,6 +103,17 @@ defmodule UM.Sales do
     end
   end
 
+  def apply_discount_code(cart, discount_code) do
+    # {:ok, %{id: discount_id}} = Discounts.fetch_available_code(discount_code)
+    action = db(:shopping_baskets) |> filter(id: cart.id) |> update(discount_id: discount_code)
+    case Moebius.Db.run(action) do
+      {:error, reason} ->
+        {:error, reason}
+      cart ->
+        {:ok, cart}
+    end
+  end
+
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 

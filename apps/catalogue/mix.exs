@@ -24,13 +24,13 @@ defmodule UM.Catalogue.Mixfile do
       {:arc, "~> 0.6.0"},
       {:moebius, "~> 2.0.0"},
       {:hackney, "~> 1.6", override: true},
+      {:utils, in_umbrella: true},
 
       # If using Amazon S3 (arc):
       ex_aws: "~> 1.0.0",
       poison: "~> 2.0",
       sweet_xml: "~> 0.5",
 
-      {:utils, in_umbrella: true},
     ]
   end
 end

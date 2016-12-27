@@ -32,6 +32,28 @@ defmodule UM.Web.CartsController do
     |> UM.Web.with_flash(success: "Items added to basket")
     |> UM.Web.with_session(session)
   end
+
+  # TODO test
+  def handle_request(request = %{path: [cart_id, "discount"], method: :PUT, body: %{"shopping_basket" => form}}, _) do
+    IO.inspect("HIIIIIIIIIIIIIIIIIIIII")
+    session = UM.Web.fetch_session(request)
+    cart = UM.Web.Session.cart(session)
+    ^cart_id = cart.id || "__empty__"
+
+    discount_code = Map.get(form, "discount", "")
+    {cart, flash} = case UM.Sales.apply_discount_code(cart, discount_code) do
+      {:ok, cart = %{discount: nil}} ->
+        {cart, success: "Discount Code Removed"}
+      {:ok, cart} ->
+        {cart, success: "Discount Code Added"}
+      {:error, reason} ->
+        {cart, error: reason}
+    end
+
+    Raxx.Patch.redirect("/shopping_baskets/#{cart.id}")
+    |> UM.Web.with_flash(flash)
+    |> UM.Web.with_session(session)
+  end
 end
 
 # creation adds many

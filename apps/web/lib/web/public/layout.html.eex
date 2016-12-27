@@ -17,20 +17,20 @@
     <!-- TODO explicit reference of guest -->
     <%= header_partial(session) %>
 
-    <%= if Map.get(session, :success) do %>
+    <%= if Map.get(flash, :success) do %>
     <div class="row collapse">
         <div class="large-12 columns flash success">
             <h2>
-                <%= session.success %>
+                <%= flash.success %>
             </h2>
         </div>
     </div>
     <% end %>
-    <%= if Map.get(session, :error) do %>
+    <%= if Map.get(flash, :error) do %>
     <div class="row collapse">
        <div class="large-12 columns flash error">
            <h2>
-               <%= session.error %>
+               <%= flash.error %>
            </h2>
        </div>
     </div>

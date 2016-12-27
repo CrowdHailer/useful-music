@@ -191,8 +191,8 @@
       </h6>
       <div class="row collapse">
         <div class="large-12 columns">
-          <form class="" action="/shopping_baskets/<%= cart.id %>" method="post">
-            <input type="hidden" name="_method" value="PATCH">
+          <form class="" action="/shopping_baskets/<%= cart.id %>/discount" method="post">
+            <input type="hidden" name="_method" value="PUT">
             <%= UM.Web.Session.csrf_tag %>
             <div class="row">
               <div class="large-5 medium-6 small-12 columns">
