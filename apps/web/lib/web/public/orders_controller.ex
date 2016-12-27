@@ -62,18 +62,3 @@ defmodule UM.Web.OrdersController do
     Raxx.Response.ok(basket_page_content(basket, session))
   end
 end
-
-# creation adds many
-# (1) POST /orders/id/items/ []{item_id:, quantity:}
-# update is one at a time
-# (2) PATCH /orders/id/items/id %{quantity}
-# Delete is one at a time
-# (2.5, patch to zero) DELETE /orders/id/items/id
-# Could have a method that loads the current number of items in basket.
-# Also lets assume that there will never be conflict
-
-# (3) PATCH /orders/id/discount/id %{quantity}
-# (4) DELETE shopping basket abandon cart
-# GET /orders/id/checkout
-# (5) POST /orders/id/checkout -> pending
-# (6/7) POST /orders/id/transaction/id -> success fail

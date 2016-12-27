@@ -32,6 +32,10 @@ defmodule UM.Web.Session do
   def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket || UM.Sales.Cart.empty
   def shopping_basket(%{account: %{shopping_basket: shopping_basket}}), do: shopping_basket || UM.Sales.Cart.empty
 
+  def cart(session) do
+    shopping_basket(session)
+  end
+
   def csrf_tag do
     "" # TODO
   end

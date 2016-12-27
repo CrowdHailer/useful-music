@@ -13,6 +13,21 @@ defmodule UM.Sales do
     end
   end
 
+  def edit_purchases(cart, purchases) do
+    cart = case cart do
+      %{id: nil} ->
+        {:ok, cart} = create_shopping_basket
+        cart
+      cart ->
+        cart
+    end
+    purchases |> Enum.map(fn
+      ({item_id, quantity}) ->
+        UM.Sales.add_item(cart.id, item_id, quantity: quantity)
+    end)
+    fetch_shopping_basket(cart.id)
+  end
+
   def add_items(shopping_basket, items) do
     shopping_basket = case shopping_basket do
       %{id: nil} ->
@@ -38,6 +53,10 @@ defmodule UM.Sales do
       [] ->
         db(:purchases)
         |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: random_string(16))
+      [_existing] ->
+        db(:purchases)
+        |> filter(shopping_basket_id: basket_id, item_id: item_id)
+        |> update(quantity: quantity)
     end
     Moebius.Db.run(update)
   end
