@@ -38,13 +38,12 @@ defmodule UM.Sales.Cart do
   end
 
   def discount_value(cart) do
-    0
-    # case cart.discount do
-    #   nil ->
-    #     0
-    #   %{value: value} ->
-    #     value
-    # end
+    case cart.discount do
+      nil ->
+        0
+      %{value: value} ->
+        value
+    end
   end
 
   def line_price(%{quantity: quantity, item: item}) do

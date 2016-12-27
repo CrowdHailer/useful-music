@@ -28,7 +28,7 @@ defmodule UM.Web.CartsControllerTest do
     session = :proplists.get_value("um-set-session", response.headers)
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     # {%{success: "Items added to cart"}, _request} = UM.Web.Flash.from_request(request_2)
-    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
+    {:ok, basket} = UM.Sales.CartsRepo.fetch_by_id(basket_id)
     assert 1 == UM.Sales.Cart.number_of_lines(basket)
     assert 1 == UM.Sales.Cart.number_of_units(basket)
   end
@@ -51,7 +51,7 @@ defmodule UM.Web.CartsControllerTest do
     session = :proplists.get_value("um-set-session", response.headers)
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     # {%{success: "Items added to basket"}, _request} = UM.Web.Flash.from_request(request_2)
-    {:ok, basket} = UM.Sales.fetch_shopping_basket(basket_id)
+    {:ok, basket} = UM.Sales.CartsRepo.fetch_by_id(basket_id)
     assert 2 == UM.Sales.Cart.number_of_lines(basket)
     assert 2 == UM.Sales.Cart.number_of_units(basket)
   end
@@ -70,7 +70,7 @@ defmodule UM.Web.CartsControllerTest do
     assert basket_id == UM.Web.Session.shopping_basket(session).id
     {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
     assert basket_id == updated_jo.shopping_basket_id
-    {:ok, cart} = UM.Sales.fetch_shopping_basket(basket_id)
+    {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(basket_id)
     assert 1 == UM.Sales.Cart.number_of_lines(cart)
     assert 1 == UM.Sales.Cart.number_of_units(cart)
   end

@@ -81,7 +81,7 @@ defmodule UM.Web.Session do
     case Poison.decode(string) do
       {:ok, %{"account_id" => id}} ->
         {:ok, customer} = UM.Accounts.fetch_by_id(id)
-        shopping_basket = case UM.Sales.fetch_shopping_basket(customer.shopping_basket_id) do
+        shopping_basket = case UM.Sales.CartsRepo.fetch_by_id(customer.shopping_basket_id || "") do
           {:ok, shopping_basket} ->
             shopping_basket
           {:error, :not_found} ->

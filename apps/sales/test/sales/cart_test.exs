@@ -31,7 +31,6 @@ defmodule UM.Sales.CartTest do
     assert 600 == Cart.list_price(cart)
   end
 
-  @tag :skip
   test "can have a discount " do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
@@ -41,7 +40,6 @@ defmodule UM.Sales.CartTest do
     refute Cart.free?(cart)
   end
 
-  @tag :skip
   test "can have a discount that makes the cart free" do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: piano_part, quantity: 2})
@@ -51,7 +49,6 @@ defmodule UM.Sales.CartTest do
     assert Cart.free?(cart)
   end
 
-  @tag :skip
   test "can start transaction" do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
