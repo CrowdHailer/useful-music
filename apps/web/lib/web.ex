@@ -125,4 +125,11 @@ defmodule UM.Web do
   def fetch_flash(request) do
     :proplists.get_value("um-flash", request.headers, %UM.Web.Flash{})
   end
+
+  def requested_page(query) do
+    %{
+      page_number: Map.get(query, "page", "1") |> :erlang.binary_to_integer,
+      page_size: Map.get(query, "page_size", "12") |> :erlang.binary_to_integer
+    }
+  end
 end

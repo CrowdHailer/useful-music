@@ -16,27 +16,21 @@ defmodule UM.Web.PiecesController do
       (fn(option) -> {option, WebForm.checkbox()} end)
     ), %{}), search)
 
-    page = %{
-      page_number: Map.get(search, "page", "1") |> :erlang.binary_to_integer,
-      page_size: Map.get(search, "page_size", "12") |> :erlang.binary_to_integer
-    }
+    page = UM.Web.requested_page(query)
 
-    # in the future this should paginate the query
+    # TODO in the future this should paginate the query
     {:ok, pieces} = UM.Catalogue.search_pieces(tags)
     Raxx.Response.ok(index_page_content(Page.paginate(pieces, page), tags))
   end
 
-  def handle_request(%{path: ["search"], method: :GET, query: %{"search" => search}}, _) do
+  def handle_request(%{path: ["search"], method: :GET, query: query = %{"search" => search}}, _) do
     case search do
       "UD" <> id ->
         Raxx.Patch.redirect("/pieces/UD#{id}")
       search ->
         {:ok, pieces} = UM.Catalogue.search_title(search)
 
-        page = %{
-          page_size: 24,
-          page_number: 1
-        }
+        page = UM.Web.requested_page(query)
         Raxx.Response.ok(index_page_content(Page.paginate(pieces, page), %{}))
     end
   end

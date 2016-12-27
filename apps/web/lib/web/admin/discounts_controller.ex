@@ -11,6 +11,7 @@ defmodule UM.Web.Admin.DiscountsController do
   alias __MODULE__.{EditForm}
 
   def handle_request(_request = %{path: [], method: :GET}, _) do
+    # TODO paginate
     {:ok, page_of_discounts} = UM.Sales.Discounts.index_by_code(%{page_size: 12, page_number: 1})
     Raxx.Response.ok(index_template(page_of_discounts))
   end

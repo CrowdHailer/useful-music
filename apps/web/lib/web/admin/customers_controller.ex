@@ -9,6 +9,7 @@ defmodule UM.Web.Admin.CustomersController do
     query = query || %{}
     size = Map.get(query, "page_size", "10") |> :erlang.binary_to_integer
     page = Map.get(query, "page", "1") |> :erlang.binary_to_integer
+    # TODO paginate properly
     customers = UM.Accounts.all_customers
 
     Raxx.Response.ok(index_page_content(%{
