@@ -65,6 +65,7 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 - form validation on files, accept types
 - password reset checks the token has not expired
 - single page info webform
+- save exchange rate to order
 - add items to public piece show page test
 - all prices are in pence lookup money package
 - paginate in SQL query

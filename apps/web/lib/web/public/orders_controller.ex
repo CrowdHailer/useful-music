@@ -13,8 +13,14 @@ defmodule UM.Web.OrdersController do
   #   Order.success
   #   Order.cancel
   # end
+  import UM.Web.ViewHelpers
+  require EEx
 
+  show_template = String.replace_suffix(__ENV__.file, ".ex", "/show.html.eex")
+  EEx.function_from_file :def, :show_page, show_template, [:order]
+
+  # TODO test
   def handle_request(%{path: [id], method: :GET}, _) do
-    Raxx.Response.ok("hi")
+    Raxx.Response.ok(show_page(%UM.Sales.Cart{id: id}))
   end
 end

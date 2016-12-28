@@ -4,8 +4,8 @@
 <body>
 <header>
     <img src="/images/logored.png">
-    <h2>Date <%= @order.updated_at.strftime('%d/%m/%Y') %></h2>
-    <h1>Receipt/licence #<%= @order.id %></h1>
+    <h2>Date <%= order.updated_at %></h2>
+    <h1>Receipt/licence #<%= order.id %></h1>
     <p class="panel">
         <em>Please print and keep this page.</em> It is your proof of purchase and your licence to print the number of copies listed below
     </p>
@@ -23,12 +23,12 @@
             <tbody>
                 <tr>
                     <td>
-                        <em>Order ID</em> <%= @order.id %><br>
-                        <em>Date Added</em> <%= @order.updated_at.strftime('%d/%m/%Y') %>
+                        <em>Order ID</em> <%= order.id %><br>
+                        <em>Date Added</em> <%= order.updated_at.strftime('%d/%m/%Y') %>
                     </td>
                     <td>
-                        <em>Name</em> <%= @order.customer.name %><br>
-                        <em>Email</em> <%= @order.customer.email %><br>
+                        <em>Name</em> <%= order.customer.name %><br>
+                        <em>Email</em> <%= order.customer.email %><br>
                     </td>
                 </tr>
             </tbody>
@@ -56,7 +56,7 @@
                 </tr>
             </thead>
             <tbody>
-                <% @order.shopping_basket.purchases.each do |purchase| %>
+                <%= for purchase <- order.cart.purchases do %>
                     <tr>
                         <td>
                             <%= purchase.item.piece.title %>
@@ -71,7 +71,7 @@
                             <%= purchase.quantity %>
                         </td>
                         <td>
-                            <%= local_price(purchase.price).format %>
+                            <%= purchase.price %>
                         </td>
                     </tr>
                 <% end %>
@@ -80,7 +80,7 @@
                         Basket Total
                     </td>
                     <td>
-                        <%= @order.basket_total.format %>
+                        <%= order.basket_total.format %>
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@
                         Tax
                     </td>
                     <td>
-                        <%= @order.tax_payment.format %>
+                        <%= order.tax_payment.format %>
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +96,7 @@
                         Discount
                     </td>
                     <td>
-                        <%= @order.discount_value.format %>
+                        <%= order.discount_value.format %>
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +104,7 @@
                         Total
                     </td>
                     <td>
-                        <%= @order.payment_net.format %>
+                        <%= order.payment_net.format %>
                     </td>
                 </tr>
             </tbody>

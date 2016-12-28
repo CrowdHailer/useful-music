@@ -53,14 +53,14 @@ defmodule UM.Sales.CartTest do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
     cart = Cart.add_discount(cart, two_pounds_odd)
-    transaction = Cart.place_order(cart, %{vat_rate: 0.2, currency: :GBP})
-    assert 440 == transaction.cart_total
-    assert 200 == transaction.discount_value
-    assert 240 == transaction.payment_gross
-    assert 48 == transaction.tax_payment
-    assert 288 == transaction.payment_net
-    assert :GBP == transaction.currency
-    assert cart == transaction.cart
+    {:ok, order} = Cart.place_order(cart, %{vat_rate: 0.2, currency: :GBP})
+    assert 440 == order.cart_total
+    assert 200 == order.discount_value
+    assert 240 == order.payment_gross
+    assert 48 == order.tax_payment
+    assert 288 == order.payment_net
+    assert :GBP == order.currency
+    assert cart == order.cart
   end
 
   def two_pounds_odd do
