@@ -7,6 +7,9 @@ defmodule UM.Web.ViewHelpers do
     # TODO some odd charachters
     ("£" <> pounds) |> String.strip
   end
+  def format_price(price) when is_integer(price) do
+    format_price({"GBP", price})
+  end
 
   def local_price(pence, session) when is_integer(pence) do
     user_price(pence, session)
