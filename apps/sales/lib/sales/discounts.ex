@@ -42,6 +42,11 @@ defmodule UM.Sales.Discounts do
     end
   end
 
+  def total_redemptions_for(%{id: id}) do
+    # TODO count
+    0
+  end
+
   def update(discount = %{id: id}) do
     discount = Enum.map(discount, fn(x) -> x end)
 

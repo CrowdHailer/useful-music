@@ -68,7 +68,7 @@
                         <%= discount.customer_allocation %>
                     </th>
                     <th>
-                        <%= discount_number_redeemed(discount) %>
+                        <%= UM.Sales.Discounts.total_redemptions_for(discount) %>
                     </th>
                     <th>
                         <%= discount_start_datetime(discount) %>

@@ -198,10 +198,6 @@ defmodule UM.Web.ViewHelpers do
     "4 days later" # TODO
   end
 
-  def discount_number_redeemed(discount) do
-    0 # TODO
-  end
-
   def order_purchases(order) do
     [%{
       item: %{
