@@ -93,13 +93,13 @@ defmodule UM.Web.SessionTest do
     assert UM.Sales.Cart.empty == Session.cart(session)
   end
 
-  test "guest can update their shopping basket" do
+  test "guest can update their cart" do
     {:ok, cart} = UM.Sales.create_shopping_basket
     session = Session.new |> Session.update_shopping_basket(cart)
     assert cart == Session.cart(session)
   end
 
-  test "customer updating their shopping basket will have it saved" do
+  test "customer updating their cart will have it saved" do
     jo = UM.Accounts.Fixtures.jo_brand
     {:ok, cart} = UM.Sales.create_shopping_basket
     session = Session.new
@@ -110,15 +110,33 @@ defmodule UM.Web.SessionTest do
     assert cart.id == updated_jo.shopping_basket_id
   end
 
-  test "logging in uses customer basket if session basket empty" do
-
+  test "logging in uses customer cart if session cart empty" do
+    bugs = UM.Accounts.Fixtures.bugs_bunny
+    _ = UM.Catalogue.Fixtures.garden_tiger
+    {:ok, record} = UM.Sales.create_shopping_basket
+    {:ok, record} = UM.Sales.edit_purchases(record, %{"garden-audio-part" => 3})
+    {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(record.id)
+    {:ok, bugs} = UM.Accounts.update_customer(%{bugs | shopping_basket_id: cart.id})
+    session = Session.new
+    |> Session.login(bugs)
+    {:ok, latest_bugs} = UM.Accounts.fetch_by_id(bugs.id)
+    assert Session.cart(session).id == latest_bugs.shopping_basket_id
   end
 
-  test "logging in uses session basket if customer basket empty" do
-
+  test "logging in uses session cart if customer cart empty, and sets customers current cart" do
+    bugs = UM.Accounts.Fixtures.bugs_bunny
+    _ = UM.Catalogue.Fixtures.garden_tiger
+    {:ok, record} = UM.Sales.create_shopping_basket
+    {:ok, record} = UM.Sales.edit_purchases(record, %{"garden-audio-part" => 3})
+    {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(record.id)
+    session = Session.new
+    |> Session.update_shopping_basket(cart)
+    |> Session.login(bugs)
+    {:ok, latest_bugs} = UM.Accounts.fetch_by_id(bugs.id)
+    assert Session.cart(session).id == latest_bugs.shopping_basket_id
   end
 
-  test "carry on shopping with session basket if it has items, the old basket will be abandoned" do
+  test "carry on shopping with session cart if it has items, the old cart will be abandoned" do
 
   end
 end

@@ -45,7 +45,19 @@ defmodule UM.Web.Session do
       {:ok, customer} = UM.Accounts.update_customer(customer)
       customer
     end
-    %__MODULE__.Authenticated{account: customer}
+
+    cart = if customer.shopping_basket_id && session.cart == nil do
+      {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(customer.shopping_basket_id)
+      cart
+    else
+      cart = session.cart
+      if cart do
+        {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | shopping_basket_id: cart.id})
+        # DEBT return updated customer
+      end
+      cart
+    end
+    %__MODULE__.Authenticated{account: customer, cart: cart}
   end
 
   def select_currency(session = %UnAuthenticated{}, currency) when currency in ["USD", "EUR", "GBP"] do

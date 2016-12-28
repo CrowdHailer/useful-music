@@ -24,7 +24,6 @@ defmodule UM.Sales do
     purchases |> Enum.map(fn
       ({item_id, quantity}) ->
         UM.Sales.set_item(cart.id, item_id, quantity: quantity)
-        |> IO.inspect
     end)
     UM.Sales.CartsRepo.fetch_by_id(cart.id)
   end
