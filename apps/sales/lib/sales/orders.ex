@@ -28,6 +28,9 @@ defmodule UM.Sales.Orders do
   end
 
   def unpack(record) do
-    record
+    cart_total = record.basket_total
+    record = Map.delete(record, :basket_total)
+
+    Map.merge(record, %{cart_total: cart_total})
   end
 end

@@ -2,6 +2,12 @@ defmodule UM.Web.ViewHelpers do
   alias UM.Web.Session
   alias UM.Sales.Cart, as: ShoppingBasket
 
+  def format_price({"GBP", pence}) do
+    pounds = Float.to_string(pence / 100, decimals: 2)
+    # TODO some odd charachters
+    ("£" <> pounds) |> String.strip
+  end
+
   def local_price(pence, session) when is_integer(pence) do
     user_price(pence, session)
   end
