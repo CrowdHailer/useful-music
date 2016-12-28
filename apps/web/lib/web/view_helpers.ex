@@ -171,14 +171,6 @@ defmodule UM.Web.ViewHelpers do
 
   ####### SALES #######
 
-  def purchase_price(%{quantity: quantity, item: item}) do
-    UM.Catalogue.Item.price_for(item, quantity) / 100
-  end
-
-  def item_piece_product_name(item) do
-    "TODO"
-  end
-
   def discount_value(%{value: pence}) do
     (pence || 0) / 100
   end

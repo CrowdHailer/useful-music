@@ -14,28 +14,29 @@
           </tr>
         </thead>
         <tbody>
-          <%= for {item_id, purchase} <- cart.purchases do %>
+          <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do %>
           <tr>
             <td>
-              <a href="/pieces/UD<%= purchase.item.piece_id %>">
-                <%= item_piece_product_name(purchase.item) %>
+              <a href="/pieces/UD<%= item.piece_id %>">
+                <%= item_product_name(item) %>
               </a>
             </td>
             <td>
               <form id="form_id" action="/shopping_baskets/<%= cart.id %>/purchases" method="post">
                 <%= UM.Web.Session.csrf_tag %>
                 <input type="hidden" name="_method" value="PATCH">
-                <input type="number" min="1" step="1" name="purchases[<%= purchase.item.id %>]" value="<%= purchase.quantity %>" style="display:inline;width:4em;">
+                <input type="number" min="1" step="1" name="purchases[<%= item.id %>]" value="<%= quantity %>" style="display:inline;width:4em;">
                 <input class="button mobile-alert" type="submit" value="Update">
               </form>
-              <form id="form_id" action="/orders/<%= cart.id %>/items/<%= purchase.item.id %>" method="post">
+              <form id="form_id" action="/shopping_baskets/<%= cart.id %>/purchases" method="post">
                 <%= UM.Web.Session.csrf_tag %>
-                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_method" value="PATCH">
+                <input type="hidden" name="purchases[<%= item.id %>]" value="0">
                 <input class="button alert mobile-alert" type="submit" value="Remove">
               </form>
             </td>
             <td>
-              <%= purchase_price(purchase) %>
+              <%= UM.Catalogue.Item.price_for(item, quantity) |> user_price(session) %>
             </td>
           </tr>
           <% end %>
@@ -92,7 +93,7 @@
             <form id="form_id" action="/shopping_baskets/<%= cart.id %>/purchases" method="post">
               <%= UM.Web.Session.csrf_tag %>
               <input type="hidden" name="_method" value="PATCH">
-              <input type="hidden" name="purchases[<%= item.id %>]" value="0" style="display:inline;width:4em;">
+              <input type="hidden" name="purchases[<%= item.id %>]" value="0">
               <input class="button tiny alert" type="submit" value="Remove">
             </form>
           </td>
