@@ -1,117 +1,117 @@
 <head>
-    <link rel="stylesheet" href="/stylesheets/licence.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/stylesheets/licence.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-<header>
+  <header>
     <img src="/images/logored.png">
     <h2>Date <%= order.updated_at %></h2>
     <h1>Receipt/licence #<%= order.id %></h1>
     <p class="panel">
-        <em>Please print and keep this page.</em> It is your proof of purchase and your licence to print the number of copies listed below
+      <em>Please print and keep this page.</em> It is your proof of purchase and your licence to print the number of copies listed below
     </p>
-</header>
-<main>
+  </header>
+  <main>
     <section class="col col-1-1">
-        <table class="pure-table pure-table-bordered">
-            <thead>
-                <tr>
-                    <th colspan=2>
-                        Order Details
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <em>Order ID</em> <%= order.id %><br>
-                        <em>Date Added</em> <%= order.updated_at # TODO strftime %>
-                    </td>
-                    <td>
-                        <em>Name</em> <%= "order.customer.name" %><br>
-                        <em>Email</em> <%= "order.customer.email" %><br>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="pure-table pure-table-bordered">
+        <thead>
+          <tr>
+            <th colspan=2>
+              Order Details
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <em>Order ID</em> <%= order.id %><br>
+              <em>Date Added</em> <%= order.updated_at # TODO strftime %>
+            </td>
+            <td>
+              <em>Name</em> <%= "order.customer.name" %><br>
+              <em>Email</em> <%= "order.customer.email" %><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
     <section class="col col-1-1">
-        <table class="pure-table pure-table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        Piece
-                    </th>
-                    <th>
-                        Part
-                    </th>
-                    <th>
-                        File
-                    </th>
-                    <th>
-                        Quantity
-                    </th>
-                    <th>
-                        Cost
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do %>
-                    <tr>
-                        <td>
-                            <%= "TODO #{item.piece_id}" %>
-                        </td>
-                        <td>
-                            <%= item.name %>
-                        </td>
-                        <td>
-                            <%= item.asset # TODO %>
-                        </td>
-                        <td>
-                            <%= quantity %>
-                        </td>
-                        <td>
-                            <%= "price" %>
-                        </td>
-                    </tr>
-                <% end %>
-                <tr>
-                    <td class="sub-total" colspan="4">
-                        Basket Total
-                    </td>
-                    <td>
-                        <%= order.basket_total %>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="sub-total" colspan="4">
-                        Tax
-                    </td>
-                    <td>
-                        <%= order.tax_payment %>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="sub-total" colspan="4">
-                        Discount
-                    </td>
-                    <td>
-                        <%= order.discount_value %>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="sub-total" colspan="4">
-                        Total
-                    </td>
-                    <td>
-                        <%= order.payment_net %>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <table class="pure-table pure-table-bordered">
+        <thead>
+          <tr>
+            <th>
+              Piece
+            </th>
+            <th>
+              Part
+            </th>
+            <th>
+              File
+            </th>
+            <th>
+              Quantity
+            </th>
+            <th>
+              Cost
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do %>
+          <tr>
+            <td>
+              <%= "TODO #{item.piece_id}" %>
+            </td>
+            <td>
+              <%= item.name %>
+            </td>
+            <td>
+              <%= item.asset # TODO %>
+            </td>
+            <td>
+              <%= quantity %>
+            </td>
+            <td>
+              <%= "price" %>
+            </td>
+          </tr>
+          <% end %>
+          <tr>
+            <td class="sub-total" colspan="4">
+              Basket Total
+            </td>
+            <td>
+              <%= order.basket_total %>
+            </td>
+          </tr>
+          <tr>
+            <td class="sub-total" colspan="4">
+              Tax
+            </td>
+            <td>
+              <%= order.tax_payment %>
+            </td>
+          </tr>
+          <tr>
+            <td class="sub-total" colspan="4">
+              Discount
+            </td>
+            <td>
+              <%= order.discount_value %>
+            </td>
+          </tr>
+          <tr>
+            <td class="sub-total" colspan="4">
+              Total
+            </td>
+            <td>
+              <%= order.payment_net %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
-</main>
-<footer>
+  </main>
+  <footer>
     <span>www.usefulmusic.com</span>
-</footer>
+  </footer>
 </body>

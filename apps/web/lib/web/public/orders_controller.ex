@@ -23,7 +23,7 @@ defmodule UM.Web.OrdersController do
     case UM.Sales.Orders.fetch_by_id(id) do
       {:ok, order} ->
         {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(order.shopping_basket_id)
-        Raxx.Response.ok(show_page(order, cart))
+        {:no_layout, Raxx.Response.ok(show_page(order, cart))}
     end
   end
 

@@ -18,14 +18,16 @@ defmodule UM.Web.Public do
     flash = UM.Web.fetch_flash(request)
 
     case public_endpoint(request, env) do
-      request = %{body: nil} ->
-        request
-      request = %{body: ""} ->
-        request
-      request = %{status: _, body: content} ->
-        %{request | body: layout_page(content, session, flash)}
+      {:no_layout, response} ->
+        response
+      response = %{body: nil} ->
+        response
+      response = %{body: ""} ->
+        response
+      response = %{status: _, body: content} ->
+        %{response | body: layout_page(content, session, flash)}
       :no_match ->
-        request = Raxx.Response.not_found(layout_page(not_found_content(), session, flash))
+        response = Raxx.Response.not_found(layout_page(not_found_content(), session, flash))
     end
   end
 
