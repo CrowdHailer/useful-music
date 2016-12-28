@@ -2,7 +2,9 @@ defmodule UM.Accounts.Fixtures do
   import Moebius.Query
 
   def clear_db do
-    db(:customers) |> delete |> Moebius.Db.run
+    db(:customers) |> delete |> UM.Accounts.Db.run
+    db(:shopping_baskets) |> delete |> UM.Accounts.Db.run
+    db(:orders) |> delete |> UM.Accounts.Db.run
     :ok
   end
 
@@ -17,7 +19,7 @@ defmodule UM.Accounts.Fixtures do
       country: "GB",
       admin: true,
     )
-    |> Moebius.Db.run
+    |> UM.Accounts.Db.run
   end
 
   def grahams_account do
@@ -31,7 +33,7 @@ defmodule UM.Accounts.Fixtures do
       country: "GB",
       admin: true,
     )
-    |> Moebius.Db.run
+    |> UM.Accounts.Db.run
   end
 
   # has a basket in progress
@@ -46,7 +48,7 @@ defmodule UM.Accounts.Fixtures do
       country: "GB",
       admin: true
     )
-    |> Moebius.Db.run
+    |> UM.Accounts.Db.run
   end
 
   # Like joe blogs
@@ -65,6 +67,6 @@ defmodule UM.Accounts.Fixtures do
       admin: false,
       currency_preference: "USD"
     )
-    |> Moebius.Db.run
+    |> UM.Accounts.Db.run
   end
 end

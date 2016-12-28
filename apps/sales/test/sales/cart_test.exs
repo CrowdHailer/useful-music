@@ -59,7 +59,7 @@ defmodule UM.Sales.CartTest do
     assert 240 == order.payment_gross
     assert 48 == order.tax_payment
     assert 288 == order.payment_net
-    assert :GBP == order.currency
+    assert "GBP" == order.currency
     assert cart == order.cart
   end
 

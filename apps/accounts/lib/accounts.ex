@@ -1,15 +1,11 @@
 defmodule UM.Accounts do
-  defmodule Db do
-    use Moebius.Database
-  end
-
   use Application
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Db, [Moebius.get_connection]),
+      worker(UM.Accounts.Db, [Moebius.get_connection]),
     ]
 
     opts = [strategy: :one_for_one, name: UM.Accounts.Supervisor]
@@ -19,7 +15,7 @@ defmodule UM.Accounts do
   import Moebius.Query
 
   def all_customers(page) do
-    case db(:customers) |> Db.run do
+    case db(:customers) |> UM.Accounts.Db.run do
       customers when is_list(customers) ->
         {:ok, Page.paginate(customers, page)}
     end
@@ -29,7 +25,7 @@ defmodule UM.Accounts do
     customer = Map.merge(%{id: Utils.random_string(16)}, customer)
     customer = Enum.map(customer, fn(x) -> x end)
     q = db(:customers) |> insert(customer)
-    Db.run(q)
+    UM.Accounts.Db.run(q)
   end
 
   # Move to CustomersRepo
@@ -39,7 +35,7 @@ defmodule UM.Accounts do
   end
 
   def fetch_customer(id) do
-    db(:customers) |> filter(id: id) |> Db.first
+    db(:customers) |> filter(id: id) |> UM.Accounts.Db.first
   end
 
   def update_customer(customer = %{id: id}) when is_binary(id) do
@@ -49,7 +45,7 @@ defmodule UM.Accounts do
     action = db(:customers)
     |> filter(id: id)
     |> update(customer)
-    case Db.run(action) do
+    case UM.Accounts.Db.run(action) do
       record = %{id: ^id} ->
         {:ok, record}
       {:error, reason} ->
@@ -58,7 +54,7 @@ defmodule UM.Accounts do
   end
 
   def find_by_email(email) do
-    customer = db(:customers) |> filter(email: email) |> Db.first
+    customer = db(:customers) |> filter(email: email) |> UM.Accounts.Db.first
     case customer do
       nil ->
         {:error, :not_found}
@@ -74,7 +70,7 @@ defmodule UM.Accounts do
   end
 
   def authenticate(%{email: email, password: password}) do
-    customer = db(:customers) |> filter(email: email) |> Db.first
+    customer = db(:customers) |> filter(email: email) |> UM.Accounts.Db.first
     case customer && customer.password do
       ^password ->
         {:ok, customer}
@@ -88,7 +84,7 @@ defmodule UM.Accounts do
     action = db(:customers)
     |> filter(email: email)
     |> update(password_reset_token: Utils.random_string(24), password_reset_created_at: :now)
-    case Db.run(action) do
+    case UM.Accounts.Db.run(action) do
       nil ->
         {:error, :no_customer}
       customer ->
