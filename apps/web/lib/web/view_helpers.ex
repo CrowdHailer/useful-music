@@ -25,8 +25,8 @@ defmodule UM.Web.ViewHelpers do
 
   # This is the price without vat
   def checkout_price(session) do
-    shopping_basket = Session.shopping_basket(session)
-    in_pence = ShoppingBasket.payment_gross(shopping_basket)
+    cart = Session.cart(session)
+    in_pence = ShoppingBasket.payment_gross(cart)
     user_price(in_pence, session)
   end
 
@@ -42,8 +42,8 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def number_of_purchases(session) do
-    shopping_basket = Session.shopping_basket(session)
-    ShoppingBasket.number_of_lines(shopping_basket)
+    cart = Session.cart(session)
+    ShoppingBasket.number_of_lines(cart)
   end
 
   def user_account_url(session) do
@@ -54,7 +54,7 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def user_shopping_basket_url(session) do
-    case Session.shopping_basket(session).id do
+    case Session.cart(session).id do
       nil ->
         "/shopping_baskets/__empty__"
       id ->

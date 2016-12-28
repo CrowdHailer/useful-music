@@ -90,24 +90,24 @@ defmodule UM.Web.SessionTest do
 
   test "new session has an empty basket" do
     session = Session.new()
-    assert UM.Sales.Cart.empty == Session.shopping_basket(session)
+    assert UM.Sales.Cart.empty == Session.cart(session)
   end
 
   test "guest can update their shopping basket" do
-    {:ok, shopping_basket} = UM.Sales.create_shopping_basket
-    session = Session.new |> Session.update_shopping_basket(shopping_basket)
-    assert shopping_basket == Session.shopping_basket(session)
+    {:ok, cart} = UM.Sales.create_shopping_basket
+    session = Session.new |> Session.update_shopping_basket(cart)
+    assert cart == Session.cart(session)
   end
 
   test "customer updating their shopping basket will have it saved" do
     jo = UM.Accounts.Fixtures.jo_brand
-    {:ok, shopping_basket} = UM.Sales.create_shopping_basket
+    {:ok, cart} = UM.Sales.create_shopping_basket
     session = Session.new
     |> Session.login(jo)
-    |> Session.update_shopping_basket(shopping_basket)
-    assert shopping_basket == Session.shopping_basket(session)
+    |> Session.update_shopping_basket(cart)
+    assert cart == Session.cart(session)
     {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
-    assert shopping_basket.id == updated_jo.shopping_basket_id
+    assert cart.id == updated_jo.shopping_basket_id
   end
 
   test "logging in uses customer basket if session basket empty" do

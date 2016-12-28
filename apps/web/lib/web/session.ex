@@ -1,8 +1,8 @@
 defmodule UM.Web.Session do
   defmodule UnAuthenticated do
     # currency_preference = "USD" | "GBP" | "EUR"
-    # shopping_basket = Maybe(ShoppingBasket)
-    defstruct [:shopping_basket, :currency_preference]
+    # cart = Maybe(Cart)
+    defstruct [:cart, :currency_preference]
   end
   defmodule Authenticated do
     # Always has a customer
@@ -29,12 +29,8 @@ defmodule UM.Web.Session do
   def currency_preference(%UnAuthenticated{currency_preference: currency}), do: currency
   def currency_preference(%{account: %{currency_preference: currency}}), do: currency
 
-  def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket || UM.Sales.Cart.empty
-  def shopping_basket(%{cart: cart}), do: cart || UM.Sales.Cart.empty
-
-  def cart(session) do
-    shopping_basket(session)
-  end
+  def cart(%UnAuthenticated{cart: cart}), do: cart || UM.Sales.Cart.empty
+  def cart(%{cart: cart}), do: cart || UM.Sales.Cart.empty
 
   def csrf_tag do
     "" # TODO
@@ -45,8 +41,7 @@ defmodule UM.Web.Session do
       customer
     else
       customer = %{customer | currency_preference: session.currency_preference}
-      # TODO saving customers properly handling shopping_baskets
-      {:ok, customer} = UM.Accounts.update_customer(Map.delete(customer, :shopping_basket))
+      {:ok, customer} = UM.Accounts.update_customer(customer)
       customer
     end
     %__MODULE__.Authenticated{account: customer}
@@ -60,12 +55,12 @@ defmodule UM.Web.Session do
     %{session | account: updated_customer}
   end
 
-  def update_shopping_basket(session = %UnAuthenticated{}, shopping_basket) do
-    %{session | shopping_basket: shopping_basket}
+  def update_shopping_basket(session = %UnAuthenticated{}, cart) do
+    %{session | cart: cart}
   end
-  def update_shopping_basket(session = %{account: customer}, shopping_basket) do
-    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | shopping_basket_id: shopping_basket.id})
-    %{session | account: updated_customer, cart: shopping_basket}
+  def update_shopping_basket(session = %{account: customer}, cart) do
+    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | shopping_basket_id: cart.id})
+    %{session | account: updated_customer, cart: cart}
   end
 
   def unpack(request) do
