@@ -1,6 +1,7 @@
 defmodule UM.Sales.Order do
   defstruct [
     :id,
+    :customer_id,
     :state,
     :cart_total,
     :tax_payment,

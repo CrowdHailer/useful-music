@@ -24,11 +24,11 @@
                 <tr>
                     <td>
                         <em>Order ID</em> <%= order.id %><br>
-                        <em>Date Added</em> <%= order.updated_at.strftime('%d/%m/%Y') %>
+                        <em>Date Added</em> <%= order.updated_at # TODO strftime %>
                     </td>
                     <td>
-                        <em>Name</em> <%= order.customer.name %><br>
-                        <em>Email</em> <%= order.customer.email %><br>
+                        <em>Name</em> <%= "order.customer.name" %><br>
+                        <em>Email</em> <%= "order.customer.email" %><br>
                     </td>
                 </tr>
             </tbody>
@@ -56,22 +56,22 @@
                 </tr>
             </thead>
             <tbody>
-                <%= for purchase <- order.cart.purchases do %>
+                <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do %>
                     <tr>
                         <td>
-                            <%= purchase.item.piece.title %>
+                            <%= "TODO #{item.piece_id}" %>
                         </td>
                         <td>
-                            <%= purchase.item.name %>
+                            <%= item.name %>
                         </td>
                         <td>
-                            <%= purchase.item.asset.filename %>
+                            <%= item.asset # TODO %>
                         </td>
                         <td>
-                            <%= purchase.quantity %>
+                            <%= quantity %>
                         </td>
                         <td>
-                            <%= purchase.price %>
+                            <%= "price" %>
                         </td>
                     </tr>
                 <% end %>
@@ -80,7 +80,7 @@
                         Basket Total
                     </td>
                     <td>
-                        <%= order.basket_total.format %>
+                        <%= order.basket_total %>
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@
                         Tax
                     </td>
                     <td>
-                        <%= order.tax_payment.format %>
+                        <%= order.tax_payment %>
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +96,7 @@
                         Discount
                     </td>
                     <td>
-                        <%= order.discount_value.format %>
+                        <%= order.discount_value %>
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +104,7 @@
                         Total
                     </td>
                     <td>
-                        <%= order.payment_net.format %>
+                        <%= order.payment_net %>
                     </td>
                 </tr>
             </tbody>

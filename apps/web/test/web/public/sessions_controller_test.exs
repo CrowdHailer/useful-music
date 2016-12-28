@@ -5,6 +5,7 @@ defmodule UM.Web.SessionsControllerTest do
   alias UM.Web.SessionsController
 
   setup do
+    :ok = UM.Accounts.Fixtures.clear_db
     :ok = UM.Catalogue.Fixtures.clear_db
   end
 

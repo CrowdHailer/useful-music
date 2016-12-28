@@ -5,14 +5,17 @@ defmodule UM.Web.CartsController do
   show_template = String.replace_suffix(__ENV__.file, ".ex", "/show.html.eex")
   EEx.function_from_file :def, :show_page, show_template, [:cart, :order, :session]
 
-
   def handle_request(request = %{path: [cart_id], method: :GET}, _) do
     session = UM.Web.fetch_session(request)
     cart = UM.Web.Session.cart(session)
     authorized = cart_id == cart.id || cart_id == "__empty__"
     case authorized do
       true ->
-        {:ok, order} = UM.Sales.Cart.place_order(cart, %{currency: :GBP, vat_rate: 0.2})
+        {:ok, order} = UM.Sales.Cart.checkout(cart, %{
+          currency: "GBP",
+          vat_rate: 0.2,
+          customer_id: "could-be-guest"
+        })
         Raxx.Response.ok(show_page(cart, order, session))
       false ->
         Raxx.Response.forbidden("Forbidden")
@@ -67,9 +70,13 @@ defmodule UM.Web.CartsController do
     case authorized do
       true ->
         # TODO handle currency
-        {:ok, order} = UM.Sales.Cart.place_order(cart, %{vat_rate: 0.2, currency: :GBP})
+        {:ok, order} = UM.Sales.Cart.checkout(cart, %{
+          vat_rate: 0.2,
+          currency: "GBP",
+          customer_id: UM.Web.Session.current_customer(session).id
+        })
         order = %{order | id: Utils.random_string(16)}
-        # TODO save order
+        {:ok, order} = UM.Sales.Orders.insert(order)
         Raxx.Patch.redirect("/orders/#{order.id}")
       false ->
         Raxx.Response.forbidden("Forbidden")

@@ -1,6 +1,14 @@
 defmodule UM.Sales.Fixtures do
   import Moebius.Query
 
+  def clear_db do
+    db(:orders) |> delete |> Moebius.Db.run
+    db(:discounts) |> delete |> Moebius.Db.run
+    db(:shopping_baskets) |> delete |> Moebius.Db.run
+    :ok
+  end
+
+
   def guest_basket do
     basket = db(:shopping_baskets) |> insert(id: "inprogress-shop")
     |> Moebius.Db.run
