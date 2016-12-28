@@ -23,42 +23,10 @@ defmodule UM.Sales do
     end
     purchases |> Enum.map(fn
       ({item_id, quantity}) ->
-        UM.Sales.add_item(cart.id, item_id, quantity: quantity)
+        UM.Sales.set_item(cart.id, item_id, quantity: quantity)
+        |> IO.inspect
     end)
     UM.Sales.CartsRepo.fetch_by_id(cart.id)
-  end
-
-  def add_items(shopping_basket, items) do
-    shopping_basket = case shopping_basket do
-      %{id: nil} ->
-        {:ok, shopping_basket} = create_shopping_basket
-        shopping_basket
-      shopping_basket ->
-        shopping_basket
-    end
-    items |> Enum.map(fn
-      ({item_id, quantity}) ->
-        {quantity, ""} = Integer.parse(quantity)
-        UM.Sales.add_item(shopping_basket.id, item_id, quantity: quantity)
-    end)
-    UM.Sales.CartsRepo.fetch_by_id(shopping_basket.id)
-  end
-
-  def add_item(basket_id, item_id, opts \\ []) do
-    opts = Enum.into(opts, %{})
-    quantity = Map.get(opts, :quantity, 1)
-    query = db(:purchases)
-    |> filter(shopping_basket_id: basket_id, item_id: item_id)
-    update = case Moebius.Db.run(query) do
-      [] ->
-        db(:purchases)
-        |> insert(shopping_basket_id: basket_id, item_id: item_id, quantity: quantity, id: Utils.random_string(16))
-      [_existing] ->
-        db(:purchases)
-        |> filter(shopping_basket_id: basket_id, item_id: item_id)
-        |> update(quantity: quantity)
-    end
-    Moebius.Db.run(update)
   end
 
   def set_item(basket_id, item_id, opts \\ []) do
