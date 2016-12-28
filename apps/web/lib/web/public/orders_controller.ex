@@ -13,4 +13,8 @@ defmodule UM.Web.OrdersController do
   #   Order.success
   #   Order.cancel
   # end
+
+  def handle_request(%{path: [id], method: :GET}, _) do
+    Raxx.Response.ok("hi")
+  end
 end

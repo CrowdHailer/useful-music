@@ -208,7 +208,7 @@
             </div>
           </form>
           <%= if logged_in?(session) do %>
-          <form id="checkout-button" action="/orders" method="post" class="">
+          <form id="checkout-button" action="/shopping_baskets/<%= cart.id %>/checkout" method="post" class="">
             <%= UM.Web.Session.csrf_tag %>
             <div class="row">
               <div class="large-5 medium-6 small-12 columns">

@@ -53,7 +53,7 @@ defmodule UM.Sales.CartTest do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
     cart = Cart.add_discount(cart, two_pounds_odd)
-    transaction = Cart.start_transaction(cart, %{vat_rate: 0.2, currency: :GBP})
+    transaction = Cart.place_order(cart, %{vat_rate: 0.2, currency: :GBP})
     assert 440 == transaction.cart_total
     assert 200 == transaction.discount_value
     assert 240 == transaction.payment_gross

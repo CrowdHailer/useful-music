@@ -57,6 +57,23 @@ defmodule UM.Web.CartsController do
     |> UM.Web.with_flash(flash)
     |> UM.Web.with_session(session)
   end
+
+  # TODO test
+  def handle_request(request = %{path: [cart_id, "checkout"], method: :POST}, _) do
+    session = UM.Web.fetch_session(request)
+    cart = UM.Web.Session.cart(session)
+    authorized = cart_id == cart.id || cart_id == "__empty__"
+    case authorized do
+      true ->
+        # TODO handle currency
+        {:ok, order} = UM.Sales.Cart.place_order(cart, %{vat_rate: 0.2, currency: :GBP})
+        order = %{order | id: Utils.random_string(16)}
+        # TODO save order
+        Raxx.Patch.redirect("/orders/#{order.id}")
+      false ->
+        Raxx.Response.forbidden("Forbidden")
+    end
+  end
 end
 
 # creation adds many
