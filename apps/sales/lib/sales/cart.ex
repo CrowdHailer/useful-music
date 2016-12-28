@@ -89,7 +89,7 @@ defmodule UM.Sales.Cart do
     list_price = list_price(cart)
     discount_value = discount_value(cart)
     payment_gross = list_price(cart) - discount_value(cart)
-    tax_payment = payment_gross * vat_rate
+    tax_payment = round(payment_gross * vat_rate)
     payment_net = payment_gross + tax_payment
     {:ok, %UM.Sales.Order{
       cart_total: list_price,
@@ -98,6 +98,7 @@ defmodule UM.Sales.Cart do
       tax_payment: tax_payment,
       payment_net: payment_net,
       currency: :GBP,
+      # vat_rate: vat_rate,
       cart: cart
     }}
   end

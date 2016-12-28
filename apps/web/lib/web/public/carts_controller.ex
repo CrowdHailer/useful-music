@@ -3,7 +3,7 @@ defmodule UM.Web.CartsController do
   require EEx
 
   show_template = String.replace_suffix(__ENV__.file, ".ex", "/show.html.eex")
-  EEx.function_from_file :def, :show_page, show_template, [:cart, :session]
+  EEx.function_from_file :def, :show_page, show_template, [:cart, :order, :session]
 
 
   def handle_request(request = %{path: [cart_id], method: :GET}, _) do
@@ -12,7 +12,8 @@ defmodule UM.Web.CartsController do
     authorized = cart_id == cart.id || cart_id == "__empty__"
     case authorized do
       true ->
-        Raxx.Response.ok(show_page(cart, session))
+        {:ok, order} = UM.Sales.Cart.place_order(cart, %{currency: :GBP, vat_rate: 0.2})
+        Raxx.Response.ok(show_page(cart, order, session))
       false ->
         Raxx.Response.forbidden("Forbidden")
     end

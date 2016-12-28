@@ -80,13 +80,13 @@
             </form>
           </td>
           <td>
-            <%= item_initial_price(item) %>
+            <%= item_initial_price(item, session) %>
           </td>
           <td>
-            <%= item_subsequent_price(item) %>
+            <%= item_subsequent_price(item, session) %>
           </td>
           <td>
-            <%= UM.Catalogue.Item.price_for(item, quantity) %>
+            <%= UM.Catalogue.Item.price_for(item, quantity) |> user_price(session) %>
           </td>
           <td>
             <form id="form_id" action="/shopping_baskets/<%= cart.id %>/purchases" method="post">
@@ -118,7 +118,7 @@
                 Total
               </th>
               <th>
-                <%= basket_payment_gross(cart) %>
+                <%= UM.Sales.Cart.checkout_price(cart) |> user_price(session) %>
               </th>
             </tr>
             <%= if cart.discount do %>
@@ -144,7 +144,7 @@
                 <%= user_vat_rate(session) %>
               </th>
               <th>
-                <%= "TODO" # user_vat_rate(session) * basket_payment_gross(basket) %>
+                <%= order.tax_payment |> user_price(session) %>
               </th>
             </tr>
             <tr>
@@ -154,7 +154,7 @@
                 Total
               </th>
               <th>
-                <%= "TODO" # (user_vat_rate(session) * basket_payment_gross(basket)) + basket_payment_gross(basket) %>
+                <%= order.payment_net |> user_price(session) %>
               </th>
             </tr>
           </thead>
