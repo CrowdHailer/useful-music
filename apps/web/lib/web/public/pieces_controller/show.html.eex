@@ -109,25 +109,20 @@
                       <input type="number" min="0" name="purchases[<%= item.id %>]" value="0">
                       <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
                       <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
-                      <p><%= item_initial_price(item) %> first licence</p>
-                      <p><%= item_subsequent_price(item) %> additional</p>
+                      <p><%= item_initial_price(item, session) %> first licence</p>
+                      <p><%= item_subsequent_price(item, session) %> additional</p>
                     </div>
                   </div>
                   <% end %>
                 </div>
                 <div class="total-box">
-                  <!-- <h4>TOTAL: £30.65</h4> -->
                   <a href=""><button class="basket-btn">ADD TO BASKET</button></a>
                 </div>
-                <!-- <div class="currency-piece">
-                <h6>SELECT CURRENCY</h6>
-                <h6><a href="/">£ </a><a href="/">$ </a><a href="/">¥ </a><a href="/">€ </a></h6>
-              </div> -->
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- END SEARCH RESULTS -->
   </div>
-  <!-- END SEARCH RESULTS -->
-</div>

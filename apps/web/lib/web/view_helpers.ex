@@ -2,6 +2,10 @@ defmodule UM.Web.ViewHelpers do
   alias UM.Web.Session
   alias UM.Sales.Cart, as: ShoppingBasket
 
+  def local_price(pence, session) when is_integer(pence) do
+    user_price(pence, session)
+  end
+
   def logged_in?(session) do
     Session.logged_in?(session)
   end
@@ -30,14 +34,14 @@ defmodule UM.Web.ViewHelpers do
     user_price(in_pence, session)
   end
 
-  def user_price(pence, session) do
+  def user_price(pence, session) when is_integer(pence) do
     case currency_preference(session) do
       "GBP" ->
-        "£#{pence / 100}"
+        "£#{Float.to_string(pence / 100, decimals: 2)}"
       "EUR" ->
-        "TODO"
+        "€#{Float.to_string(pence / 100, decimals: 2)}" # TODO convert
       "USD" ->
-        "$TODO"
+        "$#{Float.to_string(pence / 100, decimals: 2)}" # TODO convert
     end
   end
 
@@ -111,13 +115,20 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def item_initial_price(%{initial_price: nil}), do: nil
-  def item_initial_price(%{initial_price: pence}), do: pence / 100
+  def item_initial_price(%{initial_price: pence}), do: pence
+  def item_initial_price(%{initial_price: nil}, session), do: nil
+  def item_initial_price(%{initial_price: pence}, session) do
+    local_price(pence, session)
+  end
 
   def item_discounted_price(%{discounted_price: nil}), do: nil
-  def item_discounted_price(%{discounted_price: pence}), do: pence / 100
+  def item_discounted_price(%{discounted_price: pence}), do: pence
 
   def item_subsequent_price(item) do
     UM.Catalogue.Item.subsequent_price(item) / 100
+  end
+  def item_subsequent_price(item, session) do
+    local_price(UM.Catalogue.Item.subsequent_price(item), session)
   end
 
   def item_asset_url(item) do
