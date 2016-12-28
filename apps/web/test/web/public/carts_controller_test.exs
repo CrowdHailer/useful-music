@@ -11,6 +11,16 @@ defmodule UM.Web.CartsControllerTest do
     {:ok, %{piece: garden_tiger}}
   end
 
+  test "guest can view their cart" do
+    {:ok, record} = UM.Sales.create_shopping_basket
+    {:ok, record} = UM.Sales.edit_purchases(record, %{"garden-audio-part" => 3})
+    {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(record.id)
+    session = UM.Web.Session.new |> UM.Web.Session.update_shopping_basket(cart)
+    request = get("/#{cart.id}", [{"um-session", session}])
+    response = Controller.handle_request(request, [])
+    assert 200 == response.status
+  end
+
   # test that the session is updated with the correct cart.
   # test that the cart is updated in the database.
   # test that the user is redirected to the correct cart.

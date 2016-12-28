@@ -120,7 +120,7 @@
                 <%= basket_payment_gross(cart) %>
               </th>
             </tr>
-            <%= if cart.discount_id do %>
+            <%= if cart.discount do %>
             <tr>
 
               <th width="200">
@@ -199,7 +199,7 @@
                 <input type="text" name="shopping_basket[discount]" value="<%= cart_discount_code(cart) %>" placeholder="Discount Code">
               </div>
               <div class="large-7 medium-6 small-12 columns">
-                <%= if cart.discount_id == nil do %>
+                <%= if cart.discount == nil do %>
                 <button class="updatecart-btn">Apply Discount</button>
                 <% else %>
                 <button class="updatecart-btn success">Change Discount</button>

@@ -9,9 +9,13 @@ defmodule UM.Web.CartsController do
   def handle_request(request = %{path: [cart_id], method: :GET}, _) do
     session = UM.Web.fetch_session(request)
     cart = UM.Web.Session.cart(session)
-    ^cart_id = cart.id || "__empty__"
-
-    Raxx.Response.ok(show_page(cart, session))
+    authorized = cart_id == cart.id || cart_id == "__empty__"
+    case authorized do
+      true ->
+        Raxx.Response.ok(show_page(cart, session))
+      false ->
+        Raxx.Response.forbidden("Forbidden")
+    end
   end
 
   # PATCH /:cart_id/purchases
@@ -35,7 +39,6 @@ defmodule UM.Web.CartsController do
 
   # TODO test
   def handle_request(request = %{path: [cart_id, "discount"], method: :PUT, body: %{"shopping_basket" => form}}, _) do
-    IO.inspect("HIIIIIIIIIIIIIIIIIIIII")
     session = UM.Web.fetch_session(request)
     cart = UM.Web.Session.cart(session)
     ^cart_id = cart.id || "__empty__"
