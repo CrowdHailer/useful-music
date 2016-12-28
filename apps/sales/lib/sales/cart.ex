@@ -59,6 +59,14 @@ defmodule UM.Sales.Cart do
     UM.Catalogue.Item.price_for(item, quantity)
   end
 
+  # TODO sort by piece_id
+  def line_items(cart = %{purchases: purchases}) do
+    for {_id, purchase} <- purchases do
+      %{quantity: quantity, item: item} = purchase
+      {quantity, item}
+    end
+  end
+
   def number_of_lines(%{purchases: purchases}), do: Enum.count(purchases)
 
   def number_of_units(%{purchases: purchases}) do
