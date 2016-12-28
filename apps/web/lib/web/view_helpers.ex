@@ -75,6 +75,11 @@ defmodule UM.Web.ViewHelpers do
     end
   end
 
+  def quantity_in_cart(session, item) do
+    cart = Session.cart(session)
+    ((cart.purchases[item.id] || %{}) |> Map.get(:quantity)) || 0
+  end
+
   ####### ACCOUNTS #######
 
   def customer_name(customer) do

@@ -106,7 +106,7 @@
                       <h6>
                         <%= item.name %>
                       </h6>
-                      <input type="number" min="0" name="purchases[<%= item.id %>]" value="0">
+                      <input type="number" min="0" name="purchases[<%= item.id %>]" value="<%= quantity_in_cart(session, item) %>">
                       <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
                       <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
                       <p><%= item_initial_price(item, session) %> first licence</p>
