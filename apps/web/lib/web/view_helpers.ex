@@ -1,6 +1,5 @@
 defmodule UM.Web.ViewHelpers do
   alias UM.Web.Session
-  alias UM.Sales.Cart, as: ShoppingBasket
 
   def format_price({"GBP", pence}) do
     pounds = Float.to_string(pence / 100, decimals: 2)
@@ -39,7 +38,7 @@ defmodule UM.Web.ViewHelpers do
   # This is the price without vat
   def checkout_price(session) do
     cart = Session.cart(session)
-    in_pence = ShoppingBasket.payment_gross(cart)
+    in_pence = UM.Sales.Cart.payment_gross(cart)
     user_price(in_pence, session)
   end
 
@@ -56,7 +55,7 @@ defmodule UM.Web.ViewHelpers do
 
   def number_of_purchases(session) do
     cart = Session.cart(session)
-    ShoppingBasket.number_of_lines(cart)
+    UM.Sales.Cart.number_of_lines(cart)
   end
 
   def user_account_url(session) do
@@ -184,10 +183,6 @@ defmodule UM.Web.ViewHelpers do
     "TODO"
   end
 
-  def discount_code(discount) do
-    UM.Sales.Discount.code(discount)
-  end
-
   def discount_value(%{value: pence}) do
     (pence || 0) / 100
   end
@@ -213,10 +208,6 @@ defmodule UM.Web.ViewHelpers do
 
   def order_expiry_date(order) do
     "4 days later" # TODO
-  end
-
-  def basket_free?(basket) do
-    ShoppingBasket.free?(basket)
   end
 
   def discount_number_redeemed(discount) do

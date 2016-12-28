@@ -216,7 +216,7 @@
                 <p>Secure PayPal Checkout:</p>
               </div>
               <div class="large-7 medium-6 small-12 columns">
-                <%= if basket_free?(cart) do %>
+                <%= if UM.Sales.Cart.free?(cart) do %>
                 <button class="button checkout-secure-btn">Free Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>
                 <% else %>
                 <button class="button checkout-secure-btn">Checkout<i class="fa fa-arrow-right checkout-icon"></i></button>

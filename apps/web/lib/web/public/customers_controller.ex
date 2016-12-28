@@ -76,7 +76,6 @@ defmodule UM.Web.CustomersControllerController do
 
   def customer_endpoint(%{path: ["orders"], method: :GET}, customer) do
     {:ok, orders} = UM.Sales.Orders.customer_history(customer)
-    IO.inspect(orders)
     Raxx.Response.ok(order_history_content(orders, customer))
   end
 
