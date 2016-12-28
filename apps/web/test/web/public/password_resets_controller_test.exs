@@ -5,6 +5,7 @@ defmodule UM.Web.PasswordResetsControllerTest do
   alias UM.Web.PasswordResetsController, as: Controller
 
   setup do
+    :ok = UM.Accounts.Fixtures.clear_db
     :ok = UM.Catalogue.Fixtures.clear_db
   end
 

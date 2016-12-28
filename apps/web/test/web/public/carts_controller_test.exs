@@ -102,6 +102,6 @@ defmodule UM.Web.CartsControllerTest do
     assert order.state == "pending"
     assert order.currency == "GBP"
     assert order.customer_id == jo.id
-    assert order.basket_total == 120
+    assert order.cart_total == 120
   end
 end

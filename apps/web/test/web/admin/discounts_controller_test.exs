@@ -5,6 +5,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
   alias UM.Web.Admin.DiscountsController, as: Controller
 
   setup do
+    :ok = UM.Accounts.Fixtures.clear_db
     :ok = UM.Catalogue.Fixtures.clear_db
   end
 

@@ -4,7 +4,7 @@ defmodule UM.Web.AdminTest do
   import Raxx.Request
 
   setup do
-    :ok = UM.Catalogue.Fixtures.clear_db
+    :ok = UM.Accounts.Fixtures.clear_db
   end
 
   test "index page is available to admin" do

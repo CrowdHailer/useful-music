@@ -5,6 +5,7 @@ defmodule UM.Web.Admin.CustomersControllerTest do
   import Raxx.Request
 
   setup do
+    :ok = UM.Accounts.Fixtures.clear_db
     :ok = UM.Catalogue.Fixtures.clear_db
   end
 

@@ -49,7 +49,7 @@ defmodule UM.Accounts do
     action = db(:customers)
     |> filter(id: id)
     |> update(customer)
-    case Moebius.Db.run(action) do
+    case Db.run(action) do
       record = %{id: ^id} ->
         {:ok, record}
       {:error, reason} ->
