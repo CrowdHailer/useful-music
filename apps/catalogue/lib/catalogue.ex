@@ -100,8 +100,10 @@ defmodule UM.Catalogue do
     query = case tags do
       [] ->
         db(:pieces)
+        |> sort(:id, :asc)
       tags ->
         db(:pieces)
+        |> sort(:id, :asc)
         |> filter(tags)
     end
     {:ok, Moebius.Db.run(query)}

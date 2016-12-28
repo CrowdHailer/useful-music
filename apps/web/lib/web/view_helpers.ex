@@ -97,8 +97,7 @@ defmodule UM.Web.ViewHelpers do
   ####### CATALOGUE #######
 
   def piece_product_name(piece) do
-    # UM.Catalogue.Piece.product_name(piece)
-    inspect(piece)
+    UM.Catalogue.Piece.product_name(piece)
   end
 
   def item_product_name(%{piece_id: piece_id}) do
