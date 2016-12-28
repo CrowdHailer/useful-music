@@ -102,10 +102,4 @@ defmodule UM.Web.Session do
   def encode!(%UnAuthenticated{currency_preference: currency}) do
     Poison.encode!(%{currency_preference: currency})
   end
-
-  ## MOVE to test
-
-  def external_session(session) do
-    [{"cookie", "raxx.session=" <> encode!(session)}]
-  end
 end

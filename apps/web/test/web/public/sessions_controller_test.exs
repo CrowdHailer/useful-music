@@ -8,10 +8,14 @@ defmodule UM.Web.SessionsControllerTest do
     :ok = UM.Catalogue.Fixtures.clear_db
   end
 
+  def external_session(session) do
+    [{"cookie", "raxx.session=" <> UM.Web.Session.encode!(session)}]
+  end
+
   test "login page redirects if already logged in" do
     jo = UM.Accounts.Fixtures.jo_brand
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)
-    request = get("/sessions/new", UM.Web.Session.external_session(session))
+    request = get("/sessions/new", external_session(session))
     response = UM.Web.handle_request(request, :no_state)
     assert 302 == response.status
     assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
@@ -25,7 +29,7 @@ defmodule UM.Web.SessionsControllerTest do
     request = post("/sessions", Raxx.Test.encode_form(%{
       target: "/checkout",
       session: %{email: jo.email, password: jo.password}
-    }), UM.Web.Session.external_session(%{shopping_basket_id: basket.id}))
+    }), external_session(%{shopping_basket_id: basket.id}))
     response = UM.Web.handle_request(request, :no_state)
     assert delivered_cookies = :proplists.get_value("set-cookie", response.headers)
     assert "raxx.session=" <> encoded_session = delivered_cookies
@@ -50,7 +54,7 @@ defmodule UM.Web.SessionsControllerTest do
     request = post("/sessions", %{
       body: "_method=DELETE",
       headers: [{"content-type", "application/x-www-form-urlencoded"}]
-    }, UM.Web.Session.external_session(UM.Web.Session.new |> UM.Web.Session.login(bugs)))
+    }, external_session(UM.Web.Session.new |> UM.Web.Session.login(bugs)))
     response = UM.Web.handle_request(request, :no_state)
     assert 302 == response.status
     # TODO check cookies
