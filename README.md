@@ -45,11 +45,7 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 
 ### For Demo
 
-- Check basket creation and viewing. Admin view of baskets
 - Create Order, autocomplete for free orders
-- Admin views for order and and shopping baskets
-- Check customer pages, view order
-- Paypal integration
 
 ### For Production
 
@@ -57,6 +53,7 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 - encrypt password in db
 - csrf middleware
 - html escape
+- Paypal integration
 
 ### Nice to have
 

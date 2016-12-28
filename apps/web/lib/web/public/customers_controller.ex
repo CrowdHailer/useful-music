@@ -40,9 +40,14 @@ defmodule UM.Web.CustomersControllerController do
             case UM.Accounts.signup_customer(customer) do
               {:error, reason} ->
                 IO.inspect(reason)
-                Raxx.Response.conflict(new_page_content(customer, %{email: "is already taken"}, ""))
+                Raxx.Response.conflict(new_page_content(customer, %CreateForm{email: "is already taken"}, ""))
               customer = %{id: id} ->
-                UM.Web.Emails.account_created(customer) |> UM.Web.Mailer.deliver_now
+                try do
+                  UM.Web.Emails.account_created(customer) |> UM.Web.Mailer.deliver_now
+                rescue
+                  e ->
+                    IO.warn(inspect(e))
+                end
                 Raxx.Patch.redirect("/customers/#{id}")
                 |> UM.Web.with_flash(success: "Welcome to Useful Music")
                 |> UM.Web.with_session(UM.Web.Session.login(session, customer))
