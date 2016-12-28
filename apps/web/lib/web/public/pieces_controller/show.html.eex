@@ -82,7 +82,7 @@
           <img src="<%= UM.Catalogue.Piece.cover_image_url(piece) %>" alt="Piece Cover image">
           <a href="<%= UM.Catalogue.Piece.notation_preview_url(piece) %>" target="_blank"><button class="score-btn">SEE SCORE PREVIEW</button></a>
           <h6>LISTEN TO AUDIO PREVIEW</h6>
-          <audio preload="auto" controls <%= if true, do: "autoplay" # TODO fetch from query %>>
+          <audio preload="auto" controls <%= if true, do: "autoplay" # DEBT autoplay always on %>>
             <source src="<%= UM.Catalogue.Piece.audio_preview_url(piece) %>" type="audio/mpeg">
               Your browser does not support the audio element.
             </audio>

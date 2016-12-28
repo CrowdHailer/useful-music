@@ -9,15 +9,9 @@ defmodule UM.Web.CustomersController.CreateFormTest do
     "email" => "smithy@example.com",
     "password" => "password",
     "password_confirmation" => "password",
-    "country" => "TODO",
+    "country" => "GB",
     "terms_agreement" => "on"
   }
-
-  # TODO something useful
-  test "sandbox" do
-    {:ok, _data} = CreateForm.validate(@valid_form)
-    # |> IO.inspect
-  end
 
   test "requires a first name" do
     {:error, {form, errors}} = CreateForm.validate(%{@valid_form | "first_name" => ""})

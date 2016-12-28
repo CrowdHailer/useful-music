@@ -23,7 +23,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "email" => "bill@usa.com",
         "password" => "password",
         "password_confirmation" => "password",
-        "country" => "TODO",
+        "country" => "GB",
         "terms_agreement" => "on"
       }
     }), [{"um-session", UM.Web.Session.new |> UM.Web.Session.select_currency("USD")}])
@@ -48,7 +48,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "email" => "bill@usa.com",
         "password" => "easy",
         "password_confirmation" => "password",
-        "country" => "TODO",
+        "country" => "GB",
         "terms_agreement" => "on"
       }
       }), [{"um-session", UM.Web.Session.new}])
@@ -115,7 +115,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "first_name" => "",
         "last_name" => "Kennedy",
         "email" => "bill@usa.com",
-        "country" => "TODO",
+        "country" => "GB",
         "question_1" => "I play bongos",
         "question_2" => "",
         "question_3" => "",

@@ -35,7 +35,6 @@ defmodule UM.Web.HomeControllerTest do
     assert "/pieces?" <> _query = Raxx.Patch.response_location(response)
   end
 
-  # TODO test less as setting a currency preference is tested in the session tests
   test "sets currency preference for a customer" do
     jo = UM.Accounts.Fixtures.jo_brand
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)

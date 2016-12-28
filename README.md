@@ -63,19 +63,12 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 - password reset checks the token has not expired
 - single page info webform
 - save exchange rate to order
-- add items to public piece show page test
 - all prices are in pence lookup money package
 - paginate in SQL query
 - Message for failed to delete item because of purchases
-- admin controller redirects to login page if needed
-- search results have page hardcoded, i.e. loose search on next page (already happens)
-- move all session helpers from the public router
-- setting purchase items to zero
-- customer can edit only their own basket
 - change password page shows form errors
 - remove abandoned carts
 
-- adding no items to basket is silly (currently the case)
 - check the format of user names
 - catalogue to destroy associated items when deleting piece
 - solution to stringifying keys in admin/pieces_controller_test
@@ -85,13 +78,8 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 - random pieces are hardcoded to 4
 - generate styles from asset files
 - use relative links in templates
-- Generalise context object for public pages
-  user %{id: maybe(string), currency_preference: "USD" | "GBP" | "EUR"}
-  shopping_basket %{id: string, number_of_purchases: number, price :number}
-  Would be nice to call these messages but don't care
 - Handle invalid content values or assume octet content. check RFC.
 - create piece tests, generalise form, push upload content to db.
-- improve session api, note response will overwrite session if it lives in a single location.
 
 ```elixir
 Try.for do

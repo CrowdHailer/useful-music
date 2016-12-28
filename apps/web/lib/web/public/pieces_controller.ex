@@ -18,7 +18,7 @@ defmodule UM.Web.PiecesController do
 
     page = UM.Web.requested_page(query)
 
-    # TODO in the future this should paginate the query
+    # DEBT in the future this should paginate the query
     {:ok, pieces} = UM.Catalogue.search_pieces(tags)
     Raxx.Response.ok(index_page_content(Page.paginate(pieces, page), tags))
   end

@@ -34,7 +34,7 @@ defmodule UM.Web.Session do
   def cart(%{cart: cart}), do: cart || UM.Sales.Cart.empty
 
   def csrf_tag do
-    "" # TODO
+    "" # TODO CSRF
   end
 
   def login(session, customer) do

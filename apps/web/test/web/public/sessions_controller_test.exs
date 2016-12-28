@@ -21,25 +21,6 @@ defmodule UM.Web.SessionsControllerTest do
     assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
   end
 
-  # login from checkout page with a guest basket
-    @tag :skip
-  test "login will add user id to session" do
-    jo = UM.Accounts.Fixtures.jo_brand
-    basket = UM.Catalogue.Fixtures.guest_basket
-    request = post("/sessions", Raxx.Test.encode_form(%{
-      target: "/checkout",
-      session: %{email: jo.email, password: jo.password}
-    }), external_session(%{shopping_basket_id: basket.id}))
-    response = UM.Web.handle_request(request, :no_state)
-    assert delivered_cookies = :proplists.get_value("set-cookie", response.headers)
-    assert "raxx.session=" <> encoded_session = delivered_cookies
-    {:ok, %{customer_id: id}} = UM.Web.Session.decode(encoded_session)
-    assert id == jo.id
-    assert ["checkout"] == Raxx.Patch.follow(response).path
-    # TODO guest shopping basket is added to the customer record
-    # TODO guest shopping basket is added to the session
-  end
-
   test "login with invalid credentials shows flash" do
     request = post("/sessions", Raxx.Test.encode_form(%{
       session: %{email: "interloper@example.com", password: "bad_password"}
@@ -57,7 +38,6 @@ defmodule UM.Web.SessionsControllerTest do
     }, external_session(UM.Web.Session.new |> UM.Web.Session.login(bugs)))
     response = UM.Web.handle_request(request, :no_state)
     assert 302 == response.status
-    # TODO check cookies
   end
 
   test "login page (/sessions/new) maintains the users target" do
@@ -75,6 +55,5 @@ defmodule UM.Web.SessionsControllerTest do
     response = SessionsController.handle_request(request, :nostate)
     assert 302 == response.status
     assert "/customers/#{jo.id}" == Raxx.Patch.response_location(response)
-    # DEBT test encoded session.
   end
 end
