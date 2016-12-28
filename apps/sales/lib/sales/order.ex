@@ -33,6 +33,10 @@ defmodule UM.Sales.Order do
     {currency, pence}
   end
 
+  def payment_gross%{currency: currency, payment_net: pence} do
+    {currency, pence}
+  end
+
   def payment_net%{currency: currency, payment_net: pence} do
     {currency, pence}
   end

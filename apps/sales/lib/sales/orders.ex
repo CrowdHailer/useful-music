@@ -11,6 +11,17 @@ defmodule UM.Sales.Orders do
     end
   end
 
+  def index(page) do
+    query = db(:orders) |> sort(:id, :asc)
+    case Moebius.Db.run(query) do
+      {:error, reason} ->
+        {:error, reason}
+      entries ->
+        carts = Enum.map(entries, &unpack/1)
+        {:ok, Page.paginate(carts, page)}
+    end
+  end
+
   def insert(order = %{id: id}) when is_binary(id) do
     basket_total = order.cart_total
     shopping_basket_id = order.cart.id
