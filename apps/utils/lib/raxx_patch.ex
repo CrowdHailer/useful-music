@@ -80,39 +80,4 @@ defmodule Raxx.Patch do
     location = Raxx.Patch.response_location(response)
     Raxx.Request.get(location)
   end
-
-  @doc """
-  get content, having parsed content type
-
-  could alternativly have Request.form
-  this should be extensible, have multipart form as a separate project
-  # type spec, this should return an error for un parsable content
-  """
-  def form_content(request) do
-    case Raxx.Headers.content_type(request) do
-      {"multipart/form-data", "boundary=" <> boundary} ->
-        {:ok, Raxx.Request.parse_multipart_form_data(request.body, boundary)}
-      {"application/x-www-form-urlencoded", _} ->
-        {:ok, URI.decode_query(request.body)}
-      :undefined ->
-        {:error, :not_a_form}
-    end
-  end
-
-  @doc """
-  content type is a field of type media type (same as Accept)
-  https://tools.ietf.org/html/rfc7231#section-3.1.1.5
-
-  Content type should be send with any content.
-  If not can assume "application/octet-stream" or try content sniffing.
-  because of security risks it is recommended to be able to disable sniffing
-  """
-  # def content_type(%{headers: headers}) do
-  #   case :proplists.get_value("content-type", headers) do
-  #     :undefined ->
-  #       :undefined
-  #     media_type ->
-  #       Raxx.Request.parse_media_type(media_type)
-  #   end
-  # end
 end

@@ -1,6 +1,5 @@
 defmodule UM.Web.SessionTest do
   use ExUnit.Case
-  import Raxx.Request
   alias UM.Web.Session
 
   setup do

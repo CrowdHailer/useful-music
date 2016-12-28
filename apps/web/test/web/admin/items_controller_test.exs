@@ -3,7 +3,6 @@ defmodule Um.Web.Admin.ItemsControllerTest do
   import Raxx.Request
 
   alias UM.Web.Admin.ItemsController, as: Controller
-  alias UM.Catalogue
 
   setup do
     :ok = UM.Catalogue.Fixtures.clear_db

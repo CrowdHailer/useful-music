@@ -113,7 +113,7 @@ defmodule UM.Web.Admin.PiecesControllerTest do
   end
 
   test "can delete a piece" do
-    piece = UM.Catalogue.Fixtures.canonical_piece
+    _piece = UM.Catalogue.Fixtures.canonical_piece
     request = delete("/UD101")
     response = Controller.handle_request(request, %{})
     assert {:error, :piece_not_found} = Catalogue.fetch_piece(101)

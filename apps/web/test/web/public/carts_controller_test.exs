@@ -2,7 +2,6 @@ defmodule UM.Web.CartsControllerTest do
   use ExUnit.Case
   import Raxx.Request
 
-  alias UM.Catalogue
   alias UM.Web.CartsController, as: Controller
 
   setup do
