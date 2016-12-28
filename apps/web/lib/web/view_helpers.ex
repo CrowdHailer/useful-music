@@ -211,40 +211,17 @@ defmodule UM.Web.ViewHelpers do
     date
   end
 
-  def order_checkout_date(_order) do
-    # '%d %B %Y'
-    "TODO"
-  end
-
   def order_expiry_date(order) do
     "4 days later" # TODO
-  end
-
-  def order_payment_gross(order) do
-    "TODO"
-  end
-
-  def basket_payment_gross(basket) do
-    "TODO"
   end
 
   def basket_free?(basket) do
     ShoppingBasket.free?(basket)
   end
 
-  def order_tax_payment(order) do
-
-  end
-
   def discount_number_redeemed(discount) do
     0 # TODO
   end
-
-  # def basket_tax_payment(basket, vat) do
-  #   in_pence = ShoppingBasket.payment_gross(basket)
-  #   # TODO handle vat rate here
-  #   user_price(in_pence, session)
-  # end
 
   def order_purchases(order) do
     [%{

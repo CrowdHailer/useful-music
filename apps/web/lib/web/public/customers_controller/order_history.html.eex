@@ -22,7 +22,7 @@
                 <div class="order-title-wrap">
                     <div class="row collapse">
                         <div class="large-6 medium-6 small-12 columns">
-                            <h6 class="left-order"><%= order_checkout_date(order) %> |  Order ID: <%= order.id %></h6>
+                            <h6 class="left-order"><%= order.completed_at %> |  Order ID: <%= order.id %></h6>
                         </div>
                         <div class="large-6 medium-6 small-12 columns">
                             <h6 class="right-order">Order Expires on <%= order_expiry_date(order) %></h6>
@@ -32,10 +32,10 @@
                 <div class="large-2 medium-2 small-12 columns">
                     <div class="order-summary">
                         <h6>Amount</h6>
-                        <h6><%= order_payment_gross(order) %></h6>
+                        <h6><%= UM.Sales.Order.payment_gross(order) |> format_price %></h6>
                         <hr>
                         <h6>Tax</h6>
-                        <h6><%= order_tax_payment(order) %></h6>
+                        <h6><%= UM.Sales.Order.tax_payment(order) |> format_price %></h6>
                         <hr>
                         <div class="license-inform">
                           <h6 style="font-size: 1.5em;">License</h6>
@@ -83,7 +83,7 @@
                     <div class="order-title-wrap expired">
                         <div class="row collapse">
                             <div class="large-6 medium-6 small-12 columns">
-                                <h6 class="left-order"><%= order_checkout_date(order) %> |  Order ID: <%= order.id %></h6>
+                                <h6 class="left-order"><%= order.completed_at %> |  Order ID: <%= order.id %></h6>
                             </div>
                             <div class="large-6 medium-6 small-12 columns">
                                 <h6 class="right-order">Order Expired on <%= order_expiry_date(order) %></h6>
@@ -93,10 +93,10 @@
                     <div class="large-2 medium-2 small-12 columns">
                         <div class="order-summary">
                             <h6>Amount</h6>
-                            <h6><%= order_payment_gross(order) %></h6>
+                            <h6><%= UM.Sales.Order.payment_gross(order) |> format_price %></h6>
                             <hr>
                             <h6>Tax</h6>
-                            <h6><%= order_tax_payment(order) %></h6>
+                            <h6><%= UM.Sales.Order.tax_payment(order) |> format_price %></h6>
                             <hr>
                             <h6>License</h6>
                             <a href="/orders/<%= order.id %>" target="_blank" download><h6>Download</h6></a>

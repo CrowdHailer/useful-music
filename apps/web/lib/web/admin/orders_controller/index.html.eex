@@ -64,7 +64,7 @@
                         <%= order.id %>
                     </th>
                     <th>
-                        <%= "payer_name" %>
+                        <%= order.customer_id %>
                     </th>
                     <th>
                         <%= order.state %>

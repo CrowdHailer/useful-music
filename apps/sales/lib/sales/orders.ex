@@ -22,6 +22,21 @@ defmodule UM.Sales.Orders do
     end
   end
 
+  def customer_history(%{id: customer_id}) do
+    # pull all orders that succeeded in the last 4 days
+    # sorted by completion date
+    IO.inspect(customer_id)
+    query = db(:orders) |> filter(customer_id: customer_id) |> sort(:id, :asc)
+    case Moebius.Db.run(query) do
+      {:error, reason} ->
+        {:error, reason}
+      records ->
+        IO.inspect(records)
+        orders = Enum.map(records, &unpack/1)
+        {:ok, orders} # DEBT does not paginate
+    end
+  end
+
   def insert(order = %{id: id}) when is_binary(id) do
     basket_total = order.cart_total
     shopping_basket_id = order.cart.id

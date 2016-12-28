@@ -75,9 +75,8 @@ defmodule UM.Web.CustomersControllerController do
   end
 
   def customer_endpoint(%{path: ["orders"], method: :GET}, customer) do
-    # pull all orders that succeeded in the last 4 days
-    # sorted by completion date
-    orders = [%{id: "transation_id"}]
+    {:ok, orders} = UM.Sales.Orders.customer_history(customer)
+    IO.inspect(orders)
     Raxx.Response.ok(order_history_content(orders, customer))
   end
 
