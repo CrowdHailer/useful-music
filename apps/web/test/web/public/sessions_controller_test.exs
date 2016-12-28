@@ -57,7 +57,7 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   test "login page (/sessions/new) maintains the users target" do
-    request = get({"/new", %{"target" => "/admin"}}, UM.Web.Session.guest_session)
+    request = get({"/new", %{"target" => "/admin"}}, [{"um-session", UM.Web.Session.new}])
     response = SessionsController.handle_request(request, :nostate)
     assert 200 == response.status
     assert String.contains?(response.body, "name=\"requested_path\" value=\"/admin\"")

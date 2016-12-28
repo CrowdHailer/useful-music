@@ -105,16 +105,6 @@ defmodule UM.Web.Session do
 
   ## MOVE to test
 
-  def customer_session(customer) do
-    session =  new |> login(customer)
-    [{"um-session", session}]
-  end
-  def guest_session(opts \\ []) do
-    opts = Enum.into(opts, %{})
-    session = Map.merge(new, opts)
-    [{"um-session", session}]
-  end
-
   def external_session(session) do
     [{"cookie", "raxx.session=" <> encode!(session)}]
   end

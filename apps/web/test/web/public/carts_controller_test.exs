@@ -30,7 +30,7 @@ defmodule UM.Web.CartsControllerTest do
       "purchases" => %{
         "garden-all-parts" => "1"
       }
-    }), UM.Web.Session.guest_session)
+    }), [{"um-session", UM.Web.Session.new}])
     response = Controller.handle_request(request, [])
 
     request_2 = Raxx.Patch.follow(response)
@@ -72,7 +72,7 @@ defmodule UM.Web.CartsControllerTest do
       "purchases" => %{
         "garden-all-parts" => "1"
       }
-    }), UM.Web.Session.customer_session(jo))
+    }), [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
     assert ["shopping_baskets", basket_id] = request_2.path

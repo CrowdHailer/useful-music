@@ -51,7 +51,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "country" => "TODO",
         "terms_agreement" => "on"
       }
-      }), UM.Web.Session.guest_session)
+      }), [{"um-session", UM.Web.Session.new}])
       response = Controller.handle_request(request, :no_state)
       assert response.status == 400
       assert String.contains?(response.body, "too short")
@@ -59,7 +59,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
 
   test "customer page shows orders" do
     jo = UM.Accounts.Fixtures.jo_brand
-    request = get("/#{jo.id}", UM.Web.Session.customer_session(jo))
+    request = get("/#{jo.id}", [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
@@ -67,21 +67,21 @@ defmodule UM.Web.CustomersControllerControllerTest do
   test "admin can view a customer page" do
     jo = UM.Accounts.Fixtures.jo_brand
     bugs = UM.Accounts.Fixtures.bugs_bunny
-    request = get("/#{jo.id}", UM.Web.Session.customer_session(bugs))
+    request = get("/#{jo.id}", [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(bugs)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
 
   test "customer can not view anothers customer page" do
     jo = UM.Accounts.Fixtures.jo_brand
-    request = get("/#{jo.id}", UM.Web.Session.guest_session)
+    request = get("/#{jo.id}", [{"um-session", UM.Web.Session.new}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 404
   end
 
   test "can visit a customers edit page" do
     jo = UM.Accounts.Fixtures.jo_brand
-    request = get("/#{jo.id}/edit", UM.Web.Session.customer_session(jo))
+    request = get("/#{jo.id}/edit", [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
@@ -97,7 +97,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "question_1" => "I play bongos",
         "question_2" => "",
         "question_3" => ""
-      }}), UM.Web.Session.customer_session(jo))
+      }}), [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 302
     redirection = get(Raxx.Patch.response_location(response))
@@ -119,7 +119,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "question_1" => "I play bongos",
         "question_2" => "",
         "question_3" => "",
-      }}), UM.Web.Session.customer_session(jo))
+      }}), [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 400
     assert String.contains?(response.body, "required")
@@ -127,7 +127,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
 
   test "can visit a customers change password page" do
     jo = UM.Accounts.Fixtures.jo_brand
-    request = get("/#{jo.id}/change_password", UM.Web.Session.customer_session(jo))
+    request = get("/#{jo.id}/change_password", [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 200
   end
@@ -139,7 +139,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "current_password" => "password",
         "password" => "updatedSecret",
         "password_confirmation" => "updatedSecret"
-      }}), UM.Web.Session.customer_session(jo))
+      }}), [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 302
     redirection = get(Raxx.Patch.response_location(response))
@@ -156,7 +156,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "current_password" => "password",
         "password" => "bad",
         "password_confirmation" => "bad"
-      }}), UM.Web.Session.customer_session(jo))
+      }}), [{"um-session", UM.Web.Session.new |> UM.Web.Session.login(jo)}])
     response = Controller.handle_request(request, :no_state)
     assert response.status == 302
   end
