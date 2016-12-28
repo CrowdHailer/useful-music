@@ -23,7 +23,6 @@ defmodule UM.Accounts do
       customers when is_list(customers) ->
         {:ok, Page.paginate(customers, page)}
     end
-
   end
 
   def signup_customer(customer) do

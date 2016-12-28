@@ -2,11 +2,11 @@ defmodule UM.Web.Session do
   defmodule UnAuthenticated do
     # currency_preference = "USD" | "GBP" | "EUR"
     # shopping_basket = Maybe(ShoppingBasket)
-    defstruct [shopping_basket: nil, currency_preference: nil]
+    defstruct [:shopping_basket, :currency_preference]
   end
   defmodule Authenticated do
     # Always has a customer
-    defstruct [account: nil]
+    defstruct [:account, :cart]
   end
 
   def new do
@@ -30,7 +30,7 @@ defmodule UM.Web.Session do
   def currency_preference(%{account: %{currency_preference: currency}}), do: currency
 
   def shopping_basket(%UnAuthenticated{shopping_basket: shopping_basket}), do: shopping_basket || UM.Sales.Cart.empty
-  def shopping_basket(%{account: %{shopping_basket: shopping_basket}}), do: shopping_basket || UM.Sales.Cart.empty
+  def shopping_basket(%{cart: cart}), do: cart || UM.Sales.Cart.empty
 
   def cart(session) do
     shopping_basket(session)
@@ -56,7 +56,7 @@ defmodule UM.Web.Session do
     %{session | currency_preference: currency}
   end
   def select_currency(session = %{account: customer}, currency) when currency in ["USD", "EUR", "GBP"] do
-    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | currency_preference: currency})
+    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | currency_preference: currency} |> Map.delete(:shopping_basket))
     %{session | account: updated_customer}
   end
 
@@ -64,8 +64,8 @@ defmodule UM.Web.Session do
     %{session | shopping_basket: shopping_basket}
   end
   def update_shopping_basket(session = %{account: customer}, shopping_basket) do
-    {:ok, updated_customer} = UM.Accounts.update_customer(%{Map.delete(customer, :shopping_basket) | shopping_basket_id: shopping_basket.id})
-    %{session | account: Map.merge(updated_customer, %{shopping_basket: shopping_basket})}
+    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | shopping_basket_id: shopping_basket.id})
+    %{session | account: updated_customer, cart: shopping_basket}
   end
 
   def unpack(request) do
@@ -81,14 +81,13 @@ defmodule UM.Web.Session do
     case Poison.decode(string) do
       {:ok, %{"account_id" => id}} ->
         {:ok, customer} = UM.Accounts.fetch_by_id(id)
-        shopping_basket = case UM.Sales.CartsRepo.fetch_by_id(customer.shopping_basket_id || "") do
-          {:ok, shopping_basket} ->
-            shopping_basket
+        cart = case UM.Sales.CartsRepo.fetch_by_id(customer.shopping_basket_id || "") do
+          {:ok, cart} ->
+            cart
           {:error, :not_found} ->
             UM.Sales.Cart.empty
         end
-        customer = Map.merge(customer, %{shopping_basket: shopping_basket})
-        new |> login(customer)
+        new |> login(customer) |> update_shopping_basket(cart)
       {:ok, raw} ->
         currency = Map.get(raw, "currency_preference", "GBP")
         new |> select_currency(currency)
@@ -107,7 +106,7 @@ defmodule UM.Web.Session do
   ## MOVE to test
 
   def customer_session(customer) do
-    session =  new |> login(Map.merge(customer, %{shopping_basket: nil}))
+    session =  new |> login(customer)
     [{"um-session", session}]
   end
   def guest_session(opts \\ []) do
