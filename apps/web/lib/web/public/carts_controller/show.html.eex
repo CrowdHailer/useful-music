@@ -131,7 +131,7 @@
                 <%= cart.discount.code %>
               </th>
               <th style="font-size: 0.7em;">
-                -<%= cart.discount.value %>
+                -<%= cart.discount.value |> user_price(session) %>
               </th>
             </tr>
             <% end %>
@@ -197,7 +197,7 @@
             <%= UM.Web.Session.csrf_tag %>
             <div class="row">
               <div class="large-5 medium-6 small-12 columns">
-                <input type="text" name="shopping_basket[discount]" value="<%= cart_discount_code(cart) %>" placeholder="Discount Code">
+                <input type="text" name="shopping_basket[discount]" value="<%= cart.discount && cart.discount.code %>" placeholder="Discount Code">
               </div>
               <div class="large-7 medium-6 small-12 columns">
                 <%= if cart.discount == nil do %>

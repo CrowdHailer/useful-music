@@ -34,6 +34,10 @@ defmodule UM.Sales.CartsRepo do
         {item.id, Map.merge(purchase, %{item: item})}
     end)
     |> Enum.into(%{})
-    struct(UM.Sales.Cart, Map.merge(record, %{purchases: purchases}))
+    discount = if record.discount_id do
+      {:ok, discount} = UM.Sales.Discounts.fetch_by_id(record.discount_id)
+      discount
+    end
+    struct(UM.Sales.Cart, Map.merge(record, %{purchases: purchases, discount: discount}))
   end
 end

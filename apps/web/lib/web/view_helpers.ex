@@ -179,10 +179,6 @@ defmodule UM.Web.ViewHelpers do
     "TODO"
   end
 
-  def cart_discount_code(_cart) do
-    "TODO"
-  end
-
   def discount_value(%{value: pence}) do
     (pence || 0) / 100
   end

@@ -23,10 +23,10 @@ defmodule UM.Web do
     UM.Web.ImagesController.handle_request(%{request| path: rest}, env)
   end
 
+  require Logger
+
   def handle_request(request, env) do
-    if Mix.env == :dev do
-      IO.inspect(request)
-    end
+    Logger.info(request |> inspect)
     try do
       {session, request} = UM.Web.Session.unpack(request)
       {:ok, request} = Raxx.Patch.set_header(request, "um-session", session)
@@ -79,9 +79,7 @@ defmodule UM.Web do
 
       headers = headers ++ [{"server", "workshop 14 limited"}]
       response = %Raxx.Response{status: status, headers: headers, body: body}
-      if Mix.env == :dev do
-        IO.inspect(%{response | body: nil})
-      end
+      Logger.info(%{response | body: nil} |> inspect)
       response
     rescue
       exception ->

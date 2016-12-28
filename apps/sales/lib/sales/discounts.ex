@@ -31,6 +31,17 @@ defmodule UM.Sales.Discounts do
     end
   end
 
+  def fetch_available_code(code) do
+    # TODO check number redeemed etc
+    query = db(:discounts) |> filter(code: code)
+    case Moebius.Db.first(query) do
+      discount = %{id: _id} ->
+        {:ok, discount}
+      nil ->
+        {:error, :not_found}
+    end
+  end
+
   def update(discount = %{id: id}) do
     discount = Enum.map(discount, fn(x) -> x end)
 

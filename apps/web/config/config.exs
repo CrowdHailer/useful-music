@@ -72,5 +72,5 @@ end
 if Mix.env == :test do
   config :logger,
     compile_time_purge_level: :info,
-    level: :info
+    level: :warn
 end
