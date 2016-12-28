@@ -23,4 +23,8 @@ defmodule UM.Web.OrdersController do
   def handle_request(%{path: [id], method: :GET}, _) do
     Raxx.Response.ok(show_page(%UM.Sales.Cart{id: id}))
   end
+
+  def handle_request(_, _) do
+    :no_match
+  end
 end

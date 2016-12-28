@@ -10,6 +10,9 @@ defmodule UM.Web.Public do
   header_file = String.replace_suffix(__ENV__.file, ".ex", "/header.html.eex")
   EEx.function_from_file :def, :header_partial, header_file, [:session]
 
+  not_found_template = String.replace_suffix(__ENV__.file, ".ex", "/404.html.eex")
+  EEx.function_from_file :def, :not_found_content, not_found_template, []
+
   def handle_request(request, env) do
     session = UM.Web.fetch_session(request)
     flash = UM.Web.fetch_flash(request)
@@ -21,6 +24,8 @@ defmodule UM.Web.Public do
         request
       request = %{status: _, body: content} ->
         %{request | body: layout_page(content, session, flash)}
+      :no_match ->
+        request = Raxx.Response.not_found(layout_page(not_found_content(), session, flash))
     end
   end
 
