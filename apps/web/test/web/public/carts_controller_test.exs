@@ -25,7 +25,7 @@ defmodule UM.Web.CartsControllerTest do
   # test that the cart is updated in the database.
   # test that the user is redirected to the correct cart.
   # test that the correct flash message is set.
-  test "guest can add a purchase to new cary" do
+  test "guest can add a purchase to new cart" do
     request = patch("/__empty__/purchases", Raxx.Test.form_data(%{
       "purchases" => %{
         "garden-all-parts" => "1"

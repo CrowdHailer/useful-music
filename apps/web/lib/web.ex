@@ -53,7 +53,7 @@ defmodule UM.Web do
       headers = case List.keytake(headers, "um-set-session", 0) do
         {{"um-set-session", session}, headers} ->
           encoded_session = UM.Web.Session.encode!(session)
-          cookie_string = Raxx.Cookie.new("raxx.session", encoded_session)
+          cookie_string = Raxx.Cookie.new("raxx.session", encoded_session, path: "/")
           |> Raxx.Cookie.set_cookie_string
           headers ++ [{"set-cookie", cookie_string}]
         nil ->
@@ -78,7 +78,11 @@ defmodule UM.Web do
       end
 
       headers = headers ++ [{"server", "workshop 14 limited"}]
-      %Raxx.Response{status: status, headers: headers, body: body}
+      response = %Raxx.Response{status: status, headers: headers, body: body}
+      if Mix.env == :dev do
+        IO.inspect(%{response | body: nil})
+      end
+      response
     rescue
       exception ->
         Bugsnag.report(exception)

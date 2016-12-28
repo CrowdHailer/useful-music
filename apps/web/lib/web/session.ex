@@ -6,6 +6,7 @@ defmodule UM.Web.Session do
   end
   defmodule Authenticated do
     # Always has a customer
+    # cart = Maybe(Cart)
     defstruct [:account, :cart]
   end
 
@@ -72,29 +73,12 @@ defmodule UM.Web.Session do
     {session, request}
   end
 
-  def decode(string) do
-    case Poison.decode(string) do
-      {:ok, %{"account_id" => id}} ->
-        {:ok, customer} = UM.Accounts.fetch_by_id(id)
-        cart = case UM.Sales.CartsRepo.fetch_by_id(customer.shopping_basket_id || "") do
-          {:ok, cart} ->
-            cart
-          {:error, :not_found} ->
-            UM.Sales.Cart.empty
-        end
-        new |> login(customer) |> update_shopping_basket(cart)
-      {:ok, raw} ->
-        currency = Map.get(raw, "currency_preference", "GBP")
-        new |> select_currency(currency)
-      {:error, _reason} ->
-        new
-    end
+  def decode(session) do
+    __MODULE__.JSON.decode(session)
   end
 
-  def encode!(%Authenticated{account: %{id: id}}) do
-    Poison.encode!(%{account_id: id})
+  def encode!(session) do
+    __MODULE__.JSON.encode!(session)
   end
-  def encode!(%UnAuthenticated{currency_preference: currency}) do
-    Poison.encode!(%{currency_preference: currency})
-  end
+
 end
