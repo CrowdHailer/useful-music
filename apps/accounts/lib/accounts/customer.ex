@@ -1,4 +1,6 @@
 defmodule UM.Accounts.Customer do
+  # reset_with_token
+  # validate_password_reset
   def reset_password(customer, %{password: password, password_reset_token: token}) do
     case token == customer.password_reset_token do
       true ->

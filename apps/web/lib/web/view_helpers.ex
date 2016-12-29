@@ -11,6 +11,12 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def local_price(pence, session) when is_integer(pence) do
+    # {"GBP", pence}
+    # |> Exchange.convert(Session.currency_preference(session))
+    # should be passed money amount not pence therfore
+    # transfer? exchange?
+    # Exchange.convert(amount, Session.currency_preference(session))
+
     user_price(pence, session)
   end
 
@@ -24,6 +30,7 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def user_country(session) do
+    # hex package has vat rates
     nil # TODO
   end
 

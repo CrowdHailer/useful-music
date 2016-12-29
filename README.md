@@ -46,46 +46,33 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 ### For Demo
 
 - Create Order, autocomplete for free orders
+- pull out piece_name into item
+- Implement exchange rates. save exchange rate to order
+- Money package needs how to use in project and link to hex in README
+- Money package not to have USD by default, majority are not USD.
+- all prices are in pence lookup money package
+- Implement vat rates
 
 ### For Production
 
-- mailers
 - csrf middleware
-- html escape
+- html escape/ user data only?
 - Paypal integration
 
 ### Nice to have
 
-- set signed url expiry to 60 minutes
-- sort items in shopping basket by piece id
-- form validation on files, accept types
 - password reset checks the token has not expired
+- check the format of user names
+
+- set signed url expiry to 60 minutes
+- form validation on files, accept types
 - single page info webform
-- save exchange rate to order
-- all prices are in pence lookup money package
-- paginate in SQL query
-- Message for failed to delete item because of purchases
-- change password page shows form errors
 - remove abandoned carts
 
-- check the format of user names
 - catalogue to destroy associated items when deleting piece
-- solution to stringifying keys in admin/pieces_controller_test
-  `piece = for {k, v} <- piece, into: %{}, do: {"#{k}", v}``
-- Minimise validation on piece_form so we can use meaningful db exceptions
-  OR Add field errors from the form.
-- random pieces are hardcoded to 4
-- generate styles from asset files
-- use relative links in templates
 - Handle invalid content values or assume octet content. check RFC.
-- create piece tests, generalise form, push upload content to db.
+- paginate in SQL query
 
-```elixir
-Try.for do
-  data <- ChangePasswordForm.validate
-  %{id: id} <- Accounts.change_password(customer, data)
-end
-```
 # Gateway
 maybe best to rename web to gateway but probably not gateway will be for API endpoint and www for web backend for front end
 
