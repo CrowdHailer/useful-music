@@ -69,7 +69,7 @@ defmodule UM.Web.SessionTest do
     |> Session.login(jo)
     |> Session.select_currency("GBP")
     assert "GBP" == Session.currency_preference(session)
-    {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
+    {:ok, updated_jo} = UM.Accounts.CustomersRepo.fetch_by_id(jo.id)
     assert "GBP" == updated_jo.currency_preference
   end
 
@@ -82,7 +82,7 @@ defmodule UM.Web.SessionTest do
   test "logging in set the users currency preference, if the do not have one" do
     bugs = UM.Accounts.Fixtures.bugs_bunny
     session = Session.new |> Session.select_currency("EUR") |> Session.login(bugs)
-    {:ok, updated_bugs} = UM.Accounts.fetch_by_id(bugs.id)
+    {:ok, updated_bugs} = UM.Accounts.CustomersRepo.fetch_by_id(bugs.id)
     assert "EUR" == updated_bugs.currency_preference
   end
 
@@ -106,7 +106,7 @@ defmodule UM.Web.SessionTest do
     |> Session.login(jo)
     |> Session.update_shopping_basket(cart)
     assert cart == Session.cart(session)
-    {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
+    {:ok, updated_jo} = UM.Accounts.CustomersRepo.fetch_by_id(jo.id)
     assert cart.id == updated_jo.shopping_basket_id
   end
 
@@ -119,7 +119,7 @@ defmodule UM.Web.SessionTest do
     {:ok, bugs} = UM.Accounts.update_customer(%{bugs | shopping_basket_id: cart.id})
     session = Session.new
     |> Session.login(bugs)
-    {:ok, latest_bugs} = UM.Accounts.fetch_by_id(bugs.id)
+    {:ok, latest_bugs} = UM.Accounts.CustomersRepo.fetch_by_id(bugs.id)
     assert Session.cart(session).id == latest_bugs.shopping_basket_id
   end
 
@@ -132,7 +132,7 @@ defmodule UM.Web.SessionTest do
     session = Session.new
     |> Session.update_shopping_basket(cart)
     |> Session.login(bugs)
-    {:ok, latest_bugs} = UM.Accounts.fetch_by_id(bugs.id)
+    {:ok, latest_bugs} = UM.Accounts.CustomersRepo.fetch_by_id(bugs.id)
     assert Session.cart(session).id == latest_bugs.shopping_basket_id
   end
 

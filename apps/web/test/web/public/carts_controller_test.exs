@@ -79,7 +79,7 @@ defmodule UM.Web.CartsControllerTest do
     assert ["shopping_baskets", basket_id] = request_2.path
     session = :proplists.get_value("um-set-session", response.headers)
     assert basket_id == UM.Web.Session.cart(session).id
-    {:ok, updated_jo} = UM.Accounts.fetch_by_id(jo.id)
+    {:ok, updated_jo} = UM.Accounts.CustomersRepo.fetch_by_id(jo.id)
     assert basket_id == updated_jo.shopping_basket_id
     {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(basket_id)
     assert 1 == UM.Sales.Cart.number_of_lines(cart)

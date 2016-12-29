@@ -5,7 +5,7 @@ defmodule UM.Web.Session.JSON do
   def decode(string) do
     case Poison.decode(string) do
       {:ok, %{"account_id" => id}} ->
-        {:ok, customer} = UM.Accounts.fetch_by_id(id)
+        {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
         cart = case UM.Sales.CartsRepo.fetch_by_id(customer.shopping_basket_id || "") do
           {:ok, cart} ->
             cart

@@ -7,12 +7,12 @@ defmodule UM.Web.Admin.CustomersController do
 
   def handle_request(%{method: :GET, path: [], query: query}, _) do
     page = UM.Web.requested_page(query, page_size: 10)
-    {:ok, page_of_customers} = UM.Accounts.all_customers(page)
+    {:ok, page_of_customers} = UM.Accounts.CustomersRepo.index(page)
     Raxx.Response.ok(index_page_content(page_of_customers))
   end
 
   def handle_request(%{method: :POST, path: [id, "admin"]}, _) do
-    {:ok, customer} = UM.Accounts.fetch_by_id(id)
+    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     updated_customer = Map.merge(customer, %{admin: true})
     case UM.Accounts.update_customer(updated_customer) do
       {:ok, latest} ->
@@ -22,7 +22,7 @@ defmodule UM.Web.Admin.CustomersController do
   end
 
   def handle_request(%{method: :DELETE, path: [id, "admin"]}, _) do
-    {:ok, customer} = UM.Accounts.fetch_by_id(id)
+    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     updated_customer = Map.merge(customer, %{admin: false})
     case UM.Accounts.update_customer(updated_customer) do
       {:ok, latest} ->

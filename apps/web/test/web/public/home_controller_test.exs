@@ -41,7 +41,8 @@ defmodule UM.Web.HomeControllerTest do
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)
     request = post("/currency", Raxx.Test.form_data(%{"preference" => "USD"}), [{"um-session", session}])
     response = UM.Web.HomeController.handle_request(request, %{})
-    assert "USD" == UM.Accounts.fetch_customer(jo.id).currency_preference
+    {:ok, updated_customer} = UM.Accounts.CustomersRepo.fetch_by_id(jo.id)
+    assert "USD" = updated_customer.currency_preference
     assert response.status == 302
     assert "/" == Raxx.Patch.response_location(response)
     assert "USD" = Raxx.Patch.response_session(response) |> UM.Web.Session.currency_preference

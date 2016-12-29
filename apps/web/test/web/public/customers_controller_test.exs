@@ -34,7 +34,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     redirection = get(location)
     assert ["customers", id] = redirection.path
     assert List.keyfind(response.headers, "um-flash", 0)
-    {:ok, customer} = UM.Accounts.fetch_by_id(id)
+    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     assert "Bill" == customer.first_name
     assert "USD" == customer.currency_preference
     assert id == Raxx.Patch.response_session(response).account.id
@@ -104,7 +104,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     redirection = get(Raxx.Patch.response_location(response))
     assert ["customers", id] = redirection.path
     assert id == jo.id
-    jo = UM.Accounts.fetch_customer(id)
+    {:ok, jo} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     assert "I play bongos" == jo.question_1
     assert "Joanna" == jo.first_name
   end
@@ -146,7 +146,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     redirection = get(Raxx.Patch.response_location(response))
     assert ["customers", id] = redirection.path
     assert id == jo.id
-    jo = UM.Accounts.fetch_customer(id)
+    {:ok, jo} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     assert "updatedSecret" == jo.password
   end
 

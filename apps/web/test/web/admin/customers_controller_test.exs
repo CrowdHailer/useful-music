@@ -22,7 +22,8 @@ defmodule UM.Web.Admin.CustomersControllerTest do
     jo = UM.Accounts.Fixtures.jo_brand
     request = post("/#{jo.id}/admin", Raxx.Test.form_data(%{}))
     response = Controller.handle_request(request, :nostate)
-    assert true == UM.Accounts.fetch_customer(jo.id).admin
+    {:ok, updated_jo} = UM.Accounts.CustomersRepo.fetch_by_id(jo.id)
+    assert true == updated_jo.admin
     request = Raxx.Patch.follow(response)
     assert ["admin", "customers"] == request.path
     assert %{success: "Jo Brand is now an admin"} = Raxx.Patch.get_header(response, "um-flash")
@@ -32,7 +33,8 @@ defmodule UM.Web.Admin.CustomersControllerTest do
     bugs = UM.Accounts.Fixtures.bugs_bunny
     request = delete("/#{bugs.id}/admin", Raxx.Test.form_data(_method: "DELETE"))
     response = Controller.handle_request(request, :nostate)
-    assert false == UM.Accounts.fetch_customer(bugs.id).admin
+    {:ok, updated_customer} = UM.Accounts.CustomersRepo.fetch_by_id(bugs.id)
+    assert false == updated_customer.admin
     request = Raxx.Patch.follow(response)
     assert ["admin", "customers"] == request.path
     assert %{success: "Bugs Bunny is now not an admin"} = Raxx.Patch.get_header(response, "um-flash")

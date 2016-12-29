@@ -14,28 +14,11 @@ defmodule UM.Accounts do
 
   import Moebius.Query
 
-  def all_customers(page) do
-    case db(:customers) |> UM.Accounts.Db.run do
-      customers when is_list(customers) ->
-        {:ok, Page.paginate(customers, page)}
-    end
-  end
-
   def signup_customer(customer) do
     customer = Map.merge(%{id: Utils.random_string(16)}, customer)
     customer = Enum.map(customer, fn(x) -> x end)
     q = db(:customers) |> insert(customer)
     UM.Accounts.Db.run(q)
-  end
-
-  # Move to CustomersRepo
-  def fetch_by_id(id) do
-    customer = %{id: ^id} = fetch_customer(id)
-    {:ok, customer}
-  end
-
-  def fetch_customer(id) do
-    db(:customers) |> filter(id: id) |> UM.Accounts.Db.first
   end
 
   def update_customer(customer = %{id: id}) when is_binary(id) do

@@ -62,7 +62,7 @@ defmodule UM.Web.CustomersControllerController do
     session = UM.Web.fetch_session(request)
     case UM.Web.Session.can_view_account?(session, id) do
       true ->
-        {:ok, customer} = UM.Accounts.fetch_by_id(id)
+        {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
         customer_endpoint(%{request | path: rest}, customer)
       false ->
         Raxx.Response.not_found("Don't look here")
