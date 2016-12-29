@@ -12,7 +12,7 @@ defmodule UM.Accounts do
     Supervisor.start_link(children, opts)
   end
 
-  import Moebius.Query
+  alias UM.Accounts.CustomersRepo
 
   def signup_customer(customer) do
     customer = Map.merge(%{id: Utils.random_string(16)}, customer)
@@ -20,13 +20,13 @@ defmodule UM.Accounts do
   end
 
   def reset_password(data) do
-    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_email(data.email)
+    {:ok, customer} = CustomersRepo.fetch_by_email(data.email)
     {:ok, updated} = UM.Accounts.Customer.reset_password(customer, data)
-    UM.Accounts.CustomersRepo.update(updated)
+    CustomersRepo.update(updated)
   end
 
   def authenticate(%{email: email, password: password}) do
-    case UM.Accounts.CustomersRepo.fetch_by_email(email) do
+    case CustomersRepo.fetch_by_email(email) do
       {:ok, customer} ->
         case customer.password do
           ^password ->
@@ -40,15 +40,15 @@ defmodule UM.Accounts do
   end
 
   def create_password_reset(email) do
-    # could look for exisiting reset tokens all in one query
-    action = db(:customers)
-    |> filter(email: email)
-    |> update(password_reset_token: Utils.random_string(24), password_reset_created_at: :now)
-    case UM.Accounts.Db.run(action) do
-      nil ->
-        {:error, :no_customer}
-      customer ->
-        {:ok, customer}
+    case CustomersRepo.fetch_by_email(email) do
+      {:ok, customer} ->
+        updated = Map.merge(customer, %{
+          password_reset_token: Utils.random_string(24),
+          password_reset_created_at: :now
+        })
+        CustomersRepo.update(updated)
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 end

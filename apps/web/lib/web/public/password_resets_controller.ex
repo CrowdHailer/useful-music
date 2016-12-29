@@ -29,7 +29,7 @@ defmodule UM.Web.PasswordResetsController do
       {:ok, customer} ->
         # send email
         Raxx.Patch.redirect("/sessions/new", success: "A password reset has been sent to your email")
-      {:error, :no_customer} ->
+      {:error, :not_found} ->
         Raxx.Response.ok(new_page_content(email))
     end
   end
