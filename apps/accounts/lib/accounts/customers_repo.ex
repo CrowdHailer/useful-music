@@ -2,6 +2,7 @@ defmodule UM.Accounts.CustomersRepo do
   import Moebius.Query
 
   def insert(customer) do
+    customer = Map.merge(customer, %{created_at: :now, updated_at: :now})
     customer = Enum.map(customer, fn(x) -> x end)
     q = db(:customers) |> insert(customer)
     case UM.Accounts.Db.run(q) do
@@ -13,6 +14,7 @@ defmodule UM.Accounts.CustomersRepo do
   end
 
   def update(customer = %{id: id}) when is_binary(id) do
+    customer = Map.merge(customer, %{updated_at: :now})
     customer = Enum.map(customer, fn(x) -> x end)
 
     action = db(:customers)
