@@ -26,4 +26,15 @@ defmodule UM.Accounts.CustomersRepoTest do
     assert customer.created_at
     assert customer.updated_at
   end
+
+  test "inserted record has password encrypted" do
+    {:ok, customer} = Repo.insert(defaults(password: "password"))
+    refute Map.has_key?(customer, :password)
+  end
+
+  test "can authenticate with correct password" do
+    {:ok, customer} = Repo.insert(defaults(password: "password"))
+    assert UM.Accounts.Customer.check_password(customer, "password")
+    refute UM.Accounts.Customer.check_password(customer, "other_password")
+  end
 end

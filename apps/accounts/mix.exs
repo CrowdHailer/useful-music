@@ -23,6 +23,7 @@ defmodule UM.Accounts.Mixfile do
     [
       {:utils, in_umbrella: true},
       {:countries, github: "SebastianSzturo/countries"},
+      {:comeonin, "~> 3.0"},
       {:moebius, "~> 2.0.0"}
     ]
   end

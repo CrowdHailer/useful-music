@@ -28,10 +28,10 @@ defmodule UM.Accounts do
   def authenticate(%{email: email, password: password}) do
     case CustomersRepo.fetch_by_email(email) do
       {:ok, customer} ->
-        case customer.password do
-          ^password ->
+        case UM.Accounts.Customer.check_password(customer, password) do
+          true ->
             {:ok, customer}
-          _ ->
+          false ->
             {:error, :invalid_credentials}
         end
       {:error, :not_found} ->

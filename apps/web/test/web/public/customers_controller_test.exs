@@ -147,7 +147,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     assert ["customers", id] = redirection.path
     assert id == jo.id
     {:ok, jo} = UM.Accounts.CustomersRepo.fetch_by_id(id)
-    assert "updatedSecret" == jo.password
+    assert UM.Accounts.Customer.check_password(jo, "updatedSecret")
   end
 
   test "failed to update password" do

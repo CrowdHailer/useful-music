@@ -51,7 +51,7 @@ defmodule UM.Web.SessionsControllerTest do
   test "logging in sends user to their orders page" do
     jo = UM.Accounts.Fixtures.jo_brand
     request = post("/", %{
-      "session" => %{"email" => jo.email, "password" => jo.password}
+      "session" => %{"email" => jo.email, "password" => "password"}
     })
     response = SessionsController.handle_request(request, :nostate)
     assert 302 == response.status

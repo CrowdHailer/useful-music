@@ -15,4 +15,8 @@ defmodule UM.Accounts.Customer do
   def name(%{first_name: first_name, last_name: last_name}) do
     "#{first_name} #{last_name}"
   end
+
+  def check_password(%{password_hash: hash}, attempt) do
+    Comeonin.Bcrypt.checkpw(attempt, hash)
+  end
 end

@@ -15,7 +15,7 @@ defmodule UM.Accounts.Fixtures do
       first_name: "Peter",
       last_name: "Saxton",
       email: "p@me.co",
-      password: "password",
+      password: Comeonin.Bcrypt.hashpwsalt("password"),
       country: "GB",
       admin: true,
     )
@@ -29,7 +29,7 @@ defmodule UM.Accounts.Fixtures do
       first_name: "Graham",
       last_name: "Lyons",
       email: "usefulmusic@gmail.com",
-      password: "password",
+      password: Comeonin.Bcrypt.hashpwsalt("password"),
       country: "GB",
       admin: true,
     )
@@ -44,7 +44,7 @@ defmodule UM.Accounts.Fixtures do
       first_name: "Bugs",
       last_name: "Bunny",
       email: "bugs@hotmail.com",
-      password: "password",
+      password: Comeonin.Bcrypt.hashpwsalt("password"),
       country: "GB",
       admin: true
     )
@@ -62,7 +62,7 @@ defmodule UM.Accounts.Fixtures do
       first_name: "Jo",
       last_name: "Brand",
       email: "jo@hotmail.com",
-      password: "password",
+      password: Comeonin.Bcrypt.hashpwsalt("password"),
       country: "GB",
       admin: false,
       currency_preference: "USD"

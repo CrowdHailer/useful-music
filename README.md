@@ -50,7 +50,6 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 ### For Production
 
 - mailers
-- encrypt password in db
 - csrf middleware
 - html escape
 - Paypal integration

@@ -1,16 +1,5 @@
 defmodule UM.Web.PasswordResetsController do
-  defmodule ResetPasswordForm do
-    import UM.Web.FormFields
-
-    def validate(form) do
-      validator = %{
-        email: password(required: true),
-        password: password(required: true),
-        password_confirmation: password_confirmation,
-      }
-      WebForm.validate(validator, form)
-    end
-  end
+  alias UM.Web.PasswordResetsController.ResetPasswordForm
   require EEx
 
   new_file = String.replace_suffix(__ENV__.file, ".ex", "/new.html.eex")

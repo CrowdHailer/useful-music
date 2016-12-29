@@ -5,10 +5,10 @@
 </div>
 <div class="row collapse">
     <div class="large-12 columns">
-        <form class="" action="/password_resets/<%= token %>" accept-charset="UTF-8" enctype="multipart/form-data" method="post">
+        <form class="" action="/password_resets/<%= token %>" method="post">
             <%= UM.Web.Session.csrf_tag %>
             <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" name="email" value="<%= email %>">
+            <input type="hidden" name="customer[email]" value="<%= email %>">
             <fieldset>
                 <div class="row">
                     <div class="large-4 columns large-offset-2">

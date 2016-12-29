@@ -104,7 +104,7 @@ defmodule UM.Web.CustomersControllerController do
   def customer_endpoint(%{path: ["change_password"], method: :PUT, body: %{"customer" => form}}, customer) do
     case ChangePasswordForm.validate(form) do
       {:ok, data} ->
-        case data.current_password == customer.password do
+        case UM.Accounts.Customer.check_password(customer, data.current_password) do
           true ->
             update = %{password: data.password}
             case UM.Accounts.CustomersRepo.update(Map.merge(update, %{id: customer.id})) do
