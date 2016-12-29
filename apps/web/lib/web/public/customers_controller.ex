@@ -41,7 +41,7 @@ defmodule UM.Web.CustomersControllerController do
               {:error, reason} ->
                 IO.inspect(reason)
                 Raxx.Response.conflict(new_page_content(customer, %CreateForm{email: "is already taken"}, ""))
-              customer = %{id: id} ->
+              {:ok, customer = %{id: id}} ->
                 try do
                   UM.Web.Emails.account_created(customer) |> UM.Web.Mailer.deliver_now
                 rescue

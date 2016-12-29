@@ -16,9 +16,7 @@ defmodule UM.Accounts do
 
   def signup_customer(customer) do
     customer = Map.merge(%{id: Utils.random_string(16)}, customer)
-    customer = Enum.map(customer, fn(x) -> x end)
-    q = db(:customers) |> insert(customer)
-    UM.Accounts.Db.run(q)
+    UM.Accounts.CustomersRepo.insert(customer)
   end
 
   def update_customer(customer = %{id: id}) when is_binary(id) do
@@ -36,28 +34,22 @@ defmodule UM.Accounts do
     end
   end
 
-  def find_by_email(email) do
-    customer = db(:customers) |> filter(email: email) |> UM.Accounts.Db.first
-    case customer do
-      nil ->
-        {:error, :not_found}
-      customer ->
-        {:ok, customer}
-    end
-  end
-
   def reset_password(data) do
-    {:ok, customer} = find_by_email(data.email)
-    {:ok, updated} =UM.Accounts.Customer.reset_password(customer, data)
+    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_email(data.email)
+    {:ok, updated} = UM.Accounts.Customer.reset_password(customer, data)
     UM.Accounts.update_customer(updated)
   end
 
   def authenticate(%{email: email, password: password}) do
-    customer = db(:customers) |> filter(email: email) |> UM.Accounts.Db.first
-    case customer && customer.password do
-      ^password ->
-        {:ok, customer}
-      _ ->
+    case UM.Accounts.CustomersRepo.fetch_by_email(email) do
+      {:ok, customer} ->
+        case customer.password do
+          ^password ->
+            {:ok, customer}
+          _ ->
+            {:error, :invalid_credentials}
+        end
+      {:error, :not_found} ->
         {:error, :invalid_credentials}
     end
   end
