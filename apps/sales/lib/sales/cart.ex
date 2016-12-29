@@ -85,10 +85,17 @@ defmodule UM.Sales.Cart do
     %{cart | discount: discount}
   end
 
+  @doc """
+  # On the order
+  basket_total in old app is not cart_total
+  cart_total is the total list price of the items in the user currency
+
+  payment_gross on an order is the checkout price of the cart, never less than zero
+  """
   def checkout(cart, %{vat_rate: vat_rate, currency: "GBP", customer_id: customer_id}) do
     list_price = list_price(cart)
     discount_value = discount_value(cart)
-    payment_gross = list_price(cart) - discount_value(cart)
+    payment_gross = checkout_price
     tax_payment = round(payment_gross * vat_rate)
     payment_net = payment_gross + tax_payment
     {:ok, %UM.Sales.Order{
