@@ -12,8 +12,7 @@ defmodule UM.Web.Admin.CustomersController do
   end
 
   def handle_request(%{method: :POST, path: [id, "admin"]}, _) do
-    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
-    updated_customer = Map.merge(customer, %{admin: true})
+    updated_customer = %{id: id, admin: true}
     case UM.Accounts.CustomersRepo.update(updated_customer) do
       {:ok, latest} ->
         Raxx.Patch.redirect("/admin/customers")
@@ -22,8 +21,7 @@ defmodule UM.Web.Admin.CustomersController do
   end
 
   def handle_request(%{method: :DELETE, path: [id, "admin"]}, _) do
-    {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
-    updated_customer = Map.merge(customer, %{admin: false})
+    updated_customer = %{id: id, admin: false}
     case UM.Accounts.CustomersRepo.update(updated_customer) do
       {:ok, latest} ->
         Raxx.Patch.redirect("/admin/customers")
