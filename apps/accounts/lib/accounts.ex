@@ -19,25 +19,10 @@ defmodule UM.Accounts do
     UM.Accounts.CustomersRepo.insert(customer)
   end
 
-  def update_customer(customer = %{id: id}) when is_binary(id) do
-    # DEBT insert requires a keyword list
-    customer = Enum.map(customer, fn(x) -> x end)
-
-    action = db(:customers)
-    |> filter(id: id)
-    |> update(customer)
-    case UM.Accounts.Db.run(action) do
-      record = %{id: ^id} ->
-        {:ok, record}
-      {:error, reason} ->
-        {:error, reason}
-    end
-  end
-
   def reset_password(data) do
     {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_email(data.email)
     {:ok, updated} = UM.Accounts.Customer.reset_password(customer, data)
-    UM.Accounts.update_customer(updated)
+    UM.Accounts.CustomersRepo.update(updated)
   end
 
   def authenticate(%{email: email, password: password}) do

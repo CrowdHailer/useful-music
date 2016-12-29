@@ -42,7 +42,7 @@ defmodule UM.Web.Session do
       customer
     else
       customer = %{customer | currency_preference: session.currency_preference}
-      {:ok, customer} = UM.Accounts.update_customer(customer)
+      {:ok, customer} = UM.Accounts.CustomersRepo.update(customer)
       customer
     end
 
@@ -52,7 +52,7 @@ defmodule UM.Web.Session do
     else
       cart = session.cart
       if cart do
-        {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | shopping_basket_id: cart.id})
+        {:ok, updated_customer} = UM.Accounts.CustomersRepo.update(%{customer | shopping_basket_id: cart.id})
         # DEBT return updated customer
       end
       cart
@@ -64,7 +64,7 @@ defmodule UM.Web.Session do
     %{session | currency_preference: currency}
   end
   def select_currency(session = %{account: customer}, currency) when currency in ["USD", "EUR", "GBP"] do
-    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | currency_preference: currency} |> Map.delete(:shopping_basket))
+    {:ok, updated_customer} = UM.Accounts.CustomersRepo.update(%{customer | currency_preference: currency} |> Map.delete(:shopping_basket))
     %{session | account: updated_customer}
   end
 
@@ -72,7 +72,7 @@ defmodule UM.Web.Session do
     %{session | cart: cart}
   end
   def update_shopping_basket(session = %{account: customer}, cart) do
-    {:ok, updated_customer} = UM.Accounts.update_customer(%{customer | shopping_basket_id: cart.id})
+    {:ok, updated_customer} = UM.Accounts.CustomersRepo.update(%{customer | shopping_basket_id: cart.id})
     %{session | account: updated_customer, cart: cart}
   end
 

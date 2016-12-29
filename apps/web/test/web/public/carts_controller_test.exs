@@ -91,7 +91,7 @@ defmodule UM.Web.CartsControllerTest do
     {:ok, record} = UM.Sales.create_shopping_basket
     {:ok, record} = UM.Sales.edit_purchases(record, %{"garden-audio-part" => 3})
     jo = UM.Accounts.Fixtures.jo_brand
-    {:ok, jo} = UM.Accounts.update_customer(%{jo | shopping_basket_id: record.id})
+    {:ok, jo} = UM.Accounts.CustomersRepo.update(%{jo | shopping_basket_id: record.id})
     session = UM.Web.Session.new |> UM.Web.Session.login(jo)
     request = post("/#{record.id}/checkout", [{"um-session", session}])
     response = Controller.handle_request(request, [])

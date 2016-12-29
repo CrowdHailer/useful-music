@@ -14,7 +14,7 @@ defmodule UM.Web.Admin.CustomersController do
   def handle_request(%{method: :POST, path: [id, "admin"]}, _) do
     {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     updated_customer = Map.merge(customer, %{admin: true})
-    case UM.Accounts.update_customer(updated_customer) do
+    case UM.Accounts.CustomersRepo.update(updated_customer) do
       {:ok, latest} ->
         Raxx.Patch.redirect("/admin/customers")
         |> UM.Web.with_flash(success: "#{customer_name(latest)} is now an admin")
@@ -24,7 +24,7 @@ defmodule UM.Web.Admin.CustomersController do
   def handle_request(%{method: :DELETE, path: [id, "admin"]}, _) do
     {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
     updated_customer = Map.merge(customer, %{admin: false})
-    case UM.Accounts.update_customer(updated_customer) do
+    case UM.Accounts.CustomersRepo.update(updated_customer) do
       {:ok, latest} ->
         Raxx.Patch.redirect("/admin/customers")
         |> UM.Web.with_flash(success: "#{customer_name(latest)} is now not an admin")

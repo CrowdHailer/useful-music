@@ -12,6 +12,20 @@ defmodule UM.Accounts.CustomersRepo do
     end
   end
 
+  def update(customer = %{id: id}) when is_binary(id) do
+    customer = Enum.map(customer, fn(x) -> x end)
+
+    action = db(:customers)
+    |> filter(id: id)
+    |> update(customer)
+    case UM.Accounts.Db.run(action) do
+      record = %{id: ^id} ->
+        {:ok, record}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
   def index(page) do
     case db(:customers) |> sort(:id, :asc) |> UM.Accounts.Db.run do
       customers when is_list(customers) ->

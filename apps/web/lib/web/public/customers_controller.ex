@@ -87,7 +87,7 @@ defmodule UM.Web.CustomersControllerController do
     case EditForm.validate(form) do
       {:ok, update} ->
         # Could merge with whole customer
-        case UM.Accounts.update_customer(Map.merge(update, %{id: customer.id})) do
+        case UM.Accounts.CustomersRepo.update(Map.merge(update, %{id: customer.id})) do
           {:ok, customer} ->
             Raxx.Patch.redirect("/customers/#{customer.id}", success: "Update successful")
         end
@@ -107,7 +107,7 @@ defmodule UM.Web.CustomersControllerController do
         case data.current_password == customer.password do
           true ->
             update = %{password: data.password}
-            case UM.Accounts.update_customer(Map.merge(update, %{id: customer.id})) do
+            case UM.Accounts.CustomersRepo.update(Map.merge(update, %{id: customer.id})) do
               {:ok, customer} ->
                 Raxx.Patch.redirect("/customers/#{customer.id}", success: "Password changed")
             end

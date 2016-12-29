@@ -116,7 +116,7 @@ defmodule UM.Web.SessionTest do
     {:ok, record} = UM.Sales.create_shopping_basket
     {:ok, record} = UM.Sales.edit_purchases(record, %{"garden-audio-part" => 3})
     {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(record.id)
-    {:ok, bugs} = UM.Accounts.update_customer(%{bugs | shopping_basket_id: cart.id})
+    {:ok, bugs} = UM.Accounts.CustomersRepo.update(%{bugs | shopping_basket_id: cart.id})
     session = Session.new
     |> Session.login(bugs)
     {:ok, latest_bugs} = UM.Accounts.CustomersRepo.fetch_by_id(bugs.id)
