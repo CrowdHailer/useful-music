@@ -47,7 +47,7 @@ defmodule UM.Web.CartsController do
     cart = UM.Web.Session.cart(session)
     ^cart_id = cart.id || "__empty__"
 
-    discount_code = Map.get(form, "discount", "")
+    discount_code = Map.get(form, "discount", "") |> String.upcase
     {cart, flash} = case UM.Sales.apply_discount_code(cart, discount_code) do
       {:ok, cart = %{discount_id: nil}} ->
         {cart, success: "Discount Code Removed"}

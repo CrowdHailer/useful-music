@@ -95,7 +95,7 @@ defmodule UM.Sales.Cart do
   def checkout(cart, %{vat_rate: vat_rate, currency: "GBP", customer_id: customer_id}) do
     list_price = list_price(cart)
     discount_value = discount_value(cart)
-    payment_gross = checkout_price
+    payment_gross = checkout_price(cart)
     tax_payment = round(payment_gross * vat_rate)
     payment_net = payment_gross + tax_payment
     {:ok, %UM.Sales.Order{
