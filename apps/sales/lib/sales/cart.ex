@@ -11,7 +11,6 @@ defmodule UM.Sales.Cart do
   defstruct [
     id: nil,
     purchases: %{},
-    currency: nil, # feel like that might not be neccessary
     discount: nil
   ]
   def empty do

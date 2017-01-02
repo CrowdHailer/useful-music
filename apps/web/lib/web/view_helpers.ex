@@ -17,10 +17,6 @@ defmodule UM.Web.ViewHelpers do
     nil
   end
 
-  def local_price(pence, session) when is_integer(pence) do
-    user_price(pence, session)
-  end
-
   def in_local_currency(money, session) do
     local_currency = currency_preference(session)
     exchange_currency(money, local_currency)
@@ -63,17 +59,6 @@ defmodule UM.Web.ViewHelpers do
     |> Session.cart
     |> UM.Sales.Cart.payment_gross
     |> in_local_currency(session)
-  end
-
-  def user_price(pence, session) when is_integer(pence) do
-    case currency_preference(session) do
-      "GBP" ->
-        "£#{Float.to_string(pence / 100, decimals: 2)}"
-      "EUR" ->
-        "€#{Float.to_string(pence / 100, decimals: 2)}" # TODO convert
-      "USD" ->
-        "$#{Float.to_string(pence / 100, decimals: 2)}" # TODO convert
-    end
   end
 
   def number_of_purchases(session) do
