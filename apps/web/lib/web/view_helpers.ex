@@ -21,6 +21,21 @@ defmodule UM.Web.ViewHelpers do
     user_price(pence, session)
   end
 
+  def in_local_currency(money, session) do
+    local_currency = currency_preference(session)
+    exchange_currency(money, local_currency)
+  end
+
+  def exchange_currency(money = %Money{amount: pence, currency: :GBP}, "GBP") do
+    money
+  end
+  def exchange_currency(%Money{amount: pence, currency: :GBP}, "EUR") do
+    Money.new(pence, :EUR)
+  end
+  def exchange_currency(%Money{amount: pence, currency: :GBP}, "USD") do
+    Money.new(pence, :USD)
+  end
+
   def logged_in?(session) do
     Session.logged_in?(session)
   end
@@ -44,9 +59,10 @@ defmodule UM.Web.ViewHelpers do
 
   # This is the price without vat
   def checkout_price(session) do
-    cart = Session.cart(session)
-    in_pence = UM.Sales.Cart.payment_gross(cart)
-    user_price(in_pence, session)
+    session
+    |> Session.cart
+    |> UM.Sales.Cart.payment_gross
+    |> in_local_currency(session)
   end
 
   def user_price(pence, session) when is_integer(pence) do
@@ -133,22 +149,8 @@ defmodule UM.Web.ViewHelpers do
     "TODO"
   end
 
-  def item_initial_price(%{initial_price: nil}), do: nil
-  def item_initial_price(%{initial_price: pence}), do: pence
-  def item_initial_price(%{initial_price: nil}, session), do: nil
-  def item_initial_price(%{initial_price: pence}, session) do
-    local_price(pence, session)
-  end
-
   def item_discounted_price(%{discounted_price: nil}), do: nil
   def item_discounted_price(%{discounted_price: pence}), do: pence
-
-  def item_subsequent_price(item) do
-    UM.Catalogue.Item.subsequent_price(item) / 100
-  end
-  def item_subsequent_price(item, session) do
-    local_price(UM.Catalogue.Item.subsequent_price(item), session)
-  end
 
   def item_asset_url(item) do
     UM.Catalogue.ItemStorage.url({item.asset, item}, :original, signed: true)

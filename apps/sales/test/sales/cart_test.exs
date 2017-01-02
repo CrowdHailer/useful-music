@@ -28,15 +28,15 @@ defmodule UM.Sales.CartTest do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
     cart = Cart.edit_line(cart, %{item: piano_part, quantity: 2})
-    assert 600 == Cart.list_price(cart)
+    assert Money.new(600, :GBP) == Cart.list_price(cart)
   end
 
   test "can have a discount " do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
     cart = Cart.add_discount(cart, two_pounds_odd)
-    assert 440 == Cart.list_price(cart)
-    assert 200 == Cart.discount_value(cart)
+    assert Money.new(440, :GBP) == Cart.list_price(cart)
+    assert Money.new(200, :GBP) == Cart.discount_value(cart)
     refute Cart.free?(cart)
   end
 
@@ -44,8 +44,8 @@ defmodule UM.Sales.CartTest do
     cart = Cart.empty
     cart = Cart.edit_line(cart, %{item: piano_part, quantity: 2})
     cart = Cart.add_discount(cart, two_pounds_odd)
-    assert 160 == Cart.list_price(cart)
-    assert 200 == Cart.discount_value(cart)
+    assert Money.new(160, :GBP) == Cart.list_price(cart)
+    assert Money.new(200, :GBP) == Cart.discount_value(cart)
     assert Cart.free?(cart)
   end
 
@@ -54,32 +54,32 @@ defmodule UM.Sales.CartTest do
     cart = Cart.edit_line(cart, %{item: flute_part, quantity: 10})
     cart = Cart.add_discount(cart, two_pounds_odd)
     {:ok, order} = Cart.checkout(cart, %{vat_rate: 0.2, currency: "GBP", customer_id: "hi"})
-    assert 440 == order.cart_total
-    assert 200 == order.discount_value
-    assert 240 == order.payment_gross
-    assert 48 == order.tax_payment
-    assert 288 == order.payment_net
+    assert Money.new(440, :GBP) == order.cart_total
+    assert Money.new(200, :GBP) == order.discount_value
+    assert Money.new(240, :GBP) == order.payment_gross
+    assert Money.new(48, :GBP) == order.tax_payment
+    assert Money.new(288, :GBP) == order.payment_net
     assert "GBP" == order.currency
     assert cart == order.cart
   end
 
   def two_pounds_odd do
     %UM.Sales.Discount{
-      value: 200
+      value: Money.new(200, :GBP)
     }
   end
 
   def flute_part do
     %{
       id: "flute-part",
-      initial_price: 80,
-      discounted_price: 40
+      initial_price: Money.new(80, :GBP),
+      discounted_price: Money.new(40, :GBP)
     }
   end
   def piano_part do
     %{
       id: "piano-part",
-      initial_price: 80,
+      initial_price: Money.new(80, :GBP),
       discounted_price: nil
     }
   end

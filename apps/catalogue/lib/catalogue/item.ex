@@ -9,7 +9,7 @@ defmodule UM.Catalogue.Item do
   ]
 
   def price_for(item, n) when is_integer(n) and n > 0 do
-    item.initial_price + (n-1) * subsequent_price(item)
+    Money.add(item.initial_price, Money.multiply(subsequent_price(item), (n-1)))
   end
 
   def initial_price(%{initial_price: i}) do

@@ -30,7 +30,8 @@ defmodule UM.Sales.CartsRepo do
     purchases = Enum.map(purchases, fn
       (purchase = %{item_id: item_id}) ->
         query = db(:items) |> filter(id: item_id)
-        item = Moebius.Db.first(query)
+        # DEBT this should not reference the catalogue domain
+        item = UM.Catalogue.unpack_item(Moebius.Db.first(query))
         {item.id, Map.merge(purchase, %{item: item})}
     end)
     |> Enum.into(%{})

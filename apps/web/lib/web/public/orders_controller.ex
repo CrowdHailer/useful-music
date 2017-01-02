@@ -20,7 +20,7 @@ defmodule UM.Web.OrdersController do
   EEx.function_from_file :def, :show_page, show_template, [:order, :cart]
 
   def handle_request(%{path: [id], method: :GET}, _) do
-    case UM.Sales.Orders.fetch_by_id(id) do
+    case UM.Sales.OrdersRepo.fetch_by_id(id) do
       {:ok, order} ->
         {:ok, cart} = UM.Sales.CartsRepo.fetch_by_id(order.shopping_basket_id)
         {:no_layout, Raxx.Response.ok(show_page(order, cart))}

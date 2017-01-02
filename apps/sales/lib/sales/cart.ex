@@ -14,7 +14,6 @@ defmodule UM.Sales.Cart do
     currency: nil, # feel like that might not be neccessary
     discount: nil
   ]
-
   def empty do
     %__MODULE__{}
   end
@@ -23,7 +22,12 @@ defmodule UM.Sales.Cart do
 
   # Checkout price
   def payment_gross(cart) do
-    max(list_price(cart) - discount_value(cart), 0)
+    price = Money.subtract(list_price(cart), discount_value(cart))
+    if Money.positive?(price) do
+      price
+    else
+      Money.new(0, :GBP)
+    end
   end
 
   def checkout_price(cart) do
@@ -35,9 +39,9 @@ defmodule UM.Sales.Cart do
   end
 
   def list_price(%{purchases: purchases}) do
-    Enum.reduce(purchases, 0, fn
+    Enum.reduce(purchases, Money.new(0, :GBP), fn
       ({_item_id, purchase}, total) ->
-        total + line_price(purchase)
+        Money.add(total, line_price(purchase))
     end)
   end
 
@@ -96,8 +100,8 @@ defmodule UM.Sales.Cart do
     list_price = list_price(cart)
     discount_value = discount_value(cart)
     payment_gross = checkout_price(cart)
-    tax_payment = round(payment_gross * vat_rate)
-    payment_net = payment_gross + tax_payment
+    tax_payment = Money.multiply(payment_gross, vat_rate)
+    payment_net = Money.add(payment_gross, tax_payment)
     {:ok, %UM.Sales.Order{
       customer_id: customer_id,
       state: "pending",

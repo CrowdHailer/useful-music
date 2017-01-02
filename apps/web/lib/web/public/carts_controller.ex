@@ -76,7 +76,7 @@ defmodule UM.Web.CartsController do
           customer_id: UM.Web.Session.current_customer(session).id
         })
         order = %{order | id: Utils.random_string(16)}
-        {:ok, order} = UM.Sales.Orders.insert(order)
+        {:ok, order} = UM.Sales.OrdersRepo.insert(order)
         Raxx.Patch.redirect("/orders/#{order.id}")
       false ->
         Raxx.Response.forbidden("Forbidden")

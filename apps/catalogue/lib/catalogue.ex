@@ -213,6 +213,7 @@ defmodule UM.Catalogue do
   def load_items(piece = %{id: piece_id}) do
     query = db(:items) |> filter(piece_id: piece_id)
     items = Moebius.Db.run(query)
+    |> Enum.map(&unpack_item/1)
     {:ok, Map.merge(piece, %{items: items})}
   end
 

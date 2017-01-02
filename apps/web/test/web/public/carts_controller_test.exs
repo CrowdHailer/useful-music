@@ -97,7 +97,7 @@ defmodule UM.Web.CartsControllerTest do
     response = Controller.handle_request(request, [])
     request_2 = Raxx.Patch.follow(response)
     assert ["orders", order_id] = request_2.path
-    {:ok, order} = UM.Sales.Orders.fetch_by_id(order_id)
+    {:ok, order} = UM.Sales.OrdersRepo.fetch_by_id(order_id)
     assert order.state == "pending"
     assert order.currency == "GBP"
     assert order.customer_id == jo.id

@@ -107,10 +107,8 @@
                         <%= item.name %>
                       </h6>
                       <input type="number" min="0" name="purchases[<%= item.id %>]" value="<%= quantity_in_cart(session, item) %>">
-                      <!-- <a href=""><i class="fa fa-plus-circle licence-icon"></i></a>
-                      <a href=""><i class="fa fa-minus-circle licence-icon"></i></a> -->
-                      <p><%= item_initial_price(item, session) %> first licence</p>
-                      <p><%= item_subsequent_price(item, session) %> additional</p>
+                      <p><%= item.initial_price |> in_local_currency(session) %> first licence</p>
+                      <p><%= UM.Catalogue.Item.subsequent_price(item) |> in_local_currency(session) %> additional</p>
                     </div>
                   </div>
                   <% end %>

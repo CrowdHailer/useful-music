@@ -1,4 +1,4 @@
-defmodule UM.Sales.Orders do
+defmodule UM.Sales.OrdersRepo do
   import Moebius.Query
 
   def fetch_by_id(id) do
@@ -36,6 +36,16 @@ defmodule UM.Sales.Orders do
   end
 
   def insert(order = %{id: id}) when is_binary(id) do
+
+    %Money{amount: cart_total, currency: :GBP} = order.cart_total
+    order = %{order | cart_total: cart_total}
+    %Money{amount: payment_gross, currency: :GBP} = order.payment_gross
+    order = %{order | payment_gross: payment_gross}
+    %Money{amount: payment_net, currency: :GBP} = order.payment_net
+    order = %{order | payment_net: payment_net}
+    %Money{amount: tax_payment, currency: :GBP} = order.tax_payment
+    order = %{order | tax_payment: tax_payment}
+
     basket_total = order.cart_total
     shopping_basket_id = order.cart.id
     order = Map.delete(order, :__struct__)
@@ -44,6 +54,7 @@ defmodule UM.Sales.Orders do
     order = Map.merge(order, %{basket_total: basket_total})
     order = Map.merge(order, %{shopping_basket_id: shopping_basket_id})
     order = Enum.map(order, fn(x) -> x end)
+
     action = db(:orders) |> insert(order)
     case Moebius.Db.run(action) do
       record = %{id: ^id} ->
