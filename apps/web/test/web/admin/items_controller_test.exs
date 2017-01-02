@@ -23,7 +23,7 @@ defmodule Um.Web.Admin.ItemsControllerTest do
         "name" => "Flute part",
         "piece_id" => "#{piece.id}",
         "initial_price" => "40",
-        "discounted_price" => "20",
+        "discounted_price" => "",
         "asset" => %Raxx.Upload{filename: "bob.png", content: "hello world"},
     }})
     response = Controller.handle_request(request, :nostate)

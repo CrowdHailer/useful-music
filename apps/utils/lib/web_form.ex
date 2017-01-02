@@ -27,6 +27,8 @@
 # Raxx.Upload.EmptyFile
 # first_name: NameField
 
+# option arguments should be blank/empty -> default, required
+
 defmodule WebForm do
   defmodule Field do
     defstruct [:validator, :blank]

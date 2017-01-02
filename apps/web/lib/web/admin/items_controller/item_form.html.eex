@@ -60,7 +60,7 @@
                         min="0"
                         step="0.01"
                         required
-                        value="<%= item_initial_price(item) %>"
+                        value="<%= item.initial_price |> as_pounds %>"
                         placeholder="initial price">
                 </div>
 
@@ -72,7 +72,7 @@
                         type="number"
                         min="0"
                         step="0.01"
-                        value="<%= item_discounted_price(item) %>"
+                        value="<%= item.discounted_price |> as_pounds %>"
                         placeholder="discounted price">
                 </div>
 

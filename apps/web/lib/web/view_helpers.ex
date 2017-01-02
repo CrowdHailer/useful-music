@@ -10,6 +10,13 @@ defmodule UM.Web.ViewHelpers do
     format_price({"GBP", price})
   end
 
+  def as_pounds(%Money{amount: pence, currency: :GBP}) do
+    pence / 100
+  end
+  def as_pounds(nil) do
+    nil
+  end
+
   def local_price(pence, session) when is_integer(pence) do
     user_price(pence, session)
   end

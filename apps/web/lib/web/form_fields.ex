@@ -28,8 +28,8 @@ defmodule UM.Web.FormFields do
       {float, ""} ->
         {:ok, Money.new(round(float * 100), :GBP)}
         # {:ok, round(float * 100)} # TODO check decimal places
-        _ ->
-        {:error, :not_a_float, raw}
+      _ ->
+      {:error, :not_a_float}
     end
   end
 
