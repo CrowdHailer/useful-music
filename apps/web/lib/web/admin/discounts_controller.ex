@@ -12,7 +12,7 @@ defmodule UM.Web.Admin.DiscountsController do
 
   def handle_request(%{path: [], method: :GET, query: query}, _) do
     page = UM.Web.requested_page(query)
-    {:ok, page_of_discounts} = UM.Sales.Discounts.index_by_code(page)
+    {:ok, page_of_discounts} = UM.Sales.DiscountsRepo.index_by_code(page)
     Raxx.Response.ok(index_template(page_of_discounts))
   end
 
@@ -25,7 +25,7 @@ defmodule UM.Web.Admin.DiscountsController do
     case EditForm.validate(form) do
       {:ok, data} ->
         discount = Map.merge(data, %{id: Utils.random_string(16)})
-        case UM.Sales.Discounts.insert(discount) do
+        case UM.Sales.DiscountsRepo.insert(discount) do
           {:ok, discount} ->
             Raxx.Patch.redirect("/admin/discounts/#{discount.id}/edit", %{success: "Discount created"})
         end
@@ -36,7 +36,7 @@ defmodule UM.Web.Admin.DiscountsController do
   end
 
   def handle_request(%{path: [id, "edit"], method: :GET}, _) do
-    {:ok, discount} = UM.Sales.Discounts.fetch_by_id(id)
+    {:ok, discount} = UM.Sales.DiscountsRepo.fetch_by_id(id)
     Raxx.Response.ok(form_template(discount))
   end
 
@@ -44,7 +44,7 @@ defmodule UM.Web.Admin.DiscountsController do
     case EditForm.validate(form) do
       {:ok, data} ->
         discount = Map.merge(data, %{id: id})
-        case UM.Sales.Discounts.update(discount) do
+        case UM.Sales.DiscountsRepo.update(discount) do
           {:ok, discount} ->
             Raxx.Patch.redirect("/admin/discounts/#{discount.id}/edit", %{success: "Discount updated"})
         end

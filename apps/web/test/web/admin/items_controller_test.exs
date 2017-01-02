@@ -50,11 +50,11 @@ defmodule Um.Web.Admin.ItemsControllerTest do
   end
 
   test "item edit page is available", %{canonical: piece} do
-    {:ok, item} = UM.Catalogue.create_item(%{
+    {:ok, item} = UM.Catalogue.create_item(%UM.Catalogue.Item{
       piece_id: piece.id,
       name: "This piece",
       asset: "somefile.mp3",
-      initial_price: 40
+      initial_price: %Money{currency: :GBP, amount: 40}
     })
     request = get("/#{item.id}/edit")
     response = Controller.handle_request(request, :nostate)
@@ -63,18 +63,18 @@ defmodule Um.Web.Admin.ItemsControllerTest do
   end
 
   test "can edit an item", %{canonical: piece} do
-    {:ok, item} = UM.Catalogue.create_item(%{
+    {:ok, item} = UM.Catalogue.create_item(%UM.Catalogue.Item{
       piece_id: piece.id,
       name: "This piece",
       asset: "somefile.mp3",
-      initial_price: 40
+      initial_price: %Money{currency: :GBP, amount: 40}
     })
     # was previously a put
     request = put("/#{item.id}", %{"item" => %{
       "name" => "Flute part",
       "piece_id" => "#{piece.id}",
-      "initial_price" => "90",
-      "discounted_price" => "20",
+      "initial_price" => "90.00",
+      "discounted_price" => "20.00",
       "asset" => %Raxx.Upload{filename: "", content: ""},
     }})
     response = Controller.handle_request(request, :nostate)
@@ -84,15 +84,15 @@ defmodule Um.Web.Admin.ItemsControllerTest do
     assert String.contains?(location, "Item+updated")
     {:ok, updated_item} = UM.Catalogue.fetch_item(item.id)
     assert "somefile.mp3" == updated_item.asset
-    assert 9000 == updated_item.initial_price
+    assert Money.new(9000, :GBP) == updated_item.initial_price
   end
 
   test "can delete an item", %{canonical: piece} do
-    {:ok, item} = UM.Catalogue.create_item(%{
+    {:ok, item} = UM.Catalogue.create_item(%UM.Catalogue.Item{
       piece_id: piece.id,
       name: "This piece",
       asset: "somefile.mp3",
-      initial_price: 40
+      initial_price: %Money{currency: :GBP, amount: 40}
     })
     request = delete("/#{item.id}")
     response = Controller.handle_request(request, :nostate)

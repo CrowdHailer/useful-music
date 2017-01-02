@@ -39,20 +39,9 @@ defmodule UM.Catalogue do
     piece
   end
 
-  def create_piece(piece = %{id: id}) do
+  def create_piece(piece) do
     piece = save_piece_assets(piece)
-    piece = Enum.map(piece, fn(x) -> x end)
-
-    action = db(:pieces) |> insert(piece)
-    case Moebius.Db.run(action) do
-      record = %{id: ^id} ->
-        {:ok, record}
-      # DEBT exatch matching
-      {:error, "duplicate key value violates unique constraint \"pieces_pkey\""} ->
-        {:error, :id_already_used}
-      {:error, reason} ->
-        {:error, reason}
-    end
+    UM.Catalogue.PiecesRepo.insert(piece)
   end
 
   def fetch_piece(id) do
@@ -138,13 +127,20 @@ defmodule UM.Catalogue do
     item = Map.put(item, :id, Utils.random_string(16))
 
     item = save_item_assets(item)
-
-    item = Enum.map(item, fn(x) -> x end)
+    item = pack_item(item)
+    item = [
+      id: Map.get(item, :id),
+      name: Map.get(item, :name),
+      initial_price: Map.get(item, :initial_price),
+      discounted_price: Map.get(item, :discounted_price),
+      asset: Map.get(item, :asset),
+      piece_id: Map.get(item, :piece_id)
+    ]
 
     action = db(:items) |> insert(item)
     case Moebius.Db.run(action) do
       record = %{id: _id} ->
-        {:ok, record}
+        {:ok, unpack_item(record)}
       {:error, reason} ->
         {:error, reason}
     end
@@ -154,22 +150,28 @@ defmodule UM.Catalogue do
     query = db(:items) |> filter(id: id)
     case Moebius.Db.first(query) do
       nil -> {:error, :item_not_found}
-      item -> {:ok, item}
+      record -> {:ok, unpack_item(record)}
     end
   end
 
   def update_item(item = %{id: id}) do
     item = save_item_assets(item)
-
-    # DEBT insert requires a keyword list
-    item = Enum.map(item, fn(x) -> x end)
+    item = pack_item(item)
+    item = [
+      id: Map.get(item, :id),
+      name: Map.get(item, :name),
+      initial_price: Map.get(item, :initial_price),
+      discounted_price: Map.get(item, :discounted_price),
+      asset: Map.get(item, :asset),
+      piece_id: Map.get(item, :piece_id)
+    ]
 
     action = db(:items)
       |> filter(id: id)
       |> update(item)
     case Moebius.Db.run(action) do
       record = %{id: ^id} ->
-        {:ok, record}
+        {:ok, unpack_item(record)}
       {:error, reason} ->
         {:error, reason}
     end
@@ -182,6 +184,29 @@ defmodule UM.Catalogue do
     case Moebius.Db.run(action) do
       %{deleted: 1} ->
         {:ok, id}
+    end
+  end
+
+  def pack_item(item) do
+    {:ok, %Money{currency: :GBP, amount: pence}} = Map.fetch(item, :initial_price)
+    item = %{item | initial_price: pence}
+    item = case Map.fetch(item, :discounted_price) do
+      {:ok, %Money{currency: :GBP, amount: pence}} ->
+        item = %{item | discounted_price: pence}
+      {:ok, nil} ->
+        item
+    end
+  end
+
+  def unpack_item(record) do
+    item = struct(UM.Catalogue.Item, record)
+    {:ok, pence} = Map.fetch(record, :initial_price)
+    item = %{item | initial_price: Money.new(pence, :GBP)}
+    item = case Map.fetch(item, :discounted_price) do
+      {:ok, pence} when is_integer(pence) ->
+        %{item | discounted_price: Money.new(pence, :GBP)}
+      {:ok, nil} ->
+        item
     end
   end
 

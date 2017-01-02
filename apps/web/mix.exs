@@ -29,6 +29,7 @@ defmodule UM.Web.Mixfile do
       {:bamboo, "~> 0.7"},
       {:raxx, "~> 0.8.0"},
       {:moebius, "~> 2.0.0"},
+      {:money, "~> 1.2"},
       {:poison, "~> 2.0.1"},
       {:plug, "~> 1.2.2"} # DEBT remove; currently used for query strings etc
     ]

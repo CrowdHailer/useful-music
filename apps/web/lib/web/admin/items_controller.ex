@@ -25,6 +25,8 @@ defmodule UM.Web.Admin.ItemsController do
           {:error, exception} ->
             Bugsnag.report(exception)
             IO.inspect(exception)
+            Raxx.Patch.redirect("/admin/pieces/UD#{data.piece_id}/edit")
+            |> UM.Web.with_flash(error: exception)
         end
       {:error, error} ->
         # DEBT send error to bugsnag or similar
@@ -47,12 +49,21 @@ defmodule UM.Web.Admin.ItemsController do
     form_or_errors = UM.Web.Admin.ItemsController.ItemForm.validate(form)
     case form_or_errors do
       {:ok, data} ->
-        case UM.Catalogue.update_item(Map.merge(%{id: id}, data)) do
+        data = case Map.pop(data, :asset) do
+          {nil, data} ->
+            data
+          {something, data} ->
+            Map.merge(data, %{asset: something})
+        end
+        {:ok, original} = UM.Catalogue.fetch_item(id)
+        case UM.Catalogue.update_item(Map.merge(original, data)) do
           {:ok, item} ->
             Raxx.Patch.redirect("/admin/pieces/UD#{item.piece_id}/edit", %{success: "Item updated"})
           {:error, exception} ->
             Bugsnag.report(exception)
             IO.inspect(exception)
+            Raxx.Patch.redirect("/admin/items/#{id}/edit")
+            |> UM.Web.with_flash(error: exception)
         end
     end
   end

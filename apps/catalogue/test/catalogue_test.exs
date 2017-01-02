@@ -71,9 +71,9 @@ defmodule UM.CatalogueTest do
   end
 
   test "can create a new item", %{id: piece_id} do
-    {:ok, item} = Catalogue.create_item(%{
+    {:ok, item} = Catalogue.create_item(%UM.Catalogue.Item{
       name: "audio",
-      initial_price: 60,
+      initial_price: Money.new(60, :GBP),
       asset: %{content: "some sounds", filename: "music.mp3"},
       piece_id: piece_id
     })
@@ -82,32 +82,32 @@ defmodule UM.CatalogueTest do
   end
 
   test "can update an item", %{id: piece_id} do
-    {:ok, item} = Catalogue.create_item(%{
+    {:ok, item} = Catalogue.create_item(%UM.Catalogue.Item{
       name: "audio",
-      initial_price: 60,
+      initial_price: Money.new(60, :GBP),
       asset: %{content: "some sounds", filename: "music.mp3"},
       piece_id: piece_id
     })
     {:ok, item} = Catalogue.fetch_item(item.id)
-    item = %{item | initial_price: 100, name: "flute part", asset: %{content: "some picture", filename: "picture.jpg"}}
+    item = %{item | initial_price: Money.new(100, :GBP), name: "flute part", asset: %{content: "some picture", filename: "picture.jpg"}}
     {:ok, _item} = Catalogue.update_item(item)
     {:ok, item} = Catalogue.fetch_item(item.id)
-    assert 100 == item.initial_price
+    assert Money.new(100, :GBP) == item.initial_price
     assert "UD101_flute_part.jpg" == item.asset
     assert "/uploads/pieces/UD101/items/UD101_flute_part.jpg" == UM.Catalogue.ItemStorage.url({item.asset, item})
 
   end
 
   test "can load the items associated with a piece", %{id: piece_id} do
-    {:ok, _item} = Catalogue.create_item(%{
+    {:ok, _item} = Catalogue.create_item(%UM.Catalogue.Item{
       name: "violin piece",
-      initial_price: 60,
+      initial_price: Money.new(60, :GBP),
       asset: %{content: "some sounds", filename: "music.mp3"},
       piece_id: piece_id
       })
-    {:ok, _item} = Catalogue.create_item(%{
+    {:ok, _item} = Catalogue.create_item(%UM.Catalogue.Item{
       name: "flute piece",
-      initial_price: 60,
+      initial_price: Money.new(60, :GBP),
       asset: %{content: "some sounds", filename: "music.mp3"},
       piece_id: piece_id
       })

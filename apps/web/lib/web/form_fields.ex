@@ -26,7 +26,8 @@ defmodule UM.Web.FormFields do
   defp validate_price(raw) do
     case Float.parse(raw) do
       {float, ""} ->
-        {:ok, round(float * 100)} # TODO check decimal places
+        {:ok, Money.new(round(float * 100), :GBP)}
+        # {:ok, round(float * 100)} # TODO check decimal places
         _ ->
         {:error, :not_a_float, raw}
     end

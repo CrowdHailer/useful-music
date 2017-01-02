@@ -59,7 +59,7 @@ defmodule UM.Sales do
     end
   end
   def apply_discount_code(cart, discount_code) do
-    case UM.Sales.Discounts.fetch_available_code(discount_code) do
+    case UM.Sales.DiscountsRepo.fetch_available_code(discount_code) do
       {:ok, %{id: discount_id}} ->
         action = db(:shopping_baskets) |> filter(id: cart.id) |> update(discount_id: discount_id)
         case Moebius.Db.run(action) do
