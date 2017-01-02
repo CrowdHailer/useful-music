@@ -70,10 +70,10 @@
                         <%= order.state %>
                     </th>
                     <th>
-                        <%= UM.Sales.Order.payment_gross(order) |> format_price %>
+                        <%= UM.Sales.Order.payment_gross(order) %>
                     </th>
                     <th>
-                        <%= UM.Sales.Order.payment_net(order) |> format_price %>
+                        <%= UM.Sales.Order.payment_net(order) %>
                     </th>
                     <th>
                         <%= order.completed_at %>

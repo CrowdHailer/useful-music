@@ -80,7 +80,7 @@
               Basket Total
             </td>
             <td>
-              <%= UM.Sales.Order.cart_total(order) |> format_price %>
+              <%= UM.Sales.Order.cart_total(order) %>
             </td>
           </tr>
           <tr>
@@ -88,7 +88,7 @@
               Tax
             </td>
             <td>
-              <%= UM.Sales.Order.tax_payment(order) |> format_price %>
+              <%= UM.Sales.Order.tax_payment(order) %>
             </td>
           </tr>
           <tr>
@@ -96,7 +96,7 @@
               Discount
             </td>
             <td>
-              <%= UM.Sales.Order.discount_value(order) |> format_price %>
+              <%= UM.Sales.Order.discount_value(order) %>
             </td>
           </tr>
           <tr>
@@ -104,7 +104,7 @@
               Total
             </td>
             <td>
-              <%= UM.Sales.Order.payment_net(order) |> format_price %>
+              <%= UM.Sales.Order.payment_net(order) %>
             </td>
           </tr>
         </tbody>

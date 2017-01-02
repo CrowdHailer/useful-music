@@ -1,15 +1,6 @@
 defmodule UM.Web.ViewHelpers do
   alias UM.Web.Session
 
-  def format_price({"GBP", pence}) do
-    pounds = Float.to_string(pence / 100, decimals: 2)
-    # TODO some odd charachters
-    ("£" <> pounds) |> String.strip
-  end
-  def format_price(price) when is_integer(price) do
-    format_price({"GBP", price})
-  end
-
   def as_pounds(%Money{amount: pence, currency: :GBP}) do
     pence / 100
   end

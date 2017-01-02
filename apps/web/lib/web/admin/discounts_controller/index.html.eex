@@ -59,7 +59,7 @@
                         <a href="/admin/discounts/<%= discount.id %>/edit"><%= discount.code %></a>
                     </th>
                     <th>
-                        <%= discount.value |> format_price %>
+                        <%= discount.value %>
                     </th>
                     <th>
                         <%= discount.allocation %>

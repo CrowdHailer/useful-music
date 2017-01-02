@@ -32,10 +32,10 @@
                 <div class="large-2 medium-2 small-12 columns">
                     <div class="order-summary">
                         <h6>Amount</h6>
-                        <h6><%= UM.Sales.Order.payment_gross(order) |> format_price %></h6>
+                        <h6><%= UM.Sales.Order.payment_gross(order) %></h6>
                         <hr>
                         <h6>Tax</h6>
-                        <h6><%= UM.Sales.Order.tax_payment(order) |> format_price %></h6>
+                        <h6><%= UM.Sales.Order.tax_payment(order) %></h6>
                         <hr>
                         <div class="license-inform">
                           <h6 style="font-size: 1.5em;">License</h6>
@@ -93,10 +93,10 @@
                     <div class="large-2 medium-2 small-12 columns">
                         <div class="order-summary">
                             <h6>Amount</h6>
-                            <h6><%= UM.Sales.Order.payment_gross(order) |> format_price %></h6>
+                            <h6><%= UM.Sales.Order.payment_gross(order) %></h6>
                             <hr>
                             <h6>Tax</h6>
-                            <h6><%= UM.Sales.Order.tax_payment(order) |> format_price %></h6>
+                            <h6><%= UM.Sales.Order.tax_payment(order) %></h6>
                             <hr>
                             <h6>License</h6>
                             <a href="/orders/<%= order.id %>" target="_blank" download><h6>Download</h6></a>
