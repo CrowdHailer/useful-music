@@ -65,13 +65,13 @@
               <%= item.name %>
             </td>
             <td>
-              <%= item.asset # TODO %>
+              <%= item_asset_url(item) %>
             </td>
             <td>
               <%= quantity %>
             </td>
             <td>
-              <%= "price" %>
+              <%= "price TODO" %>
             </td>
           </tr>
           <% end %>

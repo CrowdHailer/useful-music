@@ -15,3 +15,8 @@ import_config "../apps/*/config/config.exs"
 #       level: :info,
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
+# Read from env
+config :sales,
+  accept_payments: true,
+  usd_exchange_rate: 1.5,
+  eur_exchange_rate: 1.4

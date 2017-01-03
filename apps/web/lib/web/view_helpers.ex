@@ -13,14 +13,16 @@ defmodule UM.Web.ViewHelpers do
     exchange_currency(money, local_currency)
   end
 
-  def exchange_currency(money = %Money{amount: pence, currency: :GBP}, "GBP") do
+  def exchange_currency(money = %Money{amount: _pence, currency: :GBP}, "GBP") do
     money
   end
   def exchange_currency(%Money{amount: pence, currency: :GBP}, "EUR") do
-    Money.new(pence, :EUR)
+    {:ok, rate} = Application.fetch_env(:sales, :eur_exchange_rate)
+    Money.new(round(pence * rate), :EUR)
   end
   def exchange_currency(%Money{amount: pence, currency: :GBP}, "USD") do
-    Money.new(pence, :USD)
+    {:ok, rate} = Application.fetch_env(:sales, :usd_exchange_rate)
+    Money.new(round(pence * rate), :USD)
   end
 
   def logged_in?(session) do

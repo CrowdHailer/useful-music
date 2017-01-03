@@ -178,16 +178,14 @@
       <input type="hidden" name="_method" value="DELETE">
       <input class="button alert clear-basket" type="submit" value="Clear Basket">
     </form>
-    <%= if true do %>
-    <!-- # SUSPEND_PAYMENTS TODO -->
+    <%= if !Application.get_env(:sales, :accept_payments, false) do %>
     <h6 style="color: black; margin-top: 1em;">This is (temporarily) as far as you can go.  We are still working on the checkout to make buying and downloading sheet music as simple, safe and reliable as possible.  You are welcome to stay here awhile and sample some scores and music.</h6>
     <h6 style="color: black;">Please come back soon.</h6>
     <% end %>
   </div>
   <div class="columns large-6 small-12">
     <div class="checkout-actions">
-      <!-- # SUSPEND_PAYMENTS TODO -->
-      <%= if true do %>
+      <%= if Application.get_env(:sales, :accept_payments, false) do %>
       <h6>
         Do you have a discount or free download code? Please enter it here:
       </h6>

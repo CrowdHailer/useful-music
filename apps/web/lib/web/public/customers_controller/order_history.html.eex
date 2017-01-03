@@ -17,6 +17,7 @@
     <div class="large-12 columns orders">
         <%= for order <- orders do %>
             <%= if true do %>
+            <!-- TODO filter order -->
             <!-- repeat this bit-->
             <div class="row collapse">
                 <div class="order-title-wrap">
@@ -78,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <%= true %>
+            <%= else %>
                 <div class="row collapse">
                     <div class="order-title-wrap expired">
                         <div class="row collapse">

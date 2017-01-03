@@ -22,22 +22,22 @@ defmodule UM.Sales.Order do
   ]
 
   def cart_total(%{currency: currency, cart_total: pence}) do
-    {currency, pence}
+    Money.new(pence, currency)
   end
 
   def tax_payment%{currency: currency, tax_payment: pence} do
-    {currency, pence}
+    Money.new(pence, currency)
   end
 
   def discount_value%{currency: currency, discount_value: pence} do
-    {currency, pence}
+    Money.new(pence, currency)
   end
 
   def payment_gross%{currency: currency, payment_net: pence} do
-    {currency, pence}
-  end
+    Money.new(pence, currency)
+    end
 
   def payment_net%{currency: currency, payment_net: pence} do
-    {currency, pence}
+    Money.new(pence, currency)
   end
 end
