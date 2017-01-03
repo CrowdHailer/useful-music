@@ -47,11 +47,6 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 
 - Create Order, autocomplete for free orders
 - pull out piece_name into item
-- Implement exchange rates. save exchange rate to order
-- Money package needs how to use in project and link to hex in README
-- Money package not to have USD by default, majority are not USD.
-- all prices are in pence lookup money package
-- Implement vat rates
 
 ### For Production
 
@@ -72,6 +67,11 @@ Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as
 - catalogue to destroy associated items when deleting piece
 - Handle invalid content values or assume octet content. check RFC.
 - paginate in SQL query
+- save exchange rate to order
+
+### Other
+- Money package needs how to use in project and link to hex in README
+- Money package not to have USD by default, majority are not USD.
 
 # Gateway
 maybe best to rename web to gateway but probably not gateway will be for API endpoint and www for web backend for front end
