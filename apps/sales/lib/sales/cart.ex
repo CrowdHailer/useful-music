@@ -54,8 +54,11 @@ defmodule UM.Sales.Cart do
   end
 
   def referenced?(cart) do
+    # Does the cart have,
+    # a) customer that has it as there current cart
+    # b) an order that uses it
     # TODO
-    false
+    true
   end
 
   def line_price(%{quantity: quantity, item: item}) do
