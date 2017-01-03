@@ -35,7 +35,9 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def user_country(session) do
-    nil # TODO
+    customer = Session.current_customer(session)
+    [country] = Countries.filter_by(:alpha2, customer.country)
+    country.name
   end
 
   def currency_preference(session) do
@@ -43,7 +45,14 @@ defmodule UM.Web.ViewHelpers do
   end
 
   def user_vat_rate(session) do
-    120 # TODO
+    customer = Session.current_customer(session)
+    [country] = Countries.filter_by(:alpha2, customer.country)
+    country
+    |> IO.inspect
+    |> Map.get(:vat_rates)
+    |> List.keyfind('standard', 0)
+    |> elem(1)
+    |> IO.inspect
   end
 
   # This is the price without vat
