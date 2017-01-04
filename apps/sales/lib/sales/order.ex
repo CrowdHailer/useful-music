@@ -18,7 +18,9 @@ defmodule UM.Sales.Order do
     :payer_identifier,
     :transaction_id,
     :completed_at,
-    :cart
+    :cart,
+    :created_at,
+    :updated_at
   ]
 
   def cart_total(%{currency: currency, cart_total: pence}) do

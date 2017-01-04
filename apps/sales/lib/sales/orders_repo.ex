@@ -35,8 +35,23 @@ defmodule UM.Sales.OrdersRepo do
     end
   end
 
-  def insert(order = %{id: id}) when is_binary(id) do
+  def available_orders(%{id: customer_id}) do
+    # pull all orders that succeeded in the last 4 days
+    # sorted by completion date
+    query = db(:orders)
+      |> filter(customer_id: customer_id, state: "succeded")
+      |> sort(:completed_at, :asc)
+    case Moebius.Db.run(query) do
+      {:error, reason} ->
+        {:error, reason}
+      records ->
+        orders = Enum.map(records, &unpack/1)
+        {:ok, orders} # DEBT does not paginate
+    end
+  end
 
+  # make discount value required
+  def insert(order = %{id: id}) when is_binary(id) do
     %Money{amount: cart_total, currency: :GBP} = order.cart_total
     order = %{order | cart_total: cart_total}
     %Money{amount: payment_gross, currency: :GBP} = order.payment_gross
@@ -45,6 +60,8 @@ defmodule UM.Sales.OrdersRepo do
     order = %{order | payment_net: payment_net}
     %Money{amount: tax_payment, currency: :GBP} = order.tax_payment
     order = %{order | tax_payment: tax_payment}
+    %Money{amount: discount_value, currency: :GBP} = order.discount_value
+    order = %{order | discount_value: discount_value}
 
     basket_total = order.cart_total
     shopping_basket_id = order.cart.id
