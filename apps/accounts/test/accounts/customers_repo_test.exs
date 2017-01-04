@@ -32,9 +32,16 @@ defmodule UM.Accounts.CustomersRepoTest do
     refute Map.has_key?(customer, :password)
   end
 
+  #DEBT not really a repo test
   test "can authenticate with correct password" do
     {:ok, customer} = Repo.insert(defaults(password: "password"))
-    assert UM.Accounts.Customer.check_password(customer, "password")
-    refute UM.Accounts.Customer.check_password(customer, "other_password")
+    assert {:ok, customer} = UM.Accounts.Customer.check_password(customer, "password")
+    assert customer.last_login_at == :now
+  end
+
+  #DEBT not really a repo test
+  test "can't authenticate with incorrect password" do
+    {:ok, customer} = Repo.insert(defaults(password: "password"))
+    assert {:error, :invalid_credentials} = UM.Accounts.Customer.check_password(customer, "other_password")
   end
 end

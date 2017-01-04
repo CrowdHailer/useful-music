@@ -18,7 +18,12 @@ defmodule UM.Accounts.Customer do
     "#{first_name} #{last_name}"
   end
 
-  def check_password(%{password_hash: hash}, attempt) do
-    Comeonin.Bcrypt.checkpw(attempt, hash)
+  def check_password(customer = %{password_hash: hash}, attempt) do
+    case Comeonin.Bcrypt.checkpw(attempt, hash) do
+      true ->
+        {:ok, Map.merge(customer, %{last_login_at: :now})}
+      false ->
+        {:error, :invalid_credentials}
+    end
   end
 end

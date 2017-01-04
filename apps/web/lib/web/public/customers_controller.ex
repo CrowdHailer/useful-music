@@ -105,13 +105,13 @@ defmodule UM.Web.CustomersControllerController do
     case ChangePasswordForm.validate(form) do
       {:ok, data} ->
         case UM.Accounts.Customer.check_password(customer, data.current_password) do
-          true ->
+          {:ok, customer} ->
             update = %{password: data.password}
             case UM.Accounts.CustomersRepo.update(Map.merge(update, %{id: customer.id})) do
               {:ok, customer} ->
                 Raxx.Patch.redirect("/customers/#{customer.id}", success: "Password changed")
             end
-          false ->
+          {:error, _reason} ->
             Raxx.Patch.redirect("/customers/#{customer.id}/change_password")
             |> UM.Web.with_flash(error: "Could not update password")
         end
