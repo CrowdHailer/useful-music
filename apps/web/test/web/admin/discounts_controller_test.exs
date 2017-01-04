@@ -36,7 +36,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
     redirect = Raxx.Patch.follow(response)
     assert {%{success: "Discount created"}, _request} = UM.Web.Flash.from_request(redirect)
     assert ["admin", "discounts", id, "edit"] = redirect.path
-    assert {:ok, %{code: "MYCODE23", value: 1000}} = UM.Sales.DiscountsRepo.fetch_by_id(id)
+    assert {:ok, %{code: "MYCODE23", value: %Money{amount: 1000, currency: :GBP}}} = UM.Sales.DiscountsRepo.fetch_by_id(id)
   end
 
   test "edit page is available" do
@@ -61,7 +61,7 @@ defmodule Um.Web.Admin.DiscountsControllerTest do
     redirect = Raxx.Patch.follow(response)
     assert {%{success: "Discount updated"}, _request} = UM.Web.Flash.from_request(redirect)
     assert ["admin", "discounts", id, "edit"] = redirect.path
-    assert {:ok, %{value: 900}} = UM.Sales.DiscountsRepo.fetch_by_id(id)
+    assert {:ok, %{value: %Money{amount: 900, currency: :GBP}}} = UM.Sales.DiscountsRepo.fetch_by_id(id)
   end
 
   # DEBT cannot delete code, just set run date to past date.

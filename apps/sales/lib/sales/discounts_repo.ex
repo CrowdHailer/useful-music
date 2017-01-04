@@ -53,6 +53,7 @@ defmodule UM.Sales.DiscountsRepo do
       {:error, reason} ->
         {:error, reason}
       entries ->
+        entries = entries |> Enum.map(&unpack/1)
         {:ok, Page.paginate(entries, page)}
     end
   end
@@ -61,8 +62,8 @@ defmodule UM.Sales.DiscountsRepo do
     query = db(:discounts) |> filter(id: id)
 
     case Moebius.Db.first(query) do
-      discount = %{id: ^id} ->
-        {:ok, discount}
+      record = %{id: ^id} ->
+        {:ok, unpack(record)}
     end
   end
 
@@ -70,15 +71,15 @@ defmodule UM.Sales.DiscountsRepo do
     # TODO check number redeemed etc
     query = db(:discounts) |> filter(code: code)
     case Moebius.Db.first(query) do
-      discount = %{id: _id} ->
-        {:ok, discount}
+      record = %{id: _id} ->
+        {:ok, unpack(record)}
       nil ->
         {:error, :not_found}
     end
   end
 
   def total_redemptions_for(%{id: id}) do
-    # TODO count
+    # TODO count number redeemed for
     0
   end
 end

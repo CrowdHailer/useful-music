@@ -57,7 +57,7 @@ defmodule UM.Sales.Cart do
     # Does the cart have,
     # a) customer that has it as there current cart
     # b) an order that uses it
-    # TODO
+    # TODO referenced cart, means order pending
     true
   end
 

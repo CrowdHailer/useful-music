@@ -155,10 +155,6 @@ defmodule UM.Web.ViewHelpers do
 
   ####### SALES #######
 
-  def discount_value(%{value: pence}) do
-    (pence || 0) / 100
-  end
-
   def discount_start_datetime(%{start_datetime: nil}) do
     ""
   end
@@ -180,16 +176,5 @@ defmodule UM.Web.ViewHelpers do
 
   def order_expiry_date(order) do
     "4 days later" # TODO
-  end
-
-  def order_purchases(order) do
-    [%{
-      item: %{
-        id: "something",
-        piece_id: "somethinf else",
-        asset: "TODO"
-
-      }
-    }]
   end
 end

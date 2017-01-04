@@ -47,28 +47,28 @@ defmodule UM.Catalogue.Fixtures do
       name: "flute",
       initial_price: 80,
       discounted_price: 40,
-      asset: "TODO link I dont have again",
+      asset: "link I dont have",
       piece_id: 477
     ) |> Moebius.Db.run
     db(:items) |> insert(
       id: "garden-all-parts",
       name: "all parts",
       initial_price: 140,
-      asset: "TODO link I dont have again",
+      asset: "link I dont have",
       piece_id: 477
     ) |> Moebius.Db.run
     db(:items) |> insert(
       id: "garden-audio-part",
       name: "audio",
       initial_price: 40,
-      asset: "TODO link I dont have again",
+      asset: "link I dont have",
       piece_id: 477
     ) |> Moebius.Db.run
     db(:items) |> insert(
       id: "garden-piano-part",
       name: "piano",
       initial_price: 80,
-      asset: "TODO link I dont have again",
+      asset: "link I dont have",
       piece_id: 477
     ) |> Moebius.Db.run
     piece
