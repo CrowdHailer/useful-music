@@ -149,8 +149,10 @@ defmodule UM.Catalogue do
   def fetch_item(id) do
     query = db(:items) |> filter(id: id)
     case Moebius.Db.first(query) do
-      nil -> {:error, :item_not_found}
-      record -> {:ok, unpack_item(record)}
+      nil ->
+        {:error, :item_not_found}
+      record ->
+        {:ok, unpack_item(record)}
     end
   end
 

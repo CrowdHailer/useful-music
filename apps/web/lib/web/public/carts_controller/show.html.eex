@@ -14,11 +14,11 @@
           </tr>
         </thead>
         <tbody>
-          <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do %>
+          <%= for {quantity, item, piece} <- UM.Sales.Cart.line_items(cart) do %>
           <tr>
             <td>
               <a href="/pieces/UD<%= item.piece_id %>">
-                <%= item_product_name(item) %>
+                <%= UM.Catalogue.Piece.product_name(piece) %>
               </a>
             </td>
             <td>
@@ -59,14 +59,14 @@
       </thead>
 
       <tbody>
-        <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do  %>
+        <%= for {quantity, item, piece} <- UM.Sales.Cart.line_items(cart) do  %>
         <tr>
           <td>
-            UD<%= item.piece_id %>
+            <%= UM.Catalogue.Piece.catalogue_number(piece) %>
           </td>
           <td>
-            <a href="/pieces/UD<%= item.piece_id %>">
-              <%= item_product_name(item) %>
+            <a href="/pieces/<%= UM.Catalogue.Piece.catalogue_number(piece) %>">
+              <%= UM.Catalogue.Piece.product_name(piece) %>
             </a>
           </td>
           <td>

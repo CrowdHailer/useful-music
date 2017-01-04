@@ -66,11 +66,14 @@ defmodule UM.Sales.Cart do
   end
 
   def line_items(cart = %{purchases: purchases}) do
+    # DEBT do a single query for all pieces then pack together
+    # probably achievable as a join
     for {_id, purchase} <- purchases do
       %{quantity: quantity, item: item} = purchase
-      {quantity, item}
+      {:ok, piece} = UM.Catalogue.fetch_piece(item.piece_id)
+      {quantity, item, piece}
     end
-    |> Enum.sort_by(fn({_, item}) -> item.piece_id end)
+    |> Enum.sort_by(fn({_quantity, item, _piece}) -> item.piece_id end)
   end
 
   def number_of_lines(%{purchases: purchases}), do: Enum.count(purchases)

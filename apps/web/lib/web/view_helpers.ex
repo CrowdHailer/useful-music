@@ -120,22 +120,8 @@ defmodule UM.Web.ViewHelpers do
     UM.Catalogue.Piece.product_name(piece)
   end
 
-  def item_product_name(%{piece_id: piece_id}) do
-    "TODO #{piece_id}"
-  end
-
   def piece_catalogue_number(piece) do
     UM.Catalogue.Piece.catalogue_number(piece)
-  end
-
-  def item_title(_) do
-    "TODO"
-  end
-  def item_sub_heading(_) do
-    "TODO"
-  end
-  def item_name(_) do
-    "TODO"
   end
 
   def item_discounted_price(%{discounted_price: nil}), do: nil

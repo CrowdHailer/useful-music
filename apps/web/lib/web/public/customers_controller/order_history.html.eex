@@ -58,19 +58,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%= for purchase <- order_purchases(order) do %>
+                                <%= for {quantity, item, piece} <- UM.Sales.Cart.line_items(order.cart) do %>
                                 <tr>
                                     <th>
-                                        <%= item_title(purchase.item) %>
+                                        <%= UM.Catalogue.Piece.product_name(piece) %>
                                     </th>
                                     <th>
-                                        <%= item_sub_heading(purchase.item) %>
+                                        <%= UM.Catalogue.Piece.sub_heading(piece) %>
                                     </th>
                                     <th>
-                                        <%= item_name(purchase.item) %>
+                                        <%= item.name %>
                                     </th>
                                     <th>
-                                        <a href="<%= item_asset_url(purchase.item) %>" download>Download</a>
+                                        <a href="<%= item_asset_url(item) %>" download>Download</a>
                                     </th>
                                 </tr>
                                 <% end %>
@@ -116,19 +116,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%= for purchase <- order_purchases(order) do %>
+                                    <%= for {quantity, item, piece} <- UM.Sales.Cart.line_items(order.cart) do %>
                                     <tr>
                                         <th>
-                                            <%= item_title(purchase.item) %>
+                                            <%= UM.Catalogue.Piece.product_name(piece) %>
                                         </th>
                                         <th>
-                                            <%= item_sub_heading(purchase.item) %>
+                                            <%= UM.Catalogue.Piece.sub_heading(piece) %>
                                         </th>
                                         <th>
-                                            <%= item_name(purchase.item) %>
+                                            <%= item.name %>
                                         </th>
                                         <th>
-                                            Expired - <a href="/pieces/<%= purchase.item.piece_id %>">Repurchase</a>
+                                            Expired - <a href="/pieces/<%= UM.Catalogue.Piece.product_name(piece) %>">Repurchase</a>
                                         </th>
                                     </tr>
                                     <% end %>

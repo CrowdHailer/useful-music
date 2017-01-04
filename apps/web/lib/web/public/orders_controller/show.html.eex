@@ -56,7 +56,7 @@
           </tr>
         </thead>
         <tbody>
-          <%= for {quantity, item} <- UM.Sales.Cart.line_items(cart) do %>
+          <%= for {quantity, item, piece} <- UM.Sales.Cart.line_items(cart) do %>
           <tr>
             <td>
               <%= "TODO #{item.piece_id}" %>
