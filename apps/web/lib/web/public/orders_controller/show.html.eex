@@ -59,7 +59,7 @@
           <%= for {quantity, item, piece} <- UM.Sales.Cart.line_items(cart) do %>
           <tr>
             <td>
-              <%= "TODO #{item.piece_id}" %>
+              <%= UM.Catalogue.Piece.product_name(piece) %>
             </td>
             <td>
               <%= item.name %>
@@ -71,7 +71,7 @@
               <%= quantity %>
             </td>
             <td>
-              <%= "price TODO" %>
+              <%= UM.Catalogue.Item.price_for(item, quantity) |> in_local_currency(session) %>
             </td>
           </tr>
           <% end %>
