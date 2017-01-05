@@ -15,6 +15,7 @@ defmodule UM.Web.FormFields do
     {:confirmation, "password"}
   end
 
+  # TODO validate country
   def country(opts) do
     WebForm.field(&pass_all/1, opts)
   end
@@ -62,7 +63,6 @@ defmodule UM.Web.FormFields do
     {:ok, input}
   end
 
-  # TODO validate contains letters only
   defp validate_name(text) do
     name = String.strip(text) |> String.capitalize
     case String.length(name) >= 2 do
@@ -73,11 +73,18 @@ defmodule UM.Web.FormFields do
           false ->
             {:error, "name is too long"}
           true ->
-            {:ok, name}
+            regex = ~r/^[a-z]+$/iu
+            case Regex.match?(regex, name) do
+              false ->
+                {:error, "name must be letters only"}
+              true ->
+                {:ok, name}
+            end
         end
     end
   end
 
+  # TODO validate contains letters only
   def validate_email(raw) do
     case String.split(raw, "@") do
       [_, _] ->

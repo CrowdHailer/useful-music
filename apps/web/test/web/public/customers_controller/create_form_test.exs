@@ -30,6 +30,11 @@ defmodule UM.Web.CustomersController.CreateFormTest do
     assert errors.first_name == "name is too short"
   end
 
+  test "name with invalid charachters is invalid" do
+    {:error, {data, errors}} = CreateForm.validate(%{"first_name" => "<script !!>"})
+    assert errors.first_name == "name must be letters only"
+  end
+
   test "long name is invalid" do
     {:error, {_data, errors}} = CreateForm.validate(%{"first_name" => "1111111111111111111111111111"})
     assert errors.first_name == "name is too long"

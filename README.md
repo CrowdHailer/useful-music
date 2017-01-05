@@ -41,12 +41,29 @@ Requires a database as well as elixir AND ruby build packs.
 Had to stop using subdirectory for elixir project.
 Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as-an-app/) was a possible alternative
 
+## Checklist
+
+- [ ] Filter pieces
+- [ ] Search for piece
+- [ ] View piece assets
+- [ ] Add items to cart
+- [ ] Change currency preferences
+- [ ] View cart
+- [ ] Create new user
+- [ ] Login
+- [ ] Edit account information
+- [ ] Reset password
+- [ ] Apply discount
+- [ ] Checkout
+- [ ] Review orders
+- [ ] View licence
+- [ ] Download assets
+
 ## Notes
 
 ### For Demo
 
 - Create Order, autocomplete for free orders
-- pull out piece_name into item
 
 ### For Production
 
