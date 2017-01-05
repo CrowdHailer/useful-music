@@ -47,7 +47,7 @@ defmodule UM.Sales.Cart do
   def discount_value(cart) do
     case cart.discount do
       nil ->
-        0
+        Money.new(0, :GBP)
       %{value: value} ->
         value
     end
