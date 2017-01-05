@@ -50,10 +50,13 @@ defmodule UM.Web.ViewHelpers do
     if logged_in?(session) do
       customer = Session.current_customer(session)
       [country] = Countries.filter_by(:alpha2, customer.country)
-      country
-      |> Map.get(:vat_rates)
-      |> List.keyfind('standard', 0)
-      |> elem(1)
+      case Map.fetch(country, :vat_rates) do
+        {:ok, nil} ->
+          0
+        {:ok, rates} ->
+          {'standard', rate} = List.keyfind(rates, 'standard', 0)
+          rate
+      end
     end
   end
 
