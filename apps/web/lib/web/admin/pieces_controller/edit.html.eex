@@ -110,7 +110,7 @@
                       id="piece_<%= category %>"
                       name="piece[<%= category %>]"
                       type="checkbox"
-                      <%= if piece[category], do: "checked" %>>
+                      <%= if Map.get(piece, category), do: "checked" %>>
                   </div>
                 <% end %>
 
@@ -161,7 +161,7 @@
                       id="piece_<%= instrument %>"
                       name="piece[<%= instrument %>]"
                       type="checkbox"
-                      <%= if piece[instrument], do: "checked" %>>
+                      <%= if Map.get(piece, instrument), do: "checked" %>>
                   </div>
                 <% end %>
 
