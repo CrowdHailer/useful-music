@@ -147,7 +147,7 @@ defmodule UM.Web.ViewHelpers do
     |> Enum.map(&stringify_option/1)
   end
 
-  defp stringify_option(term) do
+  def stringify_option(term) do
     "#{term}"
     |> String.capitalize
     |> String.replace("_", " ")

@@ -103,68 +103,16 @@
 
                 <hr>
 
-                <div class="pure-control-group">
-                    <label for="piece_solo">Solo</label>
-                    <input
-                    id="piece_solo"
-                    name="piece[solo]"
-                    type="checkbox"
-                    <%= if piece.solo, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_solo_with_accompaniment">Solo With Accompaniment</label>
-                    <input
-                    id="piece_solo_with_accompaniment"
-                    name="piece[solo_with_accompaniment]"
-                    type="checkbox"
-                    <%= if piece.solo_with_accompaniment, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_duet">Duet</label>
-                    <input
-                    id="piece_duet"
-                    name="piece[duet]"
-                    type="checkbox"
-                    <%= if piece.duet, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_trio">Trio</label>
-                    <input
-                    id="piece_trio"
-                    name="piece[trio]"
-                    type="checkbox"
-                    <%= if piece.trio, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_quartet">Quartet</label>
-                    <input
-                    id="piece_quartet"
-                    name="piece[quartet]"
-                    type="checkbox"
-                    <%= if piece.quartet, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_larger_ensembles">Larger Emsembles</label>
-                    <input
-                    id="piece_larger_ensembles"
-                    name="piece[larger_ensembles]"
-                    type="checkbox"
-                    <%= if piece.larger_ensembles, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_collection">Collection</label>
-                    <input
-                    id="piece_collection"
-                    name="piece[collection]"
-                    type="checkbox"
-                    <%= if piece.collection, do: "checked" %>>
-                </div>
+                <%= for category <- UM.Catalogue.Piece.all_categories ++ [:collection] do %>
+                  <div class="pure-control-group">
+                      <label for="piece_<%= category %>"><%= category |> UM.Web.ViewHelpers.stringify_option %></label>
+                      <input
+                      id="piece_<%= category %>"
+                      name="piece[<%= category %>]"
+                      type="checkbox"
+                      <%= if piece[category], do: "checked" %>>
+                  </div>
+                <% end %>
 
                 <hr>
 
@@ -206,113 +154,16 @@
 
                 <hr>
 
-                <div class="pure-control-group">
-                    <label for="piece_piano">Piano</label>
-                    <input
-                    id="piece_piano"
-                    name="piece[piano]"
-                    type="checkbox"
-                    <%= if piece.piano, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_recorder">Recorder</label>
-                    <input
-                    id="piece_recorder"
-                    name="piece[recorder]"
-                    type="checkbox"
-                    <%= if piece.recorder, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_flute">Flute</label>
-                    <input
-                    id="piece_flute"
-                    name="piece[flute]"
-                    type="checkbox"
-                    <%= if piece.flute, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_oboe">Oboe</label>
-                    <input
-                    id="piece_oboe"
-                    name="piece[oboe]"
-                    type="checkbox"
-                    <%= if piece.oboe, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_clarineo">Clarineo</label>
-                    <input
-                    id="piece_clarineo"
-                    name="piece[clarineo]"
-                    type="checkbox"
-                    <%= if piece.clarineo, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_clarinet">Clarinet</label>
-                    <input
-                    id="piece_clarinet"
-                    name="piece[clarinet]"
-                    type="checkbox"
-                    <%= if piece.clarinet, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_bassoon">Bassoon</label>
-                    <input
-                    id="piece_bassoon"
-                    name="piece[bassoon]"
-                    type="checkbox"
-                    <%= if piece.bassoon, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_saxophone">Saxophone</label>
-                    <input
-                    id="piece_saxophone"
-                    name="piece[saxophone]"
-                    type="checkbox"
-                    <%= if piece.saxophone, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_trumpet">Trumpet</label>
-                    <input
-                    id="piece_trumpet"
-                    name="piece[trumpet]"
-                    type="checkbox"
-                    <%= if piece.trumpet, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_violin">Violin</label>
-                    <input
-                    id="piece_violin"
-                    name="piece[violin]"
-                    type="checkbox"
-                    <%= if piece.violin, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_viola">Viola</label>
-                    <input
-                    id="piece_viola"
-                    name="piece[viola]"
-                    type="checkbox"
-                    <%= if piece.viola, do: "checked" %>>
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="piece_percussion">Percussion</label>
-                    <input
-                    id="piece_percussion"
-                    name="piece[percussion]"
-                    type="checkbox"
-                    <%= if piece.percussion, do: "checked" %>>
-                </div>
+                <%= for instrument <- UM.Catalogue.Piece.all_instruments do %>
+                  <div class="pure-control-group">
+                      <label for="piece_<%= instrument %>"><%= instrument |> UM.Web.ViewHelpers.stringify_option %></label>
+                      <input
+                      id="piece_<%= instrument %>"
+                      name="piece[<%= instrument %>]"
+                      type="checkbox"
+                      <%= if piece[instrument], do: "checked" %>>
+                  </div>
+                <% end %>
 
                 <hr>
 
