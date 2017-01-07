@@ -20,9 +20,17 @@ defmodule UM.Accounts do
   end
 
   def reset_password(data) do
-    {:ok, customer} = CustomersRepo.fetch_by_email(data.email)
-    {:ok, updated} = UM.Accounts.Customer.reset_password(customer, data)
-    CustomersRepo.update(updated)
+    case CustomersRepo.fetch_by_email(data.email) do
+      {:ok, customer} ->
+        case UM.Accounts.Customer.reset_password(customer, data) do
+          {:ok, updated} ->
+            CustomersRepo.update(updated)
+          {:error, reason} ->
+            {:error, reason}
+        end
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
   def authenticate(%{email: email, password: password}) do

@@ -23,7 +23,6 @@ defmodule UM.Web.PasswordResetsController do
           scheme: "http"
         }
         # DEBT hardcoding of scheme
-        # File.join(application_url, 'password_resets', customer.password_reset_token, 'edit') + "?email=#{customer.email}"
         UM.Web.Emails.password_reset_created(customer, password_reset_url)
         |> UM.Web.Mailer.deliver_now
         Raxx.Patch.redirect("/sessions/new", success: "A password reset has been sent to your email")
