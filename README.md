@@ -118,10 +118,9 @@ Needed for some tests
 
 ### Nice to have
 
+- Google analytics code
 - password reset checks the token has not expired
-- check the format of user names
 
-- set signed url expiry to 60 minutes
 - form validation on files, accept types
 - single page info webform
 - remove abandoned carts
