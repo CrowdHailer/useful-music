@@ -42,7 +42,7 @@ heroku apps:create um-tmp --remote tmp
 
 # Setup buildpacks
 heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git --remote tmp
-heroku buildpacks:set heroku/ruby --remote tmp
+heroku buildpacks:add heroku/ruby --remote tmp
 heroku buildpacks --remote tmp
 # === um-tmp Buildpack URLs
 # 1. https://github.com/HashNuke/heroku-buildpack-elixir.git
