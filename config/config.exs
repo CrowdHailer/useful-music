@@ -20,3 +20,6 @@ config :sales,
   accept_payments: true,
   usd_exchange_rate: 1.5,
   eur_exchange_rate: 1.4
+
+config :arc,
+  version_timeout: 60_000
