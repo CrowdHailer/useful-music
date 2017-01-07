@@ -12,11 +12,20 @@ defmodule UM.Web.PasswordResetsController do
     Raxx.Response.ok(new_page_content(nil))
   end
 
-  def handle_request(%{path: [], method: :POST, body: %{"customer" => form}}, _) do
+  def handle_request(request = %{path: [], method: :POST, body: %{"customer" => form}}, _) do
     email = Map.get(form, "email", "")
     case UM.Accounts.create_password_reset(email) do
       {:ok, customer} ->
-        # send email
+        password_reset_url = %URI{
+          host: request.host,
+          port: request.port,
+          path: "/password_resets/#{customer.password_reset_token}/edit?email=#{customer.email}",
+          scheme: "http"
+        }
+        # DEBT hardcoding of scheme
+        # File.join(application_url, 'password_resets', customer.password_reset_token, 'edit') + "?email=#{customer.email}"
+        UM.Web.Emails.password_reset_created(customer, password_reset_url)
+        |> UM.Web.Mailer.deliver_now
         Raxx.Patch.redirect("/sessions/new", success: "A password reset has been sent to your email")
       {:error, :not_found} ->
         Raxx.Response.ok(new_page_content(email))
