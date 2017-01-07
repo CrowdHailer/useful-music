@@ -23,23 +23,27 @@ defmodule UM.Sales.Order do
     :updated_at
   ]
 
-  def cart_total(%{currency: currency, cart_total: pence}) do
-    Money.new(pence, currency)
+  def cart_total(order = %{currency: currency, cart_total: pence}) do
+    Money.new(pence, currency(order))
   end
 
-  def tax_payment%{currency: currency, tax_payment: pence} do
-    Money.new(pence, currency)
+  def tax_payment(order = %{currency: currency, tax_payment: pence}) do
+    Money.new(pence, currency(order))
   end
 
-  def discount_value%{currency: currency, discount_value: pence} do
-    Money.new(pence, currency)
+  def discount_value(order = %{currency: currency, discount_value: pence}) do
+    Money.new(pence, currency(order))
   end
 
-  def payment_gross%{currency: currency, payment_net: pence} do
-    Money.new(pence, currency)
+  def payment_gross(order = %{currency: currency, payment_net: pence}) do
+    Money.new(pence, currency(order))
     end
 
-  def payment_net%{currency: currency, payment_net: pence} do
-    Money.new(pence, currency)
+  def payment_net(order = %{currency: currency, payment_net: pence}) do
+    Money.new(pence, currency(order))
+  end
+
+  def currency(%{currency: currency}) do
+    currency || "GBP"
   end
 end
