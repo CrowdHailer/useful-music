@@ -29,5 +29,5 @@ if Mix.env == :test do
     session_secret_key: "secret"
 else
   config :web,
-    session_secret_key: System.get_env |> Map.fetch!("SESSION_SECRET_KEY")
+    session_secret_key: System.get_env("SESSION_SECRET_KEY")
 end
