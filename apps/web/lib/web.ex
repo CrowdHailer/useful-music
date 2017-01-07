@@ -24,7 +24,6 @@ defmodule UM.Web do
   end
 
   require Logger
-  @session_secret_key Application.get_env(:web, :session_secret_key)
 
   def handle_request(request, env) do
     Logger.info(request |> inspect)
@@ -54,7 +53,7 @@ defmodule UM.Web do
       headers = case List.keytake(headers, "um-set-session", 0) do
         {{"um-set-session", session}, headers} ->
           packed_session = UM.Web.Session.encode!(session)
-          digest = :crypto.hmac(:sha, @session_secret_key, packed_session) |> Base.encode64
+          digest = :crypto.hmac(:sha, System.get_env("SESSION_SECRET_KEY"), packed_session) |> Base.encode64
           signed_session = digest <> "--" <> packed_session
           cookie_string = Raxx.Cookie.new("raxx.session", signed_session, path: "/")
           |> Raxx.Cookie.set_cookie_string

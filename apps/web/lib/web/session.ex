@@ -76,8 +76,6 @@ defmodule UM.Web.Session do
     %{session | account: updated_customer, cart: cart}
   end
 
-  @session_secret_key Application.get_env(:web, :session_secret_key)
-
   def unpack(request) do
     headers = request.headers
     {"cookie", cookie_string} = List.keyfind(headers, "cookie", 0, {"cookie", ""})
@@ -85,7 +83,7 @@ defmodule UM.Web.Session do
 
     case Map.get(cookies, "raxx.session", "") |> String.split("--") do
       [digest, session_string] ->
-        if digest == :crypto.hmac(:sha, @session_secret_key, session_string) |> Base.encode64 do
+        if digest == :crypto.hmac(:sha, System.get_env("SESSION_SECRET_KEY"), session_string) |> Base.encode64 do
           session = decode(session_string)
           {session, request}
         else

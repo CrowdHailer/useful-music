@@ -29,5 +29,6 @@ if Mix.env == :test do
     session_secret_key: "secret"
 else
   config :web,
+    # For some reason we cannot fetch the env as it is not available while heroku is fetching dependencies
     session_secret_key: System.get_env("SESSION_SECRET_KEY")
 end
