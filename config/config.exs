@@ -23,3 +23,11 @@ config :sales,
 
 config :arc,
   version_timeout: 60_000
+
+if Mix.env == :test do
+  config :web,
+    session_secret_key: "secret"
+else
+  config :web,
+    session_secret_key: System.get_env |> Map.fetch!("SESSION_SECRET_KEY")
+end

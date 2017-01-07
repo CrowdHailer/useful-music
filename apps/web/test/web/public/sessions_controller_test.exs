@@ -10,7 +10,11 @@ defmodule UM.Web.SessionsControllerTest do
   end
 
   def external_session(session) do
-    [{"cookie", "raxx.session=" <> UM.Web.Session.encode!(session)}]
+    session_secret_key = Application.get_env(:web, :session_secret_key)
+    packed_session = UM.Web.Session.encode!(session)
+    digest = :crypto.hmac(:sha, session_secret_key, packed_session) |> Base.encode64
+    signed_session = "#{digest}--#{packed_session}"
+    [{"cookie", "raxx.session=" <> signed_session}]
   end
 
   test "login page redirects if already logged in" do

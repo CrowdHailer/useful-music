@@ -79,7 +79,12 @@ Needed for some tests
 - BUGSNAG_API_KEY
 
 #### Email
+- SMTP_SERVER
+- SMTP_USERNAME
+- SMTP_PASSWORD
 
+#### Session signing
+- SESSION_SECRET_KEY
 
 ## Checklist
 

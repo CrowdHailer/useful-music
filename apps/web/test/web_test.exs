@@ -23,7 +23,11 @@ defmodule UM.WebTest do
 
   test "can view the admin page" do
     bugs = UM.Accounts.Fixtures.bugs_bunny
-    request = get("/admin/customers", [{"cookie", "raxx.session=" <> Poison.encode!(%{account_id: bugs.id})}])
+    session_secret_key = Application.get_env(:web, :session_secret_key)
+    packed_session = Poison.encode!(%{account_id: bugs.id})
+    digest = :crypto.hmac(:sha, session_secret_key, packed_session) |> Base.encode64
+    signed_session = "#{digest}--#{packed_session}"
+    request = get("/admin/customers", [{"cookie", "raxx.session=" <> signed_session}])
     response = UM.Web.handle_request(request, :no_state)
     assert 200 == response.status
   end
