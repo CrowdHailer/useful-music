@@ -83,6 +83,7 @@ defmodule UM.Sales.OrdersRepo do
     cart_total = record.basket_total
     record = Map.delete(record, :basket_total)
 
-    Map.merge(record, %{cart_total: cart_total})
+    # TODO remove explicit reference to cart
+    Map.merge(record, %{cart_total: cart_total, cart: UM.Sales.Cart.empty})
   end
 end
