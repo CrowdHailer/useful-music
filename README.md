@@ -1,45 +1,85 @@
-# RENAME cart
-# Customer doesn't have basket inside, use id and then keep data in session.
-# Similar behaviour for discount
-
-web depends on all
-accounts depends on all except web
-sales depends on catalogue
-
-Useful Music
-============
+# Useful Music
 
 Application to sell sheet music and associated audio tracks.
 
-## Installation
+## Local Development
 
 ```sh
 # Clone this repository
 git clone git@github.com:CrowdHailer/useful-music.git
 cd useful-music
 
-# start up the development environment
+# Start up the development environment
 vagrant up
 vagrant ssh
+cd /vagrant
+
+# Fetch Ruby dependencies
+bundle
+
+# Create databases
+createdb useful_music_development
+createdb useful_music_development
+rake db:migrate:up
+RACK_ENV=test rake db:migrate:up
+
+# Fetch Elixir dependencies
+mix deps.get
+
+# Start elixir application with environment variables
+<ENV>=<variables> iex -S mix
 ```
 
-## Development
+## Heroku Setup
 
-This is a migration of a Ruby project to an elixir project.
-Ruby code will only be deleted once the functionality has been migrated.
+Requires PostgreSQL, Elixir and Ruby.
 
-## Production
+*explaination assumes heroku CLI is installed and authenticated.*
 
-Hosted on a heroku environment.
-Requires a database as well as elixir AND ruby build packs.
+```sh
+# Create a new app with app name and remote name
+heroku apps:create um-tmp --remote tmp
+
+# Setup buildpacks
+heroku buildpacks:set https://github.com/HashNuke/heroku-buildpack-elixir.git --remote tmp
+heroku buildpacks:set heroku/ruby --remote tmp
+heroku buildpacks --remote tmp
+# === um-tmp Buildpack URLs
+# 1. https://github.com/HashNuke/heroku-buildpack-elixir.git
+# 2. heroku/ruby
+
+# Create a new addon with postgesql
+heroku addons:create heroku-postgresql:hobby-dev --remote tmp
+
+# run migrations
+heroku run --remote tmp 'rake db:migrate:up'
+
+# Setup environment variables
+
+# Push working branch to environment
+# git pust <remote> <local-branch>:<remote-branch>
+git pust tmp development:master
+```
+
+#### Notes
 
 - [elixir build pack](https://github.com/HashNuke/heroku-buildpack-elixir)
 - [instructions for multiple buildpacks](https://devcenter.heroku.com/articles/using-multiple-buildpacks-for-an-app)
 - [instruction for installing elixir buildpack](http://www.phoenixframework.org/docs/heroku)
 
+## Environment variables
 
-Had to stop using subdirectory for elixir project.
-Using a [subtree](https://sndrs.ca/2013/11/15/deploy-a-subdirectory-to-heroku-as-an-app/) was a possible alternative
+#### Amazon
+Needed for some tests
+- S3_BUCKET_NAME
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+
+#### Bugsnag
+- BUGSNAG_API_KEY
+
+#### Email
+
 
 ## Checklist
 
