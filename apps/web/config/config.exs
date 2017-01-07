@@ -64,9 +64,15 @@ if Mix.env == :test do
   config :web, UM.Web.Mailer,
     adapter: Bamboo.TestAdapter
 else
-config :web, UM.Web.Mailer,
-  adapter: Bamboo.SendgridAdapter,
-  api_key: "my_api_key"
+  config :web, UM.Web.Mailer,
+    adapter: Bamboo.SMTPAdapter,
+    server: System.get_env("SMTP_SERVER"),
+    port: 2525,
+    username: System.get_env("SMTP_USERNAME"),
+    password: System.get_env("SMTP_PASSWORD"),
+    tls: :if_available, # can be `:always` or `:never`
+    ssl: false, # can be `true`
+    retries: 1
 end
 
 if Mix.env == :test do
