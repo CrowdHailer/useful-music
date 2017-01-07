@@ -99,7 +99,12 @@ defmodule UM.Catalogue do
   end
 
   def random_pieces(4) do
-    {:ok, Moebius.Db.run("SELECT * FROM pieces ORDER BY RANDOM() LIMIT 4")}
+    case Moebius.Db.run("SELECT * FROM pieces ORDER BY RANDOM() LIMIT 4") do
+      pieces when is_list(pieces) ->
+        {:ok, pieces}
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
   def search_title(title) do
