@@ -27,6 +27,7 @@ defmodule UM.Web.Mixfile do
       {:ace, "~> 0.7.0"},
       {:bugsnag, "~> 1.3.2"},
       {:bamboo, "~> 0.7"},
+      {:bamboo_smtp, "~> 1.2.1"},
       {:raxx, "~> 0.8.0"},
       {:moebius, "~> 2.0.0"},
       {:money, "~> 1.2"},
