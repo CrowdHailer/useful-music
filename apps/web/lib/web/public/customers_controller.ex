@@ -42,7 +42,11 @@ defmodule UM.Web.CustomersControllerController do
                 IO.inspect(reason)
                 Raxx.Response.conflict(new_page_content(customer, %CreateForm{email: "is already taken"}, ""))
               {:ok, customer = %{id: id}} ->
-                UM.Web.Emails.account_created(customer) |> UM.Web.Mailer.deliver_now
+                customer_account_uri = %URI{host: request.host, port: request.port, path: "/customers/#{id}", scheme: "http"}
+                # DEBT hardcoding of scheme
+                UM.Web.Emails.account_created(customer, customer_account_uri)
+                |> UM.Web.Mailer.deliver_now
+
                 Raxx.Patch.redirect("/customers/#{id}")
                 |> UM.Web.with_flash(success: "Welcome to Useful Music")
                 |> UM.Web.with_session(UM.Web.Session.login(session, customer))
@@ -60,7 +64,8 @@ defmodule UM.Web.CustomersControllerController do
         {:ok, customer} = UM.Accounts.CustomersRepo.fetch_by_id(id)
         customer_endpoint(%{request | path: rest}, customer)
       false ->
-        Raxx.Response.not_found("Don't look here")
+        Raxx.Patch.redirect("/sessions/new")
+        |> UM.Web.with_flash(error: "Please log in")
     end
   end
 

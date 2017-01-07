@@ -28,6 +28,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
         "terms_agreement" => "on"
       }
     }), [{"um-session", UM.Web.Session.new |> UM.Web.Session.select_currency("USD")}])
+    request = %{request | host: "usefulmusic.test"}
     response = Controller.handle_request(request, :no_state)
     assert response.status == 302
     assert location = Raxx.Patch.response_location(response)
@@ -38,7 +39,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     assert "Bill" == customer.first_name
     assert "USD" == customer.currency_preference
     assert id == Raxx.Patch.response_session(response).account.id
-    assert_delivered_email UM.Web.Emails.account_created(customer)
+    assert_delivered_email UM.Web.Emails.account_created(customer, "http://usefulmusic.test/customers/#{id}")
   end
 
   test "rerenders form for bad password" do
@@ -77,7 +78,7 @@ defmodule UM.Web.CustomersControllerControllerTest do
     jo = UM.Accounts.Fixtures.jo_brand
     request = get("/#{jo.id}", [{"um-session", UM.Web.Session.new}])
     response = Controller.handle_request(request, :no_state)
-    assert response.status == 404
+    assert response.status == 302
   end
 
   test "can visit a customers edit page" do
