@@ -13,8 +13,10 @@ defmodule UM.Catalogue.PieceStorage do
   # such as :original and :thumbnail
 
   # DEBT allowed extenstions .pdf
-  def save_notation_preview(%{content: binary, filename: filename}, %{id: id}) do
+  def save_notation_preview(file = %{content: binary, filename: filename}, %{id: id}) do
     filename = "UD#{id}_notation_preview" <> Path.extname(filename)
+    IO.inspect(file |> Map.delete(:content))
+    # type is present need to pass it into arc
     store({%{filename: filename, binary: binary}, %{id: id}})
   end
 

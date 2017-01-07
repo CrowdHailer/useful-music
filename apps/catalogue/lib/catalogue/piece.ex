@@ -95,6 +95,34 @@ defmodule UM.Catalogue.Piece do
 
   def notation_preview_url(piece, default \\ nil) do
     if piece.notation_preview do
+      # url = UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original)
+      # |> IO.inspect
+      # uri = %{path: path = "/useful-music-tmp" <> rest} = URI.parse(url)
+      # IO.inspect(path)
+      # {mega, seconds, _} = :erlang.now
+      # expires = (mega * 1_000_000) + seconds + 3_600
+      # signing_string = "GET\n\n\n#{expires}\n#{path}"
+      # access_key_id = System.get_env("AWS_ACCESS_KEY_ID")
+      # secret_access_key = System.get_env("AWS_SECRET_ACCESS_KEY")
+      # signature = :crypto.hmac(:sha, secret_access_key, signing_string)
+      # |> Base.encode64
+      # |> URI.encode_www_form
+      # query = "AWSAccessKeyId=#{access_key_id}&Expires=#{expires}&Signature=#{signature}"
+      # host = "useful-music-tmp.s3.amazonaws.com"
+      # uri = %{uri | host: host, query: query, path: rest}
+      # IO.inspect("#{uri}")
+
+
+
+      # datetime = :calendar.universal_time
+      # expires_in = 3600
+      # query_params = []
+      # http_method = :GET
+      # secret_access_key = Application.get_env(:ex_aws, :secret_access_key)
+      # |> IO.inspect
+      # config = %{secret_access_key: secret_access_key, region: "us-west-2", access_key_id: access_key_id}
+      # ExAws.Auth.presigned_url(http_method, url, :s3, datetime, config, expires_in, query_params)
+      # |> IO.inspect
       UM.Catalogue.PieceStorage.url({piece.notation_preview, piece}, :original, signed: true)
     else
       default
