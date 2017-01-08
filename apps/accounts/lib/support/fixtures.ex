@@ -48,7 +48,7 @@ defmodule UM.Accounts.Fixtures do
       country: "GB",
       admin: true
     )
-    |> UM.Accounts.Db.run
+    |> UM.Accounts.Db.run |> UM.Accounts.CustomersRepo.unpack
   end
 
   # Like joe blogs
@@ -67,6 +67,6 @@ defmodule UM.Accounts.Fixtures do
       admin: false,
       currency_preference: "USD"
     )
-    |> UM.Accounts.Db.run
+    |> UM.Accounts.Db.run |> UM.Accounts.CustomersRepo.unpack
   end
 end

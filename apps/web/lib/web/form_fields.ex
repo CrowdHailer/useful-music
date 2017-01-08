@@ -15,11 +15,14 @@ defmodule UM.Web.FormFields do
     {:confirmation, "password"}
   end
 
-  # TODO validate country
   def country(opts) do
-    WebForm.field(&pass_all/1, opts)
+    WebForm.field(&parse_contry/1, opts)
   end
 
+  def parse_contry(alpha2) do
+    [country] = Countries.filter_by(:alpha2, alpha2)
+    {:ok, country}
+  end
   def price_in_pounds(opts \\ []) do
     WebForm.field(&validate_price/1, opts)
   end

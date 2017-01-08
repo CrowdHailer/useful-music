@@ -60,8 +60,8 @@
                 <label>Country
                   <select id="customer_country" name="customer[country]" required>
                     <option value>-- country --</option>
-                    <%= for {name, code} <- all_countries do %>
-                    <option value="<%= code %>" <%= if form.country == code, do: "selected" %>><%= name %></option>
+                    <%= for {name, alpha2} <- all_countries do %>
+                    <option value="<%= alpha2 %>" <%= if "#{form.country.alpha2}" == alpha2, do: "selected" %>><%= name %></option>
                     <% end %>
                   </select>
                 </label>

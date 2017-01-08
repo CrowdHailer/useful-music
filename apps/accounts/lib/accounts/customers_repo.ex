@@ -31,7 +31,7 @@ defmodule UM.Accounts.CustomersRepo do
   end
 
   defp pack(customer) do
-    if Map.has_key?(customer, :password) do
+    customer = if Map.has_key?(customer, :password) do
       customer = Map.delete(customer, :password_hash)
       {password, customer} = Map.pop(customer, :password)
       Map.merge(customer, %{password: Comeonin.Bcrypt.hashpwsalt(password)})
@@ -43,11 +43,30 @@ defmodule UM.Accounts.CustomersRepo do
         customer
       end
     end
+    # country is a required field
+    # Countries library returns char-list not binary
+    if Map.has_key?(customer, :country) do
+      %{customer | country: "#{customer.country.alpha2}"}
+    else
+      # Certain actions just patch the record in which case the whole object is not provided
+      customer
+    end
   end
 
-  defp unpack(record) do
+  def unpack(record) do
+    # IO.inspect(record)
+    # date_string = record.created_at |> String.split(" ") |> List.first
+    # [year, month, day] = String.split(date_string, "-") |> Enum.map(&String.to_integer/1)
+    # {:ok, created_at} = Timex.Date.new(year, month, day)
+    # Timex.shift(created_at, days: 4)
+    # |> IO.inspect
+    # record = %{record | created_at: created_at}
+
     {hash, record} = Map.pop(record, :password)
-    Map.merge(record, %{password_hash: hash})
+    record = Map.merge(record, %{password_hash: hash})
+
+    [country] = Countries.filter_by(:alpha2, record.country)
+    %{record | country: country}
   end
 
   def index(page) do

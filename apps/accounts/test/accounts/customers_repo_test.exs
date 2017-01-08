@@ -8,13 +8,14 @@ defmodule UM.Accounts.CustomersRepoTest do
 
   defp defaults(extra \\ []) do
     extra = Enum.into(extra, %{})
+    [country] = Countries.filter_by(:alpha2, "GB")
     %{
       id: "jo-brand-customer",
       first_name: "Jo",
       last_name: "Brand",
       email: "jo@hotmail.com",
       password: "password",
-      country: "GB",
+      country: country,
       admin: false
     } |> Map.merge(extra)
   end
@@ -23,6 +24,7 @@ defmodule UM.Accounts.CustomersRepoTest do
 
   test "inserted record has a created_at set" do
     {:ok, customer} = Repo.insert(defaults)
+    |> IO.inspect
     assert customer.created_at
     assert customer.updated_at
   end

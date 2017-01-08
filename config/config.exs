@@ -16,6 +16,10 @@ import_config "../apps/*/config/config.exs"
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
 # Read from env
+if Mix.env == :test do
+  config :comeonin, :bcrypt_log_rounds, 1
+end
+
 config :sales,
   accept_payments: true,
   usd_exchange_rate: 1.5,

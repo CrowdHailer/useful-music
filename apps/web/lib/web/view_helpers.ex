@@ -37,8 +37,7 @@ defmodule UM.Web.ViewHelpers do
   def user_country(session) do
     if logged_in?(session) do
       customer = Session.current_customer(session)
-      [country] = Countries.filter_by(:alpha2, customer.country)
-      country.name
+      customer.country.name
     end
   end
 
@@ -49,7 +48,7 @@ defmodule UM.Web.ViewHelpers do
   def user_vat_rate(session) do
     if logged_in?(session) do
       customer = Session.current_customer(session)
-      [country] = Countries.filter_by(:alpha2, customer.country)
+      country = customer.country
       case Map.fetch(country, :vat_rates) do
         {:ok, nil} ->
           0
