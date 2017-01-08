@@ -1,6 +1,8 @@
 defmodule UM.Accounts.CustomersRepo do
   import Moebius.Query
 
+  # Rename password -> password_hash
+  # Rename country -> country_alpha2
   def insert(customer) do
     customer = Map.merge(customer, %{created_at: :now, updated_at: :now})
     customer = pack(customer)
